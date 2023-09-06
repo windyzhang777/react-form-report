@@ -12,7 +12,7 @@ const Header = () => {
 
     return (
         <AppBar position={"static"}>
-            <Toolbar>
+            <Toolbar sx={{textAlign: "center"}}>
                 <IconButton
                     edge={"start"}
                     color={"default"}
