@@ -1,6 +1,6 @@
 import CommonLoader from "./commons/CommonLoader";
 import {useState} from "react";
-import Header from "./components/Header";
+import Header from "./components/Header/Header";
 
 const App = () => {
     const [loading] = useState<boolean>(false);
@@ -8,7 +8,10 @@ const App = () => {
     return (
         <div className="app">
             {loading ? <CommonLoader></CommonLoader> :
-                <Header />
+                <div>
+                    <Header />
+                    <div>Main Screen</div>
+                </div>
             }
         </div>
     );
