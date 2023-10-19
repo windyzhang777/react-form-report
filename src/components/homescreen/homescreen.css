@@ -1,0 +1,23 @@
+.sdrDefaultMsg {
+    font-family: Open Sans;
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 27px;
+    text-align: left;
+    color: #666666;
+}
+
+.Mui-selected {
+    color: #002244 !important;
+    font-weight: 600 !important;
+}
+
+.MuiTabs-indicator {
+    background-color: #002244 !important;
+    height: 4px !important;
+}
+
+* {
+    font-family: "Open Sans" !important;
+}

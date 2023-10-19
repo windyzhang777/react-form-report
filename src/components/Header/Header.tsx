@@ -12,14 +12,14 @@ const Header = () => {
 
     return (
         <AppBar position={"static"}>
-            <Toolbar sx={{textAlign: "center"}}>
+            <Toolbar className="header-toolbar">
                 <IconButton
                     edge={"start"}
                     color={"default"}
                     aria-label={"open drawer"}
                     onClick={() => setOpenDrawer(true)}
                 >
-                    <MenuIcon/>
+                    <MenuIcon sx={{ color: "#FFFFFF", width: "30px", height: "30px" }}/>
                 </IconButton>
                 <Drawer
                     anchor="left"
@@ -46,7 +46,7 @@ const Header = () => {
                 <header className={"headerTitle"}>
                     SDR Web
                 </header>
-                <RefreshIcon sx={{marginLeft: "auto", marginRight: "25px"}}/>
+                <RefreshIcon sx={{ marginLeft: "auto", marginRight: "25px" }} />
                 <PermIdentityIcon sx={{marginRight: "10px"}}/>
             </Toolbar>
         </AppBar>

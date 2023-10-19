@@ -1,0 +1,26 @@
+
+.MuiDataGrid-root .MuiDataGrid-cell:focus-within, .MuiDataGrid-root .MuiDataGrid-columnHeader {
+    outline: none !important;
+}
+
+.MuiDataGrid-columnSeparator {
+    display: none !important;
+}
+
+.MuiDataGrid-columnHeader {
+    background: #002244 !important;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0px;
+    text-align: left;
+}
+
+.MuiDataGrid-columnHeader .MuiDataGrid-columnHeaderTitle{
+    color: #FFFFFF !important;
+}
+
+.paragraph-text{
+    font-weight: bold;
+    color: red;
+ }
