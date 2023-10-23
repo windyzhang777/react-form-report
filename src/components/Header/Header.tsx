@@ -10,6 +10,14 @@ import "./header.css";
 const Header = () => {
     const [openDrawer, setOpenDrawer] = useState<boolean>(false)
 
+    const redirectToAdmin = () => {
+        if (process.env.REACT_APP_ENVIRONMENT === "production") {
+            window.open("https://amts.ual.com/mx", "_self");
+        } else {
+            window.open("http://amts-oqa.ual.com/mx/", "_self");
+        }
+    };
+
     return (
         <AppBar position={"static"}>
             <Toolbar className="header-toolbar">
@@ -36,7 +44,7 @@ const Header = () => {
                         </List>
                     </Box>
                 </Drawer>
-                <IconButton>
+                <IconButton onClick={redirectToAdmin}>
                     <img
                         alt="Logo"
                         src={UnitedLogo}
