@@ -1,10 +1,10 @@
 import {AppBar, Box, Drawer, IconButton, List, MenuItem, Toolbar} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import RefreshIcon from '@mui/icons-material/Refresh';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import {useState} from "react";
 import UnitedLogo from "../../icons/logo-united.svg";
+import RefreshIcon from "../../icons/Refresh.png";
 import "./header.css";
 
 const Header = () => {
@@ -54,7 +54,12 @@ const Header = () => {
                 <header className={"headerTitle"}>
                     SDR Web
                 </header>
-                <RefreshIcon sx={{ marginLeft: "auto", marginRight: "25px" }} />
+                <IconButton sx={{marginLeft: "auto"}}>
+                    <div>
+                        <img alt="Refresh Icon" src={RefreshIcon} className="helpIcons" />
+                        <div>Refresh</div>
+                    </div>
+                </IconButton>
                 <PermIdentityIcon sx={{marginRight: "10px"}}/>
             </Toolbar>
         </AppBar>
