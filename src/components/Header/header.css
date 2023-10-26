@@ -23,3 +23,27 @@
 .header-right {
     margin-left: auto;
 }
+
+.refresh-text {
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px;
+    margin-top: 3px;
+    color: white;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.refresh-icon {
+    width: 28px;
+    margin-bottom: -5px;
+}
+
+.last-refreshed {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+}

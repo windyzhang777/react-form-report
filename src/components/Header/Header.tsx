@@ -2,13 +2,19 @@ import {AppBar, Box, Drawer, IconButton, List, MenuItem, Toolbar} from "@mui/mat
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import UnitedLogo from "../../icons/logo-united.svg";
 import RefreshIcon from "../../icons/Refresh.png";
 import "./header.css";
+import moment from "moment";
 
 const Header = () => {
-    const [openDrawer, setOpenDrawer] = useState<boolean>(false)
+    const [openDrawer, setOpenDrawer] = useState<boolean>(false);
+    const [lastRefreshed, setLastRefreshed] = useState<string>(moment().format("MM/DD/YYYY hh:mm"));
+
+    useEffect(() => {
+        setLastRefreshed(moment().format("MM/DD/YYYY hh:mm"));
+    }, [window.location]);
 
     const redirectToAdmin = () => {
         if (process.env.REACT_APP_ENVIRONMENT === "production") {
@@ -17,6 +23,10 @@ const Header = () => {
             window.open("http://amts-oqa.ual.com/mx/", "_self");
         }
     };
+
+    const refreshData = () => {
+        setLastRefreshed(moment().format("MM/DD/YYYY hh:mm"));
+    }
 
     return (
         <AppBar position={"static"}>
@@ -54,12 +64,20 @@ const Header = () => {
                 <header className={"headerTitle"}>
                     SDR Web
                 </header>
-                <IconButton sx={{marginLeft: "auto"}}>
+                <IconButton sx={{marginLeft: "auto"}} onClick={refreshData}>
                     <div>
-                        <img alt="Refresh Icon" src={RefreshIcon} className="helpIcons" />
-                        <div>Refresh</div>
+                        <img alt="Refresh Icon" src={RefreshIcon} className="refresh-icon" />
+                        <div className={"refresh-text"}>Refresh</div>
                     </div>
                 </IconButton>
+                {lastRefreshed !== null && (
+                    <div  className="last-refreshed">
+                        Last Refreshed{" "}
+                        <div>
+                            {moment(lastRefreshed).format("MM/DD/YYYY@hh:mm")}
+                        </div>
+                    </div>
+                )}
                 <PermIdentityIcon sx={{marginRight: "10px"}}/>
             </Toolbar>
         </AppBar>
