@@ -66,8 +66,8 @@ const Header = () => {
                 </header>
                 <IconButton sx={{marginLeft: "auto", marginRight: "15px"}} onClick={refreshData}>
                     <div>
-                        <img alt="Refresh Icon" src={RefreshIcon} className="refresh-icon" />
-                        <div className={"refresh-text"}>Refresh</div>
+                        <img alt="Refresh Icon" src={RefreshIcon} className="header-icon" />
+                        <div className={"header-text"}>Refresh</div>
                     </div>
                 </IconButton>
                 {lastRefreshed !== null && (
@@ -80,8 +80,8 @@ const Header = () => {
                 )}
                 <IconButton sx={{marginLeft: "15px"}}>
                     <div>
-                        <img alt="Profile Icon" src={ProfileIcon} className="refresh-icon" />
-                        <div  className={"refresh-text"}>Firstname</div>
+                        <img alt="Profile Icon" src={ProfileIcon} className="header-icon" />
+                        <div className={"header-text"}>Firstname</div>
                     </div>
                 </IconButton>
             </Toolbar>
