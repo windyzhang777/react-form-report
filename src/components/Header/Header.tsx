@@ -1,10 +1,10 @@
 import {AppBar, Box, Drawer, IconButton, List, MenuItem, Toolbar} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import {useEffect, useState} from "react";
 import UnitedLogo from "../../icons/logo-united.svg";
 import RefreshIcon from "../../icons/Refresh.png";
+import ProfileIcon from "../../icons/Traveler.png";
 import "./header.css";
 import moment from "moment";
 
@@ -64,7 +64,7 @@ const Header = () => {
                 <header className={"headerTitle"}>
                     SDR Web
                 </header>
-                <IconButton sx={{marginLeft: "auto"}} onClick={refreshData}>
+                <IconButton sx={{marginLeft: "auto", marginRight: "15px"}} onClick={refreshData}>
                     <div>
                         <img alt="Refresh Icon" src={RefreshIcon} className="refresh-icon" />
                         <div className={"refresh-text"}>Refresh</div>
@@ -78,7 +78,12 @@ const Header = () => {
                         </div>
                     </div>
                 )}
-                <PermIdentityIcon sx={{marginRight: "10px"}}/>
+                <IconButton sx={{marginLeft: "15px"}}>
+                    <div>
+                        <img alt="Profile Icon" src={ProfileIcon} className="refresh-icon" />
+                        <div  className={"refresh-text"}>Firstname</div>
+                    </div>
+                </IconButton>
             </Toolbar>
         </AppBar>
     );
