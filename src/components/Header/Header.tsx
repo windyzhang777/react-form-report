@@ -81,7 +81,7 @@ const Header = () => {
                 <IconButton sx={{marginLeft: "15px"}}>
                     <div>
                         <img alt="Profile Icon" src={ProfileIcon} className="header-icon" />
-                        <div className={"header-text"}>Firstname</div>
+                        <div className={"header-text"}>{sessionStorage.fname}</div>
                     </div>
                 </IconButton>
             </Toolbar>
