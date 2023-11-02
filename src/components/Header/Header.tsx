@@ -107,30 +107,29 @@ const Header = () => {
                     anchorEl={anchorEl}
                     open={showProfile}
                     onClose={closeProfile}
-
                 >
                     <Typography
                         sx={{
                             mt: 1,
-                            pr: 2,
-                            pl: 2,
-                            backgroundColor: "white",
+                            pr: 4,
+                            pl: 4,
+                            backgroundColor: "#334E69",
                             fontSize: "18px",
                             fontWeight: 600,
-                            color: "#0c2340",
+                            color: "white",
                         }}
                     >
                         {sessionStorage.fname} {sessionStorage.lname}
                         {"    "}
                         {"  |   "}
-                        <Typography sx={{ pr: 2, display: "inline", fontSize: "12px" }}>
+                        <Typography sx={{ pr: 2, display: "inline", fontSize: "18px" }}>
                             {sessionStorage.id?.toLowerCase()}
                         </Typography>
-                        <Typography >
-                            Role: <span style={{ fontWeight: 600 }}> {sessionStorage.jobRole}</span>
+                        <Typography sx={{mt: 2, fontWeight: 600}}>
+                            Role: <span> {sessionStorage.jobRole}</span>
                         </Typography>{" "}
-                        <Typography>
-                            Station:<span style={{ fontWeight: 600 }}> {sessionStorage.station}</span>
+                        <Typography sx={{mt: 2, fontWeight: 600}}>
+                            Station:<span> {sessionStorage.station}</span>
                         </Typography>{" "}
                     </Typography>
                     <Button
@@ -141,14 +140,15 @@ const Header = () => {
                         sx={{
                             textTransform: "none",
                             padding: "0.2rem",
-                            marginLeft: 8,
-                            mt: 2,
-                            mb: 1,
+                            marginLeft: 4,
+                            mt: 3,
+                            mb: 3,
                             borderRadius: "12",
                             width: "135px",
-                            backgroundColor: "#6244BB",
-                            color: "white",
-                            ":hover": { bgcolor: "#6244BB" },
+                            backgroundColor: "white",
+                            fontWeight: "600",
+                            color: "#6244BB",
+                            ":hover": { bgcolor: "#1976d2" },
                         }}
                     >
                         {" "}
@@ -162,14 +162,16 @@ const Header = () => {
                         sx={{
                             textTransform: "none",
                             padding: "0.2rem",
-                            marginLeft: 8,
-                            mt: 2,
-                            mb: 1,
+                            marginLeft: 4,
+                            mt: 3,
+                            mb: 3,
+                            mr: 4,
                             borderRadius: "12",
                             width: "135px",
                             backgroundColor: "#6244BB",
+                            fontWeight: "600",
                             color: "white",
-                            ":hover": { bgcolor: "#6244BB" },
+                            ":hover": { bgcolor: "#1976d2" },
                         }}
                     >
                         {" "}
