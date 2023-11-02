@@ -1,3 +1,7 @@
+.MuiToolbar-root.MuiToolbar-gutters.MuiToolbar-regular.header-toolbar.css-hyum1k-MuiToolbar-root {
+    padding-right: 0;
+}
+
 .headerTitle{
     font-family: Open Sans;
     font-size: 24px;
@@ -46,4 +50,10 @@
     font-weight: 400;
     line-height: 24px;
     text-align: left;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.show-profile {
+    background-color: #334E69
 }

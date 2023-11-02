@@ -21,6 +21,7 @@ const App = () => {
                     sessionStorage.setItem("fname", userProfileInfo.FirstName);
                     sessionStorage.setItem("lname", userProfileInfo.LastName);
                     sessionStorage.setItem("jobRole", userProfileInfo.JobRole);
+                    sessionStorage.setItem("email", userProfileInfo.EmailAddress);
                 }
             })
             .catch(error => sessionStorage.clear())
