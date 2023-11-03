@@ -32,7 +32,7 @@ export interface gridRow {
   reportedid: string;
   datetime: string;
   logpagestatus: string;
-  sdrreportableitem: string;
+  sdrstatus: string;
 }
 
 export interface TabPanelProps {
