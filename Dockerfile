@@ -1,5 +1,5 @@
 # =====================
-# BUILD ANGULAR WEB APP
+# BUILD REACT WEB APP
 # =====================
 FROM artifactorycloud.ual.com/v-docker/node:16.18.0 as build
 
