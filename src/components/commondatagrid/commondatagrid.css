@@ -16,11 +16,23 @@
     text-align: left;
 }
 
-.MuiDataGrid-columnHeader .MuiDataGrid-columnHeaderTitle{
+.MuiDataGrid-columnHeader .MuiDataGrid-columnHeaderTitle, .MuiDataGrid-columnHeaderTitleContainerContent .MuiCheckbox-colorPrimary{
     color: #FFFFFF !important;
 }
 
 .paragraph-text{
     font-weight: bold;
     color: red;
+ }
+
+ .Mui-odd{
+    background: #F1F1F0;
+ }
+
+ .extract-button {
+     width: 190px;
+     height: 40px;
+     padding: 8px;
+     border-radius: 4px;
+     gap: 8px
  }

@@ -4,12 +4,7 @@ import "./homescreen.css";
 import CommonDataGrid from "../commondatagrid/commondatagrid";
 import { ReportStatus } from "src/commons/types";
 import TabPanel from "src/commons/TabPanel";
-
-// interface TabPanelProps {
-//     children?: React.ReactNode;
-//     index: number;
-//     value: number;
-// };
+import ViewSdrData from "../viewsdr/ViewSdrData";
 
 const sxBox = {
     borderBottom: 1, 
@@ -36,39 +31,80 @@ const HomeScreen = () => {
     const [openSdrCount, setOpenSdrCount] = useState<number>(0);
     const [flaggedSdrCount, setFlaggedSdrCount] = useState<number>(0);
     const [approvedSdrCount, setApprovedSdrCount] = useState<number>(0);
+    const [viewSdrFlag, setViewSdrFlag] = useState<boolean>(false);
+    const [selectedSdrId, setSelectedSdrId] = useState<number>(0);
+
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
 
-    const updateOpenSdrCount = (count: number) => {
-        setOpenSdrCount(count);
+    const updateOpenSdrCount = (index: number, count: number) => {
+        switch(index){
+            case 0:
+                setOpenSdrCount(count);
+                break;
+            case 1:
+                setFlaggedSdrCount(count);
+                break;
+            case 2:
+                setApprovedSdrCount(count);
+                break;
+        }
     }
 
     return (
-        <Grid container spacing={2} sx={{ m: 2 }} >
-            <Grid item md={6}>
-                <Box sx={{ ...sxBox }}>
-                    <Tabs value={value} onChange={handleChange} aria-label="homeScreenSdrTabs">
-                        <Tab  {...a11yProps(0)} label={`New SDRs(${openSdrCount})`} id="NewsdrTab" />
-                        <Tab {...a11yProps(1)} label={`Flagged for Follow up(${flaggedSdrCount})`} id="Flaggedforfollowup" />
-                        <Tab {...a11yProps(2)} label={`Approved SDRs(${approvedSdrCount})`} id="Approvedsdr" />
-                    </Tabs>
-                </Box>
-                <TabPanel value={value} index={0}>
-                    <CommonDataGrid reportStatus={ReportStatus[value]} reportIndex={value} updateOpenSdrCount={updateOpenSdrCount} />
-                </TabPanel>
-            </Grid>
-            <Grid md={6} item>
-                <Grid container
-                    spacing={0}
-                    direction="column"
-                    alignItems="center"
-                    justifyContent="center"
-                    sx={{ minHeight: '85vh' }}>
-                    <p className="sdrDefaultMsg">Please select an SDR to view it. </p>
-                </Grid>
-            </Grid>
+      <Grid container spacing={2} sx={{ m: 0 }}>
+        <Grid item md={6}>
+          <Box sx={{ ...sxBox }}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              aria-label="homeScreenSdrTabs"
+            >
+              <Tab
+                {...a11yProps(0)}
+                label={`New SDRs(${openSdrCount})`}
+                id="NewsdrTab"
+              />
+              <Tab
+                {...a11yProps(1)}
+                label={`Flagged for Follow up(${flaggedSdrCount})`}
+                id="Flaggedforfollowup"
+              />
+              <Tab
+                {...a11yProps(2)}
+                label={`Approved SDRs(${approvedSdrCount})`}
+                id="Approvedsdr"
+              />
+            </Tabs>
+          </Box>
+          <TabPanel value={value}>
+            <CommonDataGrid
+              reportStatus={ReportStatus[value]}
+              reportIndex={value}
+              updateOpenSdrCount={updateOpenSdrCount}
+              setViewSdrFlag={setViewSdrFlag}
+              setSelectedSdrId={setSelectedSdrId}
+            />
+          </TabPanel>
         </Grid>
+        <Grid item md={6}>
+          {viewSdrFlag ? (
+            <ViewSdrData selectedSdrId={selectedSdrId} />
+          ) : (
+            <Grid
+              container
+              spacing={0}
+              direction="column"
+              alignItems="center"
+              justifyContent="center"
+              sx={{ minHeight: "85vh" }}
+            >
+              <p className="sdrDefaultMsg">Please select an SDR to view it. </p>
+            </Grid>
+          )}
+        </Grid>
+      </Grid>
     );
 };
 
