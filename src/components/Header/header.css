@@ -1,9 +1,13 @@
+.MuiToolbar-root.MuiToolbar-gutters.MuiToolbar-regular.header-toolbar.css-hyum1k-MuiToolbar-root {
+    padding-right: 0;
+}
+
 .headerTitle{
     font-family: Open Sans;
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
-    margin-left: auto;
+    margin-left: 35%;
     margin-right: 10%;
     line-height: 32px;
     letter-spacing: 0px;
@@ -18,4 +22,42 @@
 .unitedLogoIcon {
     width: 177px;
     height: 32px;
+}
+
+.header-right {
+    margin-left: auto;
+}
+
+.header-text {
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px;
+    margin-top: 3px;
+    color: white;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.header-icon {
+    width: 28px;
+    margin-bottom: -5px;
+}
+
+.last-refreshed {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.show-profile {
+    background-color: #334E69
+}
+
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiMenu-paper.MuiPopover-paper.MuiMenu-paper.css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
+    background-color: #334E69;
 }
