@@ -2,7 +2,7 @@ import CommonLoader from "./commons/CommonLoader";
 import {useEffect, useState} from "react";
 import Header from "./components/Header/Header";
 import HomeScreen from "./components/homescreen/HomeScreen";
-import axios from "axios";
+import axiosInstance from "./utils/axiosInstance";
 import config from "./utils/env.config";
 
 const App = () => {
@@ -11,7 +11,7 @@ const App = () => {
 
     const getProfile = (empID: string) => {
         setLoading(true);
-        axios
+        axiosInstance
             .post(`${config.apiBaseAddress}${config.URL_GET_PROFILE}`, { EmployeeId: empID })
             .then(res => {
                 const userProfileInfo = res.data.Result.Employee;
