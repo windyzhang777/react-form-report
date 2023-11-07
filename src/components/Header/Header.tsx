@@ -7,11 +7,13 @@ import RefreshIcon from "../../icons/Refresh.png";
 import ProfileIcon from "../../icons/Traveler.png";
 import "./header.css";
 import moment from "moment";
+import {useAppSelector} from "../../redux/hooks";
 
 const Header = () => {
     const [openDrawer, setOpenDrawer] = useState<boolean>(false);
     const [anchorEl, setAnchorEl] = useState<any>(null);
     const [lastRefreshed, setLastRefreshed] = useState<string>(moment().format("MM/DD/YYYY hh:mm"));
+    const {profileData} = useAppSelector(state => state.profile);
 
     useEffect(() => {
         setLastRefreshed(moment().format("MM/DD/YYYY hh:mm"));
