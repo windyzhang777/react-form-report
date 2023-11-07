@@ -7,13 +7,15 @@ import RefreshIcon from "../../icons/Refresh.png";
 import ProfileIcon from "../../icons/Traveler.png";
 import "./header.css";
 import moment from "moment";
-import {useAppSelector} from "../../redux/hooks";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks";
+import {getProfile} from "../../redux/ducks/getProfile";
 
 const Header = () => {
     const [openDrawer, setOpenDrawer] = useState<boolean>(false);
     const [anchorEl, setAnchorEl] = useState<any>(null);
     const [lastRefreshed, setLastRefreshed] = useState<string>(moment().format("MM/DD/YYYY hh:mm"));
     const {profileData} = useAppSelector(state => state.profile);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         setLastRefreshed(moment().format("MM/DD/YYYY hh:mm"));
@@ -38,13 +40,14 @@ const Header = () => {
     };
 
     const refreshData = () => {
+        dispatch(getProfile(sessionStorage.id));
         setLastRefreshed(moment().format("MM/DD/YYYY hh:mm"));
     }
 
     const onLogoutClick = () => {
         const logoutURL = process.env.REACT_APP_LOGOUT_URL;
-        sessionStorage.clear();
         window.open(logoutURL, "_self");
+        sessionStorage.clear();
     }
 
     return (
