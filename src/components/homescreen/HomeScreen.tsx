@@ -1,6 +1,6 @@
 import { Box, Grid, Tab, Tabs } from "@mui/material";
 import React, { useState } from "react";
-import "./homescreen.css";
+import "../homescreen/homescreen.css";
 import CommonDataGrid from "../commondatagrid/commondatagrid";
 import { ReportStatus } from "src/commons/types";
 import TabPanel from "src/commons/TabPanel";
