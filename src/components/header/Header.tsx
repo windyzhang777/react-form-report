@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import UnitedLogo from "../../icons/logo-united.svg";
 import RefreshIcon from "../../icons/Refresh.png";
 import ProfileIcon from "../../icons/Traveler.png";
-import "./header.css";
+import "../header/header.css";
 import moment from "moment";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import {getProfile} from "../../redux/ducks/getProfile";
