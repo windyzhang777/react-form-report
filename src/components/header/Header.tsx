@@ -70,7 +70,7 @@ const Header = () => {
                     <Box>
                         <List>
                             <MenuItem onClick={() => setOpenDrawer(false)}><CloseIcon/></MenuItem>
-                            <MenuItem>SDR Search function</MenuItem>
+                            <MenuItem>SDR Search Function</MenuItem>
                             <MenuItem>CPCP Report</MenuItem>
                             <MenuItem>Parts Reporting</MenuItem>
                         </List>
