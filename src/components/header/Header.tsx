@@ -53,14 +53,17 @@ const Header = () => {
     return (
         <AppBar position={"static"}>
             <Toolbar className="header-toolbar">
-                <IconButton
-                    edge={"start"}
-                    color={"default"}
-                    aria-label={"open drawer"}
-                    onClick={() => setOpenDrawer(true)}
-                >
-                    <MenuIcon sx={{ color: "#FFFFFF", width: "30px", height: "30px" }}/>
-                </IconButton>
+                <div style={{backgroundColor: openDrawer ? "#334E69" : ""}}>
+                    <IconButton
+                        edge={"start"}
+                        color={"default"}
+                        aria-label={"open drawer"}
+                        onClick={() => setOpenDrawer(true)}
+                        sx={{marginLeft: "15px", marginRight: "15px", paddingTop: "15px", paddingBottom: "17px"}}
+                    >
+                        <MenuIcon sx={{ color: "#FFFFFF", width: "30px", height: "30px" }}/>
+                    </IconButton>
+                </div>
                 <Drawer
                     anchor="left"
                     variant="temporary"
@@ -69,7 +72,6 @@ const Header = () => {
                 >
                     <Box>
                         <List>
-                            <MenuItem onClick={() => setOpenDrawer(false)}><CloseIcon/></MenuItem>
                             <MenuItem>SDR Search Function</MenuItem>
                             <MenuItem>CPCP Report</MenuItem>
                             <MenuItem>Parts Reporting</MenuItem>

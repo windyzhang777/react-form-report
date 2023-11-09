@@ -5,7 +5,7 @@ const env = process.env.REACT_APP_ENVIRONMENT || "development";
 const config: any = {
     development: {
         ...defaultConfig,
-        apiBaseAddress: "https://unitedtech-linemx.qa.dtj.aws.ual.com/linemx/v60",
+        apiBaseAddress: "https://unitedtech-linemx.qa.dtj.aws.ual.com/linemx/v61",
         URL_GET_PROFILE: "/api/employee/getprofile",
     },
     qa: {
