@@ -131,12 +131,6 @@ const Header = () => {
                         <Typography sx={{ pr: 2, display: "inline", fontSize: "18px" }}>
                             {sessionStorage.id?.toLowerCase()}
                         </Typography>
-                        <Typography sx={{mt: 2, fontWeight: 600}}>
-                            Role: <span> {sessionStorage.jobRole}</span>
-                        </Typography>{" "}
-                        <Typography sx={{mt: 2, fontWeight: 600}}>
-                            Station:<span> {sessionStorage.station}</span>
-                        </Typography>{" "}
                     </Typography>
                     <Button
                         onClick={() => {
