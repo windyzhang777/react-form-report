@@ -1,5 +1,6 @@
 import axiosInstance from "../../utils/axiosInstance";
 import config from "../../utils/env.config";
+import {ReducerAction} from "../../commons/types";
 
 const Types = {
     FETCH_PROFILE: "FETCH_PROFILE",
@@ -17,21 +18,21 @@ const initFetch = () => {
     return { type: Types.FETCH_PROFILE };
 };
 
-const fetchSuccess = (data:any) => {
+const fetchSuccess = (data: object) => {
     return {
         type: Types.FETCH_SUCCESS,
         data,
     };
 };
 
-const fetchFailure = (message: any) => {
+const fetchFailure = (message: string) => {
     return {
         type: Types.FETCH_FAILURE,
         message,
     };
 };
 
-const profileReducer = (state = initialState, action: any) => {
+const profileReducer = (state = initialState, action: ReducerAction) => {
     switch (action.type) {
         case Types.FETCH_PROFILE: {
             return { ...state, loading: true };

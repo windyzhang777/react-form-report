@@ -2,6 +2,7 @@
 
 import {ReactElement} from "react";
 import moment from "moment/moment";
+import defaultConfig from "../utils/default.config";
 
 export enum ReportStatus {
   Open = 0,
@@ -60,15 +61,15 @@ export interface ViewSdrDataProps {
 }
 
 export interface NewSdrsDataResponse {
-  newSdrsData: Array<any>;
+  newSdrsData: Array<SdrRowApi>;
 }
 
 export interface ApprovedSdrsDataResponse {
-  approvedSdrsData: Array<any>;
+  approvedSdrsData: Array<SdrRowApi>;
 }
 
 export interface FlaggedSdrsDataResponse {
-  flaggedSdrsData: Array<any>;
+  flaggedSdrsData: Array<SdrRowApi>;
 }
 
 export interface NameValuesGetterParams {
@@ -93,4 +94,10 @@ export interface RowApi {
     LogPageNumber: string;
     datetime: string;
   }
+}
+
+export interface ReducerAction {
+  type: string;
+  data: object;
+  message: string;
 }

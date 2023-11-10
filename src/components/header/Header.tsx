@@ -1,7 +1,7 @@
 import {AppBar, Box, Button, Drawer, IconButton, List, Menu, MenuItem, Toolbar, Typography} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import {useEffect, useState} from "react";
+import {MouseEvent, useEffect, useState} from "react";
 import UnitedLogo from "../../icons/logo-united.svg";
 import RefreshIcon from "../../icons/Refresh.png";
 import ProfileIcon from "../../icons/Traveler.png";
@@ -20,7 +20,7 @@ const Header = () => {
         setLastRefreshed(moment().format("MM/DD/YYYY hh:mm"));
     }, [window.location]);
 
-    const openProfile = (event: any) => {
+    const openProfile = (event: MouseEvent) => {
         setAnchorEl(event.currentTarget);
     }
 

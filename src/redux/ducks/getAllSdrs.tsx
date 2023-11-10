@@ -1,5 +1,6 @@
 import axiosInstance from "../../utils/axiosInstance";
 import config from "../../utils/env.config";
+import {ReducerAction} from "../../commons/types";
 
 const Types = {
     FETCH_NEW_SDRS: "FETCH_NEW_SDRS",
@@ -42,7 +43,7 @@ const initFetch = (statusId: number) => {
     }
 };
 
-const fetchSuccess = (data:any, statusId: number) => {
+const fetchSuccess = (data:object, statusId: number) => {
     switch (statusId) {
         case 2:
             return {type: Types.FETCH_NEW_SUCCESS, data};
@@ -53,7 +54,7 @@ const fetchSuccess = (data:any, statusId: number) => {
     }
 };
 
-const fetchFailure = (message: any, statusId: number) => {
+const fetchFailure = (message: string, statusId: number) => {
     switch (statusId) {
         case 2:
             return {type: Types.FETCH_NEW_FAILURE, message};
@@ -64,7 +65,7 @@ const fetchFailure = (message: any, statusId: number) => {
     }
 };
 
-export const newSdrsReducer = (state = initialNewState, action: any) => {
+export const newSdrsReducer = (state = initialNewState, action: ReducerAction) => {
     switch (action.type) {
         case Types.FETCH_NEW_SDRS: {
             return { ...state, loading: true };
@@ -80,7 +81,7 @@ export const newSdrsReducer = (state = initialNewState, action: any) => {
     }
 };
 
-export const approvedSdrsReducer = (state = initialApprovedState, action: any) => {
+export const approvedSdrsReducer = (state = initialApprovedState, action: ReducerAction) => {
     switch (action.type) {
         case Types.FETCH_APPROVED_SDRS: {
             return { ...state, loading: true };
@@ -96,7 +97,7 @@ export const approvedSdrsReducer = (state = initialApprovedState, action: any) =
     }
 };
 
-export const flaggedSdrsReducer = (state = initialFlaggedState, action: any) => {
+export const flaggedSdrsReducer = (state = initialFlaggedState, action: ReducerAction) => {
     switch (action.type) {
         case Types.FETCH_FLAGGED_SDRS: {
             return { ...state, loading: true };
