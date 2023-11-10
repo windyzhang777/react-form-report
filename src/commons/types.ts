@@ -1,4 +1,5 @@
 // enum to hold the report statuses
+
 export enum ReportStatus {
   Open = 0,
   FlaggedForFollowUp = 1,
@@ -27,12 +28,13 @@ export interface GridColDef {
 // grid row
 export interface gridRow {
   id: number;
-  logpagenumber: string;
-  reportedby: string;
-  reportedid: string;
-  datetime: string;
-  logpagestatus: string;
-  sdrstatus: string;
+  SdrStatus: string;
+  LogPageStatus: string;
+  LogPageNumber: string;
+  FirstName: string;
+  LastName: string;
+  CreatedBy: string;
+  CreatedDate: string;
 }
 
 export interface TabPanelProps {
@@ -43,4 +45,16 @@ export interface TabPanelProps {
 
 export interface ViewSdrDataProps {
   selectedSdrId: number;
+}
+
+export interface NewSdrsDataResponse {
+  newSdrsData: Array<any>;
+}
+
+export interface ApprovedSdrsDataResponse {
+  approvedSdrsData: Array<any>;
+}
+
+export interface FlaggedSdrsDataResponse {
+  flaggedSdrsData: Array<any>;
 }
