@@ -1,7 +1,7 @@
 import {AppBar, Box, Button, Drawer, IconButton, List, Menu, MenuItem, Toolbar, Typography} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import {useEffect, useState} from "react";
+import {MouseEvent, useEffect, useState} from "react";
 import UnitedLogo from "../../icons/logo-united.svg";
 import RefreshIcon from "../../icons/Refresh.png";
 import ProfileIcon from "../../icons/Traveler.png";
@@ -14,14 +14,13 @@ const Header = () => {
     const [openDrawer, setOpenDrawer] = useState<boolean>(false);
     const [anchorEl, setAnchorEl] = useState<any>(null);
     const [lastRefreshed, setLastRefreshed] = useState<string>(moment().format("MM/DD/YYYY hh:mm"));
-    const {profileData} = useAppSelector(state => state.profile);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         setLastRefreshed(moment().format("MM/DD/YYYY hh:mm"));
     }, [window.location]);
 
-    const openProfile = (event: any) => {
+    const openProfile = (event: MouseEvent) => {
         setAnchorEl(event.currentTarget);
     }
 
@@ -53,14 +52,17 @@ const Header = () => {
     return (
         <AppBar position={"static"}>
             <Toolbar className="header-toolbar">
-                <IconButton
-                    edge={"start"}
-                    color={"default"}
-                    aria-label={"open drawer"}
-                    onClick={() => setOpenDrawer(true)}
-                >
-                    <MenuIcon sx={{ color: "#FFFFFF", width: "30px", height: "30px" }}/>
-                </IconButton>
+                <div style={{backgroundColor: openDrawer ? "#334E69" : ""}}>
+                    <IconButton
+                        edge={"start"}
+                        color={"default"}
+                        aria-label={"open drawer"}
+                        onClick={() => setOpenDrawer(true)}
+                        sx={{marginLeft: "15px", marginRight: "15px", paddingTop: "15px", paddingBottom: "17px"}}
+                    >
+                        <MenuIcon sx={{ color: "#FFFFFF", width: "30px", height: "30px" }}/>
+                    </IconButton>
+                </div>
                 <Drawer
                     anchor="left"
                     variant="temporary"
@@ -69,8 +71,7 @@ const Header = () => {
                 >
                     <Box>
                         <List>
-                            <MenuItem onClick={() => setOpenDrawer(false)}><CloseIcon/></MenuItem>
-                            <MenuItem>SDR Search function</MenuItem>
+                            <MenuItem>SDR Search Function</MenuItem>
                             <MenuItem>CPCP Report</MenuItem>
                             <MenuItem>Parts Reporting</MenuItem>
                         </List>
@@ -130,12 +131,6 @@ const Header = () => {
                         <Typography sx={{ pr: 2, display: "inline", fontSize: "18px" }}>
                             {sessionStorage.id?.toLowerCase()}
                         </Typography>
-                        <Typography sx={{mt: 2, fontWeight: 600}}>
-                            Role: <span> {sessionStorage.jobRole}</span>
-                        </Typography>{" "}
-                        <Typography sx={{mt: 2, fontWeight: 600}}>
-                            Station:<span> {sessionStorage.station}</span>
-                        </Typography>{" "}
                     </Typography>
                     <Button
                         onClick={() => {

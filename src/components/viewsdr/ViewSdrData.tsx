@@ -14,7 +14,7 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
         <Box sx={{ ...sxBox }}>
             <p>Service Difficulty Report - #{props.selectedSdrId}</p>
         </Box>
-
+          {props.selectedSdrId === null && <Grid>Please select on SDR to view it.</Grid>}
       </Grid>
     );
 };

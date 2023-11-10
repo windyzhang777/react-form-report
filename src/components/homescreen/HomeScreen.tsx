@@ -1,10 +1,12 @@
 import { Box, Grid, Tab, Tabs } from "@mui/material";
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import "../homescreen/homescreen.css";
 import CommonDataGrid from "../commondatagrid/commondatagrid";
 import { ReportStatus } from "src/commons/types";
 import TabPanel from "src/commons/TabPanel";
 import ViewSdrData from "../viewsdr/ViewSdrData";
+import {getAllSdrs} from "../../redux/ducks/getAllSdrs";
+import {useAppDispatch} from "../../redux/hooks";
 
 const sxBox = {
     borderBottom: 1, 
@@ -33,6 +35,13 @@ const HomeScreen = () => {
     const [approvedSdrCount, setApprovedSdrCount] = useState<number>(0);
     const [viewSdrFlag, setViewSdrFlag] = useState<boolean>(false);
     const [selectedSdrId, setSelectedSdrId] = useState<number>(0);
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(getAllSdrs(2));
+        dispatch(getAllSdrs(3));
+        dispatch(getAllSdrs(4));
+    }, []);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
@@ -63,17 +72,17 @@ const HomeScreen = () => {
             >
               <Tab
                 {...a11yProps(0)}
-                label={`New SDRs(${openSdrCount})`}
+                label={`New SDR/SFRs (${openSdrCount})`}
                 id="NewsdrTab"
               />
               <Tab
                 {...a11yProps(1)}
-                label={`Flagged for Follow up(${flaggedSdrCount})`}
+                label={`Flagged for Follow up (${flaggedSdrCount})`}
                 id="Flaggedforfollowup"
               />
               <Tab
                 {...a11yProps(2)}
-                label={`Approved SDRs(${approvedSdrCount})`}
+                label={`Approved SDRs (${approvedSdrCount})`}
                 id="Approvedsdr"
               />
             </Tabs>

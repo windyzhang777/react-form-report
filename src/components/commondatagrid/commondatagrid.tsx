@@ -1,26 +1,36 @@
 import { useEffect, useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import {DataGrid, GridCellParams} from "@mui/x-data-grid";
 import { Button,Grid, Link } from "@mui/material";
 import moment from "moment";
 import {
   CompDataGrid,
   GridColDef,
   ReportStatus,
-  gridRow,
+  GridRow,
+  NewSdrsDataResponse,
+  ApprovedSdrsDataResponse,
+  FlaggedSdrsDataResponse,
+  NameValuesGetterParams,
+  RowRowApi,
+  RowApi, SdrRowApi,
 } from "src/commons/types";
 import "../commondatagrid/commondatagrid.css";
+import {useAppSelector} from "../../redux/hooks";
 
 const CommonDataGrid = (props: CompDataGrid) => {
   const { reportStatus, reportIndex, setViewSdrFlag, setSelectedSdrId } = props;
-  const [rowData, setRowData] = useState<Array<gridRow>>([]);
+  const [rowData, setRowData] = useState<Array<GridRow>>([]);
   const [showCheckbox, setShowCheckbox] = useState<boolean>(false);
   const [selectedSdrsToExtract, setSelectedSdrsToExtract] = useState<
     Array<string>
   >([]);
   const [isExtractDisabled, setIsExtractDisabled] = useState<boolean>(true);
+  const newSdrs: NewSdrsDataResponse = useAppSelector(state => state.newSdrs);
+  const approvedSdrs: ApprovedSdrsDataResponse = useAppSelector(state => state.approvedSdrs);
+  const flaggedSdrs: FlaggedSdrsDataResponse = useAppSelector(state => state.flaggedSdrs);
 
-  const LinkCell = (rowApi: any) => {
-    let logPageNumber = rowApi?.rowApi?.row?.logpagenumber;
+  const LinkCell = (rowApi: RowRowApi) => {
+    let logPageNumber = rowApi?.rowApi?.row?.LogPageNumber;
     return (
       <Link
         sx={{ cursor: "pointer", color: "#6244BB" }}
@@ -35,7 +45,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
     window.open("www.google.com", "_blank", "referrer");
   };
 
-  const highlightDate = (rowApi: any) => {
+  const highlightDate = (rowApi: RowApi) => {
     let data = rowApi?.row?.datetime;
     let current = moment().add(-2, "days").format("MM/DD/YYYY h:mm");
     if (moment(data).isBefore(current)) {
@@ -45,146 +55,46 @@ const CommonDataGrid = (props: CompDataGrid) => {
 
   const columnDefs: GridColDef[] = [
     {
-      field: "logpagenumber",
+      field: "LogPageNumber",
       headerName: "Log Page Number",
       flex: 1,
       sortable: false,
-      renderCell: (rowApi: any) => <LinkCell rowApi={rowApi} />,
+      renderCell: (rowApi: RowApi) => <LinkCell rowApi={rowApi} />,
     },
     {
       field: "reportedby",
       headerName: "Reported By",
       flex: 1,
       sortable: false,
-      valueGetter: (params: any) =>
-        `${params?.row?.reportedby} (${params?.row?.reportedid})`,
+      valueGetter: (params: NameValuesGetterParams) =>
+        `${params?.row?.FirstName} ${params?.row?.LastName} (${params?.row?.CreatedBy})`,
     },
     {
-      field: "datetime",
+      field: "CreatedDate",
       headerName: "Date & Time",
       flex: 1,
       sortable: false,
-      renderCell: (rowApi: any) => highlightDate(rowApi),
+      renderCell: (rowApi: RowApi) => highlightDate(rowApi),
     },
     {
-      field: "logpagestatus",
+      field: "LogPageStatus",
       headerName: "Log Page Status",
       flex: 1,
       sortable: false,
     },
     {
-      field: "issdr",
-      headerName: "SDR/SFR",
-      flex: 1,
-      sortable: false,
-    },
-    {
-      field: "sdrstatus",
+      field: "SdrStatus",
       headerName: "SDR Status",
       flex: 1,
       sortable: false,
     },
   ];
 
-  const getAllSdrs = () => {};
-
   useEffect(() => {
-    getAllSdrs();
-  }, []);
-
-  let dateFormat = "MM/DD/YYYY h:mm";
-  let sdrData = [
-    {
-      id: 1,
-      logpagenumber: "19865441",
-      reportedby: "User 0",
-      reportedid: "U87654",
-      datetime: moment().format(dateFormat),
-      logpagestatus: "Open",
-      issdr: "SDR",
-      sdrstatus: "Open",
-    },
-    {
-      id: 2,
-      logpagenumber: "234234234",
-      reportedby: "User 1",
-      reportedid: "U543211",
-      datetime: moment().add(-3, "days").add(12, "seconds").format(dateFormat),
-      logpagestatus: "Open",
-      issdr: "SDR",
-      sdrstatus: "Open",
-    },
-    {
-      id: 3,
-      logpagenumber: "56753423",
-      reportedby: "User 2",
-      reportedid: "U87654",
-      datetime: moment().format(dateFormat),
-      logpagestatus: "Open",
-      issdr: "SFR",
-      sdrstatus: "Open",
-    },
-    {
-      id: 4,
-      logpagenumber: "67563432",
-      reportedby: "User 3",
-      reportedid: "U187654",
-      datetime: moment().add(-2, "days").format(dateFormat),
-      logpagestatus: "FlaggedForFollowUp",
-      issdr: "SDR",
-      sdrstatus: "Sent to FAA",
-    },
-    {
-      id: 5,
-      logpagenumber: "87654342",
-      reportedby: "User 4",
-      reportedid: "U23423",
-      datetime: moment().format(dateFormat),
-      logpagestatus: "FlaggedForFollowUp",
-      issdr: "SFR",
-      sdrstatus: "Sent to FAA",
-    },
-    {
-      id: 6,
-      logpagenumber: "98765432",
-      reportedby: "User 5",
-      reportedid: "U685322",
-      datetime: moment().add(-1, "days").format(dateFormat),
-      logpagestatus: "FlaggedForFollowUp",
-      issdr: "SDR",
-      sdrstatus: "Sent to FAA",
-    },
-    {
-      id: 7,
-      logpagenumber: "876541134",
-      reportedby: "User 6",
-      reportedid: "U90433",
-      datetime: moment().add(-3, "days").format(dateFormat),
-      logpagestatus: "Approved",
-      issdr: "SFR",
-      sdrstatus: "Sent to FAA",
-    },
-    {
-      id: 8,
-      logpagenumber: "087654322",
-      reportedby: "User 7",
-      reportedid: "U56789",
-      datetime: moment().add(-1, "days").format(dateFormat),
-      logpagestatus: "Approved",
-      issdr: "SDR",
-      sdrstatus: "Sent to FAA",
-    },
-    {
-      id: 9,
-      logpagenumber: "876543212",
-      reportedby: "User 8",
-      reportedid: "U32146",
-      datetime: moment().format(dateFormat),
-      logpagestatus: "Approved",
-      issdr: "SFR",
-      sdrstatus: "Sent to FAA",
-    },
-  ];
+    props.updateOpenSdrCount(0, newSdrs.newSdrsData.length);
+    props.updateOpenSdrCount(1, flaggedSdrs.flaggedSdrsData.length);
+    props.updateOpenSdrCount(2, approvedSdrs.approvedSdrsData.length);
+  })
 
   useEffect(() => {
     setShowCheckbox(reportIndex === ReportStatus.Approved);
@@ -196,7 +106,44 @@ const CommonDataGrid = (props: CompDataGrid) => {
   // }, [selectedSdrsToExtract]);
 
   useEffect(() => {
-    let filteredSdrs = sdrData?.filter((r) => r.logpagestatus === reportStatus);
+    let sdrData: Array<SdrRowApi> = [];
+    let sdrStatusText = "Open";
+    let logpageStatusText = "Submitted";
+    switch (reportIndex) {
+      case 1:
+        sdrData = flaggedSdrs.flaggedSdrsData;
+        sdrStatusText = "Approved with Follow Up";
+        logpageStatusText = "Approved with follow up";
+        break
+      case 2:
+        sdrData = approvedSdrs.approvedSdrsData;
+        sdrStatusText = "Approved";
+        logpageStatusText = "Approved";
+        break;
+      case 0:
+      default:
+        sdrData = newSdrs.newSdrsData;
+        sdrStatusText = "Open";
+        logpageStatusText = "Submitted";
+        break;
+    }
+
+    let filteredSdrs:GridRow[] = [];
+
+    Array.isArray(sdrData) && sdrData?.forEach((r:SdrRowApi) => {
+      let row:GridRow = {
+        SdrStatus: sdrStatusText,
+        LogPageStatus: logpageStatusText,
+        LogPageNumber: r.LogPageNumber,
+        FirstName: r.FirstName,
+        LastName: r.LastName,
+        CreatedBy: r.CreatedBy,
+        CreatedDate: moment(r.CreatedDate).format("MM/DD/YYYY hh:mm:ss A"),
+        id: r.SdrNumber
+      }
+      filteredSdrs.push(row);
+    })
+
     setRowData(filteredSdrs);
     props.updateOpenSdrCount(reportIndex, filteredSdrs.length);
   }, [reportStatus]);
@@ -207,9 +154,9 @@ const CommonDataGrid = (props: CompDataGrid) => {
     else setIsExtractDisabled(true);
   };
 
-  const setViewSdr = (sdrData: any) => {
+  const setViewSdr = (sdrData: GridCellParams) => {
     setViewSdrFlag(true);
-    setSelectedSdrId(sdrData?.row?.id);
+    setSelectedSdrId(sdrData?.row.id);
   };
 
   return (
@@ -228,7 +175,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
             params.indexRelativeToCurrentPage % 2 === 0 ? "" : "Mui-odd"
           }
           disableRowSelectionOnClick
-          onCellClick={(data) => {
+          onCellClick={(data: GridCellParams) => {
             if (data.field !== "__check__") {
               setViewSdr(data);
             }
