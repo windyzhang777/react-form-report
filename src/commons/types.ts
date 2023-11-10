@@ -1,6 +1,7 @@
 // enum to hold the report statuses
 
 import {ReactElement} from "react";
+import moment from "moment/moment";
 
 export enum ReportStatus {
   Open = 0,
@@ -28,8 +29,8 @@ export interface GridColDef {
 }
 
 // grid row
-export interface gridRow {
-  id: number;
+export interface GridRow {
+  id: string;
   SdrStatus: string;
   LogPageStatus: string;
   LogPageNumber: string;
@@ -37,6 +38,15 @@ export interface gridRow {
   LastName: string;
   CreatedBy: string;
   CreatedDate: string;
+}
+
+export interface SdrRowApi {
+  LogPageNumber: string;
+  FirstName: string;
+  LastName: string;
+  CreatedBy: string;
+  CreatedDate: string;
+  SdrNumber: string;
 }
 
 export interface TabPanelProps {

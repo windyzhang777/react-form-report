@@ -1,25 +1,25 @@
 import { useEffect, useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import {DataGrid, GridCellParams} from "@mui/x-data-grid";
 import { Button,Grid, Link } from "@mui/material";
 import moment from "moment";
 import {
   CompDataGrid,
   GridColDef,
   ReportStatus,
-  gridRow,
+  GridRow,
   NewSdrsDataResponse,
   ApprovedSdrsDataResponse,
   FlaggedSdrsDataResponse,
   NameValuesGetterParams,
   RowRowApi,
-  RowApi,
+  RowApi, SdrRowApi,
 } from "src/commons/types";
 import "../commondatagrid/commondatagrid.css";
 import {useAppSelector} from "../../redux/hooks";
 
 const CommonDataGrid = (props: CompDataGrid) => {
   const { reportStatus, reportIndex, setViewSdrFlag, setSelectedSdrId } = props;
-  const [rowData, setRowData] = useState<Array<gridRow>>([]);
+  const [rowData, setRowData] = useState<Array<GridRow>>([]);
   const [showCheckbox, setShowCheckbox] = useState<boolean>(false);
   const [selectedSdrsToExtract, setSelectedSdrsToExtract] = useState<
     Array<string>
@@ -106,7 +106,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
   // }, [selectedSdrsToExtract]);
 
   useEffect(() => {
-    let sdrData: Array<any> = [];
+    let sdrData: Array<SdrRowApi> = [];
     let sdrStatusText = "Open";
     let logpageStatusText = "Submitted";
     switch (reportIndex) {
@@ -128,18 +128,19 @@ const CommonDataGrid = (props: CompDataGrid) => {
         break;
     }
 
-    let filteredSdrs:any[] = [];
+    let filteredSdrs:GridRow[] = [];
 
-    Array.isArray(sdrData) && sdrData?.forEach((r:any) => {
-      let row:any = {};
-      row.SdrStatus = sdrStatusText;
-      row.LogPageStatus = logpageStatusText;
-      row.LogPageNumber = r.LogPageNumber;
-      row.FirstName = r.FirstName;
-      row.LastName = r.LastName;
-      row.CreatedBy = r.CreatedBy;
-      row.CreatedDate = moment(r.CreatedDate).format("MM/DD/YYYY hh:mm:ss A");
-      row.id = r.SdrNumber;
+    Array.isArray(sdrData) && sdrData?.forEach((r:SdrRowApi) => {
+      let row:GridRow = {
+        SdrStatus: sdrStatusText,
+        LogPageStatus: logpageStatusText,
+        LogPageNumber: r.LogPageNumber,
+        FirstName: r.FirstName,
+        LastName: r.LastName,
+        CreatedBy: r.CreatedBy,
+        CreatedDate: moment(r.CreatedDate).format("MM/DD/YYYY hh:mm:ss A"),
+        id: r.SdrNumber
+      }
       filteredSdrs.push(row);
     })
 
@@ -153,9 +154,9 @@ const CommonDataGrid = (props: CompDataGrid) => {
     else setIsExtractDisabled(true);
   };
 
-  const setViewSdr = (sdrData: any) => {
+  const setViewSdr = (sdrData: GridCellParams) => {
     setViewSdrFlag(true);
-    setSelectedSdrId(sdrData?.row?.id);
+    setSelectedSdrId(sdrData?.row.id);
   };
 
   return (
@@ -174,7 +175,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
             params.indexRelativeToCurrentPage % 2 === 0 ? "" : "Mui-odd"
           }
           disableRowSelectionOnClick
-          onCellClick={(data) => {
+          onCellClick={(data: GridCellParams) => {
             if (data.field !== "__check__") {
               setViewSdr(data);
             }
