@@ -85,6 +85,12 @@ const CommonDataGrid = (props: CompDataGrid) => {
   ];
 
   useEffect(() => {
+    props.updateOpenSdrCount(0, newSdrs.newSdrsData.length);
+    props.updateOpenSdrCount(1, flaggedSdrs.flaggedSdrsData.length);
+    props.updateOpenSdrCount(2, approvedSdrs.approvedSdrsData.length);
+  })
+
+  useEffect(() => {
     setShowCheckbox(reportIndex === ReportStatus.Approved);
   }, [reportIndex]);
 
