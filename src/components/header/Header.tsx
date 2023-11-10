@@ -14,7 +14,6 @@ const Header = () => {
     const [openDrawer, setOpenDrawer] = useState<boolean>(false);
     const [anchorEl, setAnchorEl] = useState<any>(null);
     const [lastRefreshed, setLastRefreshed] = useState<string>(moment().format("MM/DD/YYYY hh:mm"));
-    const {profileData} = useAppSelector(state => state.profile);
     const dispatch = useAppDispatch();
 
     useEffect(() => {

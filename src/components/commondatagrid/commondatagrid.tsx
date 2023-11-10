@@ -9,6 +9,8 @@ import {
   gridRow,
 } from "src/commons/types";
 import "../commondatagrid/commondatagrid.css";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks";
+import {getAllSdrs} from "../../redux/ducks/getAllSdrs";
 
 const CommonDataGrid = (props: CompDataGrid) => {
   const { reportStatus, reportIndex, setViewSdrFlag, setSelectedSdrId } = props;
@@ -18,6 +20,10 @@ const CommonDataGrid = (props: CompDataGrid) => {
     Array<string>
   >([]);
   const [isExtractDisabled, setIsExtractDisabled] = useState<boolean>(true);
+  const dispatch = useAppDispatch();
+  const newSdrs = useAppSelector(state => state.newSdrs);
+  const approvedSdrs = useAppSelector(state => state.approvedSdrs);
+  const flaggedSdrs = useAppSelector(state => state.flaggedSdrs);
 
   const LinkCell = (rowApi: any) => {
     let logPageNumber = rowApi?.rowApi?.row?.logpagenumber;
@@ -86,10 +92,10 @@ const CommonDataGrid = (props: CompDataGrid) => {
     },
   ];
 
-  const getAllSdrs = () => {};
-
   useEffect(() => {
-    getAllSdrs();
+    dispatch(getAllSdrs(2));
+    dispatch(getAllSdrs(3));
+    dispatch(getAllSdrs(4));
   }, []);
 
   let dateFormat = "MM/DD/YYYY h:mm";
