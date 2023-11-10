@@ -1,5 +1,7 @@
 // enum to hold the report statuses
 
+import {ReactElement} from "react";
+
 export enum ReportStatus {
   Open = 0,
   FlaggedForFollowUp = 1,
@@ -10,9 +12,9 @@ export enum ReportStatus {
 export interface CompDataGrid {
   reportStatus: string;
   reportIndex: number;
-  updateOpenSdrCount: any;
-  setViewSdrFlag: any;
-  setSelectedSdrId: any;
+  updateOpenSdrCount: (a: number, b: number) => void;
+  setViewSdrFlag: (a: boolean) => void;
+  setSelectedSdrId: (a: number) => void;
 }
 
 // grid col definition
@@ -20,7 +22,7 @@ export interface GridColDef {
   headerName: string;
   field: string;
   flex?: number;
-  valueGetter?: any;
+  valueGetter?: (params: NameValuesGetterParams) => void;
   renderCell?: any;
   sortable: boolean;
 }
@@ -57,4 +59,28 @@ export interface ApprovedSdrsDataResponse {
 
 export interface FlaggedSdrsDataResponse {
   flaggedSdrsData: Array<any>;
+}
+
+export interface NameValuesGetterParams {
+  row: {
+    FirstName: string;
+    LastName: string;
+    CreatedBy: string;
+  }
+}
+
+export interface RowRowApi {
+  rowApi: {
+    row: {
+      LogPageNumber: string;
+      datetime: string;
+    }
+  }
+}
+
+export interface RowApi {
+  row: {
+    LogPageNumber: string;
+    datetime: string;
+  }
 }

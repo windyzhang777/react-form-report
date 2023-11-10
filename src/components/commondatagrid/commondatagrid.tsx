@@ -6,7 +6,13 @@ import {
   CompDataGrid,
   GridColDef,
   ReportStatus,
-  gridRow, NewSdrsDataResponse, ApprovedSdrsDataResponse, FlaggedSdrsDataResponse,
+  gridRow,
+  NewSdrsDataResponse,
+  ApprovedSdrsDataResponse,
+  FlaggedSdrsDataResponse,
+  NameValuesGetterParams,
+  RowRowApi,
+  RowApi,
 } from "src/commons/types";
 import "../commondatagrid/commondatagrid.css";
 import {useAppSelector} from "../../redux/hooks";
@@ -23,7 +29,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
   const approvedSdrs: ApprovedSdrsDataResponse = useAppSelector(state => state.approvedSdrs);
   const flaggedSdrs: FlaggedSdrsDataResponse = useAppSelector(state => state.flaggedSdrs);
 
-  const LinkCell = (rowApi: any) => {
+  const LinkCell = (rowApi: RowRowApi) => {
     let logPageNumber = rowApi?.rowApi?.row?.LogPageNumber;
     return (
       <Link
@@ -39,7 +45,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
     window.open("www.google.com", "_blank", "referrer");
   };
 
-  const highlightDate = (rowApi: any) => {
+  const highlightDate = (rowApi: RowApi) => {
     let data = rowApi?.row?.datetime;
     let current = moment().add(-2, "days").format("MM/DD/YYYY h:mm");
     if (moment(data).isBefore(current)) {
@@ -53,14 +59,14 @@ const CommonDataGrid = (props: CompDataGrid) => {
       headerName: "Log Page Number",
       flex: 1,
       sortable: false,
-      renderCell: (rowApi: any) => <LinkCell rowApi={rowApi} />,
+      renderCell: (rowApi: RowApi) => <LinkCell rowApi={rowApi} />,
     },
     {
       field: "reportedby",
       headerName: "Reported By",
       flex: 1,
       sortable: false,
-      valueGetter: (params: any) =>
+      valueGetter: (params: NameValuesGetterParams) =>
         `${params?.row?.FirstName} ${params?.row?.LastName} (${params?.row?.CreatedBy})`,
     },
     {
@@ -68,7 +74,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
       headerName: "Date & Time",
       flex: 1,
       sortable: false,
-      renderCell: (rowApi: any) => highlightDate(rowApi),
+      renderCell: (rowApi: RowApi) => highlightDate(rowApi),
     },
     {
       field: "LogPageStatus",
