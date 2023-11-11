@@ -1,6 +1,7 @@
+import { Dispatch } from "redux";
+import { DispatchFunctionType, ReducerAction, SdrStateType, SdrsDataType, StatusId } from "../../commons/types";
 import axiosInstance from "../../utils/axiosInstance";
 import config from "../../utils/env.config";
-import {ReducerAction} from "../../commons/types";
 
 const Types = {
     FETCH_NEW_SDRS: "FETCH_NEW_SDRS",
@@ -14,25 +15,14 @@ const Types = {
     FETCH_FLAGGED_FAILURE: "FETCH_FLAGGED_FAILURE",
 };
 
-const initialNewState = {
-    loading: null,
-    newSdrsData: {},
+const initialState: SdrStateType = {
+    loading: false,
+    sdrsData: null,
     error: "",
 };
 
-const initialApprovedState = {
-    loading: null,
-    approvedSdrsData: {},
-    error: "",
-}
 
-const initialFlaggedState = {
-    loading: null,
-    flaggedSdrsData: {},
-    error: "",
-}
-
-const initFetch = (statusId: number) => {
+const initFetch = (statusId: StatusId) => {
     switch (statusId) {
         case 2:
             return { type: Types.FETCH_NEW_SDRS };
@@ -43,7 +33,7 @@ const initFetch = (statusId: number) => {
     }
 };
 
-const fetchSuccess = (data:object, statusId: number) => {
+const fetchSuccess = (data: SdrsDataType, statusId: StatusId) => {
     switch (statusId) {
         case 2:
             return {type: Types.FETCH_NEW_SUCCESS, data};
@@ -54,7 +44,7 @@ const fetchSuccess = (data:object, statusId: number) => {
     }
 };
 
-const fetchFailure = (message: string, statusId: number) => {
+const fetchFailure = (message: string, statusId: StatusId) => {
     switch (statusId) {
         case 2:
             return {type: Types.FETCH_NEW_FAILURE, message};
@@ -65,56 +55,56 @@ const fetchFailure = (message: string, statusId: number) => {
     }
 };
 
-export const newSdrsReducer = (state = initialNewState, action: ReducerAction) => {
+export const newSdrsReducer = (state: SdrStateType = initialState, action: ReducerAction) => {
     switch (action.type) {
         case Types.FETCH_NEW_SDRS: {
             return { ...state, loading: true };
         }
         case Types.FETCH_NEW_SUCCESS: {
-            return { ...state, loading: false, newSdrsData: action.data, error: "" };
+            return { ...state, loading: false, sdrsData: action.data, error: "" };
         }
         case Types.FETCH_NEW_FAILURE: {
-            return { ...state, loading: false, newSdrsData: {}, error: action.message };
+            return { ...state, loading: false, sdrsData: null, error: action.message };
         }
         default:
             return state;
     }
 };
 
-export const approvedSdrsReducer = (state = initialApprovedState, action: ReducerAction) => {
+export const approvedSdrsReducer = (state: SdrStateType = initialState, action: ReducerAction) => {
     switch (action.type) {
         case Types.FETCH_APPROVED_SDRS: {
             return { ...state, loading: true };
         }
         case Types.FETCH_APPROVED_SUCCESS: {
-            return { ...state, loading: false, approvedSdrsData: action.data, error: "" };
+            return { ...state, loading: false, sdrsData: action.data, error: "" };
         }
         case Types.FETCH_APPROVED_FAILURE: {
-            return { ...state, loading: false, approvedSdrsData: {}, error: action.message };
+            return { ...state, loading: false, sdrsData: null, error: action.message };
         }
         default:
             return state;
     }
 };
 
-export const flaggedSdrsReducer = (state = initialFlaggedState, action: ReducerAction) => {
+export const flaggedSdrsReducer = (state: SdrStateType = initialState, action: ReducerAction) => {
     switch (action.type) {
         case Types.FETCH_FLAGGED_SDRS: {
             return { ...state, loading: true };
         }
         case Types.FETCH_FLAGGED_SUCCESS: {
-            return { ...state, loading: false, flaggedSdrsData: action.data, error: "" };
+            return { ...state, loading: false, sdrsData: action.data, error: "" };
         }
         case Types.FETCH_FLAGGED_FAILURE: {
-            return { ...state, loading: false, flaggedSdrsData: {}, error: action.message };
+            return { ...state, loading: false, sdrsData: null, error: action.message };
         }
         default:
             return state;
     }
 };
 
-export const getAllSdrs = (statusId: number) => {
-    return function (dispatch: any) {
+export const getAllSdrs = (statusId: StatusId) => {
+    return function (dispatch: Dispatch<DispatchFunctionType>) {
         dispatch(initFetch(statusId));
         axiosInstance
             .post(`${config.apiBaseAddress}${config.URL_GET_ALL_SDRS}`, {
