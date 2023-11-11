@@ -96,8 +96,32 @@ export interface RowApi {
   }
 }
 
+export type StatusId = 2 | 3 | 4
+
+// TODO: define specific data type according to api response 
+export type ProfileDataType = {}
+export type SdrsDataType = {}
+
+export interface DispatchFunctionType {
+  type: string;
+  data?: object;
+  message?: string;
+}
+
 export interface ReducerAction {
   type: string;
   data: object;
   message: string;
+}
+
+export type ProfileStateType = {
+  loading: boolean;
+  profileData: ProfileDataType | null;
+  error: string;
+}
+
+export type SdrStateType = {
+  loading: boolean;
+  sdrsData: SdrsDataType | null;
+  error: string;
 }

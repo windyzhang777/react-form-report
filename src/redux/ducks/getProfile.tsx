@@ -1,6 +1,7 @@
 import axiosInstance from "../../utils/axiosInstance";
 import config from "../../utils/env.config";
-import {ReducerAction} from "../../commons/types";
+import {ReducerAction, ProfileStateType, DispatchFunctionType} from "../../commons/types";
+import { Dispatch } from "react";
 
 const Types = {
     FETCH_PROFILE: "FETCH_PROFILE",
@@ -8,9 +9,9 @@ const Types = {
     FETCH_FAILURE: "FETCH_FAILURE",
 };
 
-const initialState = {
-    loading: null,
-    profileData: {},
+const initialState: ProfileStateType = {
+    loading: false,
+    profileData: null,
     error: "",
 };
 
@@ -18,7 +19,7 @@ const initFetch = () => {
     return { type: Types.FETCH_PROFILE };
 };
 
-const fetchSuccess = (data: object) => {
+const fetchSuccess = (data: ProfileStateType) => {
     return {
         type: Types.FETCH_SUCCESS,
         data,
@@ -32,7 +33,7 @@ const fetchFailure = (message: string) => {
     };
 };
 
-const profileReducer = (state = initialState, action: ReducerAction) => {
+const profileReducer = (state: ProfileStateType = initialState, action: ReducerAction) => {
     switch (action.type) {
         case Types.FETCH_PROFILE: {
             return { ...state, loading: true };
@@ -41,7 +42,7 @@ const profileReducer = (state = initialState, action: ReducerAction) => {
             return { ...state, loading: false, profileData: action.data, error: "" };
         }
         case Types.FETCH_FAILURE: {
-            return { ...state, loading: false, profileData: {}, error: action.message };
+            return { ...state, loading: false, profileData: null, error: action.message };
         }
         default:
             return state;
@@ -49,7 +50,7 @@ const profileReducer = (state = initialState, action: ReducerAction) => {
 };
 
 export const getProfile = (empID: string) => {
-    return function (dispatch: any) {
+    return function (dispatch: Dispatch<DispatchFunctionType>) {
         dispatch(initFetch());
         axiosInstance
             .post(`${config.apiBaseAddress}${config.URL_GET_PROFILE}`, { EmployeeId: empID })
