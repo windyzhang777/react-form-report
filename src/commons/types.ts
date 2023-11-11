@@ -96,8 +96,62 @@ export interface RowApi {
   }
 }
 
-export interface ReducerAction {
-  type: string;
-  data: object;
+export type StatusId = 2 | 3 | 4
+
+// TODO: define specific data type according to api response 
+export type ProfileDataType = {}
+export type SdrDataType = SdrRowApi[]
+
+export type FETCH_PROFILE = "FETCH_PROFILE"
+export type FETCH_SUCCESS = "FETCH_SUCCESS"
+export type FETCH_FAILURE = "FETCH_FAILURE"
+export type ProfileActionType = FETCH_PROFILE | FETCH_SUCCESS | FETCH_FAILURE;
+
+export type FETCH_NEW_SDRS = "FETCH_NEW_SDRS"
+export type FETCH_APPROVED_SDRS = "FETCH_APPROVED_SDRS"
+export type FETCH_FLAGGED_SDRS = "FETCH_FLAGGED_SDRS"
+export type FETCH_NEW_SUCCESS = "FETCH_NEW_SUCCESS"
+export type FETCH_APPROVED_SUCCESS = "FETCH_APPROVED_SUCCESS"
+export type FETCH_FLAGGED_SUCCESS = "FETCH_FLAGGED_SUCCESS"
+export type FETCH_NEW_FAILURE = "FETCH_NEW_FAILURE"
+export type FETCH_APPROVED_FAILURE = "FETCH_APPROVED_FAILURE"
+export type FETCH_FLAGGED_FAILURE = "FETCH_FLAGGED_FAILURE"
+export type SdrActionType = FETCH_NEW_SDRS | FETCH_APPROVED_SDRS | FETCH_FLAGGED_SDRS | FETCH_NEW_SUCCESS | FETCH_APPROVED_SUCCESS | FETCH_FLAGGED_SUCCESS | FETCH_NEW_FAILURE | FETCH_APPROVED_FAILURE | FETCH_FLAGGED_FAILURE;
+
+export interface ProfileDispatchFuncType {
+  type: ProfileActionType;
+  data?: ProfileDataType;
+  message?: string;
+}
+
+export interface ProfileReducerAction {
+  type: ProfileActionType;
+  data: ProfileDataType;
   message: string;
+}
+
+export interface SdrDispatchFuncType {
+  type: SdrActionType;
+  data?: SdrDataType;
+  message?: string;
+}
+
+export interface SdrReducerAction {
+  type: SdrActionType;
+  data: SdrDataType;
+  message: string;
+}
+
+export type ReducerAction = ProfileReducerAction | SdrReducerAction
+
+export type ProfileStateType = {
+  loading: boolean;
+  profileData: ProfileDataType | null;
+  error: string;
+}
+
+export type SdrStateType = {
+  loading: boolean;
+  sdrData: SdrDataType;
+  error: string;
 }

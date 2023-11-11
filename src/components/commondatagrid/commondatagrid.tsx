@@ -7,27 +7,24 @@ import {
   GridColDef,
   ReportStatus,
   GridRow,
-  NewSdrsDataResponse,
-  ApprovedSdrsDataResponse,
-  FlaggedSdrsDataResponse,
   NameValuesGetterParams,
   RowRowApi,
-  RowApi, SdrRowApi,
+  RowApi, SdrRowApi, SdrStateType,
 } from "src/commons/types";
 import "../commondatagrid/commondatagrid.css";
 import {useAppSelector} from "../../redux/hooks";
 
 const CommonDataGrid = (props: CompDataGrid) => {
-  const { reportStatus, reportIndex, setViewSdrFlag, setSelectedSdrId } = props;
+  const { reportStatus, reportIndex, setViewSdrFlag, setSelectedSdrId, updateOpenSdrCount } = props;
   const [rowData, setRowData] = useState<Array<GridRow>>([]);
   const [showCheckbox, setShowCheckbox] = useState<boolean>(false);
   const [selectedSdrsToExtract, setSelectedSdrsToExtract] = useState<
     Array<string>
   >([]);
   const [isExtractDisabled, setIsExtractDisabled] = useState<boolean>(true);
-  const newSdrs: NewSdrsDataResponse = useAppSelector(state => state.newSdrs);
-  const approvedSdrs: ApprovedSdrsDataResponse = useAppSelector(state => state.approvedSdrs);
-  const flaggedSdrs: FlaggedSdrsDataResponse = useAppSelector(state => state.flaggedSdrs);
+  const newSdrs: SdrStateType = useAppSelector(state => state.newSdrs);
+  const approvedSdrs: SdrStateType = useAppSelector(state => state.approvedSdrs);
+  const flaggedSdrs: SdrStateType = useAppSelector(state => state.flaggedSdrs);
 
   const LinkCell = (rowApi: RowRowApi) => {
     let logPageNumber = rowApi?.rowApi?.row?.LogPageNumber;
@@ -91,10 +88,10 @@ const CommonDataGrid = (props: CompDataGrid) => {
   ];
 
   useEffect(() => {
-    props.updateOpenSdrCount(0, newSdrs.newSdrsData.length);
-    props.updateOpenSdrCount(1, flaggedSdrs.flaggedSdrsData.length);
-    props.updateOpenSdrCount(2, approvedSdrs.approvedSdrsData.length);
-  })
+    updateOpenSdrCount(0, newSdrs.sdrData.length);
+    updateOpenSdrCount(1, flaggedSdrs.sdrData.length);
+    updateOpenSdrCount(2, approvedSdrs.sdrData.length);
+  });
 
   useEffect(() => {
     setShowCheckbox(reportIndex === ReportStatus.Approved);
@@ -111,18 +108,18 @@ const CommonDataGrid = (props: CompDataGrid) => {
     let logpageStatusText = "Submitted";
     switch (reportIndex) {
       case 1:
-        sdrData = flaggedSdrs.flaggedSdrsData;
+        sdrData = flaggedSdrs.sdrData;
         sdrStatusText = "Approved with Follow Up";
         logpageStatusText = "Approved with follow up";
         break
       case 2:
-        sdrData = approvedSdrs.approvedSdrsData;
+        sdrData = approvedSdrs.sdrData;
         sdrStatusText = "Approved";
         logpageStatusText = "Approved";
         break;
       case 0:
       default:
-        sdrData = newSdrs.newSdrsData;
+        sdrData = newSdrs.sdrData;
         sdrStatusText = "Open";
         logpageStatusText = "Submitted";
         break;
@@ -145,7 +142,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
     })
 
     setRowData(filteredSdrs);
-    props.updateOpenSdrCount(reportIndex, filteredSdrs.length);
+    updateOpenSdrCount(reportIndex, filteredSdrs.length);
   }, [reportStatus]);
 
   const onRowsSelectionHandler = (sdrIds: Array<string>) => {
