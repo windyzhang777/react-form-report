@@ -100,7 +100,7 @@ export type StatusId = 2 | 3 | 4
 
 // TODO: define specific data type according to api response 
 export type ProfileDataType = {}
-export type SdrDataType = {}
+export type SdrDataType = SdrRowApi[]
 
 export type FETCH_PROFILE = "FETCH_PROFILE"
 export type FETCH_SUCCESS = "FETCH_SUCCESS"
@@ -152,6 +152,6 @@ export type ProfileStateType = {
 
 export type SdrStateType = {
   loading: boolean;
-  sdrData: SdrDataType | null;
+  sdrData: SdrDataType;
   error: string;
 }

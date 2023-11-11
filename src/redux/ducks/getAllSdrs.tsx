@@ -15,7 +15,7 @@ const FETCH_FLAGGED_FAILURE: SdrActionType = "FETCH_FLAGGED_FAILURE";
 
 const initialState: SdrStateType = {
     loading: false,
-    sdrData: null,
+    sdrData: [],
     error: "",
 };
 
