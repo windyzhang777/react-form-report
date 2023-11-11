@@ -1,13 +1,11 @@
+import { Dispatch } from "react";
+import { ProfileActionType, ProfileDispatchFuncType, ProfileStateType, ReducerAction } from "../../commons/types";
 import axiosInstance from "../../utils/axiosInstance";
 import config from "../../utils/env.config";
-import {ReducerAction, ProfileStateType, DispatchFunctionType} from "../../commons/types";
-import { Dispatch } from "react";
 
-const Types = {
-    FETCH_PROFILE: "FETCH_PROFILE",
-    FETCH_SUCCESS: "FETCH_SUCCESS",
-    FETCH_FAILURE: "FETCH_FAILURE",
-};
+const FETCH_PROFILE: ProfileActionType = "FETCH_PROFILE";
+const FETCH_SUCCESS: ProfileActionType = "FETCH_SUCCESS";
+const FETCH_FAILURE: ProfileActionType = "FETCH_FAILURE";
 
 const initialState: ProfileStateType = {
     loading: false,
@@ -16,32 +14,32 @@ const initialState: ProfileStateType = {
 };
 
 const initFetch = () => {
-    return { type: Types.FETCH_PROFILE };
+    return { type: FETCH_PROFILE };
 };
 
 const fetchSuccess = (data: ProfileStateType) => {
     return {
-        type: Types.FETCH_SUCCESS,
+        type: FETCH_SUCCESS,
         data,
     };
 };
 
 const fetchFailure = (message: string) => {
     return {
-        type: Types.FETCH_FAILURE,
+        type: FETCH_FAILURE,
         message,
     };
 };
 
 const profileReducer = (state: ProfileStateType = initialState, action: ReducerAction) => {
     switch (action.type) {
-        case Types.FETCH_PROFILE: {
+        case FETCH_PROFILE: {
             return { ...state, loading: true };
         }
-        case Types.FETCH_SUCCESS: {
+        case FETCH_SUCCESS: {
             return { ...state, loading: false, profileData: action.data, error: "" };
         }
-        case Types.FETCH_FAILURE: {
+        case FETCH_FAILURE: {
             return { ...state, loading: false, profileData: null, error: action.message };
         }
         default:
@@ -50,7 +48,7 @@ const profileReducer = (state: ProfileStateType = initialState, action: ReducerA
 };
 
 export const getProfile = (empID: string) => {
-    return function (dispatch: Dispatch<DispatchFunctionType>) {
+    return function (dispatch: Dispatch<ProfileDispatchFuncType>) {
         dispatch(initFetch());
         axiosInstance
             .post(`${config.apiBaseAddress}${config.URL_GET_PROFILE}`, { EmployeeId: empID })
