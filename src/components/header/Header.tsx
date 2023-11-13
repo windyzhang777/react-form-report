@@ -12,7 +12,7 @@ import {getProfile} from "../../redux/ducks/getProfile";
 
 const Header = () => {
     const [openDrawer, setOpenDrawer] = useState<boolean>(false);
-    const [anchorEl, setAnchorEl] = useState<any>(null);
+    const [anchorEl, setAnchorEl] = useState<Element | null>(null);
     const [lastRefreshed, setLastRefreshed] = useState<string>(moment().format("MM/DD/YYYY hh:mm"));
     const dispatch = useAppDispatch();
 
