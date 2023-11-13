@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {DataGrid, GridCellParams} from "@mui/x-data-grid";
+import {DataGrid, GridCellParams, GridRowSelectionModel} from "@mui/x-data-grid";
 import { Button,Grid, Link } from "@mui/material";
 import moment from "moment";
 import {
@@ -19,7 +19,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
   const [rowData, setRowData] = useState<Array<GridRow>>([]);
   const [showCheckbox, setShowCheckbox] = useState<boolean>(false);
   const [selectedSdrsToExtract, setSelectedSdrsToExtract] = useState<
-    Array<string>
+      GridRowSelectionModel
   >([]);
   const [isExtractDisabled, setIsExtractDisabled] = useState<boolean>(true);
   const newSdrs: SdrStateType = useAppSelector(state => state.newSdrs);
@@ -145,7 +145,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
     updateOpenSdrCount(reportIndex, filteredSdrs.length);
   }, [reportStatus]);
 
-  const onRowsSelectionHandler = (sdrIds: Array<string>) => {
+  const onRowsSelectionHandler = (sdrIds: GridRowSelectionModel) => {
     setSelectedSdrsToExtract([...sdrIds]);
     if (sdrIds && sdrIds.length > 0) setIsExtractDisabled(false);
     else setIsExtractDisabled(true);
@@ -165,7 +165,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
           rows={rowData}
           checkboxSelection={showCheckbox}
           hideFooter={true}
-          onRowSelectionModelChange={(sdrIds: any) =>
+          onRowSelectionModelChange={(sdrIds: GridRowSelectionModel) =>
             onRowsSelectionHandler(sdrIds)
           }
           getRowClassName={(params) =>
