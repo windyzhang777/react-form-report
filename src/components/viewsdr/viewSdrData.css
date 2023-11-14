@@ -15,3 +15,24 @@
     }
 }
 
+.sdr-status-grid {
+    width: 190%;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    .sdr-status-title {
+        background: #E6E6E6;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 12px;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+    .sdr-status-item {
+        color: #666666;
+        font-weight: 400;
+    }
+    .sdr-status-description {
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+}

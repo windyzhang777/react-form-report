@@ -1,4 +1,4 @@
-import {Box, Grid, ListItem, Menu, Typography} from "@mui/material";
+import {Box, Button, Checkbox, Grid, ListItem, Menu, Typography} from "@mui/material";
 import { ViewSdrDataProps } from "src/commons/types";
 import "./viewSdrData.css";
 import {MouseEvent, useState} from "react";
@@ -50,6 +50,217 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
                   <ListItem onClick={openACDetails}> <u className={"view-details-text"}>View Details</u></ListItem>
               </Grid>
           </Grid>
+          <Grid className={"sdr-status-grid"} sx={{borderLeft: 1, borderRight: 1, borderBottom: 1, borderColor: "#E6E6E6"}}>
+              <Grid className={"sdr-status-title"}>Problem Description</Grid>
+              <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                      <ListItem>Difficulty Date</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>Log Page Number</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>Station</ListItem>
+                  </Grid>
+              </Grid>
+              <Grid className={"sdr-status-description"}  container spacing={3} >
+                  <Grid item xs={4}>
+                      <ListItem>18/08/2023</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>3945748</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>IAH</ListItem>
+                  </Grid>
+              </Grid>
+              <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                      <ListItem>ATA Code</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>Nature of Condition</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>Precautionary Procedure</ListItem>
+                  </Grid>
+              </Grid>
+              <Grid className={"sdr-status-description"} container spacing={3} >
+                  <Grid item xs={4}>
+                      <ListItem>3351</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>K</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>L</ListItem>
+                  </Grid>
+              </Grid>
+              <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                      <ListItem>Stage of Operation</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>How Discovered</ListItem>
+                  </Grid>
+              </Grid>
+              <Grid className={"sdr-status-description"} container spacing={3} >
+                  <Grid item xs={4}>
+                      <ListItem>IN</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>V</ListItem>
+                  </Grid>
+              </Grid>
+              <Grid className={"sdr-status-item"} container spacing={1}>
+                  <Grid item xs={12}>
+                      <ListItem>Discrepancy/Corrective Action Summary</ListItem>
+                  </Grid>
+              </Grid>
+              <Grid className={"sdr-status-description"} container spacing={1} >
+                  <Grid item xs={12}>
+                      <ListItem>EXIT LIGHT ABOVE L1 DOOR WILL NOT ILLUMINATE (REF. AAR NR 99978502). REPLACED BATTERY PACK M1675 WITH NEW BATTERY PACK IAW B737 AMM 33-51-06-960-805. INSTALLATION TEST GOOD. (WORK ACCOMPLISHED BY V937131 AND AAR QC A-83 V935067).</ListItem>
+                  </Grid>
+              </Grid>
+          </Grid>
+          <Grid className={"sdr-status-grid"} sx={{borderLeft: 1, borderRight: 1, borderBottom: 1, borderColor: "#E6E6E6"}}>
+              <Grid className={"sdr-status-title"}>Part Information</Grid>
+              <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                      <ListItem>Part Name</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>Part Number</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>Part make</ListItem>
+                  </Grid>
+              </Grid>
+              <Grid className={"sdr-status-description"}  container spacing={3} >
+                  <Grid item xs={4}>
+                      <ListItem>BATTERY PACK</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>d71701100</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>GOODRICH LIGHTI</ListItem>
+                  </Grid>
+              </Grid>
+              <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                      <ListItem>Part Serial number</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>Part Condition</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>Part Location</ListItem>
+                  </Grid>
+              </Grid>
+              <Grid className={"sdr-status-description"} container spacing={3} >
+                  <Grid item xs={4}>
+                      <ListItem>437841</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>INOP</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>M1675</ListItem>
+                  </Grid>
+              </Grid>
+          </Grid>
+          <Grid className={"sdr-status-grid"} sx={{borderLeft: 1, borderRight: 1, borderBottom: 1, borderColor: "#E6E6E6"}}>
+              <Grid className={"sdr-status-title"}>Origin Details</Grid>
+              <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                      <ListItem>Inspection Type</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>CAL Document</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>MFR Source</ListItem>
+                  </Grid>
+              </Grid>
+              <Grid className={"sdr-status-description"}  container spacing={3} >
+                  <Grid item xs={4}>
+                      <ListItem>XXXXXX</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>123456</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>XXXXXX</ListItem>
+                  </Grid>
+              </Grid>
+              <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                      <ListItem>Spec #</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>Detection Method</ListItem>
+                  </Grid>
+              </Grid>
+              <Grid className={"sdr-status-description"} container spacing={3} >
+                  <Grid item xs={4}>
+                      <ListItem>34567</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>Visual</ListItem>
+                  </Grid>
+              </Grid>
+          </Grid>
+          <Grid className={"sdr-status-grid"} sx={{borderLeft: 1, borderRight: 1, borderBottom: 1, borderColor: "#E6E6E6"}}>
+              <Grid className={"sdr-status-title"}>Part Information</Grid>
+              <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                      <ListItem>Discrepancy</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>Discrepancy Type</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>Discrepancy Part Info</ListItem>
+                  </Grid>
+              </Grid>
+              <Grid className={"sdr-status-description"}  container spacing={3} >
+                  <Grid item xs={4}>
+                      <ListItem>Yes</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>123456</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>XXXXXX</ListItem>
+                  </Grid>
+              </Grid>
+              <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                      <ListItem>Zone</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>Defect Location</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>Location Details</ListItem>
+                  </Grid>
+              </Grid>
+              <Grid className={"sdr-status-description"} container spacing={3} >
+                  <Grid item xs={4}>
+                      <ListItem>34567</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>Fwd Pit</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                      <ListItem>Visual</ListItem>
+                  </Grid>
+              </Grid>
+          </Grid>
+          <Box sx={{ ...sxBox }}>
+          </Box>
+          <Checkbox sx={{marginLeft: "5px"}} /> Flag for follow up
           <Menu
               anchorEl={anchorEl}
               id="help-menu"
