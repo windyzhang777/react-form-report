@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
-import {DataGrid, GridCellParams, GridRowSelectionModel} from "@mui/x-data-grid";
+import { useEffect, useState} from "react";
+import {DataGrid, GridCellParams, GridRowSelectionModel, GridColDef} from "@mui/x-data-grid";
 import { Button,Grid, Link } from "@mui/material";
 import moment from "moment";
 import {
   CompDataGrid,
-  GridColDef,
   ReportStatus,
   GridRow,
   NameValuesGetterParams,
