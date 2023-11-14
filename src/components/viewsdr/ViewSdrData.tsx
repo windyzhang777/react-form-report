@@ -7,6 +7,8 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
     const sxBox = {
         borderBottom: 1, 
         borderColor: 'divider',
+        width: '195%',
+        fontWeight: '600'
     }
 
     return (
