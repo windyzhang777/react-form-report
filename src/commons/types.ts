@@ -155,3 +155,13 @@ export type SdrStateType = {
   sdrData: SdrDataType;
   error: string;
 }
+
+export interface EnvironmentConfig {
+  apiBaseAddress?: string;
+  URL_GET_PROFILE?: string;
+  URL_GET_ALL_SDRS?: string;
+}
+
+export type AppConfig = {
+  [key in keyof typeof process.env.REACT_APP_ENVIRONMENT]: EnvironmentConfig
+}
