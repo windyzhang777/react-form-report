@@ -1,8 +1,9 @@
 import defaultConfig from "./default.config";
+import {AppConfig, EnvironmentConfig} from "../commons/types";
 
 const env = process.env.REACT_APP_ENVIRONMENT || "development";
 
-const config: any = {
+const config: EnvironmentConfig = {
     development: {
         ...defaultConfig,
         apiBaseAddress: "https://unitedtech-linemx.qa.dtj.aws.ual.com/linemx/v61",
@@ -25,6 +26,6 @@ const config: any = {
     productiondr:{
 
     }
-}[env];
+}[env as keyof AppConfig];
 
 export default config;

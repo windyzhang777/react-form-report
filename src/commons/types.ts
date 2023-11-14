@@ -1,9 +1,5 @@
 // enum to hold the report statuses
 
-import {ReactElement} from "react";
-import moment from "moment/moment";
-import defaultConfig from "../utils/default.config";
-
 export enum ReportStatus {
   Open = 0,
   FlaggedForFollowUp = 1,
@@ -17,16 +13,6 @@ export interface CompDataGrid {
   updateOpenSdrCount: (a: number, b: number) => void;
   setViewSdrFlag: (a: boolean) => void;
   setSelectedSdrId: (a: number) => void;
-}
-
-// grid col definition
-export interface GridColDef {
-  headerName: string;
-  field: string;
-  flex?: number;
-  valueGetter?: (params: NameValuesGetterParams) => void;
-  renderCell?: any;
-  sortable: boolean;
 }
 
 // grid row
@@ -154,4 +140,14 @@ export type SdrStateType = {
   loading: boolean;
   sdrData: SdrDataType;
   error: string;
+}
+
+export interface EnvironmentConfig {
+  apiBaseAddress?: string;
+  URL_GET_PROFILE?: string;
+  URL_GET_ALL_SDRS?: string;
+}
+
+export type AppConfig = {
+  [key in keyof typeof process.env.REACT_APP_ENVIRONMENT]: EnvironmentConfig
 }
