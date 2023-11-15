@@ -1,4 +1,4 @@
-import {Box, Button, Checkbox, Grid, ListItem, Menu, Typography} from "@mui/material";
+import {Box, Checkbox, Grid, ListItem, Menu} from "@mui/material";
 import { ViewSdrDataProps } from "src/commons/types";
 import "./viewSdrData.css";
 import {MouseEvent, useState} from "react";
@@ -6,7 +6,6 @@ import {MouseEvent, useState} from "react";
 const ViewSdrData = (props: ViewSdrDataProps) => {
 
     const opeartorControlumber = "34564567320230714";
-    const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState<Element | null>(null);
 
     const sxBox = {
@@ -260,7 +259,10 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
           </Grid>
           <Box sx={{ ...sxBox }}>
           </Box>
-          <Checkbox sx={{marginLeft: "5px"}} /> Flag for follow up
+          <Checkbox sx={{marginLeft: "5px", color: "#6244BB",
+              '&.Mui-checked': {
+                  color: "#6244BB",
+              }, }} /> Flag for follow up
           <Menu
               anchorEl={anchorEl}
               id="help-menu"
