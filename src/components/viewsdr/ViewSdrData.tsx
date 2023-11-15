@@ -265,9 +265,17 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
                   color: "#6244BB",
               }, }} /> Flag for follow up
           </Grid>
-          <Grid md={24} sx={{boxShadow: "0px -4px 8px 0px rgba(51, 51, 51, 0.12)", width: "200%"}}>
-              <Button>Edit</Button>
-              <Button>Approve</Button>
+          <Grid spacing={3} container sx={{boxShadow: "0px -4px 8px 0px rgba(51, 51, 51, 0.12)", width: "200%",
+              marginLeft: "0", marginTop: "10px"}}>
+              <Grid xs={8}></Grid>
+              <Grid xs={2}>
+                <Button sx={{color: "#6244BB", borderColor: "#6244BB", width: "100px",
+                    marginTop: "20px", marginBottom: "20px", }} variant={"outlined"}>Edit</Button>
+              </Grid>
+              <Grid xs={2}>
+                <Button sx={{backgroundColor: "#6244BB", textTransform: "none", width: "100px",
+                    marginTop: "20px", marginBottom: "20px" }} variant={"contained"}>Approve</Button>
+              </Grid>
           </Grid>
           <Menu
               anchorEl={anchorEl}
