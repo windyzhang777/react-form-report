@@ -1,0 +1,43 @@
+.view-details-text {
+    color: #6244BB;
+    cursor: pointer;
+}
+
+.view-details-dropdown {
+    line-height: 18px;
+    font-size: 16px;
+    .view-details-left {
+        font-weight: 400;
+
+    }
+    .view-details-right {
+        font-weight: 600
+    }
+}
+
+.sdr-status-grid {
+    width: 190%;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    .sdr-status-title {
+        background: #E6E6E6;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 12px;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+    .sdr-status-item {
+        color: #666666;
+        font-weight: 400;
+    }
+    .sdr-status-description {
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+    .sdr-status-edit {
+        margin-top: -8px;
+        height: 15px;
+        margin-bottom: 15px;
+    }
+}
