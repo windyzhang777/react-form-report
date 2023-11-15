@@ -1,4 +1,4 @@
-import {Box, Checkbox, Grid, ListItem, Menu} from "@mui/material";
+import {Box, Button, Checkbox, Grid, ListItem, Menu} from "@mui/material";
 import { ViewSdrDataProps } from "src/commons/types";
 import "./viewSdrData.css";
 import {MouseEvent, useState} from "react";
@@ -13,7 +13,7 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
         borderColor: 'divider',
         width: '190%',
         fontWeight: '600',
-        marginLeft: '15px'
+        marginLeft: '15px',
     }
 
     const openACDetails = (event: MouseEvent) => {
@@ -28,7 +28,7 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
 
 
     return (
-      <Grid item md={6}>
+      <Grid item md={6} sx={{boxShadow: "-4px 4px 8px 0px rgba(51, 51, 51, 0.12)", marginTop: "-30px", paddingTop: "30px"}}>
         <Box sx={{ ...sxBox }}>
             <p>Service Difficulty Report - #{props.selectedSdrId}</p>
         </Box>
@@ -259,10 +259,16 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
           </Grid>
           <Box sx={{ ...sxBox }}>
           </Box>
+          <Grid sx={{marginTop: "10px", marginBottom: "10px"}}>
           <Checkbox sx={{marginLeft: "5px", color: "#6244BB",
               '&.Mui-checked': {
                   color: "#6244BB",
               }, }} /> Flag for follow up
+          </Grid>
+          <Grid md={24} sx={{boxShadow: "0px -4px 8px 0px rgba(51, 51, 51, 0.12)", width: "200%"}}>
+              <Button>Edit</Button>
+              <Button>Approve</Button>
+          </Grid>
           <Menu
               anchorEl={anchorEl}
               id="help-menu"
