@@ -7,6 +7,7 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
 
     const opeartorControlumber = "34564567320230714";
     const [anchorEl, setAnchorEl] = useState<Element | null>(null);
+    const [editable, setEditable] = useState(false);
 
     const sxBox = {
         borderBottom: 1, 
@@ -26,6 +27,9 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
 
     const showACDetails: boolean = Boolean(anchorEl);
 
+    const onClickEdit = () => {
+        setEditable(!editable);
+    }
 
     return (
       <Grid item md={6} sx={{boxShadow: "-4px 4px 8px 0px rgba(51, 51, 51, 0.12)", marginTop: "-30px", paddingTop: "30px"}}>
@@ -266,15 +270,17 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
               }, }} /> Flag for follow up
           </Grid>
           <Grid spacing={3} container sx={{boxShadow: "0px -4px 8px 0px rgba(51, 51, 51, 0.12)", width: "200%",
-              marginLeft: "0", marginTop: "10px"}}>
+              marginLeft: "0", marginTop: "10px", textTransform: "none"}}>
               <Grid xs={8}></Grid>
               <Grid xs={2}>
                 <Button sx={{color: "#6244BB", borderColor: "#6244BB", width: "100px",
-                    marginTop: "20px", marginBottom: "20px", }} variant={"outlined"}>Edit</Button>
+                    marginTop: "20px", marginBottom: "20px", }} variant={"outlined"}
+                    onClick={onClickEdit}
+                >{editable? "Cancel": "Edit"}</Button>
               </Grid>
               <Grid xs={2}>
                 <Button sx={{backgroundColor: "#6244BB", textTransform: "none", width: "100px",
-                    marginTop: "20px", marginBottom: "20px" }} variant={"contained"}>Approve</Button>
+                    marginTop: "20px", marginBottom: "20px" }} variant={"contained"}>{editable? "Save": "Approve"}</Button>
               </Grid>
           </Grid>
           <Menu
