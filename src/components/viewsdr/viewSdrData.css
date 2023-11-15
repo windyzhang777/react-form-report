@@ -35,4 +35,9 @@
         font-weight: 600;
         margin-bottom: 20px;
     }
+    .sdr-status-edit {
+        margin-top: -8px;
+        height: 15px;
+        margin-bottom: 15px;
+    }
 }

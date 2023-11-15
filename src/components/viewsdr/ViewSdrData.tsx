@@ -1,4 +1,4 @@
-import {Box, Button, Checkbox, Grid, ListItem, Menu} from "@mui/material";
+import {Box, Button, Checkbox, Grid, ListItem, Menu, TextareaAutosize, TextField} from "@mui/material";
 import { ViewSdrDataProps } from "src/commons/types";
 import "./viewSdrData.css";
 import {MouseEvent, useState} from "react";
@@ -68,13 +68,25 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
               </Grid>
               <Grid className={"sdr-status-description"}  container spacing={3} >
                   <Grid item xs={4}>
-                      <ListItem>18/08/2023</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"18/08/2023"} className={"sdr-status-edit"}/>
+                              : "18/08/2023"
+                          }
+                      </ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                      <ListItem>3945748</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"3945748"} className={"sdr-status-edit"}/>
+                              : "3945748"
+                          }
+                      </ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                      <ListItem>IAH</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"IAH"} className={"sdr-status-edit"}/>
+                              : "IAH"
+                          }
+                      </ListItem>
                   </Grid>
               </Grid>
               <Grid className={"sdr-status-item"} container spacing={3}>
@@ -90,13 +102,25 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
               </Grid>
               <Grid className={"sdr-status-description"} container spacing={3} >
                   <Grid item xs={4}>
-                      <ListItem>3351</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"3351"} className={"sdr-status-edit"}/>
+                              : "3351"
+                          }
+                      </ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                      <ListItem>K</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"K"} className={"sdr-status-edit"}/>
+                              : "K"
+                          }
+                      </ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                      <ListItem>L</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"L"} className={"sdr-status-edit"}/>
+                              : "L"
+                          }
+                      </ListItem>
                   </Grid>
               </Grid>
               <Grid className={"sdr-status-item"} container spacing={3}>
@@ -109,10 +133,18 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
               </Grid>
               <Grid className={"sdr-status-description"} container spacing={3} >
                   <Grid item xs={4}>
-                      <ListItem>IN</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"IN"} className={"sdr-status-edit"}/>
+                              : "IN"
+                          }
+                      </ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                      <ListItem>V</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"V"} className={"sdr-status-edit"}/>
+                              : "V"
+                          }
+                      </ListItem>
                   </Grid>
               </Grid>
               <Grid className={"sdr-status-item"} container spacing={1}>
@@ -122,7 +154,14 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
               </Grid>
               <Grid className={"sdr-status-description"} container spacing={1} >
                   <Grid item xs={12}>
-                      <ListItem>EXIT LIGHT ABOVE L1 DOOR WILL NOT ILLUMINATE (REF. AAR NR 99978502). REPLACED BATTERY PACK M1675 WITH NEW BATTERY PACK IAW B737 AMM 33-51-06-960-805. INSTALLATION TEST GOOD. (WORK ACCOMPLISHED BY V937131 AND AAR QC A-83 V935067).</ListItem>
+                      <ListItem>
+                          {editable?
+                              <TextareaAutosize style={{width: "190%", fontSize: "16px"}} value={"EXIT LIGHT ABOVE L1 DOOR WILL NOT ILLUMINATE (REF. AAR NR 99978502). REPLACED BATTERY PACK M1675 WITH NEW BATTERY PACK IAW B737 AMM 33-51-06-960-805. INSTALLATION TEST GOOD. (WORK ACCOMPLISHED BY V937131 AND AAR QC A-83 V935067)."} />
+
+                              // <TextField size={"small"} fullWidth={true}  defaultValue={"EXIT LIGHT ABOVE L1 DOOR WILL NOT ILLUMINATE (REF. AAR NR 99978502). REPLACED BATTERY PACK M1675 WITH NEW BATTERY PACK IAW B737 AMM 33-51-06-960-805. INSTALLATION TEST GOOD. (WORK ACCOMPLISHED BY V937131 AND AAR QC A-83 V935067)."} className={"sdr-status-edit"}/>
+                              : "EXIT LIGHT ABOVE L1 DOOR WILL NOT ILLUMINATE (REF. AAR NR 99978502). REPLACED BATTERY PACK M1675 WITH NEW BATTERY PACK IAW B737 AMM 33-51-06-960-805. INSTALLATION TEST GOOD. (WORK ACCOMPLISHED BY V937131 AND AAR QC A-83 V935067)."
+                          }
+                      </ListItem>
                   </Grid>
               </Grid>
           </Grid>
@@ -141,13 +180,25 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
               </Grid>
               <Grid className={"sdr-status-description"}  container spacing={3} >
                   <Grid item xs={4}>
-                      <ListItem>BATTERY PACK</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"BATTERY PACK"} className={"sdr-status-edit"}/>
+                              : "BATTERY PACK"
+                          }
+                      </ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                      <ListItem>d71701100</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"d71701100"} className={"sdr-status-edit"}/>
+                              : "d71701100"
+                          }
+                      </ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                      <ListItem>GOODRICH LIGHTI</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"GOODRICH LIGHTI"} className={"sdr-status-edit"}/>
+                              : "GOODRICH LIGHTI"
+                          }
+                      </ListItem>
                   </Grid>
               </Grid>
               <Grid className={"sdr-status-item"} container spacing={3}>
@@ -163,13 +214,25 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
               </Grid>
               <Grid className={"sdr-status-description"} container spacing={3} >
                   <Grid item xs={4}>
-                      <ListItem>437841</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"437841"} className={"sdr-status-edit"}/>
+                              : "437841"
+                          }
+                      </ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                      <ListItem>INOP</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"INOP"} className={"sdr-status-edit"}/>
+                              : "INOP"
+                          }
+                      </ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                      <ListItem>M1675</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"M1675"} className={"sdr-status-edit"}/>
+                              : "M1675"
+                          }
+                      </ListItem>
                   </Grid>
               </Grid>
           </Grid>
@@ -188,13 +251,25 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
               </Grid>
               <Grid className={"sdr-status-description"}  container spacing={3} >
                   <Grid item xs={4}>
-                      <ListItem>XXXXXX</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"XXXXXX"} className={"sdr-status-edit"}/>
+                              : "XXXXXX"
+                          }
+                      </ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                      <ListItem>123456</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"123456"} className={"sdr-status-edit"}/>
+                              : "123456"
+                          }
+                      </ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                      <ListItem>XXXXXX</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"XXXXXX"} className={"sdr-status-edit"}/>
+                              : "XXXXXX"
+                          }
+                      </ListItem>
                   </Grid>
               </Grid>
               <Grid className={"sdr-status-item"} container spacing={3}>
@@ -207,10 +282,18 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
               </Grid>
               <Grid className={"sdr-status-description"} container spacing={3} >
                   <Grid item xs={4}>
-                      <ListItem>34567</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"34567"} className={"sdr-status-edit"}/>
+                              : "34567"
+                          }
+                      </ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                      <ListItem>Visual</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"Visual"} className={"sdr-status-edit"}/>
+                              : "Visual"
+                          }
+                      </ListItem>
                   </Grid>
               </Grid>
           </Grid>
@@ -229,13 +312,25 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
               </Grid>
               <Grid className={"sdr-status-description"}  container spacing={3} >
                   <Grid item xs={4}>
-                      <ListItem>Yes</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"Yes"} className={"sdr-status-edit"}/>
+                              : "Yes"
+                          }
+                      </ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                      <ListItem>123456</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"123456"} className={"sdr-status-edit"}/>
+                              : "123456"
+                          }
+                      </ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                      <ListItem>XXXXXX</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"XXXXXX"} className={"sdr-status-edit"}/>
+                              : "XXXXXX"
+                          }
+                      </ListItem>
                   </Grid>
               </Grid>
               <Grid className={"sdr-status-item"} container spacing={3}>
@@ -251,13 +346,25 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
               </Grid>
               <Grid className={"sdr-status-description"} container spacing={3} >
                   <Grid item xs={4}>
-                      <ListItem>34567</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"34567"} className={"sdr-status-edit"}/>
+                              : "34567"
+                          }
+                      </ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                      <ListItem>Fwd Pit</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"Fwd Pit"} className={"sdr-status-edit"}/>
+                              : "Fwd Pit"
+                          }
+                      </ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                      <ListItem>Visual</ListItem>
+                      <ListItem>
+                          {editable? <TextField size={"small"} defaultValue={"Visual"} className={"sdr-status-edit"}/>
+                              : "Visual"
+                          }
+                      </ListItem>
                   </Grid>
               </Grid>
           </Grid>
