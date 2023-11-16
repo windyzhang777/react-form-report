@@ -370,13 +370,13 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
           </Grid>
           <Box sx={{ ...sxBox }}>
           </Box>
-          <Grid sx={{marginTop: "10px", marginBottom: "10px"}}>
+          {props.selectedIndex !== 2 && <Grid sx={{marginTop: "10px", marginBottom: "10px"}}>
           <Checkbox sx={{marginLeft: "5px", color: "#6244BB",
               '&.Mui-checked': {
                   color: "#6244BB",
               }, }} /> Flag for follow up
-          </Grid>
-          <Grid spacing={3} container sx={{boxShadow: "0px -4px 8px 0px rgba(51, 51, 51, 0.12)", width: "200%",
+          </Grid>}
+          {props.selectedIndex !== 2 && <Grid spacing={3} container sx={{boxShadow: "0px -4px 8px 0px rgba(51, 51, 51, 0.12)", width: "200%",
               marginLeft: "0", marginTop: "10px", textTransform: "none"}}>
               <Grid xs={8}></Grid>
               <Grid xs={2}>
@@ -389,7 +389,7 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
                 <Button sx={{backgroundColor: "#6244BB", textTransform: "none", width: "100px",
                     marginTop: "20px", marginBottom: "20px" }} variant={"contained"}>{editable? "Save": "Approve"}</Button>
               </Grid>
-          </Grid>
+          </Grid>}
           <Menu
               anchorEl={anchorEl}
               id="help-menu"

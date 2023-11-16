@@ -99,7 +99,7 @@ const HomeScreen = () => {
         </Grid>
         <Grid item md={6}>
           {viewSdrFlag ? (
-            <ViewSdrData selectedSdrId={selectedSdrId} />
+            <ViewSdrData selectedSdrId={selectedSdrId} selectedIndex={value} />
           ) : (
             <Grid
               container

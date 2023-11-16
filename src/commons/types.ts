@@ -46,6 +46,7 @@ export interface TabPanelProps {
 
 export interface ViewSdrDataProps {
   selectedSdrId: number;
+  selectedIndex: number
 }
 
 export interface NewSdrsDataResponse {
