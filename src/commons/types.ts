@@ -25,6 +25,7 @@ export interface GridRow {
   LastName: string;
   CreatedBy: string;
   CreatedDate: string;
+  sfdr: string;
 }
 
 export interface SdrRowApi {
@@ -34,6 +35,7 @@ export interface SdrRowApi {
   CreatedBy: string;
   CreatedDate: string;
   SdrNumber: string;
+  SFdr: string;
 }
 
 export interface TabPanelProps {

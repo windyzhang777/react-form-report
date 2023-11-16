@@ -79,6 +79,12 @@ const CommonDataGrid = (props: CompDataGrid) => {
       sortable: false,
     },
     {
+      field: "sfdr",
+      headerName: "SDR/SFR",
+      flex: 1,
+      sortable: false,
+    },
+    {
       field: "SdrStatus",
       headerName: "SDR Status",
       flex: 1,
@@ -135,6 +141,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
         LastName: r.LastName,
         CreatedBy: r.CreatedBy,
         CreatedDate: moment(r.CreatedDate).format("MM/DD/YYYY hh:mm:ss A"),
+        sfdr: r.SFdr,
         id: r.SdrNumber
       }
       filteredSdrs.push(row);

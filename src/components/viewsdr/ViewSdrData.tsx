@@ -298,10 +298,10 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
               </Grid>
           </Grid>
           <Grid className={"sdr-status-grid"} sx={{borderLeft: 1, borderRight: 1, borderBottom: 1, borderColor: "#E6E6E6"}}>
-              <Grid className={"sdr-status-title"}>Part Information</Grid>
+              <Grid className={"sdr-status-title"}>Discrepancy</Grid>
               <Grid className={"sdr-status-item"} container spacing={3}>
                   <Grid item xs={4}>
-                      <ListItem>Discrepancy</ListItem>
+                      <ListItem>Exceeds Manufacturer Limits</ListItem>
                   </Grid>
                   <Grid item xs={4}>
                       <ListItem>Discrepancy Type</ListItem>
