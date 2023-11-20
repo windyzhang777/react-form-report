@@ -35,6 +35,7 @@ const HomeScreen = () => {
     const [approvedSdrCount, setApprovedSdrCount] = useState<number>(0);
     const [viewSdrFlag, setViewSdrFlag] = useState<boolean>(false);
     const [selectedSdrId, setSelectedSdrId] = useState<number>(0);
+    const [selectedIndex, setSelectedIndex] = useState<number>(0);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -94,12 +95,13 @@ const HomeScreen = () => {
               updateOpenSdrCount={updateOpenSdrCount}
               setViewSdrFlag={setViewSdrFlag}
               setSelectedSdrId={setSelectedSdrId}
+              setSelectedIndex={setSelectedIndex}
             />
           </TabPanel>
         </Grid>
         <Grid item md={6}>
           {viewSdrFlag ? (
-            <ViewSdrData selectedSdrId={selectedSdrId} selectedIndex={value} />
+            <ViewSdrData selectedSdrId={selectedSdrId} selectedIndex={selectedIndex} />
           ) : (
             <Grid
               container
