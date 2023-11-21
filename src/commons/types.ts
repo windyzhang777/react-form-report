@@ -156,3 +156,9 @@ export interface EnvironmentConfig {
 export type AppConfig = {
   [key in keyof typeof process.env.REACT_APP_ENVIRONMENT]: EnvironmentConfig
 }
+
+export enum SdrStatus {
+  New = 2,
+  Approved = 3,
+  Flagged = 4
+}

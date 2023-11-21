@@ -2,7 +2,7 @@ import { Box, Grid, Tab, Tabs } from "@mui/material";
 import React, {useEffect, useState} from "react";
 import "../homescreen/homescreen.css";
 import CommonDataGrid from "../commondatagrid/commondatagrid";
-import { ReportStatus } from "src/commons/types";
+import {ReportStatus, SdrStatus} from "src/commons/types";
 import TabPanel from "src/commons/TabPanel";
 import ViewSdrData from "../viewsdr/ViewSdrData";
 import {getAllSdrs} from "../../redux/ducks/getAllSdrs";
@@ -39,9 +39,9 @@ const HomeScreen = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(getAllSdrs(2));
-        dispatch(getAllSdrs(3));
-        dispatch(getAllSdrs(4));
+        dispatch(getAllSdrs(SdrStatus.New));
+        dispatch(getAllSdrs(SdrStatus.Flagged));
+        dispatch(getAllSdrs(SdrStatus.Approved));
     }, []);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
