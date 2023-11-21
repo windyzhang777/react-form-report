@@ -36,3 +36,12 @@
      border-radius: 4px;
      gap: 8px
  }
+
+ .Mui-selection {
+     background-color: #CCCCCC;
+     color: #333333;
+ }
+
+.Mui-hovered {
+    background-color: #CCCCCC !important;
+}

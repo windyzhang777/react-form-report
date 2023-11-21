@@ -96,6 +96,7 @@ const HomeScreen = () => {
               setViewSdrFlag={setViewSdrFlag}
               setSelectedSdrId={setSelectedSdrId}
               setSelectedIndex={setSelectedIndex}
+              selectedSdrId={selectedSdrId}
             />
           </TabPanel>
         </Grid>

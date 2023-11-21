@@ -14,13 +14,14 @@ import "../commondatagrid/commondatagrid.css";
 import {useAppSelector} from "../../redux/hooks";
 
 const CommonDataGrid = (props: CompDataGrid) => {
-  const { reportStatus, reportIndex, setViewSdrFlag, setSelectedSdrId, updateOpenSdrCount, setSelectedIndex } = props;
+  const { reportStatus, reportIndex, setViewSdrFlag, selectedSdrId, setSelectedSdrId, updateOpenSdrCount, setSelectedIndex } = props;
   const [rowData, setRowData] = useState<Array<GridRow>>([]);
   const [showCheckbox, setShowCheckbox] = useState<boolean>(false);
   const [selectedSdrsToExtract, setSelectedSdrsToExtract] = useState<
       GridRowSelectionModel
   >([]);
   const [isExtractDisabled, setIsExtractDisabled] = useState<boolean>(true);
+  const [viewSdrId, setViewSdrId] = useState(selectedSdrId);
   const newSdrs: SdrStateType = useAppSelector(state => state.newSdrs);
   const approvedSdrs: SdrStateType = useAppSelector(state => state.approvedSdrs);
   const flaggedSdrs: SdrStateType = useAppSelector(state => state.flaggedSdrs);
@@ -160,8 +161,21 @@ const CommonDataGrid = (props: CompDataGrid) => {
   const setViewSdr = (sdrData: GridCellParams) => {
     setViewSdrFlag(true);
     setSelectedSdrId(sdrData?.row.id);
+    setViewSdrId(sdrData?.row.id);
     setSelectedIndex(reportIndex);
   };
+
+  const styleRow = (params: any) => {
+    if (params.id === viewSdrId && params.indexRelativeToCurrentPage % 2 === 0) {
+      return "Mui-selection";
+    } else if (params.id !== viewSdrId && params.indexRelativeToCurrentPage % 2 !== 0) {
+      return "Mui-odd";
+    } else if (params.id === viewSdrId && params.indexRelativeToCurrentPage % 2 !== 0) {
+      return "Mui-selection Mui-odd";
+    } else {
+      return "";
+    }
+  }
 
   return (
       <Grid item md={12} sx={{ height: 700 }}>
@@ -176,7 +190,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
             onRowsSelectionHandler(sdrIds)
           }
           getRowClassName={(params) =>
-            params.indexRelativeToCurrentPage % 2 === 0 ? "" : "Mui-odd"
+            styleRow(params)
           }
           disableRowSelectionOnClick
           onCellClick={(data: GridCellParams) => {
