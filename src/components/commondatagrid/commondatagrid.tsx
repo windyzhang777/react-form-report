@@ -12,9 +12,10 @@ import {
 } from "src/commons/types";
 import "../commondatagrid/commondatagrid.css";
 import {useAppSelector} from "../../redux/hooks";
+import config from "src/utils/env.config";
 
 const CommonDataGrid = (props: CompDataGrid) => {
-  const { reportStatus, reportIndex, setViewSdrFlag, setSelectedSdrId, updateOpenSdrCount } = props;
+  const { reportStatus, reportIndex, setViewSdrFlag, setSelectedSdrId, updateSdrCount } = props;
   const [rowData, setRowData] = useState<Array<GridRow>>([]);
   const [showCheckbox, setShowCheckbox] = useState<boolean>(false);
   const [selectedSdrsToExtract, setSelectedSdrsToExtract] = useState<
@@ -37,8 +38,10 @@ const CommonDataGrid = (props: CompDataGrid) => {
     );
   };
 
-  const openLogPage = (url: string) => {
-    window.open("www.google.com", "_blank", "referrer");
+  const openLogPage = (logPageNumber: string) => {
+    let width = window.innerWidth;
+    let url = `${config.webTechApiBaseUrl}${config.URL_LOGPAGE_SEARCH}?logPageNumber=${logPageNumber}&fleetCode=null&role=${sessionStorage.getItem("jobRole")}`;
+    window.open(url, "_blank", "width=" + (width - 450) / 2 + ",height=" + (window.innerHeight - 320) + ",left=" + ((width/2) - 50) + ",top=450");
   };
 
   const highlightDate = (rowApi: RowApi) => {
@@ -93,19 +96,14 @@ const CommonDataGrid = (props: CompDataGrid) => {
   ];
 
   useEffect(() => {
-    updateOpenSdrCount(0, newSdrs.sdrData.length);
-    updateOpenSdrCount(1, flaggedSdrs.sdrData.length);
-    updateOpenSdrCount(2, approvedSdrs.sdrData.length);
+    updateSdrCount(0, newSdrs.sdrData.length);
+    updateSdrCount(1, flaggedSdrs.sdrData.length);
+    updateSdrCount(2, approvedSdrs.sdrData.length);
   });
 
   useEffect(() => {
     setShowCheckbox(reportIndex === ReportStatus.Approved);
   }, [reportIndex]);
-
-  // useEffect(() => {
-  //   if (selectedSdrsToExtract && selectedSdrsToExtract.length > 0) setIsExtractDisabled(false);
-  //   else setIsExtractDisabled(true);
-  // }, [selectedSdrsToExtract]);
 
   useEffect(() => {
     let sdrData: Array<SdrRowApi> = [];
@@ -148,7 +146,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
     })
 
     setRowData(filteredSdrs);
-    updateOpenSdrCount(reportIndex, filteredSdrs.length);
+    updateSdrCount(reportIndex, filteredSdrs.length);
   }, [reportStatus]);
 
   const onRowsSelectionHandler = (sdrIds: GridRowSelectionModel) => {

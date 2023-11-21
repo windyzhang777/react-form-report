@@ -7,8 +7,8 @@ const config: EnvironmentConfig = {
     development: {
         ...defaultConfig,
         apiBaseAddress: "https://unitedtech-linemx.qa.dtj.aws.ual.com/linemx/v61",
-        URL_GET_PROFILE: "/api/employee/getprofile",
-        URL_GET_ALL_SDRS: "/api/Elb/GetAllSdrs"
+        webTechApiBaseUrl: "https://logbook.qa.dsq.aws.ual.com",
+        
     },
     qa: {
         ...defaultConfig,

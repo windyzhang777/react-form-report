@@ -10,7 +10,7 @@ export enum ReportStatus {
 export interface CompDataGrid {
   reportStatus: string;
   reportIndex: number;
-  updateOpenSdrCount: (a: number, b: number) => void;
+  updateSdrCount: (a: number, b: number) => void;
   setViewSdrFlag: (a: boolean) => void;
   setSelectedSdrId: (a: number) => void;
 }
@@ -149,6 +149,8 @@ export interface EnvironmentConfig {
   apiBaseAddress?: string;
   URL_GET_PROFILE?: string;
   URL_GET_ALL_SDRS?: string;
+  webTechApiBaseUrl?: string;
+  URL_LOGPAGE_SEARCH?: string;
 }
 
 export type AppConfig = {
