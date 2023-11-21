@@ -166,21 +166,16 @@ const CommonDataGrid = (props: CompDataGrid) => {
   };
 
   const styleRow = (params: any) => {
-    if (params.id === viewSdrId && params.indexRelativeToCurrentPage % 2 === 0) {
-      return "Mui-selection";
-    } else if (params.id !== viewSdrId && params.indexRelativeToCurrentPage % 2 !== 0) {
-      return "Mui-odd";
-    } else if (params.id === viewSdrId && params.indexRelativeToCurrentPage % 2 !== 0) {
-      return "Mui-selection Mui-odd";
-    } else {
-      return "";
-    }
+    let rowStyles = "";
+    rowStyles += params.id === viewSdrId ? "Mui-selection " : "";
+    rowStyles += params.indexRelativeToCurrentPage % 2 === 0 ? "" : "Mui-odd";
+    return rowStyles;
   }
 
   return (
       <Grid item md={12} sx={{ height: 700 }}>
         <DataGrid
-          sx={{ border: "none" }}
+          sx={{ border: "none"}}
           disableColumnMenu
           columns={columnDefs}
           rows={rowData}

@@ -37,10 +37,14 @@
      gap: 8px
  }
 
- .Mui-selection {
-     background-color: #CCCCCC !important;
-     color: #333333 !important;
- }
+.MuiCheckbox-colorPrimary {
+    color: #6244BB !important;
+}
+
+.Mui-selection {
+    background-color: #CCCCCC !important;
+    color: #333333 !important;
+}
 
 .Mui-hovered {
     background-color: #CCCCCC !important;
