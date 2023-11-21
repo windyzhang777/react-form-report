@@ -46,9 +46,11 @@ const HomeScreen = () => {
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
+        setViewSdrFlag(false);
+        setSelectedSdrId(0);
     };
 
-    const updateOpenSdrCount = (index: number, count: number) => {
+    const updateSdrCount = (index: number, count: number) => {
         switch(index){
             case 0:
                 setOpenSdrCount(count);
@@ -92,7 +94,7 @@ const HomeScreen = () => {
             <CommonDataGrid
               reportStatus={ReportStatus[value]}
               reportIndex={value}
-              updateOpenSdrCount={updateOpenSdrCount}
+              updateSdrCount={updateSdrCount}
               setViewSdrFlag={setViewSdrFlag}
               setSelectedSdrId={setSelectedSdrId}
               setSelectedIndex={setSelectedIndex}
