@@ -2,7 +2,7 @@ import { Box, Grid, Tab, Tabs } from "@mui/material";
 import React, {useEffect, useState} from "react";
 import "../homescreen/homescreen.css";
 import CommonDataGrid from "../commondatagrid/commondatagrid";
-import { ReportStatus } from "src/commons/types";
+import {ReportStatus, SdrStatus} from "src/commons/types";
 import TabPanel from "src/commons/TabPanel";
 import ViewSdrData from "../viewsdr/ViewSdrData";
 import {getAllSdrs} from "../../redux/ducks/getAllSdrs";
@@ -35,12 +35,13 @@ const HomeScreen = () => {
     const [approvedSdrCount, setApprovedSdrCount] = useState<number>(0);
     const [viewSdrFlag, setViewSdrFlag] = useState<boolean>(false);
     const [selectedSdrId, setSelectedSdrId] = useState<number>(0);
+    const [selectedIndex, setSelectedIndex] = useState<number>(0);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(getAllSdrs(2));
-        dispatch(getAllSdrs(3));
-        dispatch(getAllSdrs(4));
+        dispatch(getAllSdrs(SdrStatus.New));
+        dispatch(getAllSdrs(SdrStatus.Flagged));
+        dispatch(getAllSdrs(SdrStatus.Approved));
     }, []);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -96,12 +97,14 @@ const HomeScreen = () => {
               updateSdrCount={updateSdrCount}
               setViewSdrFlag={setViewSdrFlag}
               setSelectedSdrId={setSelectedSdrId}
+              setSelectedIndex={setSelectedIndex}
+              selectedSdrId={selectedSdrId}
             />
           </TabPanel>
         </Grid>
         <Grid item md={6}>
           {viewSdrFlag ? (
-            <ViewSdrData selectedSdrId={selectedSdrId} selectedIndex={value} />
+            <ViewSdrData selectedSdrId={selectedSdrId} selectedIndex={selectedIndex} />
           ) : (
             <Grid
               container

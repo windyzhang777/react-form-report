@@ -13,6 +13,8 @@ export interface CompDataGrid {
   updateSdrCount: (a: number, b: number) => void;
   setViewSdrFlag: (a: boolean) => void;
   setSelectedSdrId: (a: number) => void;
+  setSelectedIndex: (a: number) => void;
+  selectedSdrId: number;
 }
 
 // grid row
@@ -155,4 +157,10 @@ export interface EnvironmentConfig {
 
 export type AppConfig = {
   [key in keyof typeof process.env.REACT_APP_ENVIRONMENT]: EnvironmentConfig
+}
+
+export enum SdrStatus {
+  New = 2,
+  Approved = 3,
+  Flagged = 4
 }

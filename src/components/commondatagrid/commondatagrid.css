@@ -25,10 +25,6 @@
     color: red;
  }
 
- .Mui-odd{
-    background: #F1F1F0;
- }
-
  .extract-button {
      width: 190px;
      height: 40px;
@@ -36,3 +32,25 @@
      border-radius: 4px;
      gap: 8px
  }
+
+.Mui-selected {
+    background: transparent !important;
+    font-weight: normal !important;
+}
+
+.MuiCheckbox-colorPrimary {
+    color: #6244BB !important;
+}
+
+.Mui-odd{
+    background: #F1F1F0 !important;
+}
+
+.Mui-selection {
+    background-color: #CCCCCC !important;
+    color: #333333 !important;
+}
+
+.Mui-hovered {
+    background-color: #CCCCCC !important;
+}

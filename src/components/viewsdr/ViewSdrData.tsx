@@ -32,7 +32,7 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
     }
 
     return (
-      <Grid item md={6} sx={{boxShadow: "-4px 4px 8px 0px rgba(51, 51, 51, 0.12)", marginTop: "-30px", paddingTop: "30px"}}>
+      <Grid item md={6} sx={{boxShadow: "-4px 0px 4px 0px rgba(51, 51, 51, 0.12)", marginTop: "-30px", paddingTop: "30px"}}>
         <Box sx={{ ...sxBox }}>
             <p>Service Difficulty Report - #{props.selectedSdrId}</p>
         </Box>
