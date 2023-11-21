@@ -1,5 +1,13 @@
 import { Dispatch } from "redux";
-import { SdrDispatchFuncType, ReducerAction, SdrStateType, SdrDataType, StatusId, SdrActionType } from "../../commons/types";
+import {
+    SdrDispatchFuncType,
+    ReducerAction,
+    SdrStateType,
+    SdrDataType,
+    StatusId,
+    SdrActionType,
+    SdrStatus
+} from "../../commons/types";
 import axiosInstance from "../../utils/axiosInstance";
 import config from "../../utils/env.config";
 
@@ -21,34 +29,37 @@ const initialState: SdrStateType = {
 
 const initFetch = (statusId: StatusId) => {
     switch (statusId) {
-        case 2:
-            return { type: FETCH_NEW_SDRS };
-        case 3:
+        case SdrStatus.Approved:
             return { type: FETCH_APPROVED_SDRS};
-        case 4:
+        case SdrStatus.Flagged:
             return { type: FETCH_FLAGGED_SDRS};
+        case SdrStatus.New:
+        default:
+            return { type: FETCH_NEW_SDRS };
     }
 };
 
 const fetchSuccess = (data: SdrDataType, statusId: StatusId) => {
     switch (statusId) {
-        case 2:
-            return {type: FETCH_NEW_SUCCESS, data};
-        case 3:
+        case SdrStatus.Approved:
             return {type: FETCH_APPROVED_SUCCESS, data};
-        case 4:
+        case SdrStatus.Flagged:
             return {type: FETCH_FLAGGED_SUCCESS, data};
+        case SdrStatus.New:
+        default:
+            return {type: FETCH_NEW_SUCCESS, data};
     }
 };
 
 const fetchFailure = (message: string, statusId: StatusId) => {
     switch (statusId) {
-        case 2:
-            return {type: FETCH_NEW_FAILURE, message};
-        case 3:
+        case SdrStatus.Approved:
             return {type: FETCH_APPROVED_FAILURE, message};
-        case 4:
+        case SdrStatus.Flagged:
             return {type: FETCH_FLAGGED_FAILURE, message};
+        case SdrStatus.New:
+        default:
+            return {type: FETCH_NEW_FAILURE, message};
     }
 };
 
