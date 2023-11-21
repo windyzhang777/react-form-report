@@ -38,8 +38,8 @@
  }
 
  .Mui-selection {
-     background-color: #CCCCCC;
-     color: #333333;
+     background-color: #CCCCCC !important;
+     color: #333333 !important;
  }
 
 .Mui-hovered {
