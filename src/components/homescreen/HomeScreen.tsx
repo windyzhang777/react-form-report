@@ -4,7 +4,7 @@ import "../homescreen/homescreen.css";
 import CommonDataGrid from "../commondatagrid/commondatagrid";
 import {SelectedTab, SdrStatus} from "src/commons/types";
 import TabPanel from "src/commons/TabPanel";
-import ViewSdrData from "../viewsdr/viewsdrdata";
+import ViewSdrData from "../viewsdr/ViewSdrData";
 import {getAllSdrs} from "../../redux/ducks/getAllSdrs";
 import {useAppDispatch} from "../../redux/hooks";
 

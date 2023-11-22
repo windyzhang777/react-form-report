@@ -1,6 +1,6 @@
 import {Box, Button, Checkbox, Grid, ListItem, Menu, TextareaAutosize, TextField} from "@mui/material";
 import { ViewSdrDataProps } from "src/commons/types";
-import "./viewsdrdata.css";
+import "./viewSdrData.css";
 import {MouseEvent, useState} from "react";
 
 const ViewSdrData = (props: ViewSdrDataProps) => {
