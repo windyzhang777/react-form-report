@@ -4,7 +4,7 @@ import { Button,Grid, Link } from "@mui/material";
 import moment from "moment";
 import {
   CompDataGrid,
-  ReportStatus,
+  SelectedTab,
   GridRow,
   NameValuesGetterParams,
   RowRowApi,
@@ -103,7 +103,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
   });
 
   useEffect(() => {
-    setShowCheckbox(reportIndex === ReportStatus.Approved);
+    setShowCheckbox(reportIndex === SelectedTab.Approved);
   }, [reportIndex]);
 
   useEffect(() => {
@@ -152,6 +152,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
 
   const onRowsSelectionHandler = (sdrIds: GridRowSelectionModel) => {
     setSelectedSdrsToExtract([...sdrIds]);
+    console.log(selectedSdrsToExtract);
     if (sdrIds && sdrIds.length > 0) setIsExtractDisabled(false);
     else setIsExtractDisabled(true);
   };
@@ -192,7 +193,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
             }
           }}
         />
-        {reportIndex === ReportStatus.Approved && (
+        {reportIndex === SelectedTab.Approved && (
           <Grid item sx={{ float: "right" }}>
             <Button
               variant="contained"
