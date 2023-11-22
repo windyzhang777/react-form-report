@@ -2,7 +2,7 @@ import React from "react";
 import CommonLoader from "./commons/CommonLoader";
 import { useEffect } from "react";
 import Header from "./components/header/Header";
-import HomeScreen from "./components/homescreen/homescreen";
+import HomeScreen from "./components/homescreen/HomeScreen";
 import {getProfile} from "./redux/ducks/getProfile";
 import {useAppDispatch, useAppSelector} from "./redux/hooks";
 
