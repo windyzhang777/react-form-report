@@ -1,6 +1,5 @@
 // enum to hold the report statuses
-
-export enum ReportStatus {
+export enum SelectedTab {
   Open = 0,
   FlaggedForFollowUp = 1,
   Approved = 2,
@@ -151,8 +150,8 @@ export interface EnvironmentConfig {
   apiBaseAddress?: string;
   URL_GET_PROFILE?: string;
   URL_GET_ALL_SDRS?: string;
-  webTechApiBaseUrl?: string;
-  URL_LOGPAGE_SEARCH?: string;
+  webTechApiBaseUrl: string;
+  URL_LOGPAGE_SEARCH: string;
 }
 
 export type AppConfig = {

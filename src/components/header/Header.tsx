@@ -1,13 +1,12 @@
 import {AppBar, Box, Button, Drawer, IconButton, List, Menu, MenuItem, Toolbar, Typography} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
 import {MouseEvent, useEffect, useState} from "react";
 import UnitedLogo from "../../icons/logo-united.svg";
 import RefreshIcon from "../../icons/Refresh.png";
 import ProfileIcon from "../../icons/Traveler.png";
 import "../header/header.css";
 import moment from "moment";
-import {useAppDispatch, useAppSelector} from "../../redux/hooks";
+import { useAppDispatch } from "../../redux/hooks";
 import {getProfile} from "../../redux/ducks/getProfile";
 
 const Header = () => {

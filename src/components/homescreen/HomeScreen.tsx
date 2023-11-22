@@ -2,9 +2,9 @@ import { Box, Grid, Tab, Tabs } from "@mui/material";
 import React, {useEffect, useState} from "react";
 import "../homescreen/homescreen.css";
 import CommonDataGrid from "../commondatagrid/commondatagrid";
-import {ReportStatus, SdrStatus} from "src/commons/types";
+import {SelectedTab, SdrStatus} from "src/commons/types";
 import TabPanel from "src/commons/TabPanel";
-import ViewSdrData from "../viewsdr/ViewSdrData";
+import ViewSdrData from "../viewsdr/viewsdrdata";
 import {getAllSdrs} from "../../redux/ducks/getAllSdrs";
 import {useAppDispatch} from "../../redux/hooks";
 
@@ -26,7 +26,7 @@ function a11yProps(index: number) {
             width: "25%",
         }
     }
-};
+}
 
 const HomeScreen = () => {
     const [value, setValue]= useState<number>(0);
@@ -92,7 +92,7 @@ const HomeScreen = () => {
           </Box>
           <TabPanel value={value}>
             <CommonDataGrid
-              reportStatus={ReportStatus[value]}
+              reportStatus={SelectedTab[value]}
               reportIndex={value}
               updateSdrCount={updateSdrCount}
               setViewSdrFlag={setViewSdrFlag}

@@ -38,12 +38,22 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "lint-staged": {
+    "*.{json,css,html,md}": [
+      "npx prettier --write '**/*.{json,css,html,md}' --ignore-path ./.prettierignore"
+    ],
+    "*.tsx": [
+      "npx prettier --write '*.tsx' --ignore-path ./.prettierignore",
+      "eslint --max-warnings=0 --ignore-pattern '!.eslintrc.js' ./src --ext .tsx"
+    ]
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
     ]
   },
+  "eslintIgnore": ["types.ts"],
   "browserslist": {
     "production": [
       ">0.2%",
