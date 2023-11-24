@@ -18,25 +18,27 @@ export interface CompDataGrid {
 
 // grid row
 export interface GridRow {
-  id: string;
+  id: number;
+  LogpageNumber: string;
+  LogpageStatus: any;
+  CreatedBy: string;
+  CreatedbyFirstName: any;
+  createbyLastName: any;
+  CreatedDate: string;
+  Type: string
   SdrStatus: string;
   LogPageStatus: string;
-  LogPageNumber: string;
-  FirstName: string;
-  LastName: string;
-  CreatedBy: string;
-  CreatedDate: string;
-  sfdr: string;
 }
 
 export interface SdrRowApi {
-  LogPageNumber: string;
-  FirstName: string;
-  LastName: string;
+  Id: number;
+  LogpageNumber: string;
+  LogpageStatus: any;
   CreatedBy: string;
+  CreatedbyFirstName: any;
+  CreatebyLastName: any;
   CreatedDate: string;
-  SdrNumber: string;
-  SFdr: string;
+  Type: string;
 }
 
 export interface TabPanelProps {
@@ -64,8 +66,8 @@ export interface FlaggedSdrsDataResponse {
 
 export interface NameValuesGetterParams {
   row: {
-    FirstName: string;
-    LastName: string;
+    CreatedbyFirstName: string;
+    createbyLastName: string;
     CreatedBy: string;
   }
 }
@@ -73,7 +75,7 @@ export interface NameValuesGetterParams {
 export interface RowRowApi {
   rowApi: {
     row: {
-      LogPageNumber: string;
+      LogpageNumber: string;
       datetime: string;
     }
   }
@@ -81,7 +83,7 @@ export interface RowRowApi {
 
 export interface RowApi {
   row: {
-    LogPageNumber: string;
+    LogpageNumber: string;
     datetime: string;
   }
 }

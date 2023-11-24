@@ -8,7 +8,9 @@ import {
   GridRow,
   NameValuesGetterParams,
   RowRowApi,
-  RowApi, SdrRowApi, SdrStateType,
+  RowApi,
+  SdrRowApi,
+  SdrStateType
 } from "src/commons/types";
 import "../commondatagrid/commondatagrid.css";
 import {useAppSelector} from "../../redux/hooks";
@@ -28,7 +30,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
   const flaggedSdrs: SdrStateType = useAppSelector(state => state.flaggedSdrs);
 
   const LinkCell = (rowApi: RowRowApi) => {
-    let logPageNumber = rowApi?.rowApi?.row?.LogPageNumber;
+    let logPageNumber = rowApi?.rowApi?.row?.LogpageNumber;
     return (
       <Link
         sx={{ cursor: "pointer", color: "#6244BB" }}
@@ -64,26 +66,26 @@ const CommonDataGrid = (props: CompDataGrid) => {
     {
       field: "reportedby",
       headerName: "Reported By",
-      flex: 1,
+      flex: 1.5,
       sortable: false,
       valueGetter: (params: NameValuesGetterParams) =>
-        `${params?.row?.FirstName} ${params?.row?.LastName} (${params?.row?.CreatedBy})`,
+        `${params?.row?.CreatedbyFirstName} ${params?.row?.createbyLastName} (${params?.row?.CreatedBy})`,
     },
     {
       field: "CreatedDate",
       headerName: "Date & Time",
-      flex: 1,
+      flex: 1.5,
       sortable: false,
       renderCell: (rowApi: RowApi) => highlightDate(rowApi),
     },
     {
       field: "LogPageStatus",
       headerName: "Log Page Status",
-      flex: 1,
+      flex: 1.5,
       sortable: false,
     },
     {
-      field: "sfdr",
+      field: "Type",
       headerName: "SDR/SFR",
       flex: 1,
       sortable: false,
@@ -97,9 +99,9 @@ const CommonDataGrid = (props: CompDataGrid) => {
   ];
 
   useEffect(() => {
-    updateSdrCount(0, newSdrs.sdrData.length);
-    updateSdrCount(1, flaggedSdrs.sdrData.length);
-    updateSdrCount(2, approvedSdrs.sdrData.length);
+    updateSdrCount(0, newSdrs.sdrData?.length);
+    updateSdrCount(1, flaggedSdrs.sdrData?.length);
+    updateSdrCount(2, approvedSdrs.sdrData?.length);
   });
 
   useEffect(() => {
@@ -109,23 +111,19 @@ const CommonDataGrid = (props: CompDataGrid) => {
   useEffect(() => {
     let sdrData: Array<SdrRowApi> = [];
     let sdrStatusText = "Open";
-    let logpageStatusText = "Submitted";
     switch (reportIndex) {
       case 1:
         sdrData = flaggedSdrs.sdrData;
         sdrStatusText = "Approved with Follow Up";
-        logpageStatusText = "Approved with follow up";
         break
       case 2:
         sdrData = approvedSdrs.sdrData;
         sdrStatusText = "Approved";
-        logpageStatusText = "Approved";
         break;
       case 0:
       default:
         sdrData = newSdrs.sdrData;
         sdrStatusText = "Open";
-        logpageStatusText = "Submitted";
         break;
     }
 
@@ -134,14 +132,15 @@ const CommonDataGrid = (props: CompDataGrid) => {
     Array.isArray(sdrData) && sdrData?.forEach((r:SdrRowApi) => {
       let row:GridRow = {
         SdrStatus: sdrStatusText,
-        LogPageStatus: logpageStatusText,
-        LogPageNumber: r.LogPageNumber,
-        FirstName: r.FirstName,
-        LastName: r.LastName,
+        LogPageStatus: r.LogpageStatus,
+        id: r.Id,
+        LogpageNumber: r.LogpageNumber,
+        LogpageStatus: r.LogpageStatus,
         CreatedBy: r.CreatedBy,
+        CreatedbyFirstName: r.CreatedbyFirstName,
+        createbyLastName: r.CreatebyLastName,
         CreatedDate: moment(r.CreatedDate).format("MM/DD/YYYY hh:mm:ss A"),
-        sfdr: r.SFdr,
-        id: r.SdrNumber
+        Type: r.Type,
       }
       filteredSdrs.push(row);
     })
