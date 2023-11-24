@@ -59,7 +59,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
     {
       field: "LogPageNumber",
       headerName: "Log Page Number",
-      flex: 1,
+      flex: 1.5,
       sortable: false,
       renderCell: (rowApi: RowApi) => <LinkCell rowApi={rowApi} />,
     },
