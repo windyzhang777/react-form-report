@@ -2,10 +2,172 @@ import {Box, Button, Checkbox, Grid, ListItem, Menu, TextareaAutosize, TextField
 import { ViewSdrDataProps } from "src/commons/types";
 import "./viewSdrData.css";
 import {MouseEvent, useState} from "react";
+import moment from "moment/moment";
 
 const ViewSdrData = (props: ViewSdrDataProps) => {
 
-    const opeartorControlumber = "34564567320230714";
+    const esfrRecordDetails = {
+        "Type": "Positive",
+        "StatusId": 2,
+        "SfrId": 62,
+        "LogPageNumber": "123129",
+        "Station": "IAH",
+        "CreatedDate": "2023-07-25T03:59:07.907",
+        "LogPageCreatedDate": "2023-07-25T03:59:07.907",
+        "LogPageCreatedBy": "testUser",
+        "ModifiedDate": "2023-07-25T03:59:07.907",
+        "CreatedBy": "V112353",
+        "ModifiedBy": "V112353",
+        "AirCraftNumber": "345678",
+        "OperatorControlNumber": null,
+        "OriginDetails": {
+            "CalDoc": null,
+            "DetectionMethod": null,
+            "MfrSource": null,
+            "OriginId": 18,
+            "IsScheduledInspection": true,
+            "CalDocId": 1,
+            "InspectionType": 0,
+            "CalDocIdentifier": "Cal-Doc-Identifier",
+            "SpecIdentifier": "spec-Identifier",
+            "MfrSourceComments": "mfrSource-Comments",
+            "DetectionMethodId": 1,
+            "MfrSourceId": 2,
+            "MfrSourceIdentifier": "mfr-Source-Identifier",
+            "Rev": "rev",
+            "Op": "op",
+            "DetectionMethodComments": "detection-Method-Comments"
+        },
+        "LocationDetails": {
+            "Zone": null,
+            "DefectLocation": null,
+            "DamageProximity": null,
+            "LocationId": 12,
+            "ZoneId": 2,
+            "DefectLocationId": 1,
+            "Comments": "location-comments-async",
+            "Surface": "surface",
+            "Side": "side",
+            "Specifics": "side",
+            "CoordinateLocationDetails": null,
+            "LocationType": "location-Type",
+            "FromSta": "from-Sta",
+            "ToSta": "to-Sta",
+            "FromBLLength": 2,
+            "ToBLLength": 3,
+            "SpecificsLocation": "specifics-Location",
+            "DefectLocationIdentifier": "defect-Location-Identifier",
+            "ToSide": "to-Side",
+            "FromSide": "from-Side",
+            "StaTypeId": 1,
+            "StaType": "staType",
+            "FromStr": "fromStr",
+            "ToStr": "toStr",
+            "DamageProximityId": 1
+        },
+        "RepairDetails": {
+            "IsDeferred": true,
+            "IsMajorRepair": true,
+            "IsSDRReportable": true,
+            "DamageStructureStatus": "damageStructureStatus",
+            "IsOverWeight": true,
+            "IsECRA": true,
+            "ECRACode": "ecraCode",
+            "Comments": "repair-comments",
+            "ManHoursRequired": 10,
+            "MaterialsUtilized": "materials-Utilized",
+            "Rev": "rev",
+            "DIPCode": "dip-Code",
+            "IsRepairOrRework": true,
+            "RepairType": "repair-Type",
+            "RepairTypes": [
+                {
+                    "code": "code",
+                    "page": "page",
+                    "fig": "fig"
+                }
+            ]
+        },
+        "DiscrepancyDetails": {
+            "DiscrepancyType": null,
+            "CorrosionLevel": null,
+            "CorrosionCause": null,
+            "CorrosionExtent": null,
+            "DiscrepancyId": 114,
+            "IsManufacturingLimitExceeded": true,
+            "DiscrepancyTypeId": 2,
+            "CorrosionLevelId": 3,
+            "CorrosionCauseId": 4,
+            "CorrosionExtentId": 1,
+            "CorrosionCauseComments": "corrosion-Cause-Comments",
+            "AreMultipleCracksInTheSameLocation": false,
+            "CrackLength": 12,
+            "CrackWidth": 13,
+            "CrackDepth": 14,
+            "DiscrepancyTypeComments": "discrepancy-Type-Comments",
+            "IsSafeOperationEndangered": true,
+            "DiscrepancyPartComments": "discrepancy-Part-Comments",
+            "DiscrepancyPartDetails": [
+                {
+                    "SfrId": 62,
+                    "DiscrepancyPartId": 0,
+                    "atacode": "ata-Code",
+                    "partnumber": "part-Number",
+                    "structure": "structure",
+                    "partdetails": "part-Details"
+                }
+            ]
+        },
+        "FleetInfo": {
+            "FleetCode": "757",
+            "TailNumber": "0136",
+            "LicenseNumber": "N19136",
+            "ManufacturerPartNumber": "757-200",
+            "ManufacturedBy": "BAC",
+            "ManufacturerSerialNumber": "29285",
+            "TotalAircraftTime": 92784.41,
+            "TotalAircraftCycles": 20184,
+            "Station": "EWR",
+            "ATACode": "511",
+            "Date": "2023-11-24T00:00:00",
+        },
+        "sdrDetails": {
+            "sdrNumber": "string",
+            "logPageCreationDate": "2023-11-22T17:50:37.270Z",
+            "station": "string",
+            "logPageNumber": "string",
+            "precautionaryProcedureIds": [
+                0
+            ],
+            "natureOfReportIds": [
+                0
+            ],
+            "stageId": 0,
+            "statusId": 0,
+            "howDiscoveredId": 0,
+            "partDetails": {
+                "partTrackingNumber": "string",
+                "partManufacturerSerialNumber": "string",
+                "partSerialNumber": "string",
+                "partLocation": "string",
+                "partCondition": "string",
+                "partDescription": "string"
+            },
+            "createdDate": "2023-11-22T17:50:37.270Z",
+            "createdBy": "string",
+            "submittedDate": "2023-11-22T17:50:37.270Z",
+            "createdbyFirstName": "string",
+            "createdbyLastName": "string",
+            "modifiedbyFirstName": "string",
+            "modifiedbyLastName": "string"
+        },
+        "SfrActivity": null,
+        "CreatedbyFirstName": null,
+        "CreatedbyLastName": null,
+        "ModifiedbyFirstName": null,
+        "ModifiedbyLastName": null
+    }
+
     const [anchorEl, setAnchorEl] = useState<Element | null>(null);
     const [editable, setEditable] = useState(false);
 
@@ -47,7 +209,7 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
           </Grid>
           <Grid container spacing={2}>
               <Grid item xs={6}>
-                  <ListItem>{opeartorControlumber}</ListItem>
+                  <ListItem>{esfrRecordDetails.OperatorControlNumber}</ListItem>
               </Grid>
               <Grid item xs={6}>
                   <ListItem onClick={openACDetails}> <u className={"view-details-text"}>View Details</u></ListItem>
@@ -69,22 +231,22 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
               <Grid className={"sdr-status-description"}  container spacing={3} >
                   <Grid item xs={4}>
                       <ListItem>
-                          {editable? <TextField size={"small"} defaultValue={"18/08/2023"} className={"sdr-status-edit"}/>
-                              : "18/08/2023"
+                          {editable? <TextField size={"small"} defaultValue={moment(esfrRecordDetails.CreatedDate).format("MM/DD/YYYY")} className={"sdr-status-edit"}/>
+                              : moment(esfrRecordDetails.CreatedDate).format("MM/DD/YYYY")
                           }
                       </ListItem>
                   </Grid>
                   <Grid item xs={4}>
                       <ListItem>
-                          {editable? <TextField size={"small"} defaultValue={"3945748"} className={"sdr-status-edit"}/>
-                              : "3945748"
+                          {editable? <TextField size={"small"} defaultValue={esfrRecordDetails.LogPageNumber} className={"sdr-status-edit"}/>
+                              : esfrRecordDetails.LogPageNumber
                           }
                       </ListItem>
                   </Grid>
                   <Grid item xs={4}>
                       <ListItem>
-                          {editable? <TextField size={"small"} defaultValue={"IAH"} className={"sdr-status-edit"}/>
-                              : "IAH"
+                          {editable? <TextField size={"small"} defaultValue={esfrRecordDetails.Station} className={"sdr-status-edit"}/>
+                              : esfrRecordDetails.Station
                           }
                       </ListItem>
                   </Grid>
@@ -103,8 +265,8 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
               <Grid className={"sdr-status-description"} container spacing={3} >
                   <Grid item xs={4}>
                       <ListItem>
-                          {editable? <TextField size={"small"} defaultValue={"3351"} className={"sdr-status-edit"}/>
-                              : "3351"
+                          {editable? <TextField size={"small"} defaultValue={esfrRecordDetails.DiscrepancyDetails?.DiscrepancyPartDetails[0]?.atacode} className={"sdr-status-edit"}/>
+                              : esfrRecordDetails.DiscrepancyDetails?.DiscrepancyPartDetails[0]?.atacode
                           }
                       </ListItem>
                   </Grid>
@@ -426,7 +588,7 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
                       <ListItem>A/C Number</ListItem>
                   </Grid>
                   <Grid className={"view-details-right"} item xs={5}>
-                      <ListItem>N37534</ListItem>
+                      <ListItem>{esfrRecordDetails.FleetInfo?.LicenseNumber}</ListItem>
                   </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -434,7 +596,7 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
                       <ListItem>A/C Manufacturer</ListItem>
                   </Grid>
                   <Grid className={"view-details-right"} item xs={5}>
-                      <ListItem>BOEING</ListItem>
+                      <ListItem>{esfrRecordDetails.FleetInfo?.ManufacturedBy}</ListItem>
                   </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -442,7 +604,7 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
                       <ListItem>A/C Model</ListItem>
                   </Grid>
                   <Grid className={"view-details-right"} item xs={5}>
-                      <ListItem>737-9M9</ListItem>
+                      <ListItem>{esfrRecordDetails.FleetInfo?.ManufacturerPartNumber}</ListItem>
                   </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -450,7 +612,7 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
                       <ListItem>A/C Serial Number</ListItem>
                   </Grid>
                   <Grid className={"view-details-right"} item xs={5}>
-                      <ListItem>66121</ListItem>
+                      <ListItem>{esfrRecordDetails.FleetInfo?.ManufacturerSerialNumber}</ListItem>
                   </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -458,7 +620,7 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
                       <ListItem>A/C Total Time</ListItem>
                   </Grid>
                   <Grid className={"view-details-right"} item xs={5}>
-                      <ListItem>4344.00</ListItem>
+                      <ListItem>{esfrRecordDetails.FleetInfo?.TotalAircraftTime}</ListItem>
                   </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -466,7 +628,7 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
                       <ListItem>A/C Total Cycles</ListItem>
                   </Grid>
                   <Grid className={"view-details-right"} item xs={5}>
-                      <ListItem>6641</ListItem>
+                      <ListItem>{esfrRecordDetails.FleetInfo?.TotalAircraftCycles}</ListItem>
                   </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -474,7 +636,7 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
                       <ListItem>Flight #</ListItem>
                   </Grid>
                   <Grid className={"view-details-right"} item xs={5}>
-                      <ListItem>2631</ListItem>
+                      <ListItem>{esfrRecordDetails.FleetInfo?.TailNumber}</ListItem>
                   </Grid>
               </Grid>
           </Menu>
