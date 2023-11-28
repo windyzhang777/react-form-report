@@ -18,7 +18,7 @@ export interface CompDataGrid {
 
 // grid row
 export interface GridRow {
-  id: number;
+  Id: number;
   LogpageNumber: string;
   LogpageStatus: any;
   CreatedBy: string;

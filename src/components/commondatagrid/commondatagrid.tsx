@@ -133,7 +133,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
       let row:GridRow = {
         SdrStatus: sdrStatusText,
         LogPageStatus: r.LogpageStatus,
-        id: r.Id,
+        Id: r.Id,
         LogpageNumber: r.LogpageNumber,
         LogpageStatus: r.LogpageStatus,
         CreatedBy: r.CreatedBy,
@@ -158,16 +158,20 @@ const CommonDataGrid = (props: CompDataGrid) => {
 
   const setViewSdr = (sdrData: GridCellParams) => {
     setViewSdrFlag(true);
-    setSelectedSdrId(sdrData?.row.id);
-    setViewSdrId(sdrData?.row.id);
+    setSelectedSdrId(sdrData?.row.Id);
+    setViewSdrId(sdrData?.row.Id);
     setSelectedIndex(reportIndex);
   };
 
   const styleRow = (params: any) => {
     let rowStyles = "";
-    rowStyles += params.id === viewSdrId ? "Mui-selection " : "";
+    rowStyles += params.Id === viewSdrId ? "Mui-selection " : "";
     rowStyles += params.indexRelativeToCurrentPage % 2 === 0 ? "" : "Mui-odd";
     return rowStyles;
+  }
+
+  const getRowId = (row: GridRow) => {
+    return row.Id + "-" + row.Type;
   }
 
   return (
@@ -177,6 +181,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
           disableColumnMenu
           columns={columnDefs}
           rows={rowData}
+          getRowId={getRowId}
           checkboxSelection={showCheckbox}
           hideFooter={true}
           onRowSelectionModelChange={(sdrIds: GridRowSelectionModel) =>
