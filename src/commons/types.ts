@@ -20,10 +20,10 @@ export interface CompDataGrid {
 export interface GridRow {
   Id: number;
   LogpageNumber: string;
-  LogpageStatus: any;
+  LogpageStatus: string;
   CreatedBy: string;
-  CreatedbyFirstName: any;
-  createbyLastName: any;
+  CreatedbyFirstName: string;
+  createbyLastName: string;
   CreatedDate: string;
   Type: string
   SdrStatus: string;
@@ -33,10 +33,10 @@ export interface GridRow {
 export interface SdrRowApi {
   Id: number;
   LogpageNumber: string;
-  LogpageStatus: any;
+  LogpageStatus: string;
   CreatedBy: string;
-  CreatedbyFirstName: any;
-  CreatebyLastName: any;
+  CreatedbyFirstName: string;
+  CreatebyLastName: string;
   CreatedDate: string;
   Type: string;
 }

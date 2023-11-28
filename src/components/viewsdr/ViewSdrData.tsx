@@ -541,14 +541,14 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
           </Grid>}
           {props.selectedIndex !== 2 && <Grid spacing={3} container sx={{boxShadow: "0px -4px 8px 0px rgba(51, 51, 51, 0.12)", width: "200%",
               marginLeft: "0", marginTop: "10px", textTransform: "none"}}>
-              <Grid xs={8}></Grid>
-              <Grid xs={2}>
+              <Grid item xs={8}></Grid>
+              <Grid item xs={2}>
                 <Button sx={{color: "#6244BB", borderColor: "#6244BB", width: "100px",
                     marginTop: "20px", marginBottom: "20px", }} variant={"outlined"}
                     onClick={onClickEdit}
                 >{editable? "Cancel": "Edit"}</Button>
               </Grid>
-              <Grid xs={2}>
+              <Grid item xs={2}>
                 <Button sx={{backgroundColor: "#6244BB", textTransform: "none", width: "100px",
                     marginTop: "20px", marginBottom: "20px" }} variant={"contained"}>{editable? "Save": "Approve"}</Button>
               </Grid>

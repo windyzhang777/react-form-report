@@ -1,6 +1,6 @@
 import { useEffect, useState} from "react";
-import {DataGrid, GridCellParams, GridRowSelectionModel, GridColDef} from "@mui/x-data-grid";
-import { Button,Grid, Link } from "@mui/material";
+import {DataGrid, GridCellParams, GridRowSelectionModel, GridColDef, GridRowClassNameParams} from "@mui/x-data-grid";
+import {Button, Grid, Link} from "@mui/material";
 import moment from "moment";
 import {
   CompDataGrid,
@@ -17,7 +17,15 @@ import {useAppSelector} from "../../redux/hooks";
 import config from "src/utils/env.config";
 
 const CommonDataGrid = (props: CompDataGrid) => {
-  const { reportStatus, reportIndex, setViewSdrFlag, setSelectedSdrId, setSelectedType, updateSdrCount, setSelectedIndex } = props;
+  const {
+    reportStatus,
+    reportIndex,
+    setViewSdrFlag,
+    setSelectedSdrId,
+    setSelectedType,
+    updateSdrCount,
+    setSelectedIndex
+  } = props;
   const [rowData, setRowData] = useState<Array<GridRow>>([]);
   const [showCheckbox, setShowCheckbox] = useState<boolean>(false);
   const [selectedSdrsToExtract, setSelectedSdrsToExtract] = useState<
@@ -32,19 +40,19 @@ const CommonDataGrid = (props: CompDataGrid) => {
   const LinkCell = (rowApi: RowRowApi) => {
     let logPageNumber = rowApi?.rowApi?.row?.LogpageNumber;
     return (
-      <Link
-        sx={{ cursor: "pointer", color: "#6244BB" }}
-        onClick={() => openLogPage(logPageNumber)}
-      >
-        {logPageNumber}
-      </Link>
+        <Link
+            sx={{cursor: "pointer", color: "#6244BB"}}
+            onClick={() => openLogPage(logPageNumber)}
+        >
+          {logPageNumber}
+        </Link>
     );
   };
 
   const openLogPage = (logPageNumber: string) => {
     let width = window.innerWidth;
     let url = `${config.webTechApiBaseUrl}${config.URL_LOGPAGE_SEARCH}?logPageNumber=${logPageNumber}&fleetCode=null&role=${sessionStorage.getItem("jobRole")}`;
-    window.open(url, "_blank", "width=" + (width - 450) / 2 + ",height=" + (window.innerHeight - 320) + ",left=" + ((width/2) - 50) + ",top=450");
+    window.open(url, "_blank", "width=" + (width - 450) / 2 + ",height=" + (window.innerHeight - 320) + ",left=" + ((width / 2) - 50) + ",top=450");
   };
 
   const highlightDate = (rowApi: RowApi) => {
@@ -61,7 +69,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
       headerName: "Log Page Number",
       flex: 1.5,
       sortable: false,
-      renderCell: (rowApi: RowApi) => <LinkCell rowApi={rowApi} />,
+      renderCell: (rowApi: RowApi) => <LinkCell rowApi={rowApi}/>,
     },
     {
       field: "reportedby",
@@ -69,7 +77,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
       flex: 1.5,
       sortable: false,
       valueGetter: (params: NameValuesGetterParams) =>
-        `${params?.row?.CreatedbyFirstName} ${params?.row?.createbyLastName} (${params?.row?.CreatedBy})`,
+          `${params?.row?.CreatedbyFirstName} ${params?.row?.createbyLastName} (${params?.row?.CreatedBy})`,
     },
     {
       field: "CreatedDate",
@@ -127,10 +135,10 @@ const CommonDataGrid = (props: CompDataGrid) => {
         break;
     }
 
-    let filteredSdrs:GridRow[] = [];
+    let filteredSdrs: GridRow[] = [];
 
-    Array.isArray(sdrData) && sdrData?.forEach((r:SdrRowApi) => {
-      let row:GridRow = {
+    Array.isArray(sdrData) && sdrData?.forEach((r: SdrRowApi) => {
+      let row: GridRow = {
         SdrStatus: sdrStatusText,
         LogPageStatus: r.LogpageStatus,
         Id: r.Id,
@@ -164,7 +172,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
     setSelectedIndex(reportIndex);
   };
 
-  const styleRow = (params: any) => {
+  const styleRow = (params: GridRowClassNameParams<GridRow>) => {
     let rowStyles = "";
     rowStyles += params.id === viewSdrId ? "Mui-selection " : "";
     rowStyles += params.indexRelativeToCurrentPage % 2 === 0 ? "" : "Mui-odd";
