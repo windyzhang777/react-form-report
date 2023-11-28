@@ -17,7 +17,7 @@ import {useAppSelector} from "../../redux/hooks";
 import config from "src/utils/env.config";
 
 const CommonDataGrid = (props: CompDataGrid) => {
-  const { reportStatus, reportIndex, setViewSdrFlag, setSelectedSdrId, updateSdrCount, setSelectedIndex } = props;
+  const { reportStatus, reportIndex, setViewSdrFlag, setSelectedSdrId, setSelectedType, updateSdrCount, setSelectedIndex } = props;
   const [rowData, setRowData] = useState<Array<GridRow>>([]);
   const [showCheckbox, setShowCheckbox] = useState<boolean>(false);
   const [selectedSdrsToExtract, setSelectedSdrsToExtract] = useState<
@@ -159,6 +159,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
   const setViewSdr = (sdrData: GridCellParams) => {
     setViewSdrFlag(true);
     setSelectedSdrId(sdrData?.row.Id);
+    setSelectedType(sdrData?.row.Type);
     setViewSdrId(sdrData?.row.Id + "-" + sdrData?.row.Type);
     setSelectedIndex(reportIndex);
   };

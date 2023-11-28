@@ -12,6 +12,7 @@ export interface CompDataGrid {
   updateSdrCount: (a: number, b: number) => void;
   setViewSdrFlag: (a: boolean) => void;
   setSelectedSdrId: (a: number) => void;
+  setSelectedType: (a: string) => void;
   setSelectedIndex: (a: number) => void;
 }
 
@@ -40,6 +41,10 @@ export interface SdrRowApi {
   Type: string;
 }
 
+export interface EsfrRecordDetailApi {
+  OperatorControlNumber: string;
+}
+
 export interface TabPanelProps {
   children?: React.ReactNode;
   index?: number;
@@ -48,7 +53,8 @@ export interface TabPanelProps {
 
 export interface ViewSdrDataProps {
   selectedSdrId: number;
-  selectedIndex: number
+  selectedIndex: number;
+  selectedType: string;
 }
 
 export interface NewSdrsDataResponse {
@@ -109,6 +115,11 @@ export type FETCH_APPROVED_FAILURE = "FETCH_APPROVED_FAILURE"
 export type FETCH_FLAGGED_FAILURE = "FETCH_FLAGGED_FAILURE"
 export type SdrActionType = FETCH_NEW_SDRS | FETCH_APPROVED_SDRS | FETCH_FLAGGED_SDRS | FETCH_NEW_SUCCESS | FETCH_APPROVED_SUCCESS | FETCH_FLAGGED_SUCCESS | FETCH_NEW_FAILURE | FETCH_APPROVED_FAILURE | FETCH_FLAGGED_FAILURE;
 
+export type FETCH_ESFR_DETAIL = "FETCH_ESFR_DETAIL";
+export type FETCH_ESFR_DETAIL_SUCCESS = "FETCH_ESFR_DETAIL_SUCCESS";
+export type FETCH_ESFR_DETAIL_FAILURE = "FETCH_ESFR_DETAIL_FAILURE";
+export type EsfrRecordDetailType = FETCH_ESFR_DETAIL | FETCH_ESFR_DETAIL_SUCCESS | FETCH_ESFR_DETAIL_FAILURE;
+
 export interface ProfileDispatchFuncType {
   type: ProfileActionType;
   data?: ProfileDataType;
@@ -133,6 +144,12 @@ export interface SdrReducerAction {
   message: string;
 }
 
+export interface EsfrRecordDetailAcition {
+  type: EsfrRecordDetailType;
+  data: EsfrRecordDetailApi;
+  message: string;
+}
+
 export type ReducerAction = ProfileReducerAction | SdrReducerAction
 
 export type ProfileStateType = {
@@ -147,10 +164,17 @@ export type SdrStateType = {
   error: string;
 }
 
+export type EsfrRecordDetailStateType = {
+  loading: boolean;
+  esfrRecordDetail: EsfrRecordDetailApi;
+  error: string;
+}
+
 export interface EnvironmentConfig {
   apiBaseAddress?: string;
   URL_GET_PROFILE?: string;
   URL_GET_ALL_SDRS?: string;
+  URL_GET_ESFR_RECORD_DETAILS?: string;
   webTechApiBaseUrl: string;
   URL_LOGPAGE_SEARCH: string;
 }
