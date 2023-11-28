@@ -17,14 +17,14 @@ import {useAppSelector} from "../../redux/hooks";
 import config from "src/utils/env.config";
 
 const CommonDataGrid = (props: CompDataGrid) => {
-  const { reportStatus, reportIndex, setViewSdrFlag, selectedSdrId, setSelectedSdrId, updateSdrCount, setSelectedIndex } = props;
+  const { reportStatus, reportIndex, setViewSdrFlag, setSelectedSdrId, updateSdrCount, setSelectedIndex } = props;
   const [rowData, setRowData] = useState<Array<GridRow>>([]);
   const [showCheckbox, setShowCheckbox] = useState<boolean>(false);
   const [selectedSdrsToExtract, setSelectedSdrsToExtract] = useState<
       GridRowSelectionModel
   >([]);
   const [isExtractDisabled, setIsExtractDisabled] = useState<boolean>(true);
-  const [viewSdrId, setViewSdrId] = useState(selectedSdrId);
+  const [viewSdrId, setViewSdrId] = useState("");
   const newSdrs: SdrStateType = useAppSelector(state => state.newSdrs);
   const approvedSdrs: SdrStateType = useAppSelector(state => state.approvedSdrs);
   const flaggedSdrs: SdrStateType = useAppSelector(state => state.flaggedSdrs);
@@ -159,13 +159,13 @@ const CommonDataGrid = (props: CompDataGrid) => {
   const setViewSdr = (sdrData: GridCellParams) => {
     setViewSdrFlag(true);
     setSelectedSdrId(sdrData?.row.Id);
-    setViewSdrId(sdrData?.row.Id);
+    setViewSdrId(sdrData?.row.Id + "-" + sdrData?.row.Type);
     setSelectedIndex(reportIndex);
   };
 
   const styleRow = (params: any) => {
     let rowStyles = "";
-    rowStyles += params.Id === viewSdrId ? "Mui-selection " : "";
+    rowStyles += params.id === viewSdrId ? "Mui-selection " : "";
     rowStyles += params.indexRelativeToCurrentPage % 2 === 0 ? "" : "Mui-odd";
     return rowStyles;
   }

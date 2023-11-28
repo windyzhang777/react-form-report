@@ -13,7 +13,6 @@ export interface CompDataGrid {
   setViewSdrFlag: (a: boolean) => void;
   setSelectedSdrId: (a: number) => void;
   setSelectedIndex: (a: number) => void;
-  selectedSdrId: number;
 }
 
 // grid row
