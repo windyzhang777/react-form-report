@@ -1,8 +1,10 @@
 import {Box, Button, Checkbox, Grid, ListItem, Menu, TextareaAutosize, TextField} from "@mui/material";
-import { ViewSdrDataProps } from "src/commons/types";
+import {EsfrRecordDetailStateType, ViewSdrDataProps} from "src/commons/types";
 import "./viewSdrData.css";
-import {MouseEvent, useState} from "react";
-import moment from "moment/moment";
+import {MouseEvent, useEffect, useState} from "react";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks";
+import {getEsfrRecordDetails} from "../../redux/ducks/getEsfrRecordDetails";
+import moment from "moment";
 
 const ViewSdrData = (props: ViewSdrDataProps) => {
 
@@ -171,6 +173,12 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
 
     const [anchorEl, setAnchorEl] = useState<Element | null>(null);
     const [editable, setEditable] = useState(false);
+    const dispatch = useAppDispatch();
+    const testDetails: EsfrRecordDetailStateType = useAppSelector(state => state.esfrRecordDetail);
+
+    useEffect(() => {
+        dispatch(getEsfrRecordDetails(props.selectedSdrId, props.selectedType));
+    }, [props]);
 
     const sxBox = {
         borderBottom: 1, 
@@ -210,7 +218,7 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
           </Grid>
           <Grid container spacing={2}>
               <Grid item xs={6}>
-                  <ListItem>{esfrRecordDetails.OperatorControlNumber}</ListItem>
+                  <ListItem>{testDetails.esfrRecordDetailData?.CreatedDate}</ListItem>
               </Grid>
               <Grid item xs={6}>
                   <ListItem onClick={openACDetails}> <u className={"view-details-text"}>View Details</u></ListItem>

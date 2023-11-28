@@ -41,10 +41,6 @@ export interface SdrRowApi {
   Type: string;
 }
 
-export interface EsfrRecordDetailApi {
-  OperatorControlNumber: string;
-}
-
 export interface TabPanelProps {
   children?: React.ReactNode;
   index?: number;
@@ -98,6 +94,9 @@ export type StatusId = 2 | 3 | 4
 // TODO: define specific data type according to api response 
 export type ProfileDataType = {}
 export type SdrDataType = SdrRowApi[]
+export type EsfrRecordDetailDataType = {
+  CreatedDate: string
+}
 
 export type FETCH_PROFILE = "FETCH_PROFILE"
 export type FETCH_SUCCESS = "FETCH_SUCCESS"
@@ -118,7 +117,7 @@ export type SdrActionType = FETCH_NEW_SDRS | FETCH_APPROVED_SDRS | FETCH_FLAGGED
 export type FETCH_ESFR_DETAIL = "FETCH_ESFR_DETAIL";
 export type FETCH_ESFR_DETAIL_SUCCESS = "FETCH_ESFR_DETAIL_SUCCESS";
 export type FETCH_ESFR_DETAIL_FAILURE = "FETCH_ESFR_DETAIL_FAILURE";
-export type EsfrRecordDetailType = FETCH_ESFR_DETAIL | FETCH_ESFR_DETAIL_SUCCESS | FETCH_ESFR_DETAIL_FAILURE;
+export type EsfrRecordDetailActionType = FETCH_ESFR_DETAIL | FETCH_ESFR_DETAIL_SUCCESS | FETCH_ESFR_DETAIL_FAILURE;
 
 export interface ProfileDispatchFuncType {
   type: ProfileActionType;
@@ -144,13 +143,20 @@ export interface SdrReducerAction {
   message: string;
 }
 
-export interface EsfrRecordDetailAcition {
-  type: EsfrRecordDetailType;
-  data: EsfrRecordDetailApi;
+export interface EsfrRecordDetailFuncType {
+  type: EsfrRecordDetailActionType;
+  data?: EsfrRecordDetailDataType;
+  message?: string;
+}
+
+
+export interface EsfrRecordDetailReducerAcition {
+  type: EsfrRecordDetailActionType;
+  data: EsfrRecordDetailDataType;
   message: string;
 }
 
-export type ReducerAction = ProfileReducerAction | SdrReducerAction
+export type ReducerAction = ProfileReducerAction | SdrReducerAction | EsfrRecordDetailReducerAcition
 
 export type ProfileStateType = {
   loading: boolean;
@@ -166,7 +172,7 @@ export type SdrStateType = {
 
 export type EsfrRecordDetailStateType = {
   loading: boolean;
-  esfrRecordDetail: EsfrRecordDetailApi;
+  esfrRecordDetailData: EsfrRecordDetailDataType | null;
   error: string;
 }
 
