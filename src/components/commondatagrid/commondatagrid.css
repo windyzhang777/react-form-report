@@ -54,3 +54,7 @@
 .Mui-hovered {
     background-color: #CCCCCC !important;
 }
+
+.MuiDataGrid-columnHeader.MuiDataGrid-withBorderColor {
+    font-size: 15px;
+}

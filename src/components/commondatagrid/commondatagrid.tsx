@@ -74,7 +74,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
     {
       field: "CreatedDate",
       headerName: "Date & Time",
-      flex: 1.5,
+      flex: 2,
       sortable: false,
       renderCell: (rowApi: RowApi) => highlightDate(rowApi),
     },
@@ -175,7 +175,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
   }
 
   return (
-      <Grid item md={12} sx={{ height: 700 }}>
+      <Grid item md={12}>
         <DataGrid
           sx={{ border: "none"}}
           disableColumnMenu
