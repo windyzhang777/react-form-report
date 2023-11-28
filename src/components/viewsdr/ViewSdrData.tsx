@@ -130,6 +130,7 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
             "Station": "EWR",
             "ATACode": "511",
             "Date": "2023-11-24T00:00:00",
+            "CorrectiveActions": "This is the corrective actions summary"
         },
         "sdrDetails": {
             "sdrNumber": "string",
@@ -272,15 +273,15 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
                   </Grid>
                   <Grid item xs={4}>
                       <ListItem>
-                          {editable? <TextField size={"small"} defaultValue={"K"} className={"sdr-status-edit"}/>
-                              : "K"
+                          {editable? <TextField size={"small"} defaultValue={esfrRecordDetails.sdrDetails?.natureOfReportIds[0]} className={"sdr-status-edit"}/>
+                              : esfrRecordDetails.sdrDetails?.natureOfReportIds[0]
                           }
                       </ListItem>
                   </Grid>
                   <Grid item xs={4}>
                       <ListItem>
-                          {editable? <TextField size={"small"} defaultValue={"L"} className={"sdr-status-edit"}/>
-                              : "L"
+                          {editable? <TextField size={"small"} defaultValue={esfrRecordDetails.sdrDetails?.precautionaryProcedureIds[0]} className={"sdr-status-edit"}/>
+                              : esfrRecordDetails.sdrDetails?.precautionaryProcedureIds[0]
                           }
                       </ListItem>
                   </Grid>
@@ -296,15 +297,15 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
               <Grid className={"sdr-status-description"} container spacing={3} >
                   <Grid item xs={4}>
                       <ListItem>
-                          {editable? <TextField size={"small"} defaultValue={"IN"} className={"sdr-status-edit"}/>
-                              : "IN"
+                          {editable? <TextField size={"small"} defaultValue={esfrRecordDetails.sdrDetails?.stageId} className={"sdr-status-edit"}/>
+                              : esfrRecordDetails.sdrDetails?.stageId
                           }
                       </ListItem>
                   </Grid>
                   <Grid item xs={4}>
                       <ListItem>
-                          {editable? <TextField size={"small"} defaultValue={"V"} className={"sdr-status-edit"}/>
-                              : "V"
+                          {editable? <TextField size={"small"} defaultValue={esfrRecordDetails.sdrDetails?.howDiscoveredId} className={"sdr-status-edit"}/>
+                              : esfrRecordDetails.sdrDetails?.howDiscoveredId
                           }
                       </ListItem>
                   </Grid>
@@ -318,10 +319,10 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
                   <Grid item xs={12}>
                       <ListItem>
                           {editable?
-                              <TextareaAutosize style={{width: "190%", fontSize: "16px"}} value={"EXIT LIGHT ABOVE L1 DOOR WILL NOT ILLUMINATE (REF. AAR NR 99978502). REPLACED BATTERY PACK M1675 WITH NEW BATTERY PACK IAW B737 AMM 33-51-06-960-805. INSTALLATION TEST GOOD. (WORK ACCOMPLISHED BY V937131 AND AAR QC A-83 V935067)."} />
+                              <TextareaAutosize style={{width: "190%", fontSize: "16px"}} value= {esfrRecordDetails.FleetInfo?.CorrectiveActions} />
 
                               // <TextField size={"small"} fullWidth={true}  defaultValue={"EXIT LIGHT ABOVE L1 DOOR WILL NOT ILLUMINATE (REF. AAR NR 99978502). REPLACED BATTERY PACK M1675 WITH NEW BATTERY PACK IAW B737 AMM 33-51-06-960-805. INSTALLATION TEST GOOD. (WORK ACCOMPLISHED BY V937131 AND AAR QC A-83 V935067)."} className={"sdr-status-edit"}/>
-                              : "EXIT LIGHT ABOVE L1 DOOR WILL NOT ILLUMINATE (REF. AAR NR 99978502). REPLACED BATTERY PACK M1675 WITH NEW BATTERY PACK IAW B737 AMM 33-51-06-960-805. INSTALLATION TEST GOOD. (WORK ACCOMPLISHED BY V937131 AND AAR QC A-83 V935067)."
+                              : esfrRecordDetails.FleetInfo?.CorrectiveActions
                           }
                       </ListItem>
                   </Grid>
