@@ -201,9 +201,6 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
                     <Grid item xs={4}>
                         <ListItem>Part Number</ListItem>
                     </Grid>
-                    <Grid item xs={4}>
-                        <ListItem>Part make</ListItem>
-                    </Grid>
                 </Grid>
                 <Grid className={"sdr-status-description"} container spacing={3}>
                     <Grid item xs={4}>
@@ -221,15 +218,6 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
                                                    defaultValue={esfrRecordDetails.esfrRecordDetailData?.SdrDetails?.PartDetails?.PartManufacturerSerialNumber}
                                                    className={"sdr-status-edit"}/>
                                 : esfrRecordDetails.esfrRecordDetailData?.SdrDetails?.PartDetails?.PartManufacturerSerialNumber
-                            }
-                        </ListItem>
-                    </Grid>
-                    <Grid item xs={4}>
-                        <ListItem>
-                            {editable ? <TextField size={"small"}
-                                                   defaultValue={esfrRecordDetails.esfrRecordDetailData?.SdrDetails?.PartDetails?.PartTrackingNumber}
-                                                   className={"sdr-status-edit"}/>
-                                : esfrRecordDetails.esfrRecordDetailData?.SdrDetails?.PartDetails?.PartTrackingNumber
                             }
                         </ListItem>
                     </Grid>
