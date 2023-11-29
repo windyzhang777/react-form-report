@@ -1,4 +1,4 @@
-import { Box, Grid, Tab, Tabs } from "@mui/material";
+import {Alert, Box, Grid, Tab, Tabs} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import "../homescreen/homescreen.css";
 import CommonDataGrid from "../commondatagrid/commondatagrid";
@@ -9,7 +9,7 @@ import {getAllSdrs} from "../../redux/ducks/getAllSdrs";
 import {useAppDispatch} from "../../redux/hooks";
 
 const sxBox = {
-    borderBottom: 1, 
+    borderBottom: 1,
     borderColor: 'divider'
 }
 
@@ -29,7 +29,7 @@ function a11yProps(index: number) {
 }
 
 const HomeScreen = () => {
-    const [value, setValue]= useState<number>(0);
+    const [value, setValue] = useState<number>(0);
     const [openSdrCount, setOpenSdrCount] = useState<number>(0);
     const [flaggedSdrCount, setFlaggedSdrCount] = useState<number>(0);
     const [approvedSdrCount, setApprovedSdrCount] = useState<number>(0);
@@ -38,6 +38,7 @@ const HomeScreen = () => {
     const [selectedIndex, setSelectedIndex] = useState<number>(0);
     const [selectedType, setSelectedType] = useState<string>("");
     const dispatch = useAppDispatch();
+    const [openSDRApproved, setOpenSDRApproved] = useState<boolean>(false);
 
     useEffect(() => {
         dispatch(getAllSdrs(SdrStatus.New));
@@ -52,7 +53,7 @@ const HomeScreen = () => {
     };
 
     const updateSdrCount = (index: number, count: number) => {
-        switch(index){
+        switch (index) {
             case 0:
                 setOpenSdrCount(count);
                 break;
@@ -66,60 +67,64 @@ const HomeScreen = () => {
     }
 
     return (
-      <Grid container spacing={2} sx={{ m: 0 }}>
-        <Grid item md={6}>
-          <Box sx={{ ...sxBox }}>
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              aria-label="homeScreenSdrTabs"
-            >
-              <Tab
-                {...a11yProps(0)}
-                label={`New SDR/SFRs (${openSdrCount})`}
-                id="NewsdrTab"
-              />
-              <Tab
-                {...a11yProps(1)}
-                label={`Flagged for Follow up (${flaggedSdrCount})`}
-                id="Flaggedforfollowup"
-              />
-              <Tab
-                {...a11yProps(2)}
-                label={`Approved SDRs (${approvedSdrCount})`}
-                id="Approvedsdr"
-              />
-            </Tabs>
-          </Box>
-          <TabPanel value={value}>
-            <CommonDataGrid
-              reportStatus={SelectedTab[value]}
-              reportIndex={value}
-              updateSdrCount={updateSdrCount}
-              setViewSdrFlag={setViewSdrFlag}
-              setSelectedSdrId={setSelectedSdrId}
-              setSelectedType={setSelectedType}
-              setSelectedIndex={setSelectedIndex}
-            />
-          </TabPanel>
-        </Grid>
-        <Grid item md={6}>
-          {viewSdrFlag ? (
-            <ViewSdrData selectedSdrId={selectedSdrId} selectedIndex={selectedIndex} selectedType={selectedType} />
-          ) : (
-            <Grid
-              container
-              spacing={0}
-              direction="column"
-              alignItems="center"
-              justifyContent="center"
-              sx={{ minHeight: "85vh" }}
-            >
-              <p className="sdrDefaultMsg">Please select an SDR to view it. </p>
+        <Grid container spacing={2} sx={{m: 0}}>
+            {openSDRApproved && <Alert sx={{position: "absolute", left: "47%"}} onClose={() => {
+                setOpenSDRApproved(false)
+            }} variant="filled" severity="success">SDR approved</Alert>}
+            <Grid item md={6}>
+                <Box sx={{...sxBox}}>
+                    <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        aria-label="homeScreenSdrTabs"
+                    >
+                        <Tab
+                            {...a11yProps(0)}
+                            label={`New SDR/SFRs (${openSdrCount})`}
+                            id="NewsdrTab"
+                        />
+                        <Tab
+                            {...a11yProps(1)}
+                            label={`Flagged for Follow up (${flaggedSdrCount})`}
+                            id="Flaggedforfollowup"
+                        />
+                        <Tab
+                            {...a11yProps(2)}
+                            label={`Approved SDRs (${approvedSdrCount})`}
+                            id="Approvedsdr"
+                        />
+                    </Tabs>
+                </Box>
+                <TabPanel value={value}>
+                    <CommonDataGrid
+                        reportStatus={SelectedTab[value]}
+                        reportIndex={value}
+                        updateSdrCount={updateSdrCount}
+                        setViewSdrFlag={setViewSdrFlag}
+                        setSelectedSdrId={setSelectedSdrId}
+                        setSelectedType={setSelectedType}
+                        setSelectedIndex={setSelectedIndex}
+                    />
+                </TabPanel>
             </Grid>
-          )}
+            <Grid item md={6}>
+                {viewSdrFlag ? (
+                    <ViewSdrData selectedSdrId={selectedSdrId} selectedIndex={selectedIndex} selectedType={selectedType}
+                                 setOpenSDRApproved={setOpenSDRApproved}/>
+                ) : (
+                    <Grid
+                        container
+                        spacing={0}
+                        direction="column"
+                        alignItems="center"
+                        justifyContent="center"
+                        sx={{minHeight: "85vh"}}
+                    >
+                        <p className="sdrDefaultMsg">Please select an SDR to view it. </p>
+                    </Grid>
+                )}
+            </Grid>
         </Grid>
-      </Grid>
     );
 };
 

@@ -15,7 +15,7 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
 
     useEffect(() => {
         dispatch(getEsfrRecordDetails(props.selectedSdrId, props.selectedType));
-    }, [props]);
+    }, [props.selectedSdrId]);
 
     const sxBox = {
         borderBottom: 1,
@@ -37,6 +37,10 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
 
     const onClickEdit = () => {
         setEditable(!editable);
+    }
+
+    const onClickApprve = () => {
+        props.setOpenSDRApproved(true);
     }
 
     return (
@@ -451,7 +455,7 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
                             <Button sx={{
                                 backgroundColor: "#6244BB", textTransform: "none", width: "100px",
                                 marginTop: "20px", marginBottom: "20px"
-                            }} variant={"contained"}>{editable ? "Save" : "Approve"}</Button>
+                            }} variant={"contained"} onClick={onClickApprve}>{editable ? "Save" : "Approve"}</Button>
                         </Grid>
                     </Grid>}
                     <Menu

@@ -51,6 +51,7 @@ export interface ViewSdrDataProps {
   selectedSdrId: number;
   selectedIndex: number;
   selectedType: string;
+  setOpenSDRApproved: (a: boolean) => void;
 }
 
 export interface NewSdrsDataResponse {
