@@ -244,10 +244,10 @@ export type EsfrRecordDetailStateType = {
 }
 
 export interface EnvironmentConfig {
-    apiBaseAddress?: string;
-    URL_GET_PROFILE?: string;
-    URL_GET_ALL_SDRS?: string;
-    URL_GET_ESFR_RECORD_DETAILS?: string;
+    apiBaseAddress: string;
+    URL_GET_PROFILE: string;
+    URL_GET_ALL_SDRS: string;
+    URL_GET_ESFR_RECORD_DETAILS: string;
     webTechApiBaseUrl: string;
     URL_LOGPAGE_SEARCH: string;
 }
