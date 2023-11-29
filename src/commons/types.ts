@@ -95,7 +95,52 @@ export type StatusId = 2 | 3 | 4
 export type ProfileDataType = {}
 export type SdrDataType = SdrRowApi[]
 export type EsfrRecordDetailDataType = {
-  CreatedDate: string
+  OperatorControlNumber: string,
+  CreatedDate: string,
+  LogPageNumber: string,
+  Station: string,
+  FleetInfo: {
+    AtaCode: string,
+    CorrectiveActions: string,
+    LicenseNumber: string,
+    ManufacturedBy: string,
+    ManufacturerPartNumber: string,
+    ManufacturerSerialNumber: string,
+    TotalAircraftTime: number,
+    TotalAircraftCycles: number,
+    TailNumber: string
+  },
+  OriginDetails: {
+    InspectionType: number,
+    CalDoc: string,
+    MfrSource: string,
+    SpecIdentifier: string,
+    DetectionMethod: string
+  },
+  DiscrepancyDetails: {
+    IsManufacturingLimitExceeded: boolean,
+    DiscrepancyType: string,
+    DiscrepancyPartComments: string
+  },
+  LocationDetails: {
+    Zone: string,
+    DefectLocation: string,
+    CoordinateLocationDetails: string
+  }
+  SdrDetails: {
+    NatureofReports: string[],
+    PrecautionaryProcedures: string[],
+    Stage: string,
+    HowDicovered: string,
+    PartDetails: {
+      PartDescription: string,
+      PartSerialNumber: string,
+      PartTrackingNumber: string,
+      PartManufacturerSerialNumber: string,
+      PartCondition: string,
+      PartLocation: string
+    },
+  }
 }
 
 export type FETCH_PROFILE = "FETCH_PROFILE"
