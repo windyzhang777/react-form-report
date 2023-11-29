@@ -1,5 +1,5 @@
 import {Box, Button, Checkbox, Grid, ListItem, Menu, TextareaAutosize, TextField} from "@mui/material";
-import {EsfrRecordDetailStateType, ViewSdrDataProps} from "src/commons/types";
+import {EsfrRecordDetailStateType, InspectionType, ViewSdrDataProps} from "src/commons/types";
 import "./viewSdrData.css";
 import {MouseEvent, useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
@@ -293,9 +293,9 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
                     <Grid item xs={4}>
                         <ListItem>
                             {editable ? <TextField size={"small"}
-                                                   defaultValue={esfrRecordDetails.esfrRecordDetailData?.OriginDetails?.InspectionType}
+                                                   defaultValue={esfrRecordDetails.esfrRecordDetailData?.OriginDetails?.InspectionType ? InspectionType.get(esfrRecordDetails.esfrRecordDetailData?.OriginDetails?.InspectionType) : ""}
                                                    className={"sdr-status-edit"}/>
-                                : esfrRecordDetails.esfrRecordDetailData?.OriginDetails?.InspectionType
+                                : esfrRecordDetails.esfrRecordDetailData?.OriginDetails?.InspectionType ? InspectionType.get(esfrRecordDetails.esfrRecordDetailData?.OriginDetails?.InspectionType) : ""
                             }
                         </ListItem>
                     </Grid>

@@ -239,3 +239,12 @@ export enum SdrStatus {
   Approved = 3,
   Flagged = 4
 }
+
+export const InspectionType = new Map<number, string>([
+      [1, "Pre-Flight/Walk Around"],
+      [2, "Line MX Discovery"],
+      [3, "Special Inspection"],
+      [4, "Accident Investigation"],
+      [5, "OTHER"]
+    ]
+)
