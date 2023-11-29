@@ -77,7 +77,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
       flex: 1.5,
       sortable: false,
       valueGetter: (params: NameValuesGetterParams) =>
-          `${params?.row?.CreatedbyFirstName} ${params?.row?.createbyLastName} (${params?.row?.CreatedBy})`,
+          `${params?.row?.CreatedbyFirstName} ${params?.row?.CreatedbyFirstName} (${params?.row?.CreatedBy})`,
     },
     {
       field: "CreatedDate",
@@ -146,7 +146,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
         LogpageStatus: r.LogpageStatus,
         CreatedBy: r.CreatedBy,
         CreatedbyFirstName: r.CreatedbyFirstName,
-        createbyLastName: r.CreatebyLastName,
+        createdbyLastName: r.CreatedbyLastName,
         CreatedDate: moment(r.CreatedDate).format("MM/DD/YYYY hh:mm:ss A"),
         Type: r.Type,
       }

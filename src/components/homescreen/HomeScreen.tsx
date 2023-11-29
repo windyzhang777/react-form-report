@@ -39,6 +39,7 @@ const HomeScreen = () => {
     const [selectedType, setSelectedType] = useState<string>("");
     const dispatch = useAppDispatch();
     const [openSDRApproved, setOpenSDRApproved] = useState<boolean>(false);
+    const [openSDRApprovedWithFlag, setOpenSDRApprovedWithFlag] = useState<boolean>(false);
 
     useEffect(() => {
         dispatch(getAllSdrs(SdrStatus.New));
@@ -66,11 +67,18 @@ const HomeScreen = () => {
         }
     }
 
+    const onClickApprove = (flag: boolean) => {
+        flag ? setOpenSDRApprovedWithFlag(true) : setOpenSDRApproved(true);
+    }
+
     return (
         <Grid container spacing={2} sx={{m: 0}}>
             {openSDRApproved && <Alert sx={{position: "absolute", left: "47%"}} onClose={() => {
                 setOpenSDRApproved(false)
             }} variant="filled" severity="success">SDR approved</Alert>}
+            {openSDRApprovedWithFlag && <Alert sx={{position: "absolute", left: "42%"}} onClose={() => {
+                setOpenSDRApprovedWithFlag(false)
+            }} variant="filled" severity="success">SDR approved with flagged for follow-up</Alert>}
             <Grid item md={6}>
                 <Box sx={{...sxBox}}>
                     <Tabs
@@ -110,7 +118,7 @@ const HomeScreen = () => {
             <Grid item md={6}>
                 {viewSdrFlag ? (
                     <ViewSdrData selectedSdrId={selectedSdrId} selectedIndex={selectedIndex} selectedType={selectedType}
-                                 setOpenSDRApproved={setOpenSDRApproved}/>
+                                 onClickApprove={onClickApprove}/>
                 ) : (
                     <Grid
                         container
