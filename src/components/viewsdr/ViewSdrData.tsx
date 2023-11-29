@@ -192,8 +192,6 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
                                     {editable ?
                                         <TextareaAutosize style={{width: "190%", fontSize: "16px"}}
                                                           value={esfrRecordDetails.esfrRecordDetailData?.FleetInfo?.CorrectiveActions}/>
-
-                                        // <TextField size={"small"} fullWidth={true}  defaultValue={"EXIT LIGHT ABOVE L1 DOOR WILL NOT ILLUMINATE (REF. AAR NR 99978502). REPLACED BATTERY PACK M1675 WITH NEW BATTERY PACK IAW B737 AMM 33-51-06-960-805. INSTALLATION TEST GOOD. (WORK ACCOMPLISHED BY V937131 AND AAR QC A-83 V935067)."} className={"sdr-status-edit"}/>
                                         : esfrRecordDetails.esfrRecordDetailData?.FleetInfo?.CorrectiveActions
                                     }
                                 </ListItem>
