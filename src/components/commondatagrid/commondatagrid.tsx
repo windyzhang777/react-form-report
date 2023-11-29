@@ -1,6 +1,6 @@
 import { useEffect, useState} from "react";
-import {DataGrid, GridCellParams, GridRowSelectionModel, GridColDef} from "@mui/x-data-grid";
-import { Button,Grid, Link } from "@mui/material";
+import {DataGrid, GridCellParams, GridRowSelectionModel, GridColDef, GridRowClassNameParams} from "@mui/x-data-grid";
+import {Button, Grid, Link} from "@mui/material";
 import moment from "moment";
 import {
   CompDataGrid,
@@ -8,41 +8,51 @@ import {
   GridRow,
   NameValuesGetterParams,
   RowRowApi,
-  RowApi, SdrRowApi, SdrStateType,
+  RowApi,
+  SdrRowApi,
+  SdrStateType
 } from "src/commons/types";
 import "../commondatagrid/commondatagrid.css";
 import {useAppSelector} from "../../redux/hooks";
 import config from "src/utils/env.config";
 
 const CommonDataGrid = (props: CompDataGrid) => {
-  const { reportStatus, reportIndex, setViewSdrFlag, selectedSdrId, setSelectedSdrId, updateSdrCount, setSelectedIndex } = props;
+  const {
+    reportStatus,
+    reportIndex,
+    setViewSdrFlag,
+    setSelectedSdrId,
+    setSelectedType,
+    updateSdrCount,
+    setSelectedIndex
+  } = props;
   const [rowData, setRowData] = useState<Array<GridRow>>([]);
   const [showCheckbox, setShowCheckbox] = useState<boolean>(false);
   const [selectedSdrsToExtract, setSelectedSdrsToExtract] = useState<
       GridRowSelectionModel
   >([]);
   const [isExtractDisabled, setIsExtractDisabled] = useState<boolean>(true);
-  const [viewSdrId, setViewSdrId] = useState(selectedSdrId);
+  const [viewSdrId, setViewSdrId] = useState("");
   const newSdrs: SdrStateType = useAppSelector(state => state.newSdrs);
   const approvedSdrs: SdrStateType = useAppSelector(state => state.approvedSdrs);
   const flaggedSdrs: SdrStateType = useAppSelector(state => state.flaggedSdrs);
 
   const LinkCell = (rowApi: RowRowApi) => {
-    let logPageNumber = rowApi?.rowApi?.row?.LogPageNumber;
+    let logPageNumber = rowApi?.rowApi?.row?.LogpageNumber;
     return (
-      <Link
-        sx={{ cursor: "pointer", color: "#6244BB" }}
-        onClick={() => openLogPage(logPageNumber)}
-      >
-        {logPageNumber}
-      </Link>
+        <Link
+            sx={{cursor: "pointer", color: "#6244BB"}}
+            onClick={() => openLogPage(logPageNumber)}
+        >
+          {logPageNumber}
+        </Link>
     );
   };
 
   const openLogPage = (logPageNumber: string) => {
     let width = window.innerWidth;
     let url = `${config.webTechApiBaseUrl}${config.URL_LOGPAGE_SEARCH}?logPageNumber=${logPageNumber}&fleetCode=null&role=${sessionStorage.getItem("jobRole")}`;
-    window.open(url, "_blank", "width=" + (width - 450) / 2 + ",height=" + (window.innerHeight - 320) + ",left=" + ((width/2) - 50) + ",top=450");
+    window.open(url, "_blank", "width=" + (width - 450) / 2 + ",height=" + (window.innerHeight - 320) + ",left=" + ((width / 2) - 50) + ",top=450");
   };
 
   const highlightDate = (rowApi: RowApi) => {
@@ -57,33 +67,33 @@ const CommonDataGrid = (props: CompDataGrid) => {
     {
       field: "LogPageNumber",
       headerName: "Log Page Number",
-      flex: 1,
+      flex: 1.5,
       sortable: false,
-      renderCell: (rowApi: RowApi) => <LinkCell rowApi={rowApi} />,
+      renderCell: (rowApi: RowApi) => <LinkCell rowApi={rowApi}/>,
     },
     {
       field: "reportedby",
       headerName: "Reported By",
-      flex: 1,
+      flex: 1.5,
       sortable: false,
       valueGetter: (params: NameValuesGetterParams) =>
-        `${params?.row?.FirstName} ${params?.row?.LastName} (${params?.row?.CreatedBy})`,
+          `${params?.row?.CreatedbyFirstName} ${params?.row?.createbyLastName} (${params?.row?.CreatedBy})`,
     },
     {
       field: "CreatedDate",
       headerName: "Date & Time",
-      flex: 1,
+      flex: 2,
       sortable: false,
       renderCell: (rowApi: RowApi) => highlightDate(rowApi),
     },
     {
       field: "LogPageStatus",
       headerName: "Log Page Status",
-      flex: 1,
+      flex: 1.5,
       sortable: false,
     },
     {
-      field: "sfdr",
+      field: "Type",
       headerName: "SDR/SFR",
       flex: 1,
       sortable: false,
@@ -97,9 +107,9 @@ const CommonDataGrid = (props: CompDataGrid) => {
   ];
 
   useEffect(() => {
-    updateSdrCount(0, newSdrs.sdrData.length);
-    updateSdrCount(1, flaggedSdrs.sdrData.length);
-    updateSdrCount(2, approvedSdrs.sdrData.length);
+    updateSdrCount(0, newSdrs.sdrData?.length);
+    updateSdrCount(1, flaggedSdrs.sdrData?.length);
+    updateSdrCount(2, approvedSdrs.sdrData?.length);
   });
 
   useEffect(() => {
@@ -109,39 +119,36 @@ const CommonDataGrid = (props: CompDataGrid) => {
   useEffect(() => {
     let sdrData: Array<SdrRowApi> = [];
     let sdrStatusText = "Open";
-    let logpageStatusText = "Submitted";
     switch (reportIndex) {
       case 1:
         sdrData = flaggedSdrs.sdrData;
         sdrStatusText = "Approved with Follow Up";
-        logpageStatusText = "Approved with follow up";
         break
       case 2:
         sdrData = approvedSdrs.sdrData;
         sdrStatusText = "Approved";
-        logpageStatusText = "Approved";
         break;
       case 0:
       default:
         sdrData = newSdrs.sdrData;
         sdrStatusText = "Open";
-        logpageStatusText = "Submitted";
         break;
     }
 
-    let filteredSdrs:GridRow[] = [];
+    let filteredSdrs: GridRow[] = [];
 
-    Array.isArray(sdrData) && sdrData?.forEach((r:SdrRowApi) => {
-      let row:GridRow = {
+    Array.isArray(sdrData) && sdrData?.forEach((r: SdrRowApi) => {
+      let row: GridRow = {
         SdrStatus: sdrStatusText,
-        LogPageStatus: logpageStatusText,
-        LogPageNumber: r.LogPageNumber,
-        FirstName: r.FirstName,
-        LastName: r.LastName,
+        LogPageStatus: r.LogpageStatus,
+        Id: r.Id,
+        LogpageNumber: r.LogpageNumber,
+        LogpageStatus: r.LogpageStatus,
         CreatedBy: r.CreatedBy,
+        CreatedbyFirstName: r.CreatedbyFirstName,
+        createbyLastName: r.CreatebyLastName,
         CreatedDate: moment(r.CreatedDate).format("MM/DD/YYYY hh:mm:ss A"),
-        sfdr: r.SFdr,
-        id: r.SdrNumber
+        Type: r.Type,
       }
       filteredSdrs.push(row);
     })
@@ -159,25 +166,31 @@ const CommonDataGrid = (props: CompDataGrid) => {
 
   const setViewSdr = (sdrData: GridCellParams) => {
     setViewSdrFlag(true);
-    setSelectedSdrId(sdrData?.row.id);
-    setViewSdrId(sdrData?.row.id);
+    setSelectedSdrId(sdrData?.row.Id);
+    setSelectedType(sdrData?.row.Type);
+    setViewSdrId(sdrData?.row.Id + "-" + sdrData?.row.Type);
     setSelectedIndex(reportIndex);
   };
 
-  const styleRow = (params: any) => {
+  const styleRow = (params: GridRowClassNameParams<GridRow>) => {
     let rowStyles = "";
     rowStyles += params.id === viewSdrId ? "Mui-selection " : "";
     rowStyles += params.indexRelativeToCurrentPage % 2 === 0 ? "" : "Mui-odd";
     return rowStyles;
   }
 
+  const getRowId = (row: GridRow) => {
+    return row.Id + "-" + row.Type;
+  }
+
   return (
-      <Grid item md={12} sx={{ height: 700 }}>
+      <Grid item md={12}>
         <DataGrid
           sx={{ border: "none"}}
           disableColumnMenu
           columns={columnDefs}
           rows={rowData}
+          getRowId={getRowId}
           checkboxSelection={showCheckbox}
           hideFooter={true}
           onRowSelectionModelChange={(sdrIds: GridRowSelectionModel) =>
