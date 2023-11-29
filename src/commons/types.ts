@@ -23,7 +23,7 @@ export interface GridRow {
     LogpageStatus: string;
     CreatedBy: string;
     CreatedbyFirstName: string;
-    createdbyLastName: string;
+    CreatedbyLastName: string;
     CreatedDate: string;
     Type: string
     SdrStatus: string;

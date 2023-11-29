@@ -146,7 +146,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
         LogpageStatus: r.LogpageStatus,
         CreatedBy: r.CreatedBy,
         CreatedbyFirstName: r.CreatedbyFirstName,
-        createdbyLastName: r.CreatedbyLastName,
+        CreatedbyLastName: r.CreatedbyLastName,
         CreatedDate: moment(r.CreatedDate).format("MM/DD/YYYY hh:mm:ss A"),
         Type: r.Type,
       }
