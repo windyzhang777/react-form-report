@@ -23,7 +23,7 @@ export interface GridRow {
     LogpageStatus: string;
     CreatedBy: string;
     CreatedbyFirstName: string;
-    CreatedbyLastName: string;
+    CreatebyLastName: string;
     CreatedDate: string;
     Type: string
     SdrStatus: string;
@@ -36,7 +36,7 @@ export interface SdrRowApi {
     LogpageStatus: string;
     CreatedBy: string;
     CreatedbyFirstName: string;
-    CreatedbyLastName: string;
+    CreatebyLastName: string;
     CreatedDate: string;
     Type: string;
 }
@@ -69,7 +69,7 @@ export interface FlaggedSdrsDataResponse {
 export interface NameValuesGetterParams {
     row: {
         CreatedbyFirstName: string;
-        CreatedbyLastName: string;
+        CreatebyLastName: string;
         CreatedBy: string;
     }
 }
