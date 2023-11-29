@@ -77,7 +77,7 @@ const CommonDataGrid = (props: CompDataGrid) => {
       flex: 1.5,
       sortable: false,
       valueGetter: (params: NameValuesGetterParams) =>
-          `${params?.row?.CreatedbyFirstName} ${params?.row?.CreatedbyFirstName} (${params?.row?.CreatedBy})`,
+          `${params?.row?.CreatedbyFirstName} ${params?.row?.CreatedbyLastName} (${params?.row?.CreatedBy})`,
     },
     {
       field: "CreatedDate",
