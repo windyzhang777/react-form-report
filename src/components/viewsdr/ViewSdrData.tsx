@@ -12,9 +12,11 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
     const [editable, setEditable] = useState(false);
     const dispatch = useAppDispatch();
     const esfrRecordDetails: EsfrRecordDetailStateType = useAppSelector(state => state.esfrRecordDetail);
+    const [flagFollowUp, setFlagFollowUp] = useState<boolean>(props.selectedIndex === 1);
 
     useEffect(() => {
         dispatch(getEsfrRecordDetails(props.selectedSdrId, props.selectedType));
+        setFlagFollowUp(props.selectedIndex === 1);
     }, [props.selectedSdrId]);
 
     const sxBox = {
@@ -39,8 +41,8 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
         setEditable(!editable);
     }
 
-    const onClickApprve = () => {
-        props.setOpenSDRApproved(true);
+    const onClickApprove = () => {
+        props.onClickApprove(flagFollowUp);
     }
 
     return (
@@ -434,7 +436,7 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
                             '&.Mui-checked': {
                                 color: "#6244BB",
                             },
-                        }}/> Flag for follow up
+                        }} checked={flagFollowUp} onChange={() => setFlagFollowUp(!flagFollowUp)}/> Flag for follow up
                     </Grid>}
                     {props.selectedIndex !== 2 && <Grid spacing={3} container sx={{
                         boxShadow: "0px -4px 8px 0px rgba(51, 51, 51, 0.12)", width: "200%",
@@ -453,7 +455,7 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
                             <Button sx={{
                                 backgroundColor: "#6244BB", textTransform: "none", width: "100px",
                                 marginTop: "20px", marginBottom: "20px"
-                            }} variant={"contained"} onClick={onClickApprve}>{editable ? "Save" : "Approve"}</Button>
+                            }} variant={"contained"} onClick={onClickApprove}>{editable ? "Save" : "Approve"}</Button>
                         </Grid>
                     </Grid>}
                     <Menu

@@ -23,7 +23,7 @@ export interface GridRow {
     LogpageStatus: string;
     CreatedBy: string;
     CreatedbyFirstName: string;
-    createbyLastName: string;
+    CreatebyLastName: string;
     CreatedDate: string;
     Type: string
     SdrStatus: string;
@@ -51,7 +51,7 @@ export interface ViewSdrDataProps {
     selectedSdrId: number;
     selectedIndex: number;
     selectedType: string;
-    setOpenSDRApproved: (a: boolean) => void;
+    onClickApprove: (a: boolean) => void;
 }
 
 export interface NewSdrsDataResponse {
@@ -69,7 +69,7 @@ export interface FlaggedSdrsDataResponse {
 export interface NameValuesGetterParams {
     row: {
         CreatedbyFirstName: string;
-        createbyLastName: string;
+        CreatebyLastName: string;
         CreatedBy: string;
     }
 }
