@@ -244,6 +244,7 @@ export type EsfrRecordDetailStateType = {
 }
 
 export interface EnvironmentConfig {
+    URL_ESFR_APPROVE: string;
     apiBaseAddress: string;
     URL_GET_PROFILE: string;
     URL_GET_ALL_SDRS: string;
