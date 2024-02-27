@@ -1,13 +1,17 @@
-import {AppBar, Box, Button, Drawer, IconButton, List, Menu, MenuItem, Toolbar, Typography} from "@mui/material";
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MenuIcon from "@mui/icons-material/Menu";
-import {MouseEvent, useEffect, useState} from "react";
-import UnitedLogo from "../../icons/logo-united.svg";
-import RefreshIcon from "../../icons/Refresh.png";
-import ProfileIcon from "../../icons/Traveler.png";
-import "../header/header.css";
+import { AppBar, Box, Drawer, IconButton, List, Menu, MenuItem, Toolbar } from "@mui/material";
 import moment from "moment";
-import { useAppDispatch } from "../../redux/hooks";
-import {getProfile} from "../../redux/ducks/getProfile";
+import { MouseEvent, useEffect, useState } from "react";
+import { FlexColumn } from 'src/commons/Box';
+import StyledButton from 'src/commons/Button';
+import RefreshIcon from "src/icons/Refresh.png";
+import ProfileIcon from "src/icons/Traveler.png";
+import UnitedLogo from "src/icons/logo-united.svg";
+import { getProfile } from "src/redux/ducks/getProfile";
+import { useAppDispatch } from "src/redux/hooks";
+import "./header.css";
 
 const Header = () => {
     const [openDrawer, setOpenDrawer] = useState<boolean>(false);
@@ -106,6 +110,7 @@ const Header = () => {
                         <img alt="Profile Icon" src={ProfileIcon} className="header-icon" />
                         <div className={"header-text"}>{sessionStorage.fname}</div>
                     </div>
+                    {anchorEl ? <ExpandLessIcon sx={{color:"#fff"}} /> : <ExpandMoreIcon sx={{color:"#fff"}} />}
                 </IconButton>
                 </div>
                 <Menu
@@ -113,69 +118,37 @@ const Header = () => {
                     open={showProfile}
                     onClose={closeProfile}
                 >
-                    <Typography
+                    <FlexColumn
                         sx={{
-                            mt: 1,
-                            pr: 4,
-                            pl: 4,
-                            backgroundColor: "#334E69",
+                            marginBottom: "1rem ",
                             fontSize: "18px",
-                            fontWeight: 600,
-                            color: "white",
+                            color: "#fff",
                         }}
                     >
-                        {sessionStorage.fname} {sessionStorage.lname}
-                        {"    "}
-                        {"  |   "}
-                        <Typography sx={{ pr: 2, display: "inline", fontSize: "18px" }}>
-                            {sessionStorage.id?.toLowerCase()}
-                        </Typography>
-                    </Typography>
-                    <Button
-                        onClick={() => {
-                            window.open(`${process.env.REACT_APP_URL_AMT_BASE}/app-feedback?empid=${sessionStorage?.id}&appid=MyCrewWeb&appversion=1&firstname=${sessionStorage?.fname}&lastname=${sessionStorage?.lname}&employeestation=${sessionStorage?.station}&email=${sessionStorage?.email}`, "_blank")
-                        }}
-                        variant="text"
-                        sx={{
-                            textTransform: "none",
-                            padding: "0.2rem",
-                            marginLeft: 4,
-                            mt: 3,
-                            mb: 3,
-                            borderRadius: "12",
-                            width: "135px",
-                            backgroundColor: "white",
-                            fontWeight: "600",
-                            color: "#6244BB",
-                            ":hover": { bgcolor: "#1976d2" },
-                        }}
-                    >
-                        {" "}
-                        Site Feedback
-                    </Button>
-                    <Button
-                        onClick={() => {
-                            onLogoutClick();
-                        }}
-                        variant="text"
-                        sx={{
-                            textTransform: "none",
-                            padding: "0.2rem",
-                            marginLeft: 4,
-                            mt: 3,
-                            mb: 3,
-                            mr: 4,
-                            borderRadius: "12",
-                            width: "135px",
-                            backgroundColor: "#6244BB",
-                            fontWeight: "600",
-                            color: "white",
-                            ":hover": { bgcolor: "#1976d2" },
-                        }}
-                    >
-                        {" "}
-                        Logout
-                    </Button>
+                        <div>{`${sessionStorage.fname} ${sessionStorage.lname} | ${sessionStorage.id?.toLowerCase()}`}</div>
+                        <div>{`Role: ${sessionStorage.jobRole}`}</div>
+                        <div>{`Station: ${sessionStorage.station}`}</div>
+                    </FlexColumn>
+                    <Box sx={{ display: "flex", gap: "1rem" }}>
+                        <StyledButton
+                            className="site-feedback-button"
+                            onClick={() => {
+                                window.open(
+                                    `${process.env.REACT_APP_URL_AMT_BASE}/app-feedback?empid=${sessionStorage?.id}&appid=MyCrewWeb&appversion=1&firstname=${sessionStorage?.fname}&lastname=${sessionStorage?.lname}&employeestation=${sessionStorage?.station}&email=${sessionStorage?.email}`,
+                                    "_blank"
+                                );
+                            }}
+                            secondary
+                        >
+                            Site Feedback
+                        </StyledButton>
+                        <StyledButton
+                            className="logout-button"
+                            onClick={onLogoutClick}
+                        >
+                            Logout
+                        </StyledButton>
+                    </Box>
                 </Menu>
             </Toolbar>
         </AppBar>

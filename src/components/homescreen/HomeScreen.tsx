@@ -1,15 +1,15 @@
-import {Alert, Box, Grid, Tab, Tabs} from "@mui/material";
-import React, {useEffect, useState} from "react";
-import "../homescreen/homescreen.css";
-import CommonDataGrid from "../commondatagrid/commondatagrid";
-import {SdrStatus, SelectedTab} from "src/commons/types";
+import { Alert, Box, Grid, Tab, Tabs } from "@mui/material";
+import { SyntheticEvent, useState } from "react";
+import CommonLoader from "src/commons/CommonLoader";
 import TabPanel from "src/commons/TabPanel";
-import ViewSdrData from "../viewsdr/ViewSdrData";
-import {getAllSdrs} from "../../redux/ducks/getAllSdrs";
-import {useAppDispatch} from "../../redux/hooks";
-import CommonLoader from "../../commons/CommonLoader";
-import axiosInstance from "../../utils/axiosInstance";
-import config from "../../utils/env.config";
+import { SdrStatus, SelectedTab } from "src/commons/types";
+import CommonDataGrid from "src/components/commondatagrid/commondatagrid";
+import "src/components/homescreen/homescreen.css";
+import ViewSdrData from "src/components/viewsdr/ViewSdrData";
+import { getAllSdrs } from "src/redux/ducks/getAllSdrs";
+import { useAppDispatch } from "src/redux/hooks";
+import axiosInstance from "src/utils/axiosInstance";
+import config from "src/utils/env.config";
 
 const sxBox = {
     borderBottom: 1,
@@ -26,13 +26,14 @@ function a11yProps(index: number) {
             fontSize: "16px",
             textTransform: "capitalize",
             minWidth: "20%",
-            width: "25%",
+            width: "30%",
+            whiteSpace: "nowrap",
         }
     }
 }
 
 const HomeScreen = () => {
-    const [value, setValue] = useState<number>(0);
+    const [tabIndex, setTabIndex] = useState<number>(0);
     const [openSdrCount, setOpenSdrCount] = useState<number>(0);
     const [flaggedSdrCount, setFlaggedSdrCount] = useState<number>(0);
     const [approvedSdrCount, setApprovedSdrCount] = useState<number>(0);
@@ -46,14 +47,8 @@ const HomeScreen = () => {
     const [approving, setApproving] = useState<boolean>(false);
     const [openFail, setOpenFail] = useState<boolean>(false);
 
-    useEffect(() => {
-        dispatch(getAllSdrs(SdrStatus.New));
-        dispatch(getAllSdrs(SdrStatus.Flagged));
-        dispatch(getAllSdrs(SdrStatus.Approved));
-    }, []);
-
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
+    const handleTabChange = (event: SyntheticEvent, newValue: number) => {
+        setTabIndex(newValue);
         setViewSdrFlag(false);
         setSelectedSdrId(0);
     };
@@ -72,7 +67,7 @@ const HomeScreen = () => {
         }
     }
 
-    const onClickApprove = (flag: boolean) => {
+    const handleApprove = (flag: boolean) => {
         setApproving(true);
         axiosInstance
             .post(`${config.apiBaseAddress}${config.URL_ESFR_APPROVE}`,
@@ -111,49 +106,54 @@ const HomeScreen = () => {
             {openFail && <Alert sx={{position: "absolute", left: "47%"}} onClose={() => {
                 setOpenFail(false)
             }} variant="filled" severity="error">Fail to Approve</Alert>}
-            {approving ? <CommonLoader></CommonLoader> :
+            {approving ? (
+                <CommonLoader />
+            ) : (
                 <>
                     <Grid item md={6}>
                         <Box sx={{...sxBox}}>
                             <Tabs
-                                value={value}
-                                onChange={handleChange}
+                                value={tabIndex}
+                                onChange={handleTabChange}
                                 aria-label="homeScreenSdrTabs"
                             >
                                 <Tab
                                     {...a11yProps(0)}
-                                    label={`New SDR/SFRs (${openSdrCount})`}
+                                    label={`New SDR/SFRs (${openSdrCount || 0})`}
                                     id="NewsdrTab"
                                 />
                                 <Tab
                                     {...a11yProps(1)}
-                                    label={`Flagged for Follow up (${flaggedSdrCount})`}
+                                    label={`Flagged for Follow up (${flaggedSdrCount || 0})`}
                                     id="Flaggedforfollowup"
                                 />
                                 <Tab
                                     {...a11yProps(2)}
-                                    label={`Approved SDRs (${approvedSdrCount})`}
+                                    label={`Approved SDRs (${approvedSdrCount || 0})`}
                                     id="Approvedsdr"
                                 />
                             </Tabs>
                         </Box>
-                        <TabPanel value={value}>
+                        <TabPanel value={tabIndex}>
                             <CommonDataGrid
-                                reportStatus={SelectedTab[value]}
-                                reportIndex={value}
-                                updateSdrCount={updateSdrCount}
-                                setViewSdrFlag={setViewSdrFlag}
+                                setSelectedIndex={setSelectedIndex}
                                 setSelectedSdrId={setSelectedSdrId}
                                 setSelectedType={setSelectedType}
-                                setSelectedIndex={setSelectedIndex}
+                                setViewSdrFlag={setViewSdrFlag}
+                                tabIndex={tabIndex}
+                                tabValue={SelectedTab[tabIndex]}
+                                updateSdrCount={updateSdrCount}
                             />
                         </TabPanel>
                     </Grid>
                     <Grid item md={6}>
                         {viewSdrFlag ? (
-                            <ViewSdrData selectedSdrId={selectedSdrId} selectedIndex={selectedIndex}
-                                         selectedType={selectedType}
-                                         onClickApprove={onClickApprove}/>
+                            <ViewSdrData
+                                selectedSdrId={selectedSdrId}
+                                selectedIndex={selectedIndex}
+                                selectedType={selectedType}
+                                handleApprove={handleApprove}
+                            />
                         ) : (
                             <Grid
                                 container
@@ -168,7 +168,7 @@ const HomeScreen = () => {
                         )}
                     </Grid>
                 </>
-            }
+            )}
         </Grid>
     );
 };

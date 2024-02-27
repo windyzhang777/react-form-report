@@ -1,23 +1,30 @@
-import {Box, Button, Checkbox, Grid, ListItem, Menu, TextareaAutosize, TextField} from "@mui/material";
-import {EsfrRecordDetailStateType, InspectionType, ViewSdrDataProps} from "src/commons/types";
-import "./viewSdrData.css";
-import {MouseEvent, useEffect, useState} from "react";
-import {useAppDispatch, useAppSelector} from "../../redux/hooks";
-import {getEsfrRecordDetails} from "../../redux/ducks/getEsfrRecordDetails";
+import { Box, Checkbox, Grid, ListItem, Menu, TextareaAutosize, TextField } from "@mui/material";
 import moment from "moment";
-import CommonLoader from "../../commons/CommonLoader";
+import { MouseEvent, useEffect, useState } from "react";
+import { FlexRow } from "src/commons/Box";
+import StyledButton from "src/commons/Button";
+import CommonLoader from "src/commons/CommonLoader";
+import { EsfrRecordDetailStateType, InspectionType, ViewSdrDataProps } from "src/commons/types";
+import { getEsfrRecordDetails } from "src/redux/ducks/getEsfrRecordDetails";
+import { useAppDispatch, useAppSelector } from "src/redux/hooks";
+import "./viewSdrData.css";
 
-const ViewSdrData = (props: ViewSdrDataProps) => {
+const ViewSdrData = ({
+    handleApprove,
+    selectedIndex,
+    selectedSdrId,
+    selectedType,
+}: ViewSdrDataProps) => {
     const [anchorEl, setAnchorEl] = useState<Element | null>(null);
     const [editable, setEditable] = useState(false);
     const dispatch = useAppDispatch();
     const esfrRecordDetails: EsfrRecordDetailStateType = useAppSelector(state => state.esfrRecordDetail);
-    const [flagFollowUp, setFlagFollowUp] = useState<boolean>(props.selectedIndex === 1);
+    const [flagFollowUp, setFlagFollowUp] = useState<boolean>(selectedIndex === 1);
 
     useEffect(() => {
-        dispatch(getEsfrRecordDetails(props.selectedSdrId, props.selectedType));
-        setFlagFollowUp(props.selectedIndex === 1);
-    }, [props.selectedSdrId]);
+        dispatch(getEsfrRecordDetails(selectedSdrId, selectedType));
+        setFlagFollowUp(selectedIndex === 1);
+    }, [selectedSdrId]);
 
     const sxBox = {
         borderBottom: 1,
@@ -42,14 +49,14 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
     }
 
     const onClickApprove = () => {
-        props.onClickApprove(flagFollowUp);
+        handleApprove(flagFollowUp);
     }
 
     return (
         <Grid item md={6}
               sx={{boxShadow: "-4px 0px 4px 0px rgba(51, 51, 51, 0.12)", marginTop: "-30px", paddingTop: "30px"}}>
             <Box sx={{...sxBox}}>
-                <p>Service Difficulty Report - #{props.selectedSdrId}</p>
+                <p>Service Difficulty Report - #{selectedSdrId}</p>
             </Box>
             {esfrRecordDetails.loading ? <CommonLoader></CommonLoader> :
                 <>
@@ -430,7 +437,7 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
                     </Grid>
                     <Box sx={{...sxBox}}>
                     </Box>
-                    {props.selectedIndex !== 2 && <Grid sx={{marginTop: "10px", marginBottom: "10px"}}>
+                    {selectedIndex !== 2 && <Grid sx={{marginTop: "10px", marginBottom: "10px"}}>
                         <Checkbox sx={{
                             marginLeft: "5px", color: "#6244BB",
                             '&.Mui-checked': {
@@ -438,25 +445,25 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
                             },
                         }} checked={flagFollowUp} onChange={() => setFlagFollowUp(!flagFollowUp)}/> Flag for follow up
                     </Grid>}
-                    {props.selectedIndex !== 2 && <Grid spacing={3} container sx={{
+                    {selectedIndex !== 2 && <Grid spacing={3} container sx={{
                         boxShadow: "0px -4px 8px 0px rgba(51, 51, 51, 0.12)", width: "200%",
-                        marginLeft: "0", marginTop: "10px", textTransform: "none"
+                        marginLeft: "0", marginTop: "10px", paddingTop: "20px", textTransform: "none"
                     }}>
-                        <Grid item xs={8}></Grid>
-                        <Grid item xs={2}>
-                            <Button sx={{
-                                color: "#6244BB", borderColor: "#6244BB", width: "100px",
-                                marginTop: "20px", marginBottom: "20px",
-                            }} variant={"outlined"}
-                                    onClick={onClickEdit}
-                            >{editable ? "Cancel" : "Edit"}</Button>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Button sx={{
-                                backgroundColor: "#6244BB", textTransform: "none", width: "100px",
-                                marginTop: "20px", marginBottom: "20px"
-                            }} variant={"contained"} onClick={onClickApprove}>{editable ? "Save" : "Approve"}</Button>
-                        </Grid>
+                        <FlexRow end>
+                            <StyledButton
+                                className={`${editable ? "cancel" : "edit"}-button`}
+                                onClick={onClickEdit}
+                                secondary
+                            >
+                                {editable ? "Cancel" : "Edit"}
+                            </StyledButton>
+                            <StyledButton
+                                className={`${editable ? "save" : "approve"}-button`}
+                                onClick={onClickApprove}
+                            >
+                                {editable ? "Save" : "Approve"}
+                            </StyledButton>
+                        </FlexRow>
                     </Grid>}
                     <Menu
                         anchorEl={anchorEl}
@@ -546,7 +553,7 @@ const ViewSdrData = (props: ViewSdrDataProps) => {
                             </Grid>
                         </Grid>
                     </Menu>
-                    {props.selectedSdrId === null && <Grid>Please select on SDR to view it.</Grid>}
+                    {selectedSdrId === null && <Grid>Please select on SDR to view it.</Grid>}
                 </>}
         </Grid>
     );

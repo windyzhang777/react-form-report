@@ -1,0 +1,195 @@
+{
+  "Timestamp": "2024-02-27T17:21:55Z",
+  "ResponseTime": 0,
+  "Errors": [],
+  "ErrorCode": null,
+  "Result": [
+      {
+          "CreatebyLastName": null,
+          "CreatedBy": "V117729",
+          "CreatedbyFirstName": "Sonia",
+          "CreatedDate": "01/01/0001 00:00:00",
+          "Id": 76,
+          "LogpageNumber": "6906041",
+          "LogpageStatus": "OPEN-O",
+          "StatusId": 2,
+          "Type": "SFR"
+      },
+      {
+          "CreatebyLastName": null,
+          "CreatedBy": "U370264",
+          "CreatedbyFirstName": "Shahnawaz",
+          "CreatedDate": "01/01/0001 00:00:00",
+          "Id": 73,
+          "LogpageNumber": "5806377",
+          "LogpageStatus": "Cleared",
+          "StatusId": 2,
+          "Type": "SFR"
+      },
+      {
+          "CreatebyLastName": null,
+          "CreatedBy": "V112353",
+          "CreatedbyFirstName": null,
+          "CreatedDate": "01/03/2023 21:21:13",
+          "Id": 16,
+          "LogpageNumber": "12345697",
+          "LogpageStatus": null,
+          "StatusId": 2,
+          "Type": "SFR"
+      },
+      {
+          "CreatebyLastName": null,
+          "CreatedBy": "V112353",
+          "CreatedbyFirstName": null,
+          "CreatedDate": "01/03/2023 21:21:13",
+          "Id": 17,
+          "LogpageNumber": "123456907",
+          "LogpageStatus": null,
+          "StatusId": 2,
+          "Type": "SFR"
+      },
+      {
+          "CreatebyLastName": null,
+          "CreatedBy": "U370264",
+          "CreatedbyFirstName": "Shahnawaz",
+          "CreatedDate": "01/01/0001 00:00:00",
+          "Id": 74,
+          "LogpageNumber": "5816184",
+          "LogpageStatus": "Cleared",
+          "StatusId": 2,
+          "Type": "SFR"
+      },
+      {
+          "CreatebyLastName": null,
+          "CreatedBy": "U370264",
+          "CreatedbyFirstName": "Shahnawaz",
+          "CreatedDate": "01/01/0001 00:00:00",
+          "Id": 75,
+          "LogpageNumber": "5840836",
+          "LogpageStatus": "Cleared",
+          "StatusId": 2,
+          "Type": "SFR"
+      },
+      {
+          "CreatebyLastName": null,
+          "CreatedBy": "V112353",
+          "CreatedbyFirstName": null,
+          "CreatedDate": "09/14/2023 13:43:47",
+          "Id": 9,
+          "LogpageNumber": "5331217",
+          "LogpageStatus": null,
+          "StatusId": 2,
+          "Type": "SDR"
+      },
+      {
+          "CreatebyLastName": null,
+          "CreatedBy": "V757221",
+          "CreatedbyFirstName": "Dharma",
+          "CreatedDate": "12/08/2023 19:47:07",
+          "Id": 37,
+          "LogpageNumber": "5847834",
+          "LogpageStatus": "Cleared",
+          "StatusId": 2,
+          "Type": "SDR"
+      },
+      {
+          "CreatebyLastName": null,
+          "CreatedBy": "V757221",
+          "CreatedbyFirstName": "Dharma",
+          "CreatedDate": "12/08/2023 20:07:02",
+          "Id": 38,
+          "LogpageNumber": "5846891",
+          "LogpageStatus": "Cleared",
+          "StatusId": 2,
+          "Type": "SDR"
+      },
+      {
+          "CreatebyLastName": null,
+          "CreatedBy": "V117729",
+          "CreatedbyFirstName": "Sonia",
+          "CreatedDate": "02/27/2024 14:44:11",
+          "Id": 45,
+          "LogpageNumber": "6882222",
+          "LogpageStatus": "OPEN-O",
+          "StatusId": 2,
+          "Type": "SDR"
+      },
+      {
+          "CreatebyLastName": null,
+          "CreatedBy": "V757221",
+          "CreatedbyFirstName": "",
+          "CreatedDate": "11/24/2023 16:44:54",
+          "Id": 26,
+          "LogpageNumber": "5793566",
+          "LogpageStatus": "Cleared",
+          "StatusId": 2,
+          "Type": "SDR"
+      },
+      {
+          "CreatebyLastName": null,
+          "CreatedBy": "V757221",
+          "CreatedbyFirstName": "",
+          "CreatedDate": "11/24/2023 15:07:19",
+          "Id": 25,
+          "LogpageNumber": "5793516",
+          "LogpageStatus": "Cleared",
+          "StatusId": 2,
+          "Type": "SDR"
+      },
+      {
+          "CreatebyLastName": null,
+          "CreatedBy": "V757221",
+          "CreatedbyFirstName": "",
+          "CreatedDate": "11/24/2023 18:12:54",
+          "Id": 27,
+          "LogpageNumber": "5793554",
+          "LogpageStatus": "Cleared",
+          "StatusId": 2,
+          "Type": "SDR"
+      },
+      {
+          "CreatebyLastName": null,
+          "CreatedBy": "V757221",
+          "CreatedbyFirstName": "",
+          "CreatedDate": "11/27/2023 17:14:08",
+          "Id": 28,
+          "LogpageNumber": "5803101",
+          "LogpageStatus": "Cleared",
+          "StatusId": 2,
+          "Type": "SDR"
+      },
+      {
+          "CreatebyLastName": null,
+          "CreatedBy": "V112353",
+          "CreatedbyFirstName": null,
+          "CreatedDate": "07/30/2023 21:37:08",
+          "Id": 2,
+          "LogpageNumber": "12345567",
+          "LogpageStatus": null,
+          "StatusId": 2,
+          "Type": "SDR"
+      },
+      {
+          "CreatebyLastName": null,
+          "CreatedBy": "V112353",
+          "CreatedbyFirstName": null,
+          "CreatedDate": "07/30/2023 22:07:09",
+          "Id": 4,
+          "LogpageNumber": "123467",
+          "LogpageStatus": null,
+          "StatusId": 2,
+          "Type": "SDR"
+      },
+      {
+          "CreatebyLastName": null,
+          "CreatedBy": "V757221",
+          "CreatedbyFirstName": "",
+          "CreatedDate": "11/28/2023 20:48:06",
+          "Id": 30,
+          "LogpageNumber": "5807221",
+          "LogpageStatus": "Cleared",
+          "StatusId": 2,
+          "Type": "SDR"
+      }
+  ]
+}

@@ -1,101 +1,80 @@
-import { useEffect, useState} from "react";
-import {DataGrid, GridCellParams, GridRowSelectionModel, GridColDef, GridRowClassNameParams} from "@mui/x-data-grid";
-import {Button, Grid, Link} from "@mui/material";
+import { Grid, Link } from "@mui/material";
+import { GridCellParams, GridColDef, GridRowSelectionModel, GridValidRowModel } from "@mui/x-data-grid";
 import moment from "moment";
+import { useEffect, useState } from "react";
+import StyledButton from "src/commons/Button";
+import StyledDataGrid from "src/commons/DataGrid";
 import {
-  CompDataGrid,
-  SelectedTab,
+  CommonDataGridProps,
   GridRow,
-  NameValuesGetterParams,
-  RowRowApi,
-  RowApi,
   SdrRowApi,
-  SdrStateType
+  SdrStateType,
+  SelectedTab
 } from "src/commons/types";
-import "../commondatagrid/commondatagrid.css";
-import {useAppSelector} from "../../redux/hooks";
+import { useAppSelector } from "src/redux/hooks";
 import config from "src/utils/env.config";
+import "./commondatagrid.css";
 
-const CommonDataGrid = (props: CompDataGrid) => {
-  const {
-    reportStatus,
-    reportIndex,
-    setViewSdrFlag,
-    setSelectedSdrId,
-    setSelectedType,
-    updateSdrCount,
-    setSelectedIndex
-  } = props;
+const CommonDataGrid = ({
+  setSelectedIndex,
+  setSelectedSdrId,
+  setSelectedType,
+  setViewSdrFlag,
+  tabIndex,
+  tabValue,
+  updateSdrCount,
+}: CommonDataGridProps) => {
   const [rowData, setRowData] = useState<Array<GridRow>>([]);
   const [showCheckbox, setShowCheckbox] = useState<boolean>(false);
-  const [selectedSdrsToExtract, setSelectedSdrsToExtract] = useState<
-      GridRowSelectionModel
-  >([]);
+  const [selectedSdrsToExtract, setSelectedSdrsToExtract] = useState<GridRowSelectionModel>([]);
   const [isExtractDisabled, setIsExtractDisabled] = useState<boolean>(true);
   const [viewSdrId, setViewSdrId] = useState("");
   const newSdrs: SdrStateType = useAppSelector(state => state.newSdrs);
   const approvedSdrs: SdrStateType = useAppSelector(state => state.approvedSdrs);
   const flaggedSdrs: SdrStateType = useAppSelector(state => state.flaggedSdrs);
+  const currentDateTime = moment().add(-2, "days");
 
-  const LinkCell = (rowApi: RowRowApi) => {
-    let logPageNumber = rowApi?.rowApi?.row?.LogpageNumber;
-    return (
-        <Link
-            sx={{cursor: "pointer", color: "#6244BB"}}
-            onClick={() => openLogPage(logPageNumber)}
-        >
-          {logPageNumber}
-        </Link>
-    );
-  };
-
-  const openLogPage = (logPageNumber: string) => {
+  const openLogPage = (logpageNumber: string) => {
     let width = window.innerWidth;
-    let url = `${config.webTechApiBaseUrl}${config.URL_LOGPAGE_SEARCH}?logPageNumber=${logPageNumber}&fleetCode=null&role=${sessionStorage.getItem("jobRole")}`;
+    let url = `${config.webTechApiBaseUrl}${config.URL_LOGPAGE_SEARCH}?logPageNumber=${logpageNumber}&fleetCode=null&role=${sessionStorage.getItem("jobRole")}`;
     window.open(url, "_blank", "width=" + (width - 450) / 2 + ",height=" + (window.innerHeight - 320) + ",left=" + ((width / 2) - 50) + ",top=450");
-  };
-
-  const highlightDate = (rowApi: RowApi) => {
-    let data = rowApi?.row?.datetime;
-    let current = moment().add(-2, "days").format("MM/DD/YYYY h:mm");
-    if (moment(data).isBefore(current)) {
-      return <p className="paragraph-text">{data}</p>;
-    }
   };
 
   const columnDefs: GridColDef[] = [
     {
-      field: "LogPageNumber",
+      field: "LogpageNumber",
       headerName: "Log Page Number",
-      flex: 1.5,
       sortable: false,
-      renderCell: (rowApi: RowApi) => <LinkCell rowApi={rowApi}/>,
+      minWidth: 100,
+      renderCell: ({ row }) => (
+        <Link onClick={() => openLogPage(row?.LogpageNumber)} sx={{ cursor: "pointer", color: "#6244BB" }}>{row?.LogpageNumber}</Link>
+      ),
     },
     {
       field: "reportedby",
       headerName: "Reported By",
-      flex: 1.5,
       sortable: false,
-      valueGetter: (params: NameValuesGetterParams) =>
-          `${params?.row?.CreatedbyFirstName} ${params?.row?.CreatebyLastName} (${params?.row?.CreatedBy})`,
+      minWidth: 120,
+      valueGetter: ({ row }) =>
+          `${row?.CreatedbyFirstName || ""} ${row?.CreatebyLastName || ""} (${row?.CreatedBy || ""})`,
     },
     {
       field: "CreatedDate",
       headerName: "Date & Time",
-      flex: 2,
+      minWidth: 180,
       sortable: false,
-      renderCell: (rowApi: RowApi) => highlightDate(rowApi),
+      renderCell: ({ row }) => 
+        <p className={moment(row?.CreatedDate).isBefore(currentDateTime) ? "paragraph-text" : ""}>{row?.CreatedDate}</p>,
     },
     {
-      field: "LogPageStatus",
+      field: "LogpageStatus",
       headerName: "Log Page Status",
-      flex: 1.5,
+      minWidth: 150,
       sortable: false,
     },
     {
       field: "Type",
       headerName: "SDR/SFR",
-      flex: 1,
       sortable: false,
     },
     {
@@ -113,13 +92,13 @@ const CommonDataGrid = (props: CompDataGrid) => {
   });
 
   useEffect(() => {
-    setShowCheckbox(reportIndex === SelectedTab.Approved);
-  }, [reportIndex]);
+    setShowCheckbox(tabIndex === SelectedTab.Approved);
+  }, [tabIndex]);
 
   useEffect(() => {
     let sdrData: Array<SdrRowApi> = [];
     let sdrStatusText = "Open";
-    switch (reportIndex) {
+    switch (tabIndex) {
       case 1:
         sdrData = flaggedSdrs.sdrData;
         sdrStatusText = "Approved with Follow Up";
@@ -140,7 +119,6 @@ const CommonDataGrid = (props: CompDataGrid) => {
     Array.isArray(sdrData) && sdrData?.forEach((r: SdrRowApi) => {
       let row: GridRow = {
         SdrStatus: sdrStatusText,
-        LogPageStatus: r.LogpageStatus,
         Id: r.Id,
         LogpageNumber: r.LogpageNumber,
         LogpageStatus: r.LogpageStatus,
@@ -154,8 +132,8 @@ const CommonDataGrid = (props: CompDataGrid) => {
     })
 
     setRowData(filteredSdrs);
-    updateSdrCount(reportIndex, filteredSdrs.length);
-  }, [reportStatus]);
+    updateSdrCount(tabIndex, filteredSdrs.length);
+  }, [tabValue]);
 
   const onRowsSelectionHandler = (sdrIds: GridRowSelectionModel) => {
     setSelectedSdrsToExtract([...sdrIds]);
@@ -169,24 +147,16 @@ const CommonDataGrid = (props: CompDataGrid) => {
     setSelectedSdrId(sdrData?.row.Id);
     setSelectedType(sdrData?.row.Type);
     setViewSdrId(sdrData?.row.Id + "-" + sdrData?.row.Type);
-    setSelectedIndex(reportIndex);
+    setSelectedIndex(tabIndex);
   };
 
-  const styleRow = (params: GridRowClassNameParams<GridRow>) => {
-    let rowStyles = "";
-    rowStyles += params.id === viewSdrId ? "Mui-selection " : "";
-    rowStyles += params.indexRelativeToCurrentPage % 2 === 0 ? "" : "Mui-odd";
-    return rowStyles;
-  }
-
-  const getRowId = (row: GridRow) => {
+  const getRowId = (row: GridValidRowModel) => {
     return row.Id + "-" + row.Type;
   }
 
   return (
       <Grid item md={12}>
-        <DataGrid
-          sx={{ border: "none"}}
+        <StyledDataGrid
           disableColumnMenu
           columns={columnDefs}
           rows={rowData}
@@ -196,9 +166,12 @@ const CommonDataGrid = (props: CompDataGrid) => {
           onRowSelectionModelChange={(sdrIds: GridRowSelectionModel) =>
             onRowsSelectionHandler(sdrIds)
           }
-          getRowClassName={(params) =>
-            styleRow(params)
-          }
+          getRowClassName={(params) => {
+            let rowStyles = "";
+            rowStyles += params.id === viewSdrId ? "Mui-selection " : "";
+            rowStyles += params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd";
+            return rowStyles;
+          }}
           disableRowSelectionOnClick
           onCellClick={(data: GridCellParams) => {
             if (data.field !== "__check__") {
@@ -206,23 +179,16 @@ const CommonDataGrid = (props: CompDataGrid) => {
             }
           }}
         />
-        {reportIndex === SelectedTab.Approved && (
-          <Grid item sx={{ float: "right" }}>
-            <Button
-              variant="contained"
-              disabled={isExtractDisabled}
-              className="extract-button"
-              sx={
-                isExtractDisabled
-                  ? {
-                      background: "#999999",
-                    }
-                  : { background: "#6244BB" }
-              }
-            >
-              Extract
-            </Button>
-          </Grid>
+        {tabIndex === SelectedTab.Approved && (
+        <Grid item sx={{ marginTop: "2rem", display: "flex", justifyContent: "flex-end" }}>
+          <StyledButton
+            className="extract-button"
+            disabled={isExtractDisabled}
+            // onClick={handleExtract}
+          >
+            Extract
+          </StyledButton>
+        </Grid>
         )}
       </Grid>
   );
