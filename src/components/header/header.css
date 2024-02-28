@@ -3,19 +3,19 @@
     padding-left: 0;
 }
 
-.headerTitle{
-    font-family: "Open Sans";
+.headerTitle {
+    width: 100%;
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
-    margin-left: 35%;
-    margin-right: 10%;
     line-height: 32px;
     letter-spacing: 0px;
     text-align: center;
+    text-wrap: nowrap;
+    user-select: none;
 }
 
-.header-toolbar{
+.header-toolbar {
     text-align: center;
     background: #002244;
 }

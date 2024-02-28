@@ -58,3 +58,7 @@
 .MuiDataGrid-columnHeader.MuiDataGrid-withBorderColor {
     font-size: 15px;
 }
+
+#confirm-extract-modal-title, #confirm-extract-modal-description {
+    user-select: none;
+}

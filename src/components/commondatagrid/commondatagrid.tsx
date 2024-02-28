@@ -1,9 +1,12 @@
-import { Grid, Link } from "@mui/material";
+import { Grid, Link, Typography } from "@mui/material";
 import { GridCellParams, GridColDef, GridRowSelectionModel, GridValidRowModel } from "@mui/x-data-grid";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { FlexRow } from "src/commons/Box";
 import StyledButton from "src/commons/Button";
+import CommonButtonGroup from "src/commons/ButtonGroup";
 import StyledDataGrid from "src/commons/DataGrid";
+import CommonModal from "src/commons/Modal";
 import {
   CommonDataGridProps,
   GridRow,
@@ -33,6 +36,7 @@ const CommonDataGrid = ({
   const approvedSdrs: SdrStateType = useAppSelector(state => state.approvedSdrs);
   const flaggedSdrs: SdrStateType = useAppSelector(state => state.flaggedSdrs);
   const currentDateTime = moment().add(-2, "days");
+  const [confirmExtract, setConfirmExtract] = useState<boolean>(false);
 
   const openLogPage = (logpageNumber: string) => {
     let width = window.innerWidth;
@@ -54,7 +58,7 @@ const CommonDataGrid = ({
       field: "reportedby",
       headerName: "Reported By",
       sortable: false,
-      minWidth: 120,
+      minWidth: 150,
       valueGetter: ({ row }) =>
           `${row?.CreatedbyFirstName || ""} ${row?.CreatebyLastName || ""} (${row?.CreatedBy || ""})`,
     },
@@ -80,7 +84,7 @@ const CommonDataGrid = ({
     {
       field: "SdrStatus",
       headerName: "SDR Status",
-      flex: 1,
+      minWidth: 200,
       sortable: false,
     },
   ];
@@ -137,7 +141,6 @@ const CommonDataGrid = ({
 
   const onRowsSelectionHandler = (sdrIds: GridRowSelectionModel) => {
     setSelectedSdrsToExtract([...sdrIds]);
-    console.log(selectedSdrsToExtract);
     if (sdrIds && sdrIds.length > 0) setIsExtractDisabled(false);
     else setIsExtractDisabled(true);
   };
@@ -150,12 +153,36 @@ const CommonDataGrid = ({
     setSelectedIndex(tabIndex);
   };
 
-  const getRowId = (row: GridValidRowModel) => {
-    return row.Id + "-" + row.Type;
-  }
+  const getRowId = (row: GridValidRowModel) => row.Id;
+
+  const handleConfirmExtract = () => {
+    setConfirmExtract(false);
+    console.log("selectedSdrsToExtract :", selectedSdrsToExtract);
+    // TODO: [TASK 1227082] eSFR Flat file creation for sending to external system
+    // const found = approvedSdrs.sdrData.find(s=>s.Id===selectedSdrsToExtract[0])
+    // Type
+    // moment(CreatedDate).format("yyyymmdd")
+  };
 
   return (
       <Grid item md={12}>
+        {confirmExtract && (
+          <CommonModal
+            name="confirm-extract"
+            onClose={() => setConfirmExtract(false)}
+            open={confirmExtract}
+          >
+            <Typography id="confirm-extract-modal-title" variant="h6" mb={2} fontWeight={600}>Extract Confirmation</Typography>
+            <Typography id="confirm-extract-modal-description" variant="body1" mb={6}>Please confirm that you would like to extract the selected reports</Typography>
+            <CommonButtonGroup
+              labelPrimary="Confirm"
+              labelSecondary="Cancel"
+              onClickPrimary={handleConfirmExtract}
+              onClickSecondary={() => setConfirmExtract(false)}
+              placeEnd
+            />
+          </CommonModal>
+        )}
         <StyledDataGrid
           disableColumnMenu
           columns={columnDefs}
@@ -180,15 +207,15 @@ const CommonDataGrid = ({
           }}
         />
         {tabIndex === SelectedTab.Approved && (
-        <Grid item sx={{ marginTop: "2rem", display: "flex", justifyContent: "flex-end" }}>
+        <FlexRow placeEnd mt={2}>
           <StyledButton
             className="extract-button"
             disabled={isExtractDisabled}
-            // onClick={handleExtract}
+            onClick={() => setConfirmExtract(true)}
           >
             Extract
           </StyledButton>
-        </Grid>
+        </FlexRow>
         )}
       </Grid>
   );

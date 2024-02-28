@@ -1,18 +1,18 @@
 import { Box, styled } from "@mui/material";
 
-export interface IFlexRow {
-    end?: boolean;
+export interface IFlexRowProps {
+  placeEnd?: boolean;
 }
 
-export const FlexRow = styled(Box)(({ end }: IFlexRow) => ({
-    display: "flex",
-    gap: "10px",
-    width: end ? "100%" : "unset",
-    justifyContent: end ? "flex-end" : "unset",
+export const FlexRow = styled(Box)(({ placeEnd }: IFlexRowProps) => ({
+  display: "flex",
+  gap: "10px",
+  width: placeEnd ? "100%" : "unset",
+  justifyContent: placeEnd ? "flex-end" : "unset",
 }));
 
 export const FlexColumn = styled(Box)({
-    display: "flex",
-    flexDirection: "column",
-    gap: "10px",
+  display: "flex",
+  flexDirection: "column",
+  gap: "10px",
 });

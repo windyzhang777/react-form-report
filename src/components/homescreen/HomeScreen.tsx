@@ -1,6 +1,7 @@
-import { Alert, Box, Grid, Tab, Tabs } from "@mui/material";
+import { Box, Grid, Tab, Tabs } from "@mui/material";
 import { SyntheticEvent, useState } from "react";
 import CommonLoader from "src/commons/CommonLoader";
+import CommonSnackbar from "src/commons/Snackbar";
 import TabPanel from "src/commons/TabPanel";
 import { SdrStatus, SelectedTab } from "src/commons/types";
 import CommonDataGrid from "src/components/commondatagrid/commondatagrid";
@@ -13,8 +14,8 @@ import config from "src/utils/env.config";
 
 const sxBox = {
     borderBottom: 1,
-    borderColor: 'divider'
-}
+    borderColor: "divider",
+};
 
 function a11yProps(index: number) {
     return {
@@ -26,10 +27,10 @@ function a11yProps(index: number) {
             fontSize: "16px",
             textTransform: "capitalize",
             minWidth: "20%",
-            width: "30%",
-            whiteSpace: "nowrap",
-        }
-    }
+            width: "25%",
+            // whiteSpace: "nowrap",
+        },
+    };
 }
 
 const HomeScreen = () => {
@@ -65,17 +66,16 @@ const HomeScreen = () => {
                 setApprovedSdrCount(count);
                 break;
         }
-    }
+    };
 
     const handleApprove = (flag: boolean) => {
         setApproving(true);
         axiosInstance
-            .post(`${config.apiBaseAddress}${config.URL_ESFR_APPROVE}`,
-                {
-                    "id": selectedSdrId,
-                    "recordType": selectedType,
-                    "statusId": flag ? SdrStatus.Flagged : SdrStatus.Approved
-                })
+            .post(`${config.apiBaseAddress}${config.URL_ESFR_APPROVE}`, {
+                id: selectedSdrId,
+                recordType: selectedType,
+                statusId: flag ? SdrStatus.Flagged : SdrStatus.Approved,
+            })
             .then((res) => {
                 setApproving(false);
                 if (res && res.status === 200) {
@@ -92,26 +92,41 @@ const HomeScreen = () => {
             .catch(() => {
                 setApproving(false);
                 setOpenFail(true);
-            })
-    }
+            });
+    };
 
     return (
-        <Grid container spacing={2} sx={{m: 0}}>
-            {openSDRApproved && <Alert sx={{position: "absolute", left: "47%"}} onClose={() => {
-                setOpenSDRApproved(false)
-            }} variant="filled" severity="success">SDR approved</Alert>}
-            {openSDRApprovedWithFlag && <Alert sx={{position: "absolute", left: "42%"}} onClose={() => {
-                setOpenSDRApprovedWithFlag(false)
-            }} variant="filled" severity="success">SDR approved with flagged for follow-up</Alert>}
-            {openFail && <Alert sx={{position: "absolute", left: "47%"}} onClose={() => {
-                setOpenFail(false)
-            }} variant="filled" severity="error">Fail to Approve</Alert>}
+        <Grid container spacing={2} sx={{ m: 0 }}>
+            {openSDRApproved && (
+                <CommonSnackbar
+                    onClose={() => setOpenSDRApproved(false)}
+                    severity="success"
+                >
+                    SDR approved
+                </CommonSnackbar>
+            )}
+            {openSDRApprovedWithFlag && (
+                <CommonSnackbar
+                    onClose={() => setOpenSDRApprovedWithFlag(false)}
+                    severity="success"
+                >
+                    SDR approved with flagged for follow-up
+                </CommonSnackbar>
+            )}
+            {openFail && (
+                <CommonSnackbar
+                    onClose={() => setOpenFail(false)}
+                    severity="error"
+                >
+                    Fail to Approve
+                </CommonSnackbar>
+            )}
             {approving ? (
                 <CommonLoader />
             ) : (
                 <>
                     <Grid item md={6}>
-                        <Box sx={{...sxBox}}>
+                        <Box sx={{ ...sxBox }}>
                             <Tabs
                                 value={tabIndex}
                                 onChange={handleTabChange}
@@ -161,9 +176,9 @@ const HomeScreen = () => {
                                 direction="column"
                                 alignItems="center"
                                 justifyContent="center"
-                                sx={{minHeight: "85vh"}}
+                                sx={{ minHeight: "85vh" }}
                             >
-                                <p className="sdrDefaultMsg">Please select an SDR to view it. </p>
+                                <p className="sdrDefaultMsg">Please select an SDR to view it.</p>
                             </Grid>
                         )}
                     </Grid>

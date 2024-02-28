@@ -5,7 +5,7 @@ import { AppBar, Box, Drawer, IconButton, List, Menu, MenuItem, Toolbar } from "
 import moment from "moment";
 import { MouseEvent, useEffect, useState } from "react";
 import { FlexColumn } from 'src/commons/Box';
-import StyledButton from 'src/commons/Button';
+import CommonButtonGroup from 'src/commons/ButtonGroup';
 import RefreshIcon from "src/icons/Refresh.png";
 import ProfileIcon from "src/icons/Traveler.png";
 import UnitedLogo from "src/icons/logo-united.svg";
@@ -129,26 +129,17 @@ const Header = () => {
                         <div>{`Role: ${sessionStorage.jobRole}`}</div>
                         <div>{`Station: ${sessionStorage.station}`}</div>
                     </FlexColumn>
-                    <Box sx={{ display: "flex", gap: "1rem" }}>
-                        <StyledButton
-                            className="site-feedback-button"
-                            onClick={() => {
-                                window.open(
-                                    `${process.env.REACT_APP_URL_AMT_BASE}/app-feedback?empid=${sessionStorage?.id}&appid=MyCrewWeb&appversion=1&firstname=${sessionStorage?.fname}&lastname=${sessionStorage?.lname}&employeestation=${sessionStorage?.station}&email=${sessionStorage?.email}`,
-                                    "_blank"
-                                );
-                            }}
-                            secondary
-                        >
-                            Site Feedback
-                        </StyledButton>
-                        <StyledButton
-                            className="logout-button"
-                            onClick={onLogoutClick}
-                        >
-                            Logout
-                        </StyledButton>
-                    </Box>
+                    <CommonButtonGroup
+                        labelPrimary="Logout"
+                        labelSecondary="Site Feedback"
+                        onClickPrimary={onLogoutClick}
+                        onClickSecondary={() =>
+                            window.open(
+                            `${process.env.REACT_APP_URL_AMT_BASE}/app-feedback?empid=${sessionStorage?.id}&appid=MyCrewWeb&appversion=1&firstname=${sessionStorage?.fname}&lastname=${sessionStorage?.lname}&employeestation=${sessionStorage?.station}&email=${sessionStorage?.email}`,
+                            "_blank"
+                            )
+                        }
+                    />
                 </Menu>
             </Toolbar>
         </AppBar>

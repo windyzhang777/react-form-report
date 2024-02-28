@@ -1,8 +1,7 @@
 import { Box, Checkbox, Grid, ListItem, Menu, TextareaAutosize, TextField } from "@mui/material";
 import moment from "moment";
 import { MouseEvent, useEffect, useState } from "react";
-import { FlexRow } from "src/commons/Box";
-import StyledButton from "src/commons/Button";
+import CommonButtonGroup from "src/commons/ButtonGroup";
 import CommonLoader from "src/commons/CommonLoader";
 import { EsfrRecordDetailStateType, InspectionType, ViewSdrDataProps } from "src/commons/types";
 import { getEsfrRecordDetails } from "src/redux/ducks/getEsfrRecordDetails";
@@ -449,21 +448,13 @@ const ViewSdrData = ({
                         boxShadow: "0px -4px 8px 0px rgba(51, 51, 51, 0.12)", width: "200%",
                         marginLeft: "0", marginTop: "10px", paddingTop: "20px", textTransform: "none"
                     }}>
-                        <FlexRow end>
-                            <StyledButton
-                                className={`${editable ? "cancel" : "edit"}-button`}
-                                onClick={onClickEdit}
-                                secondary
-                            >
-                                {editable ? "Cancel" : "Edit"}
-                            </StyledButton>
-                            <StyledButton
-                                className={`${editable ? "save" : "approve"}-button`}
-                                onClick={onClickApprove}
-                            >
-                                {editable ? "Save" : "Approve"}
-                            </StyledButton>
-                        </FlexRow>
+                    <CommonButtonGroup
+                        labelPrimary={editable ? "Save" : "Approve"}
+                        labelSecondary={editable ? "Cancel" : "Edit"}
+                        onClickPrimary={onClickApprove}
+                        onClickSecondary={onClickEdit}
+                        placeEnd
+                    />
                     </Grid>}
                     <Menu
                         anchorEl={anchorEl}

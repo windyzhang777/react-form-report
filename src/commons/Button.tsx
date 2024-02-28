@@ -1,14 +1,13 @@
 import { Button, styled } from "@mui/material";
 
-export interface IStyledButton {
+export interface IStyledButtonProps {
   secondary?: boolean;
   tertiary?: boolean;
 }
 
 const StyledButton = styled(Button)(
-  ({ secondary, tertiary }: IStyledButton) => {
+  ({ secondary, tertiary }: IStyledButtonProps) => {
     return {
-      fontFamily: "Open Sans",
       minWidth: "10em",
       minHeight: "2.5em",
       color: tertiary || secondary ? "#6244BB" : "#FFF",

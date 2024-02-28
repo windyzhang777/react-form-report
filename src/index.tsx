@@ -1,9 +1,11 @@
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
+import App from "src/App";
 import store from "src/redux/configureStore";
 import reportWebVitals from "src/reportWebVitals";
-import App from "./App";
+import { theme } from "src/theme";
 import "./index.css";
 
 const root = ReactDOM.createRoot(
@@ -11,9 +13,12 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </ThemeProvider>
   </StrictMode>
 );
 
