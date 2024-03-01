@@ -20,7 +20,7 @@ const CommonButtonGroup = ({
     <StyledButton
       className={`${labelSecondary.toLowerCase()}-button`}
       onClick={onClickSecondary}
-      secondary={true}
+      secondary
     >
       {labelSecondary}
     </StyledButton>

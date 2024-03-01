@@ -73,8 +73,7 @@ const ViewSdrData = ({
                             <ListItem>{esfrRecordDetails.esfrRecordDetailData?.OperatorControlNumber}</ListItem>
                         </Grid>
                         <Grid item xs={6}>
-                            <ListItem onClick={openACDetails}> <u className={"view-details-text"}>View
-                                Details</u></ListItem>
+                            <ListItem onClick={openACDetails}> <u className={"view-details-text"}>View Details</u></ListItem>
                         </Grid>
                     </Grid>
                     <Grid className={"sdr-status-grid"}
@@ -198,8 +197,8 @@ const ViewSdrData = ({
                             <Grid item xs={12}>
                                 <ListItem>
                                     {editable ?
-                                        <TextareaAutosize style={{width: "190%", fontSize: "16px"}}
-                                                          value={esfrRecordDetails.esfrRecordDetailData?.FleetInfo?.CorrectiveActions}/>
+                                        <TextareaAutosize minRows={2} style={{width: "190%", fontSize: "16px"}}
+                                                          value={esfrRecordDetails.esfrRecordDetailData?.FleetInfo?.CorrectiveActions} />
                                         : esfrRecordDetails.esfrRecordDetailData?.FleetInfo?.CorrectiveActions
                                     }
                                 </ListItem>
@@ -461,26 +460,28 @@ const ViewSdrData = ({
                         id="help-menu"
                         open={showACDetails}
                         onClose={closeACDetails}
-                        PaperProps={{
-                            elevation: 0,
-                            sx: {
-                                top: "100px",
-                                width: "310px",
-                                overflow: "visible",
-                                filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                                mt: 1.5,
-                                "& .MuiAvatar-root": {width: 32, height: 32, ml: -0.5, mr: 1},
-                                "&:before": {
-                                    content: "''",
-                                    display: "block",
-                                    position: "absolute",
-                                    top: 0,
-                                    right: 150,
-                                    width: 10,
-                                    height: 10,
-                                    bgcolor: "background.paper",
-                                    transform: "translateY(-50%) rotate(45deg)",
-                                    zIndex: 0,
+                        slotProps={{
+                            paper: {
+                                elevation: 0,
+                                sx: {
+                                    top: "100px",
+                                    width: "310px",
+                                    overflow: "visible",
+                                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                                    mt: 1.5,
+                                    "& .MuiAvatar-root": { width: 32, height: 32, ml: -0.5, mr: 1 },
+                                    "&:before": {
+                                        content: "''",
+                                        display: "block",
+                                        position: "absolute",
+                                        top: 0,
+                                        right: 150,
+                                        width: 10,
+                                        height: 10,
+                                        bgcolor: "background.paper",
+                                        transform: "translateY(-50%) rotate(45deg)",
+                                        zIndex: 0,
+                                    },
                                 },
                             },
                         }}

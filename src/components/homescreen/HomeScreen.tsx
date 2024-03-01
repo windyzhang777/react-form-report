@@ -5,12 +5,12 @@ import CommonSnackbar from "src/commons/Snackbar";
 import TabPanel from "src/commons/TabPanel";
 import { SdrStatus, SelectedTab } from "src/commons/types";
 import CommonDataGrid from "src/components/commondatagrid/commondatagrid";
-import "src/components/homescreen/homescreen.css";
 import ViewSdrData from "src/components/viewsdr/ViewSdrData";
 import { getAllSdrs } from "src/redux/ducks/getAllSdrs";
 import { useAppDispatch } from "src/redux/hooks";
 import axiosInstance from "src/utils/axiosInstance";
 import config from "src/utils/env.config";
+import "./homescreen.css";
 
 const sxBox = {
     borderBottom: 1,

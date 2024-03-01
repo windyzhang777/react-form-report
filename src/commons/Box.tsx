@@ -4,7 +4,9 @@ export interface IFlexRowProps {
   placeEnd?: boolean;
 }
 
-export const FlexRow = styled(Box)(({ placeEnd }: IFlexRowProps) => ({
+export const FlexRow = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "placeEnd",
+})(({ placeEnd }: IFlexRowProps) => ({
   display: "flex",
   gap: "10px",
   width: placeEnd ? "100%" : "unset",
