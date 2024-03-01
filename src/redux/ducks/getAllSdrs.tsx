@@ -122,12 +122,6 @@ export const getAllSdrs = (statusId: StatusId) => {
                 const sdrsInfo = res.data.Result;
                 dispatch(fetchSuccess(sdrsInfo, statusId));
             })
-            .catch((error) => {
-                dispatch(fetchFailure(error.message, statusId));
-                const data = require("../mocks/GetAllEsfrRecords.json");
-                const sdrsInfo = data.Result.JTokenString.Result;
-                console.log("sdrsInfo :",	sdrsInfo)
-                dispatch(fetchSuccess(sdrsInfo, statusId));
-            });
+            .catch((error) => dispatch(fetchFailure(error.message, statusId)))
     };
 };
