@@ -1,5 +1,5 @@
 import { Grid, Link, Typography } from "@mui/material";
-import { GridCellParams, GridColDef, GridRowSelectionModel, GridValidRowModel } from "@mui/x-data-grid";
+import { GridCellParams, GridColDef, GridRowSelectionModel } from "@mui/x-data-grid";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { FlexRow } from "src/commons/Box";
@@ -139,21 +139,13 @@ const CommonDataGrid = ({
     updateSdrCount(tabIndex, filteredSdrs.length);
   }, [tabValue]);
 
-  const onRowsSelectionHandler = (sdrIds: GridRowSelectionModel) => {
-    setSelectedSdrsToExtract([...sdrIds]);
-    if (sdrIds && sdrIds.length > 0) setIsExtractDisabled(false);
-    else setIsExtractDisabled(true);
-  };
-
   const setViewSdr = (sdrData: GridCellParams) => {
     setViewSdrFlag(true);
     setSelectedSdrId(sdrData?.row.Id);
     setSelectedType(sdrData?.row.Type);
-    setViewSdrId(sdrData?.row.Id + "-" + sdrData?.row.Type);
+    setViewSdrId(sdrData?.row.Id);
     setSelectedIndex(tabIndex);
   };
-
-  const getRowId = (row: GridValidRowModel) => row.Id;
 
   const handleConfirmExtract = () => {
     setConfirmExtract(false);
@@ -187,12 +179,14 @@ const CommonDataGrid = ({
           disableColumnMenu
           columns={columnDefs}
           rows={rowData}
-          getRowId={getRowId}
+          getRowId={(row) => row.Id}
           checkboxSelection={showCheckbox}
           hideFooter={true}
-          onRowSelectionModelChange={(sdrIds: GridRowSelectionModel) =>
-            onRowsSelectionHandler(sdrIds)
-          }
+          onRowSelectionModelChange={(sdrIds) => {
+            setSelectedSdrsToExtract([...sdrIds]);
+            if (sdrIds && sdrIds.length > 0) setIsExtractDisabled(false);
+            else setIsExtractDisabled(true);
+          }}
           getRowClassName={(params) => {
             let rowStyles = "";
             rowStyles += params.id === viewSdrId ? "Mui-selection " : "";
