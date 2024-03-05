@@ -1,5 +1,5 @@
+import { Button } from "@mui/material";
 import { FlexRow } from "./Box";
-import StyledButton from "./Button";
 
 export interface ICommonButtonGroupProps {
   labelPrimary: string;
@@ -17,19 +17,19 @@ const CommonButtonGroup = ({
   placeEnd,
 }: ICommonButtonGroupProps) => (
   <FlexRow placeEnd={placeEnd}>
-    <StyledButton
+    <Button
       className={`${labelSecondary.toLowerCase()}-button`}
+      color="secondary"
       onClick={onClickSecondary}
-      secondary
     >
       {labelSecondary}
-    </StyledButton>
-    <StyledButton
+    </Button>
+    <Button
       className={`${labelPrimary.toLocaleLowerCase()}-button`}
       onClick={onClickPrimary}
     >
       {labelPrimary}
-    </StyledButton>
+    </Button>
   </FlexRow>
 );
 
