@@ -3,9 +3,9 @@ import { GridCellParams, GridColDef, GridRowSelectionModel } from "@mui/x-data-g
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { FlexRow } from "src/commons/Box";
-import StyledButton from "src/commons/Button";
+import Button from "src/commons/Button";
 import CommonButtonGroup from "src/commons/ButtonGroup";
-import StyledDataGrid from "src/commons/DataGrid";
+import DataGrid from "src/commons/DataGrid";
 import CommonModal from "src/commons/Modal";
 import {
   CommonDataGridProps,
@@ -175,7 +175,7 @@ const CommonDataGrid = ({
             />
           </CommonModal>
         )}
-        <StyledDataGrid
+        <DataGrid
           disableColumnMenu
           columns={columnDefs}
           rows={rowData}
@@ -202,13 +202,13 @@ const CommonDataGrid = ({
         />
         {tabIndex === SelectedTab.Approved && (
         <FlexRow placeEnd mt={2}>
-          <StyledButton
+          <Button
             className="extract-button"
             disabled={isExtractDisabled}
             onClick={() => setConfirmExtract(true)}
           >
             Extract
-          </StyledButton>
+          </Button>
         </FlexRow>
         )}
       </Grid>

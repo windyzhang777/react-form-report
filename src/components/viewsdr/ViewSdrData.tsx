@@ -1,8 +1,9 @@
-import { Box, Checkbox, Grid, ListItem, Menu, TextareaAutosize, TextField } from "@mui/material";
+import { Box, Checkbox, Grid, ListItem, TextareaAutosize, TextField } from "@mui/material";
 import moment from "moment";
-import { MouseEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CommonButtonGroup from "src/commons/ButtonGroup";
 import CommonLoader from "src/commons/CommonLoader";
+import Menu from 'src/commons/Menu';
 import { EsfrRecordDetailStateType, InspectionType, ViewSdrDataProps } from "src/commons/types";
 import { getEsfrRecordDetails } from "src/redux/ducks/getEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
@@ -14,7 +15,6 @@ const ViewSdrData = ({
     selectedSdrId,
     selectedType,
 }: ViewSdrDataProps) => {
-    const [anchorEl, setAnchorEl] = useState<Element | null>(null);
     const [editable, setEditable] = useState(false);
     const dispatch = useAppDispatch();
     const esfrRecordDetails: EsfrRecordDetailStateType = useAppSelector(state => state.esfrRecordDetail);
@@ -32,16 +32,6 @@ const ViewSdrData = ({
         fontWeight: '600',
         marginLeft: '15px',
     }
-
-    const openACDetails = (event: MouseEvent) => {
-        setAnchorEl(event.currentTarget);
-    }
-
-    const closeACDetails = () => {
-        setAnchorEl(null);
-    }
-
-    const showACDetails: boolean = Boolean(anchorEl);
 
     const onClickEdit = () => {
         setEditable(!editable);
@@ -73,7 +63,64 @@ const ViewSdrData = ({
                             <ListItem>{esfrRecordDetails.esfrRecordDetailData?.OperatorControlNumber}</ListItem>
                         </Grid>
                         <Grid item xs={6}>
-                            <ListItem onClick={openACDetails}> <u className={"view-details-text"}>View Details</u></ListItem>
+                            <Menu button={<u className={"view-details-text"}>View Details</u>} id="view-details-menu">
+                                <Grid className={"view-details-dropdown"} container spacing={2}>
+                                    <Grid className={"view-details-left"} item xs={6}>
+                                        <ListItem>A/C Number</ListItem>
+                                    </Grid>
+                                    <Grid className={"view-details-right"} item>
+                                        <ListItem>{esfrRecordDetails.esfrRecordDetailData?.FleetInfo?.LicenseNumber}</ListItem>
+                                    </Grid>
+                                </Grid>
+                                <Grid className={"view-details-dropdown"} container spacing={2}>
+                                    <Grid className={"view-details-left"} item xs={6}>
+                                        <ListItem>A/C Manufacturer</ListItem>
+                                    </Grid>
+                                    <Grid className={"view-details-right"} item>
+                                        <ListItem>{esfrRecordDetails.esfrRecordDetailData?.FleetInfo?.ManufacturedBy}</ListItem>
+                                    </Grid>
+                                </Grid>
+                                <Grid className={"view-details-dropdown"} container spacing={2}>
+                                    <Grid className={"view-details-left"} item xs={6}>
+                                        <ListItem>A/C Model</ListItem>
+                                    </Grid>
+                                    <Grid className={"view-details-right"} item>
+                                        <ListItem>{esfrRecordDetails.esfrRecordDetailData?.FleetInfo?.ManufacturerPartNumber}</ListItem>
+                                    </Grid>
+                                </Grid>
+                                <Grid className={"view-details-dropdown"} container spacing={2}>
+                                    <Grid className={"view-details-left"} item xs={6}>
+                                        <ListItem>A/C Serial Number</ListItem>
+                                    </Grid>
+                                    <Grid className={"view-details-right"} item>
+                                        <ListItem>{esfrRecordDetails.esfrRecordDetailData?.FleetInfo?.ManufacturerSerialNumber}</ListItem>
+                                    </Grid>
+                                </Grid>
+                                <Grid className={"view-details-dropdown"} container spacing={2}>
+                                    <Grid className={"view-details-left"} item xs={6}>
+                                        <ListItem>A/C Total Time</ListItem>
+                                    </Grid>
+                                    <Grid className={"view-details-right"} item>
+                                        <ListItem>{esfrRecordDetails.esfrRecordDetailData?.FleetInfo?.TotalAircraftTime}</ListItem>
+                                    </Grid>
+                                </Grid>
+                                <Grid className={"view-details-dropdown"} container spacing={2}>
+                                    <Grid className={"view-details-left"} item xs={6}>
+                                        <ListItem>A/C Total Cycles</ListItem>
+                                    </Grid>
+                                    <Grid className={"view-details-right"} item>
+                                        <ListItem>{esfrRecordDetails.esfrRecordDetailData?.FleetInfo?.TotalAircraftCycles}</ListItem>
+                                    </Grid>
+                                </Grid>
+                                <Grid className={"view-details-dropdown"} container spacing={2}>
+                                    <Grid className={"view-details-left"} item xs={6}>
+                                        <ListItem>Flight #</ListItem>
+                                    </Grid>
+                                    <Grid className={"view-details-right"} item>
+                                        <ListItem>{esfrRecordDetails.esfrRecordDetailData?.FleetInfo?.TailNumber}</ListItem>
+                                    </Grid>
+                                </Grid>
+                            </Menu>
                         </Grid>
                     </Grid>
                     <Grid className={"sdr-status-grid"}
@@ -455,96 +502,6 @@ const ViewSdrData = ({
                         placeEnd
                     />
                     </Grid>}
-                    <Menu
-                        anchorEl={anchorEl}
-                        id="help-menu"
-                        open={showACDetails}
-                        onClose={closeACDetails}
-                        slotProps={{
-                            paper: {
-                                elevation: 0,
-                                sx: {
-                                    top: "100px",
-                                    width: "310px",
-                                    overflow: "visible",
-                                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                                    mt: 1.5,
-                                    "& .MuiAvatar-root": { width: 32, height: 32, ml: -0.5, mr: 1 },
-                                    "&:before": {
-                                        content: "''",
-                                        display: "block",
-                                        position: "absolute",
-                                        top: 0,
-                                        right: 150,
-                                        width: 10,
-                                        height: 10,
-                                        bgcolor: "background.paper",
-                                        transform: "translateY(-50%) rotate(45deg)",
-                                        zIndex: 0,
-                                    },
-                                },
-                            },
-                        }}
-                        transformOrigin={{horizontal: "center", vertical: "top"}}
-                        anchorOrigin={{horizontal: 66, vertical: "bottom"}}
-                    >
-                        <Grid className={"view-details-dropdown"} container spacing={2}>
-                            <Grid className={"view-details-left"} item xs={7}>
-                                <ListItem>A/C Number</ListItem>
-                            </Grid>
-                            <Grid className={"view-details-right"} item xs={5}>
-                                <ListItem>{esfrRecordDetails.esfrRecordDetailData?.FleetInfo?.LicenseNumber}</ListItem>
-                            </Grid>
-                        </Grid>
-                        <Grid className={"view-details-dropdown"} container spacing={2}>
-                            <Grid className={"view-details-left"} item xs={7}>
-                                <ListItem>A/C Manufacturer</ListItem>
-                            </Grid>
-                            <Grid className={"view-details-right"} item xs={5}>
-                                <ListItem>{esfrRecordDetails.esfrRecordDetailData?.FleetInfo?.ManufacturedBy}</ListItem>
-                            </Grid>
-                        </Grid>
-                        <Grid className={"view-details-dropdown"} container spacing={2}>
-                            <Grid className={"view-details-left"} item xs={7}>
-                                <ListItem>A/C Model</ListItem>
-                            </Grid>
-                            <Grid className={"view-details-right"} item xs={5}>
-                                <ListItem>{esfrRecordDetails.esfrRecordDetailData?.FleetInfo?.ManufacturerPartNumber}</ListItem>
-                            </Grid>
-                        </Grid>
-                        <Grid className={"view-details-dropdown"} container spacing={2}>
-                            <Grid className={"view-details-left"} item xs={7}>
-                                <ListItem>A/C Serial Number</ListItem>
-                            </Grid>
-                            <Grid className={"view-details-right"} item xs={5}>
-                                <ListItem>{esfrRecordDetails.esfrRecordDetailData?.FleetInfo?.ManufacturerSerialNumber}</ListItem>
-                            </Grid>
-                        </Grid>
-                        <Grid className={"view-details-dropdown"} container spacing={2}>
-                            <Grid className={"view-details-left"} item xs={7}>
-                                <ListItem>A/C Total Time</ListItem>
-                            </Grid>
-                            <Grid className={"view-details-right"} item xs={5}>
-                                <ListItem>{esfrRecordDetails.esfrRecordDetailData?.FleetInfo?.TotalAircraftTime}</ListItem>
-                            </Grid>
-                        </Grid>
-                        <Grid className={"view-details-dropdown"} container spacing={2}>
-                            <Grid className={"view-details-left"} item xs={7}>
-                                <ListItem>A/C Total Cycles</ListItem>
-                            </Grid>
-                            <Grid className={"view-details-right"} item xs={5}>
-                                <ListItem>{esfrRecordDetails.esfrRecordDetailData?.FleetInfo?.TotalAircraftCycles}</ListItem>
-                            </Grid>
-                        </Grid>
-                        <Grid className={"view-details-dropdown"} container spacing={2}>
-                            <Grid className={"view-details-left"} item xs={7}>
-                                <ListItem>Flight #</ListItem>
-                            </Grid>
-                            <Grid className={"view-details-right"} item xs={5}>
-                                <ListItem>{esfrRecordDetails.esfrRecordDetailData?.FleetInfo?.TailNumber}</ListItem>
-                            </Grid>
-                        </Grid>
-                    </Menu>
                     {selectedSdrId === null && <Grid>Please select on SDR to view it.</Grid>}
                 </>}
         </Grid>
