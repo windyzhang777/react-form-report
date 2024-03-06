@@ -1,107 +1,89 @@
-import { useEffect, useState} from "react";
-import {DataGrid, GridCellParams, GridRowSelectionModel, GridColDef, GridRowClassNameParams} from "@mui/x-data-grid";
-import {Button, Grid, Link} from "@mui/material";
+import { Button, Grid, Link, Typography } from "@mui/material";
+import { GridCellParams, GridColDef, GridRowSelectionModel } from "@mui/x-data-grid";
 import moment from "moment";
+import { useEffect, useState } from "react";
+import { FlexRow } from "src/commons/Box";
+import CommonButtonGroup from "src/commons/ButtonGroup";
+import DataGrid from "src/commons/DataGrid";
+import CommonModal from "src/commons/Modal";
 import {
-  CompDataGrid,
-  SelectedTab,
+  CommonDataGridProps,
   GridRow,
-  NameValuesGetterParams,
-  RowRowApi,
-  RowApi,
   SdrRowApi,
-  SdrStateType
+  SdrStateType,
+  SelectedTab
 } from "src/commons/types";
-import "../commondatagrid/commondatagrid.css";
-import {useAppSelector} from "../../redux/hooks";
+import { useAppSelector } from "src/redux/hooks";
 import config from "src/utils/env.config";
+import "./commondatagrid.css";
 
-const CommonDataGrid = (props: CompDataGrid) => {
-  const {
-    reportStatus,
-    reportIndex,
-    setViewSdrFlag,
-    setSelectedSdrId,
-    setSelectedType,
-    updateSdrCount,
-    setSelectedIndex
-  } = props;
+const CommonDataGrid = ({
+  setSelectedIndex,
+  setSelectedSdrId,
+  setSelectedType,
+  setViewSdrFlag,
+  tabIndex,
+  tabValue,
+  updateSdrCount,
+}: CommonDataGridProps) => {
   const [rowData, setRowData] = useState<Array<GridRow>>([]);
   const [showCheckbox, setShowCheckbox] = useState<boolean>(false);
-  const [selectedSdrsToExtract, setSelectedSdrsToExtract] = useState<
-      GridRowSelectionModel
-  >([]);
+  const [selectedSdrsToExtract, setSelectedSdrsToExtract] = useState<GridRowSelectionModel>([]);
   const [isExtractDisabled, setIsExtractDisabled] = useState<boolean>(true);
   const [viewSdrId, setViewSdrId] = useState("");
   const newSdrs: SdrStateType = useAppSelector(state => state.newSdrs);
   const approvedSdrs: SdrStateType = useAppSelector(state => state.approvedSdrs);
   const flaggedSdrs: SdrStateType = useAppSelector(state => state.flaggedSdrs);
+  const currentDateTime = moment().add(-2, "days");
+  const [confirmExtract, setConfirmExtract] = useState<boolean>(false);
 
-  const LinkCell = (rowApi: RowRowApi) => {
-    let logPageNumber = rowApi?.rowApi?.row?.LogpageNumber;
-    return (
-        <Link
-            sx={{cursor: "pointer", color: "#6244BB"}}
-            onClick={() => openLogPage(logPageNumber)}
-        >
-          {logPageNumber}
-        </Link>
-    );
-  };
-
-  const openLogPage = (logPageNumber: string) => {
+  const openLogPage = (logpageNumber: string) => {
     let width = window.innerWidth;
-    let url = `${config.webTechApiBaseUrl}${config.URL_LOGPAGE_SEARCH}?logPageNumber=${logPageNumber}&fleetCode=null&role=${sessionStorage.getItem("jobRole")}`;
+    let url = `${config.webTechApiBaseUrl}${config.URL_LOGPAGE_SEARCH}?logPageNumber=${logpageNumber}&fleetCode=null&role=${sessionStorage.getItem("jobRole")}`;
     window.open(url, "_blank", "width=" + (width - 450) / 2 + ",height=" + (window.innerHeight - 320) + ",left=" + ((width / 2) - 50) + ",top=450");
-  };
-
-  const highlightDate = (rowApi: RowApi) => {
-    let data = rowApi?.row?.datetime;
-    let current = moment().add(-2, "days").format("MM/DD/YYYY h:mm");
-    if (moment(data).isBefore(current)) {
-      return <p className="paragraph-text">{data}</p>;
-    }
   };
 
   const columnDefs: GridColDef[] = [
     {
-      field: "LogPageNumber",
+      field: "LogpageNumber",
       headerName: "Log Page Number",
-      flex: 1.5,
       sortable: false,
-      renderCell: (rowApi: RowApi) => <LinkCell rowApi={rowApi}/>,
+      minWidth: 100,
+      renderCell: ({ row }) => (
+        <Link onClick={() => openLogPage(row?.LogpageNumber)} sx={{ cursor: "pointer", color: "#6244BB" }}>{row?.LogpageNumber}</Link>
+      ),
     },
     {
       field: "reportedby",
       headerName: "Reported By",
-      flex: 1.5,
       sortable: false,
-      valueGetter: (params: NameValuesGetterParams) =>
-          `${params?.row?.CreatedbyFirstName} ${params?.row?.CreatebyLastName} (${params?.row?.CreatedBy})`,
+      minWidth: 150,
+      valueGetter: ({ row }) =>
+          `${row?.CreatedbyFirstName || ""} ${row?.CreatebyLastName || ""} (${row?.CreatedBy || ""})`,
     },
     {
       field: "CreatedDate",
       headerName: "Date & Time",
-      flex: 2,
+      minWidth: 180,
       sortable: false,
-      renderCell: (rowApi: RowApi) => highlightDate(rowApi),
+      renderCell: ({ row }) => 
+        <p className={moment(row?.CreatedDate).isBefore(currentDateTime) ? "paragraph-text" : ""}>{row?.CreatedDate}</p>,
     },
     {
-      field: "LogPageStatus",
+      field: "LogpageStatus",
       headerName: "Log Page Status",
-      flex: 1.5,
+      minWidth: 150,
       sortable: false,
     },
     {
       field: "Type",
       headerName: "SDR/SFR",
-      flex: 1,
       sortable: false,
     },
     {
       field: "SdrStatus",
       headerName: "SDR Status",
-      flex: 1,
+      minWidth: 200,
       sortable: false,
     },
   ];
@@ -113,13 +95,13 @@ const CommonDataGrid = (props: CompDataGrid) => {
   });
 
   useEffect(() => {
-    setShowCheckbox(reportIndex === SelectedTab.Approved);
-  }, [reportIndex]);
+    setShowCheckbox(tabIndex === SelectedTab.Approved);
+  }, [tabIndex]);
 
   useEffect(() => {
     let sdrData: Array<SdrRowApi> = [];
     let sdrStatusText = "Open";
-    switch (reportIndex) {
+    switch (tabIndex) {
       case 1:
         sdrData = flaggedSdrs.sdrData;
         sdrStatusText = "Approved with Follow Up";
@@ -140,7 +122,6 @@ const CommonDataGrid = (props: CompDataGrid) => {
     Array.isArray(sdrData) && sdrData?.forEach((r: SdrRowApi) => {
       let row: GridRow = {
         SdrStatus: sdrStatusText,
-        LogPageStatus: r.LogpageStatus,
         Id: r.Id,
         LogpageNumber: r.LogpageNumber,
         LogpageStatus: r.LogpageStatus,
@@ -154,51 +135,63 @@ const CommonDataGrid = (props: CompDataGrid) => {
     })
 
     setRowData(filteredSdrs);
-    updateSdrCount(reportIndex, filteredSdrs.length);
-  }, [reportStatus]);
-
-  const onRowsSelectionHandler = (sdrIds: GridRowSelectionModel) => {
-    setSelectedSdrsToExtract([...sdrIds]);
-    console.log(selectedSdrsToExtract);
-    if (sdrIds && sdrIds.length > 0) setIsExtractDisabled(false);
-    else setIsExtractDisabled(true);
-  };
+    updateSdrCount(tabIndex, filteredSdrs.length);
+  }, [tabValue]);
 
   const setViewSdr = (sdrData: GridCellParams) => {
     setViewSdrFlag(true);
     setSelectedSdrId(sdrData?.row.Id);
     setSelectedType(sdrData?.row.Type);
-    setViewSdrId(sdrData?.row.Id + "-" + sdrData?.row.Type);
-    setSelectedIndex(reportIndex);
+    setViewSdrId(sdrData?.row.Id);
+    setSelectedIndex(tabIndex);
   };
 
-  const styleRow = (params: GridRowClassNameParams<GridRow>) => {
-    let rowStyles = "";
-    rowStyles += params.id === viewSdrId ? "Mui-selection " : "";
-    rowStyles += params.indexRelativeToCurrentPage % 2 === 0 ? "" : "Mui-odd";
-    return rowStyles;
-  }
-
-  const getRowId = (row: GridRow) => {
-    return row.Id + "-" + row.Type;
-  }
+  const handleConfirmExtract = () => {
+    setConfirmExtract(false);
+    console.log("selectedSdrsToExtract :", selectedSdrsToExtract);
+    // TODO: [TASK 1227082] eSFR Flat file creation for sending to external system
+    // const found = approvedSdrs.sdrData.find(s=>s.Id===selectedSdrsToExtract[0])
+    // Type
+    // moment(CreatedDate).format("yyyymmdd")
+  };
 
   return (
       <Grid item md={12}>
+        {confirmExtract && (
+          <CommonModal
+            name="confirm-extract"
+            onClose={() => setConfirmExtract(false)}
+            open={confirmExtract}
+          >
+            <Typography id="confirm-extract-modal-title" variant="h6" mb={2} fontWeight={600}>Extract Confirmation</Typography>
+            <Typography id="confirm-extract-modal-description" variant="body1" mb={6}>Please confirm that you would like to extract the selected reports</Typography>
+            <CommonButtonGroup
+              labelPrimary="Confirm"
+              labelSecondary="Cancel"
+              onClickPrimary={handleConfirmExtract}
+              onClickSecondary={() => setConfirmExtract(false)}
+              placeEnd
+            />
+          </CommonModal>
+        )}
         <DataGrid
-          sx={{ border: "none"}}
           disableColumnMenu
           columns={columnDefs}
           rows={rowData}
-          getRowId={getRowId}
+          getRowId={(row) => row.Id}
           checkboxSelection={showCheckbox}
           hideFooter={true}
-          onRowSelectionModelChange={(sdrIds: GridRowSelectionModel) =>
-            onRowsSelectionHandler(sdrIds)
-          }
-          getRowClassName={(params) =>
-            styleRow(params)
-          }
+          onRowSelectionModelChange={(sdrIds) => {
+            setSelectedSdrsToExtract([...sdrIds]);
+            if (sdrIds && sdrIds.length > 0) setIsExtractDisabled(false);
+            else setIsExtractDisabled(true);
+          }}
+          getRowClassName={(params) => {
+            let rowStyles = "";
+            rowStyles += params.id === viewSdrId ? "Mui-selection " : "";
+            rowStyles += params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd";
+            return rowStyles;
+          }}
           disableRowSelectionOnClick
           onCellClick={(data: GridCellParams) => {
             if (data.field !== "__check__") {
@@ -206,23 +199,16 @@ const CommonDataGrid = (props: CompDataGrid) => {
             }
           }}
         />
-        {reportIndex === SelectedTab.Approved && (
-          <Grid item sx={{ float: "right" }}>
-            <Button
-              variant="contained"
-              disabled={isExtractDisabled}
-              className="extract-button"
-              sx={
-                isExtractDisabled
-                  ? {
-                      background: "#999999",
-                    }
-                  : { background: "#6244BB" }
-              }
-            >
-              Extract
-            </Button>
-          </Grid>
+        {tabIndex === SelectedTab.Approved && (
+        <FlexRow placeEnd mx={2} my={4}>
+          <Button
+            className="extract-button"
+            disabled={isExtractDisabled}
+            onClick={() => setConfirmExtract(true)}
+          >
+            Extract
+          </Button>
+        </FlexRow>
         )}
       </Grid>
   );

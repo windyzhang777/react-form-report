@@ -6,39 +6,45 @@ export enum SelectedTab {
 }
 
 // common data grid
-export interface CompDataGrid {
-    reportStatus: string;
-    reportIndex: number;
-    updateSdrCount: (a: number, b: number) => void;
-    setViewSdrFlag: (a: boolean) => void;
+export interface CommonDataGridProps {
+    setSelectedIndex: (a: number) => void;
     setSelectedSdrId: (a: number) => void;
     setSelectedType: (a: string) => void;
-    setSelectedIndex: (a: number) => void;
+    setViewSdrFlag: (a: boolean) => void;
+    tabIndex: number;
+    tabValue: string;
+    updateSdrCount: (a: number, b: number) => void;
+}
+
+export interface CommonGridRow {
+	Id: number;
+    LogpageNumber: string;
+    LogpageStatus: LogpageStatus | null;
+    CreatedBy: string;
+    CreatedbyFirstName: null | string;
+    CreatebyLastName: null | string;
+    CreatedDate: string;
+    Type: Type;
 }
 
 // grid row
-export interface GridRow {
-    Id: number;
-    LogpageNumber: string;
-    LogpageStatus: string;
-    CreatedBy: string;
-    CreatedbyFirstName: string;
-    CreatebyLastName: string;
-    CreatedDate: string;
-    Type: string
+export interface GridRow extends CommonGridRow {
     SdrStatus: string;
-    LogPageStatus: string;
 }
 
-export interface SdrRowApi {
-    Id: number;
-    LogpageNumber: string;
-    LogpageStatus: string;
-    CreatedBy: string;
-    CreatedbyFirstName: string;
-    CreatebyLastName: string;
-    CreatedDate: string;
-    Type: string;
+export interface SdrRowApi extends CommonGridRow {
+    StatusId: number;
+}
+
+export enum LogpageStatus {
+    OpenD = "OPEN-D",
+    OpenO = "OPEN-O",
+}
+
+export enum Type {
+    Both = "Both",
+    SDR = "SDR",
+    Sfr = "SFR",
 }
 
 export interface TabPanelProps {
@@ -48,10 +54,10 @@ export interface TabPanelProps {
 }
 
 export interface ViewSdrDataProps {
-    selectedSdrId: number;
+    handleApprove: (a: boolean) => void;
     selectedIndex: number;
+    selectedSdrId: number;
     selectedType: string;
-    onClickApprove: (a: boolean) => void;
 }
 
 export interface NewSdrsDataResponse {
@@ -64,30 +70,6 @@ export interface ApprovedSdrsDataResponse {
 
 export interface FlaggedSdrsDataResponse {
     flaggedSdrsData: Array<SdrRowApi>;
-}
-
-export interface NameValuesGetterParams {
-    row: {
-        CreatedbyFirstName: string;
-        CreatebyLastName: string;
-        CreatedBy: string;
-    }
-}
-
-export interface RowRowApi {
-    rowApi: {
-        row: {
-            LogpageNumber: string;
-            datetime: string;
-        }
-    }
-}
-
-export interface RowApi {
-    row: {
-        LogpageNumber: string;
-        datetime: string;
-    }
 }
 
 export type StatusId = 2 | 3 | 4;

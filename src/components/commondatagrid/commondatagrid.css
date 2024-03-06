@@ -22,16 +22,8 @@
 
 .paragraph-text{
     font-weight: bold;
-    color: red;
- }
-
- .extract-button {
-     width: 190px;
-     height: 40px;
-     padding: 8px;
-     border-radius: 4px;
-     gap: 8px
- }
+    color: #D50032;
+}
 
 .Mui-selected {
     background: transparent !important;
@@ -57,4 +49,8 @@
 
 .MuiDataGrid-columnHeader.MuiDataGrid-withBorderColor {
     font-size: 15px;
+}
+
+#confirm-extract-modal-title, #confirm-extract-modal-description {
+    user-select: none;
 }

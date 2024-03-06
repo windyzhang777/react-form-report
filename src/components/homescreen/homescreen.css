@@ -1,5 +1,4 @@
 .sdrDefaultMsg {
-    font-family: Open Sans;
     font-size: 20px;
     font-style: italic;
     font-weight: 400;
@@ -16,8 +15,4 @@
 .MuiTabs-indicator {
     background-color: #002244 !important;
     height: 4px !important;
-}
-
-* {
-    font-family: "Open Sans" !important;
 }

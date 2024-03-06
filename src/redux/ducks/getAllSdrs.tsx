@@ -1,15 +1,15 @@
 import { Dispatch } from "redux";
 import {
-    SdrDispatchFuncType,
     ReducerAction,
-    SdrStateType,
-    SdrDataType,
-    StatusId,
     SdrActionType,
-    SdrStatus
-} from "../../commons/types";
-import axiosInstance from "../../utils/axiosInstance";
-import config from "../../utils/env.config";
+    SdrDataType,
+    SdrDispatchFuncType,
+    SdrStateType,
+    SdrStatus,
+    StatusId
+} from "src/commons/types";
+import axiosInstance from "src/utils/axiosInstance";
+import config from "src/utils/env.config";
 
 const FETCH_NEW_SDRS: SdrActionType = "FETCH_NEW_SDRS";
 const FETCH_APPROVED_SDRS: SdrActionType = "FETCH_APPROVED_SDRS";
@@ -122,6 +122,6 @@ export const getAllSdrs = (statusId: StatusId) => {
                 const sdrsInfo = res.data.Result;
                 dispatch(fetchSuccess(sdrsInfo, statusId));
             })
-            .catch((error) => dispatch(fetchFailure(error.message, statusId)));
+            .catch((error) => dispatch(fetchFailure(error.message, statusId)))
     };
 };
