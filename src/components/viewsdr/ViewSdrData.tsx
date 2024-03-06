@@ -3,7 +3,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import CommonButtonGroup from "src/commons/ButtonGroup";
 import CommonLoader from "src/commons/CommonLoader";
-import Menu from 'src/commons/Menu';
+import { ArrowMenu } from 'src/commons/Menu';
 import { EsfrRecordDetailStateType, InspectionType, ViewSdrDataProps } from "src/commons/types";
 import { getEsfrRecordDetails } from "src/redux/ducks/getEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
@@ -28,7 +28,6 @@ const ViewSdrData = ({
     const sxBox = {
         borderBottom: 1,
         borderColor: 'divider',
-        width: '190%',
         fontWeight: '600',
         marginLeft: '15px',
     }
@@ -42,7 +41,7 @@ const ViewSdrData = ({
     }
 
     return (
-        <Grid item md={6}
+        <Grid item md={12}
               sx={{boxShadow: "-4px 0px 4px 0px rgba(51, 51, 51, 0.12)", marginTop: "-30px", paddingTop: "30px"}}>
             <Box sx={{...sxBox}}>
                 <p>Service Difficulty Report - #{selectedSdrId}</p>
@@ -63,7 +62,7 @@ const ViewSdrData = ({
                             <ListItem>{esfrRecordDetails.esfrRecordDetailData?.OperatorControlNumber}</ListItem>
                         </Grid>
                         <Grid item xs={6}>
-                            <Menu button={<u className={"view-details-text"}>View Details</u>} id="view-details-menu">
+                            <ArrowMenu button={<ListItem><u className={"view-details-text"}>View Details</u></ListItem>} id="view-details-menu">
                                 <Grid className={"view-details-dropdown"} container spacing={2}>
                                     <Grid className={"view-details-left"} item xs={6}>
                                         <ListItem>A/C Number</ListItem>
@@ -120,7 +119,7 @@ const ViewSdrData = ({
                                         <ListItem>{esfrRecordDetails.esfrRecordDetailData?.FleetInfo?.TailNumber}</ListItem>
                                     </Grid>
                                 </Grid>
-                            </Menu>
+                            </ArrowMenu>
                         </Grid>
                     </Grid>
                     <Grid className={"sdr-status-grid"}
@@ -244,7 +243,7 @@ const ViewSdrData = ({
                             <Grid item xs={12}>
                                 <ListItem>
                                     {editable ?
-                                        <TextareaAutosize minRows={2} style={{width: "190%", fontSize: "16px"}}
+                                        <TextareaAutosize minRows={2} style={{width: "100%", fontSize: "16px"}}
                                                           value={esfrRecordDetails.esfrRecordDetailData?.FleetInfo?.CorrectiveActions} />
                                         : esfrRecordDetails.esfrRecordDetailData?.FleetInfo?.CorrectiveActions
                                     }
@@ -490,18 +489,19 @@ const ViewSdrData = ({
                             },
                         }} checked={flagFollowUp} onChange={() => setFlagFollowUp(!flagFollowUp)}/> Flag for follow up
                     </Grid>}
-                    {selectedIndex !== 2 && <Grid spacing={3} container sx={{
-                        boxShadow: "0px -4px 8px 0px rgba(51, 51, 51, 0.12)", width: "200%",
-                        marginLeft: "0", marginTop: "10px", paddingTop: "20px", textTransform: "none"
-                    }}>
-                    <CommonButtonGroup
-                        labelPrimary={editable ? "Save" : "Approve"}
-                        labelSecondary={editable ? "Cancel" : "Edit"}
-                        onClickPrimary={onClickApprove}
-                        onClickSecondary={onClickEdit}
-                        placeEnd
-                    />
-                    </Grid>}
+                    {selectedIndex !== 2 && (
+                        <Grid
+                            mx={0} mb={0}
+                            sx={{borderLeft: 1, borderRight: 1, borderBottom: 1, borderColor: "#E6E6E6", boxShadow: "0px -4px 8px 0px rgba(51, 51, 51, 0.12)", width: "100%", marginTop: "10px", paddingTop: "20px", textTransform: "none"}}>
+                                <CommonButtonGroup
+                                    labelPrimary={editable ? "Save" : "Approve"}
+                                    labelSecondary={editable ? "Cancel" : "Edit"}
+                                    onClickPrimary={onClickApprove}
+                                    onClickSecondary={onClickEdit}
+                                    placeEnd
+                                />
+                        </Grid>
+                        )}
                     {selectedSdrId === null && <Grid>Please select on SDR to view it.</Grid>}
                 </>}
         </Grid>

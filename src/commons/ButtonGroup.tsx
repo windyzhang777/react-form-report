@@ -16,7 +16,7 @@ const CommonButtonGroup = ({
   onClickSecondary,
   placeEnd,
 }: ICommonButtonGroupProps) => (
-  <FlexRow placeEnd={placeEnd}>
+  <FlexRow placeEnd={placeEnd} mx={2} my={2}>
     <Button
       className={`${labelSecondary.toLowerCase()}-button`}
       color="secondary"

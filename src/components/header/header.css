@@ -52,20 +52,9 @@
     line-height: 24px;
     text-align: left;
     margin-left: 5px;
-    margin-right: 5px;
+    margin-right: 15px;
 }
 
 .show-profile {
     background-color: #334E69
-}
-
-.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiMenu-paper.MuiPopover-paper.MuiMenu-paper {
-    background-color: #334E69;
-    padding: 1rem;
-}
-
-.MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation16.MuiDrawer-paper.MuiDrawer-paperAnchorLeft {
-    background-color: #334E69;
-    color: white;
-    margin-top: 68px;
 }

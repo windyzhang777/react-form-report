@@ -96,7 +96,7 @@ const HomeScreen = () => {
     };
 
     return (
-        <Grid container spacing={2} sx={{ m: 0 }}>
+        <Grid container>
             {openSDRApproved && (
                 <CommonSnackbar
                     onClose={() => setOpenSDRApproved(false)}
@@ -125,7 +125,7 @@ const HomeScreen = () => {
                 <CommonLoader />
             ) : (
                 <>
-                    <Grid item md={6}>
+                    <Grid item lg={6} md={12}>
                         <Box sx={{ ...sxBox }}>
                             <Tabs
                                 value={tabIndex}
@@ -161,7 +161,7 @@ const HomeScreen = () => {
                             />
                         </TabPanel>
                     </Grid>
-                    <Grid item md={6}>
+                    <Grid item lg={6} md={12}>
                         {viewSdrFlag ? (
                             <ViewSdrData
                                 selectedSdrId={selectedSdrId}

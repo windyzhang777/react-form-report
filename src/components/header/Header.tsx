@@ -1,11 +1,10 @@
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MenuIcon from "@mui/icons-material/Menu";
-import { AppBar, Box, Drawer, IconButton, List, Menu, MenuItem, Toolbar } from "@mui/material";
+import { AppBar, Box, Drawer, IconButton, List, MenuItem, Toolbar } from "@mui/material";
 import moment from "moment";
-import { MouseEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FlexColumn } from 'src/commons/Box';
 import CommonButtonGroup from 'src/commons/ButtonGroup';
+import Menu from 'src/commons/Menu';
 import RefreshIcon from "src/icons/Refresh.png";
 import ProfileIcon from "src/icons/Traveler.png";
 import UnitedLogo from "src/icons/logo-united.svg";
@@ -15,23 +14,12 @@ import "./header.css";
 
 const Header = () => {
     const [openDrawer, setOpenDrawer] = useState<boolean>(false);
-    const [anchorEl, setAnchorEl] = useState<Element | null>(null);
     const [lastRefreshed, setLastRefreshed] = useState<string>(moment().format("MM/DD/YYYY hh:mm"));
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         setLastRefreshed(moment().format("MM/DD/YYYY hh:mm"));
     }, [window.location]);
-
-    const openProfile = (event: MouseEvent) => {
-        setAnchorEl(event.currentTarget);
-    }
-
-    const closeProfile = () => {
-        setAnchorEl(null);
-    }
-
-    const showProfile: boolean = Boolean(anchorEl);
 
     const redirectToAdmin = () => {
         if (process.env.REACT_APP_ENVIRONMENT === "production") {
@@ -104,27 +92,17 @@ const Header = () => {
                         </div>
                     </div>
                 )}
-                <div className={showProfile ? "show-profile" : "" }>
-                <IconButton sx={{marginLeft: "15px", marginRight: "15px"}} onClick={openProfile} >
-                    <div>
+                <Menu
+                    button={
+                    <FlexColumn>
                         <img alt="Profile Icon" src={ProfileIcon} className="header-icon" />
                         <div className={"header-text"}>{sessionStorage.fname}</div>
-                    </div>
-                    {anchorEl ? <ExpandLessIcon sx={{color:"#fff"}} /> : <ExpandMoreIcon sx={{color:"#fff"}} />}
-                </IconButton>
-                </div>
-                <Menu
-                    anchorEl={anchorEl}
-                    open={showProfile}
-                    onClose={closeProfile}
+                    </FlexColumn>
+                    }
+                    endIcon="expand"
+                    darkMood
                 >
-                    <FlexColumn
-                        sx={{
-                            marginBottom: "1rem ",
-                            fontSize: "18px",
-                            color: "#fff",
-                        }}
-                    >
+                    <FlexColumn sx={{ margin: "1rem", fontSize: "18px" }}>
                         <div>{`${sessionStorage.fname} ${sessionStorage.lname} | ${sessionStorage.id?.toLowerCase()}`}</div>
                         <div>{`Role: ${sessionStorage.jobRole}`}</div>
                         <div>{`Station: ${sessionStorage.station}`}</div>
@@ -133,12 +111,7 @@ const Header = () => {
                         labelPrimary="Logout"
                         labelSecondary="Site Feedback"
                         onClickPrimary={onLogoutClick}
-                        onClickSecondary={() =>
-                            window.open(
-                            `${process.env.REACT_APP_URL_AMT_BASE}/app-feedback?empid=${sessionStorage?.id}&appid=MyCrewWeb&appversion=1&firstname=${sessionStorage?.fname}&lastname=${sessionStorage?.lname}&employeestation=${sessionStorage?.station}&email=${sessionStorage?.email}`,
-                            "_blank"
-                            )
-                        }
+                        onClickSecondary={() => window.open(`${process.env.REACT_APP_URL_AMT_BASE}/app-feedback?empid=${sessionStorage?.id}&appid=MyCrewWeb&appversion=1&firstname=${sessionStorage?.fname}&lastname=${sessionStorage?.lname}&employeestation=${sessionStorage?.station}&email=${sessionStorage?.email}`, "_blank")}
                     />
                 </Menu>
             </Toolbar>

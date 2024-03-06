@@ -9,8 +9,8 @@ export const FlexRow = styled(Box, {
 })(({ placeEnd }: IFlexRowProps) => ({
   display: "flex",
   gap: "10px",
-  width: placeEnd ? "100%" : "unset",
   justifyContent: placeEnd ? "flex-end" : "unset",
+  alignItems: "center",
 }));
 
 export const FlexColumn = styled(Box)({

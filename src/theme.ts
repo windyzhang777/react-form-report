@@ -9,10 +9,6 @@ export const theme = createTheme({
       main: "#002244",
       contrastText: "#fff",
     },
-    info: {
-      main: "#334E69",
-      contrastText: "#fff",
-    },
     error: {
       main: "#D50032",
     },
@@ -21,8 +17,8 @@ export const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: ({ ownerState }) => ({
-          minWidth: "10em",
-          minHeight: "2.5em",
+          minWidth: "10rem",
+          minHeight: "2.5rem",
           textTransform: "capitalize",
           padding: "0.3% 0.6%",
           fontSize: "16px",

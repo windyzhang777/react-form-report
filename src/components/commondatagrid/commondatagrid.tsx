@@ -200,7 +200,7 @@ const CommonDataGrid = ({
           }}
         />
         {tabIndex === SelectedTab.Approved && (
-        <FlexRow placeEnd mt={2}>
+        <FlexRow placeEnd mx={2} my={4}>
           <Button
             className="extract-button"
             disabled={isExtractDisabled}
