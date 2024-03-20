@@ -32,7 +32,7 @@ const MenuProps: Partial<MenuPropsType> = {
       minWidth: 250,
       display: "flex",
       // justifyContent: "center",
-      alignItems: "center",
+      // alignItems: "center",
     },
   },
   MenuListProps: {

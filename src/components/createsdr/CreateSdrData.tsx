@@ -11,7 +11,7 @@ import { handleFocus, handleScroll } from "src/helpers";
 import { resetLogpageDataSuccess } from "src/redux/ducks/getEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import ValidationSchema from "src/validationSchema";
-import { object } from "yup";
+import { object, string } from "yup";
 import "./createSdrData.css";
 
 export interface ICreateSdrDataProps {
@@ -121,6 +121,7 @@ const CreateSdrData = ({
         validationSchema={object().shape({
           ...ValidationSchema,
           LogPageNumber: ValidationSchema.LogPageNumber.required(),
+          AircraftNumber: string(),
         })}
       >
         {({

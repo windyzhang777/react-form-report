@@ -129,6 +129,9 @@ export const theme = createTheme({
           ".MuiSvgIcon-root": {
             color: theme.palette.secondary.main,
           },
+          "&.Mui-focused fieldset": {
+            borderColor: theme.palette.secondary.main + " !important",
+          },
         }),
       },
     },
