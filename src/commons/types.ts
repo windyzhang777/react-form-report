@@ -1,255 +1,259 @@
-// enum to hold the report statuses
+import { CreateSDRReq } from "src/types/CreateSdrReq";
+import { GetAllEsfrRecordsResResult } from "src/types/GetAllEsfrRecordsRes";
+import { Employee } from "src/types/GetProfilerRes";
+import { GetSDREsfrRecordDetailsResResult } from "src/types/GetSdrEsfrRecordDetailsRes";
+import { GetSfrMasterDataResResult, OptionDocument } from "src/types/GetSfrMasterDataRes";
+import { ViewLogpageResResult } from "src/types/ViewLogpageRes";
+
+export enum SdrStatus {
+  New = 2,
+  Approved = 3,
+  Flagged = 4,
+}
+
 export enum SelectedTab {
-    Open = 0,
-    FlaggedForFollowUp = 1,
-    Approved = 2,
+  Open = 0,
+  FlaggedForFollowUp = 1,
+  Approved = 2,
 }
 
-// common data grid
-export interface CommonDataGridProps {
-    setSelectedIndex: (a: number) => void;
-    setSelectedSdrId: (a: number) => void;
-    setSelectedType: (a: string) => void;
-    setViewSdrFlag: (a: boolean) => void;
-    tabIndex: number;
-    tabValue: string;
-    updateSdrCount: (a: number, b: number) => void;
-}
-
-export interface CommonGridRow {
-	Id: number;
-    LogpageNumber: string;
-    LogpageStatus: LogpageStatus | null;
-    CreatedBy: string;
-    CreatedbyFirstName: null | string;
-    CreatebyLastName: null | string;
-    CreatedDate: string;
-    Type: Type;
-}
-
-// grid row
-export interface GridRow extends CommonGridRow {
-    SdrStatus: string;
-}
-
-export interface SdrRowApi extends CommonGridRow {
-    StatusId: number;
-}
-
-export enum LogpageStatus {
-    OpenD = "OPEN-D",
-    OpenO = "OPEN-O",
-}
-
-export enum Type {
-    Both = "Both",
-    SDR = "SDR",
-    Sfr = "SFR",
+export enum SelectedStatus {
+  Draft = 1,
+  Submitted = 2,
+  Approved = 3,
+  ApprovedwithFollowup = 4,
 }
 
 export interface TabPanelProps {
-    children?: React.ReactNode;
-    index?: number;
-    value: number;
+  children?: React.ReactNode;
+  index?: number;
+  value: number;
 }
 
-export interface ViewSdrDataProps {
-    handleApprove: (a: boolean) => void;
-    selectedIndex: number;
-    selectedSdrId: number;
-    selectedType: string;
+export interface ISaveSdrValues extends CreateSDRReq {
+  Aircraft: MajorEquipmentIdentity;
+  Powerplant: MajorEquipmentIdentity;
+  NNumber: string;
+  AtaCode: string;
+  FlightNumber: string;
+  Discrepancy: string;
 }
 
-export interface NewSdrsDataResponse {
-    newSdrsData: Array<SdrRowApi>;
+export interface IEditSdrValues extends CreateSDRReq {
+  AtaCode: string;
+  Discrepancy: string;
+  SubmitterDesignator: string;
+  SubmitterType: string;
+  OperatorDesignator: string;
+  OperatorType: string;
+  FAAReceivingRegionCode: string;
+  ReceivingDistrictOffice: string;
+  PartManufacturerName: string;
+  LocationDetails: ILocationDetails;
+  ComponentDetails: IComponentDetails;
+  StructureCausingDifficulty: IStructureCausingDifficulty;
 }
 
-export interface ApprovedSdrsDataResponse {
-    approvedSdrsData: Array<SdrRowApi>;
+export interface IComponentDetails {
+  ComponentName: string;
+  ComponentManufactureName: string;
+  ComponentPartNumber: string;
+  ComponentPartSerialNumber: string;
+  ComponentPartModelNumber: string;
+  ComponentLocation: string;
 }
 
-export interface FlaggedSdrsDataResponse {
-    flaggedSdrsData: Array<SdrRowApi>;
+export interface IStructureCausingDifficulty {
+  FuselageFromSTA: string;
+  FuselageToSTA: string;
+  CorrosionLevel: string;
+  CrackLength: number;
+  NumberofCracks: number;
+  CCCorrosionLevel: string;
+  CCCrackLength: number;
+  CCNumberofCracks: number;
+  WaterLineFrom: string;
+  WaterLineAt: string;
+  StringerFrom: string;
+  StringerFromSide: string;
+  StringerAt: string;
+  StringerAtSide: string;
+  ButtLineFrom: string;
+  ButtLineFromSide: string;
+  ButtLineAt: string;
+  ButtLineAtSide: string;
+  WingStationFromSTA: string;
+  WingStationFromSide: string;
+  WingStationToSTA: string;
+  WingStationToSide: string;
+  StructuralOther: string;
+}
+
+export interface ILocationDetails {
+  ZoneId: number;
+  DefectLocationIdentifier: string;
+  CoordinateLocationDetails: string;
+}
+
+export interface MajorEquipmentIdentity {
+  Manufacturer: string;
+  Model: string;
+  SerialNumber: string;
+  TotalTime: number;
+  TotalCycles: number;
 }
 
 export type StatusId = 2 | 3 | 4;
 
-type FleetInfoType = {
-    AtaCode: string,
-    CorrectiveActions: string,
-    LicenseNumber: string,
-    ManufacturedBy: string,
-    ManufacturerPartNumber: string,
-    ManufacturerSerialNumber: string,
-    TotalAircraftTime: number,
-    TotalAircraftCycles: number,
-    TailNumber: string
-};
-
-type OriginDetailsType = {
-    InspectionType: number,
-    CalDoc: string,
-    MfrSource: string,
-    SpecIdentifier: string,
-    DetectionMethod: string
-};
-
-type DiscrepancyDetailsType = {
-    IsManufacturingLimitExceeded: boolean,
-    DiscrepancyType: string,
-    DiscrepancyPartComments: string
-};
-
-type LocationDetailsType = {
-    Zone: string,
-    DefectLocation: string,
-    CoordinateLocationDetails: string
-};
-
-type PartDetailsType = {
-    PartDescription: string,
-    PartSerialNumber: string,
-    PartTrackingNumber: string,
-    PartManufacturerSerialNumber: string,
-    PartCondition: string,
-    PartLocation: string
-};
-
-type SdrDetailsType = {
-    NatureofReports: string[],
-    PrecautionaryProcedures: string[],
-    Stage: string,
-    HowDicovered: string,
-    PartDetails: PartDetailsType,
-};
-
-// TODO: define specific data type according to api response 
-export type ProfileDataType = {}
-export type SdrDataType = SdrRowApi[]
-export type EsfrRecordDetailDataType = {
-    OperatorControlNumber: string,
-    CreatedDate: string,
-    LogPageNumber: string,
-    Station: string,
-    FleetInfo: FleetInfoType,
-    OriginDetails: OriginDetailsType,
-    DiscrepancyDetails: DiscrepancyDetailsType,
-    LocationDetails: LocationDetailsType,
-    SdrDetails: SdrDetailsType
-}
-
-export type FETCH_PROFILE = "FETCH_PROFILE"
-export type FETCH_SUCCESS = "FETCH_SUCCESS"
-export type FETCH_FAILURE = "FETCH_FAILURE"
+export type FETCH_PROFILE = "FETCH_PROFILE";
+export type FETCH_SUCCESS = "FETCH_SUCCESS";
+export type FETCH_FAILURE = "FETCH_FAILURE";
 export type ProfileActionType = FETCH_PROFILE | FETCH_SUCCESS | FETCH_FAILURE;
 
-export type FETCH_NEW_SDRS = "FETCH_NEW_SDRS"
-export type FETCH_APPROVED_SDRS = "FETCH_APPROVED_SDRS"
-export type FETCH_FLAGGED_SDRS = "FETCH_FLAGGED_SDRS"
-export type FETCH_NEW_SUCCESS = "FETCH_NEW_SUCCESS"
-export type FETCH_APPROVED_SUCCESS = "FETCH_APPROVED_SUCCESS"
-export type FETCH_FLAGGED_SUCCESS = "FETCH_FLAGGED_SUCCESS"
-export type FETCH_NEW_FAILURE = "FETCH_NEW_FAILURE"
-export type FETCH_APPROVED_FAILURE = "FETCH_APPROVED_FAILURE"
-export type FETCH_FLAGGED_FAILURE = "FETCH_FLAGGED_FAILURE"
+export type FETCH_NEW_SDRS = "FETCH_NEW_SDRS";
+export type FETCH_APPROVED_SDRS = "FETCH_APPROVED_SDRS";
+export type FETCH_FLAGGED_SDRS = "FETCH_FLAGGED_SDRS";
+export type FETCH_NEW_SUCCESS = "FETCH_NEW_SUCCESS";
+export type FETCH_APPROVED_SUCCESS = "FETCH_APPROVED_SUCCESS";
+export type FETCH_FLAGGED_SUCCESS = "FETCH_FLAGGED_SUCCESS";
+export type FETCH_NEW_FAILURE = "FETCH_NEW_FAILURE";
+export type FETCH_APPROVED_FAILURE = "FETCH_APPROVED_FAILURE";
+export type FETCH_FLAGGED_FAILURE = "FETCH_FLAGGED_FAILURE";
 export type SdrActionType =
-    FETCH_NEW_SDRS
-    | FETCH_APPROVED_SDRS
-    | FETCH_FLAGGED_SDRS
-    | FETCH_NEW_SUCCESS
-    | FETCH_APPROVED_SUCCESS
-    | FETCH_FLAGGED_SUCCESS
-    | FETCH_NEW_FAILURE
-    | FETCH_APPROVED_FAILURE
-    | FETCH_FLAGGED_FAILURE;
+  | FETCH_NEW_SDRS
+  | FETCH_APPROVED_SDRS
+  | FETCH_FLAGGED_SDRS
+  | FETCH_NEW_SUCCESS
+  | FETCH_APPROVED_SUCCESS
+  | FETCH_FLAGGED_SUCCESS
+  | FETCH_NEW_FAILURE
+  | FETCH_APPROVED_FAILURE
+  | FETCH_FLAGGED_FAILURE;
 
 export type FETCH_ESFR_DETAIL = "FETCH_ESFR_DETAIL";
 export type FETCH_ESFR_DETAIL_SUCCESS = "FETCH_ESFR_DETAIL_SUCCESS";
 export type FETCH_ESFR_DETAIL_FAILURE = "FETCH_ESFR_DETAIL_FAILURE";
-export type EsfrRecordDetailActionType = FETCH_ESFR_DETAIL | FETCH_ESFR_DETAIL_SUCCESS | FETCH_ESFR_DETAIL_FAILURE;
+export type FETCH_SDR_MATER_DATA_SUCCESS = "FETCH_SDR_MATER_DATA_SUCCESS";
+export type FETCH_SDR_MATER_DATA_FAILURE = "FETCH_SDR_MATER_DATA_FAILURE";
+export type FETCH_LOGPAGE_DATA_SUCCESS = "FETCH_LOGPAGE_DATA_SUCCESS";
+export type FETCH_LOGPAGE_DATA_FAILURE = "FETCH_LOGPAGE_DATA_FAILURE";
+export type EsfrRecordDetailActionType =
+  | FETCH_ESFR_DETAIL
+  | FETCH_ESFR_DETAIL_SUCCESS
+  | FETCH_ESFR_DETAIL_FAILURE
+  | FETCH_SDR_MATER_DATA_SUCCESS
+  | FETCH_SDR_MATER_DATA_FAILURE
+  | FETCH_LOGPAGE_DATA_SUCCESS
+  | FETCH_LOGPAGE_DATA_FAILURE;
 
 export interface ProfileDispatchFuncType {
-    type: ProfileActionType;
-    data?: ProfileDataType;
-    message?: string;
+  type: ProfileActionType;
+  data?: Employee;
+  message?: string;
 }
 
 export interface ProfileReducerAction {
-    type: ProfileActionType;
-    data: ProfileDataType;
-    message: string;
+  type: ProfileActionType;
+  data: Employee;
+  message: string;
 }
 
 export interface SdrDispatchFuncType {
-    type: SdrActionType;
-    data?: SdrDataType;
-    message?: string;
+  type: SdrActionType;
+  data?: TransformedSdrDataType[];
+  message?: string;
 }
 
 export interface SdrReducerAction {
-    type: SdrActionType;
-    data: SdrDataType;
-    message: string;
+  type: SdrActionType;
+  data: TransformedSdrDataType[];
+  message: string;
 }
 
 export interface EsfrRecordDetailFuncType {
-    type: EsfrRecordDetailActionType;
-    data?: EsfrRecordDetailDataType;
-    message?: string;
+  type: EsfrRecordDetailActionType;
+  data?: GetSDREsfrRecordDetailsResResult;
+  message?: string;
 }
 
+export interface SfrMasterDataFuncType {
+  type: EsfrRecordDetailActionType;
+  data?: GetSfrMasterDataResResult;
+  message?: string;
+}
 
 export interface EsfrRecordDetailReducerAcition {
-    type: EsfrRecordDetailActionType;
-    data: EsfrRecordDetailDataType;
-    message: string;
+  type: EsfrRecordDetailActionType;
+  data: GetSDREsfrRecordDetailsResResult;
+  message: string;
 }
 
-export type ReducerAction = ProfileReducerAction | SdrReducerAction | EsfrRecordDetailReducerAcition
+export type TransformedSdrDataType = GetAllEsfrRecordsResResult & { SdrStatus: string };
+
+export type ReducerAction =
+  | ProfileReducerAction
+  | SdrReducerAction
+  | EsfrRecordDetailReducerAcition;
 
 export type ProfileStateType = {
-    loading: boolean;
-    profileData: ProfileDataType | null;
-    error: string;
-}
+  loading: boolean;
+  profileData: Employee | null;
+  error: string;
+};
 
 export type SdrStateType = {
-    loading: boolean;
-    sdrData: SdrDataType;
-    error: string;
-}
+  loading: boolean;
+  sdrData: TransformedSdrDataType[] | null;
+  error: string;
+};
 
 export type EsfrRecordDetailStateType = {
-    loading: boolean;
-    esfrRecordDetailData: EsfrRecordDetailDataType | null;
-    error: string;
-}
+  loading: boolean;
+  esfrRecordDetailData: GetSDREsfrRecordDetailsResResult | null;
+  sfrMasterData: GetSfrMasterDataResResult | null;
+  logpageData: ViewLogpageResResult | null;
+  error: string;
+};
 
 export interface EnvironmentConfig {
-    URL_ESFR_APPROVE: string;
-    apiBaseAddress: string;
-    URL_GET_PROFILE: string;
-    URL_GET_ALL_SDRS: string;
-    URL_GET_ESFR_RECORD_DETAILS: string;
-    webTechApiBaseUrl: string;
-    URL_LOGPAGE_SEARCH: string;
+  URL_ESFR_APPROVE: string;
+  apiBaseAddress: string;
+  REACT_APP_ENVIRONMENT: string;
+  PUBLIC_URL: string;
+  REACT_APP_APPLICATION_NAME: string;
+  REACT_APP_APPLICATION_KEY: string;
+  URL_GET_PROFILE: string;
+  URL_GET_ALL_SDRS: string;
+  URL_GET_ESFR_RECORD_DETAILS: string;
+  webTechApiBaseUrl: string;
+  URL_LOGPAGE_SEARCH: string;
+  URL_GET_SFR_MASTER_DATA: string;
+  URL_ADD_SDR: string;
+  URL_CREATE_SDR: string;
+  URL_VIEW_LOGPAGE: string;
 }
 
 export type AppConfig = {
-    [key in keyof typeof process.env.REACT_APP_ENVIRONMENT]: EnvironmentConfig
-}
-
-export enum SdrStatus {
-    New = 2,
-    Approved = 3,
-    Flagged = 4
-}
+  [key in keyof typeof process.env.REACT_APP_ENVIRONMENT]: EnvironmentConfig;
+};
 
 export const InspectionType = new Map<number, string>([
-        [1, "Pre-Flight/Walk Around"],
-        [2, "Line MX Discovery"],
-        [3, "Special Inspection"],
-        [4, "Accident Investigation"],
-        [5, "OTHER"]
-    ]
-)
+  [1, "Pre-Flight/Walk Around"],
+  [2, "Line MX Discovery"],
+  [3, "Special Inspection"],
+  [4, "Accident Investigation"],
+  [5, "OTHER"],
+]);
+
+export const Sides: OptionDocument[] = [
+  {
+    Description: "Left",
+    DisplayOrder: 1,
+    Id: 1,
+  },
+  {
+    Description: "Right",
+    DisplayOrder: 2,
+    Id: 2,
+  },
+];

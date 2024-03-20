@@ -1,3 +1,4 @@
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { createTheme } from "@mui/material/styles";
 
 export const theme = createTheme({
@@ -9,6 +10,9 @@ export const theme = createTheme({
       main: "#002244",
       contrastText: "#fff",
     },
+    secondary: {
+      main: "#6244BB",
+    },
     error: {
       main: "#D50032",
     },
@@ -16,7 +20,7 @@ export const theme = createTheme({
   components: {
     MuiButton: {
       styleOverrides: {
-        root: ({ ownerState }) => ({
+        root: ({ ownerState, theme }) => ({
           minWidth: "10rem",
           minHeight: "2.5rem",
           textTransform: "capitalize",
@@ -26,12 +30,12 @@ export const theme = createTheme({
           borderRadius: "4px",
           ...(ownerState.color === "secondary"
             ? {
-                color: "#6244BB",
-                border: "1px solid #6244BB",
+                color: theme.palette.secondary.main,
+                border: "1px solid " + theme.palette.secondary.main,
                 backgroundColor: "#FFF",
                 "&:hover": {
                   backgroundColor: "#EAEAF3",
-                  border: "1px solid #6244BB",
+                  border: "1px solid " + theme.palette.secondary.main,
                 },
                 "&:active": {
                   backgroundColor: "#B6B8DC",
@@ -48,7 +52,7 @@ export const theme = createTheme({
               }
             : ownerState.color === "info"
             ? {
-                color: "#6244BB",
+                color: theme.palette.secondary.main,
                 border: "none",
                 backgroundColor: "#FFF",
                 "&:hover": {
@@ -71,7 +75,7 @@ export const theme = createTheme({
             : {
                 color: "#FFF",
                 border: "none",
-                backgroundColor: "#6244BB",
+                backgroundColor: theme.palette.secondary.main,
                 "&:hover": {
                   backgroundColor: "#8972CC",
                   border: "none",
@@ -80,7 +84,7 @@ export const theme = createTheme({
                   backgroundColor: "#49328C",
                 },
                 "&:focus": {
-                  backgroundColor: "#6244BB",
+                  backgroundColor: theme.palette.secondary.main,
                   outline: "4px solid #B6B8DC !important",
                 },
                 "&.Mui-disabled": {
@@ -89,6 +93,106 @@ export const theme = createTheme({
                   color: "#FFF",
                 },
               }),
+        }),
+      },
+    },
+    MuiButtonBase: {
+      styleOverrides: {
+        root: ({ _, theme }) => ({
+          ".Mui-checked": {
+            color: theme.palette.secondary.main + "!important",
+          },
+        }),
+      },
+    },
+    MuiSelect: {
+      defaultProps: {
+        IconComponent: ExpandMoreIcon,
+      },
+      styleOverrides: {
+        root: ({ _, theme }) => ({
+          ".MuiInputBase-input.MuiSelect-select": {
+            padding: "8.5px 14px !important",
+          },
+          ".MuiSvgIcon-root": {
+            color: theme.palette.secondary.main,
+          },
+        }),
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: ({ _, theme }) => ({
+          ".MuiInputBase-input.MuiSelect-select": {
+            padding: "8.5px 30px 8.5px 14px !important",
+          },
+          ".MuiSvgIcon-root": {
+            color: theme.palette.secondary.main,
+          },
+        }),
+      },
+    },
+    MuiGrid: {
+      styleOverrides: {
+        root: {
+          marginTop: 0,
+          marginLeft: 0,
+          ".MuiGrid-item": {
+            paddingTop: 0,
+            paddingLeft: 0,
+          },
+        },
+        container: {
+          width: "100%",
+        },
+        item: {
+          ".MuiListItem-root": {
+            paddingLeft: 0,
+            paddingBottom: 0,
+          },
+        },
+      },
+    },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          marginLeft: 0,
+          marginRight: 0,
+          marginBottom: 2,
+          lineHeight: "15px",
+        },
+      },
+    },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          textDecoration: "none",
+        },
+      },
+    },
+    MuiListItem: {
+      styleOverrides: {
+        root: ({ _, theme }) => ({
+          display: "inline-block",
+          ".required": {
+            color: theme.palette.error.main,
+          },
+        }),
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          "&:hover": {
+            backgroundColor: "#eaeaf3",
+          },
+        },
+      },
+    },
+    MuiCircularProgress: {
+      styleOverrides: {
+        svg: ({ _, theme }) => ({
+          color: theme.palette.secondary.main,
         }),
       },
     },

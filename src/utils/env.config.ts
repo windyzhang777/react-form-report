@@ -1,35 +1,74 @@
-import defaultConfig from "./default.config";
-import {AppConfig, EnvironmentConfig} from "../commons/types";
+import { AppConfig, EnvironmentConfig } from "src/commons/types";
+import defaultConfig from "src/utils/default.config";
 
-const env = process.env.REACT_APP_ENVIRONMENT || "development";
+let env = "qa";
+switch (window.location.hostname) {
+  case "localhost":
+  case "mx.dev.dwz.aws.ual.com":
+    env = "development";
+    break;
+  case "mx.qa.dwz.aws.ual.com":
+    env = "qa";
+    break;
+  case "mx-stg.ual.com":
+    env = "stage";
+    break;
+  case "mx.ual.com":
+    env = "production";
+    break;
+  default:
+    env = "dev";
+    break;
+}
 
-// line mx broker version
-const lineMxVersion = "v63";
-
+const lineMxVersion = "v64";
 const config: EnvironmentConfig = {
-    development: {
-        ...defaultConfig,
-        apiBaseAddress: `https://unitedtech-linemx.qa.dtj.aws.ual.com/linemx/${lineMxVersion}`,
-        webTechApiBaseUrl: "https://logbook.qa.dsq.aws.ual.com",
-
-    },
-    qa: {
-        ...defaultConfig,
-        apiBaseAddress: `https://unitedtech-linemx.qa.dtj.aws.ual.com/linemx/${lineMxVersion}`,
-        webTechApiBaseUrl: "https://logbook.qa.dsq.aws.ual.com",
-    },
-    stage:{
-
-    },
-    stagedr:{
-
-    },
-    production:{
-
-    }, 
-    productiondr:{
-
-    }
+  development: {
+    ...defaultConfig,
+    apiBaseAddress: `https://unitedtech-linemx.dev.dtj.aws.ual.com/linemx/${lineMxVersion}`,
+    webTechApiBaseUrl: "https://logbook.qa.dsq.aws.ual.com",
+    REACT_APP_ENVIRONMENT: "development",
+    PUBLIC_URL: "/esfr/",
+    REACT_APP_APPLICATION_NAME: "MobileTech",
+    REACT_APP_APPLICATION_KEY: "188fba97-4473-48b6-8126-c0359e0b71a9",
+  },
+  qa: {
+    ...defaultConfig,
+    apiBaseAddress: `https://unitedtech-linemx.qa.dtj.aws.ual.com/linemx/${lineMxVersion}`,
+    webTechApiBaseUrl: "https://logbook.qa.dsq.aws.ual.com",
+    REACT_APP_ENVIRONMENT: "qa",
+    PUBLIC_URL: "/esfr/",
+    REACT_APP_APPLICATION_NAME: "MobileTech",
+    REACT_APP_APPLICATION_KEY: "188fba97-4473-48b6-8126-c0359e0b71a9",
+  },
+  stage: {
+    ...defaultConfig,
+    REACT_APP_ENVIRONMENT: "staging",
+    PUBLIC_URL: "/esfr/",
+    REACT_APP_APPLICATION_NAME: "MobileTech",
+    REACT_APP_APPLICATION_KEY: "188FBA97-4473-48B6-8126-C0359E0B71A9",
+  },
+  stagedr: {
+    ...defaultConfig,
+    REACT_APP_ENVIRONMENT: "staging",
+    PUBLIC_URL: "/esfr/",
+    REACT_APP_APPLICATION_NAME: "MobileTech",
+    REACT_APP_APPLICATION_KEY: "188FBA97-4473-48B6-8126-C0359E0B71A9",
+  },
+  production: {
+    ...defaultConfig,
+    REACT_APP_ENVIRONMENT: "production",
+    PUBLIC_URL: "/esfr/",
+    REACT_APP_APPLICATION_NAME: "MobileTech",
+    REACT_APP_APPLICATION_KEY: "1807c0b6-17a3-4730-8b5c-61a0fee8f754",
+  },
+  productiondr: {
+    ...defaultConfig,
+    REACT_APP_ENVIRONMENT: "production",
+    PUBLIC_URL: "/esfr/",
+    REACT_APP_APPLICATION_NAME: "MobileTech",
+    REACT_APP_APPLICATION_KEY: "1807c0b6-17a3-4730-8b5c-61a0fee8f754",
+  },
 }[env as keyof AppConfig];
 
 export default config;

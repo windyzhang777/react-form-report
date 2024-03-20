@@ -10,9 +10,6 @@
 
   .view-details-left {
     font-weight: 400;
-    .MuiListItem-root {
-      padding-bottom: 10px;
-    }
   }
 
   .view-details-right {
@@ -20,7 +17,7 @@
   }
 }
 
-.view-sdr {
+.create-sdr {
   box-shadow: -4px 0px 4px 0px rgba(51, 51, 51, 0.12);
   margin-top: 0px !important;
   margin-bottom: 1px;
@@ -74,27 +71,5 @@
     .textareaAutosize {
       max-height: unset !important;
     }
-  }
-}
-
-#view-sdr-details {
-  height: 1050px;
-  overflow-y: auto;
-
-  /* width */
-  &::-webkit-scrollbar {
-    width: 10px;
-  }
-
-  /* Handle */
-  &::-webkit-scrollbar-thumb {
-    background: #6244bb;
-    border-radius: 12px;
-    cursor: pointer;
-  }
-
-  /* Handle on hover */
-  &::-webkit-scrollbar-thumb:hover {
-    background: #30118a;
   }
 }

@@ -9,21 +9,14 @@ export interface ICommonModalProps {
   sx?: SxProps;
 }
 
-const CommonModal = ({
-  children,
-  name,
-  onClose,
-  open,
-  sx,
-  ...props
-}: ICommonModalProps) => {
+const CommonModal = ({ children, name, onClose, open, sx, ...props }: ICommonModalProps) => {
   return (
     <Modal
+      {...props}
       open={open}
       onClose={onClose}
       aria-labelledby={`${name}-modal-title`}
       aria-describedby={`${name}-modal-description`}
-      {...props}
     >
       <Box
         sx={{

@@ -7,11 +7,7 @@ export interface ICommonSnackbarProps {
   severity: AlertColor;
 }
 
-const CommonSnackbar = ({
-  children,
-  onClose,
-  severity,
-}: ICommonSnackbarProps) => {
+const CommonSnackbar = ({ children, onClose, severity }: ICommonSnackbarProps) => {
   const [open, setOpen] = useState<boolean>(true);
 
   const handleClose = (event: SyntheticEvent | Event, reason?: string) => {
@@ -34,6 +30,7 @@ const CommonSnackbar = ({
         onClose={handleClose}
         severity={severity}
         variant="filled"
+        sx={{ overflow: "unset", maxWidth: "400px" }}
       >
         {children}
       </Alert>

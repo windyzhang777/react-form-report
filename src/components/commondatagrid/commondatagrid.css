@@ -1,56 +1,66 @@
-
-.MuiDataGrid-root .MuiDataGrid-cell:focus-within, .MuiDataGrid-root .MuiDataGrid-columnHeader {
-    outline: none !important;
+.MuiDataGrid-root .MuiDataGrid-cell:focus-within,
+.MuiDataGrid-root .MuiDataGrid-columnHeader {
+  outline: none !important;
 }
 
 .MuiDataGrid-columnSeparator {
-    display: none !important;
+  display: none !important;
 }
 
 .MuiDataGrid-columnHeader {
-    background: #002244 !important;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 24px;
-    letter-spacing: 0px;
-    text-align: left;
+  background: #002244 !important;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0px;
+  text-align: left;
 }
 
-.MuiDataGrid-columnHeader .MuiDataGrid-columnHeaderTitle, .MuiDataGrid-columnHeaderTitleContainerContent .MuiCheckbox-colorPrimary{
-    color: #FFFFFF !important;
+.MuiDataGrid-columnHeader .MuiDataGrid-columnHeaderTitle,
+.MuiDataGrid-columnHeaderTitleContainerContent .MuiCheckbox-colorPrimary {
+  color: #ffffff !important;
 }
 
-.paragraph-text{
-    font-weight: bold;
-    color: #D50032;
+.paragraph-text {
+  font-weight: bold;
+  color: #d50032;
 }
 
 .Mui-selected {
-    background: transparent !important;
-    font-weight: normal !important;
+  background: transparent !important;
+  font-weight: normal !important;
 }
 
-.MuiCheckbox-colorPrimary {
-    color: #6244BB !important;
-}
-
-.Mui-odd{
-    background: #F1F1F0 !important;
+.Mui-odd {
+  background: #f1f1f0 !important;
 }
 
 .Mui-selection {
-    background-color: #CCCCCC !important;
-    color: #333333 !important;
+  background-color: #cccccc !important;
+  color: #333333 !important;
 }
 
 .Mui-hovered {
-    background-color: #CCCCCC !important;
+  background-color: #cccccc !important;
 }
 
 .MuiDataGrid-columnHeader.MuiDataGrid-withBorderColor {
-    font-size: 15px;
+  font-size: 15px;
 }
 
-#confirm-extract-modal-title, #confirm-extract-modal-description {
-    user-select: none;
+#confirm-extract-modal-title,
+#confirm-extract-modal-description {
+  user-select: none;
+}
+
+.create-button-icon {
+  border-left: 1px solid #fff;
+}
+
+div[id="create-sdr/sfr-click-menu-button-0"]:hover .create-button-icon,
+div[id="create-sdr/sfr-click-menu-button-0"]:active .create-button-icon,
+div[id="create-sdr/sfr-click-menu-button-1"] .create-button-icon {
+  background-color: #d0c7ea;
+  color: #6244bb;
+  border-left: none !important;
 }

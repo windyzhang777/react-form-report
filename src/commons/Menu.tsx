@@ -40,6 +40,7 @@ export const ArrowMenu = ({ button, children, id }: ICommonMenuProps) => {
       <Menu
         anchorEl={anchorEl}
         anchorOrigin={{ horizontal: 66, vertical: "bottom" }}
+        className={id ? id + "-menu" : "common-menu"}
         id={id ? id + "-menu" : "common-menu"}
         MenuListProps={{ "aria-labelledby": "common-menu-button" }}
         onClose={closeMenu}
@@ -98,12 +99,14 @@ const CommonMenu = ({
   return (
     <>
       <FlexRow
-        aria-controls={open ? (id ? id + "-menu" : "click-menu") : undefined}
+        aria-controls={open ? (id ? id + "-click-menu" : "click-menu") : undefined}
         aria-expanded={open ? "true" : undefined}
         aria-haspopup="true"
-        id="click-menu-button"
+        id={
+          id ? id + "-click-menu-button-" + (open ? 1 : 0) : "click-menu-button-" + (open ? 1 : 0)
+        }
         onClick={openMenu}
-        sx={{ position: "relative", gap: 0, cursor: "pointer" }}
+        sx={{ position: "relative", cursor: "pointer" }}
       >
         {button}
         {endIcon === "expand" ? (
@@ -119,7 +122,7 @@ const CommonMenu = ({
       <Menu
         anchorEl={anchorEl}
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        id={id ? id + "-menu" : "click-menu"}
+        id={id ? id + "-click-menu" : "click-menu"}
         MenuListProps={{ "aria-labelledby": "click-menu-button" }}
         onClose={closeMenu}
         open={open}
@@ -129,11 +132,19 @@ const CommonMenu = ({
             bgcolor: darkMood ? "#334E69" : "#fff",
             color: darkMood ? "#fff" : "#334E69",
           },
+          "& .MuiMenu-list": {
+            paddingTop: 0,
+            paddingBottom: 0,
+          },
         }}
       >
         {shouldCloseMenu
-          ? Children.map(children, (child) => (
-              <MenuItem onClick={closeMenu} sx={{ minWidth: "10rem" }}>
+          ? Children.map(children, (child, index) => (
+              <MenuItem
+                id={id ? id + "-menuItem-" + index : "menuItem-" + index}
+                onClick={closeMenu}
+                sx={{ minWidth: "10rem" }}
+              >
                 {child}
               </MenuItem>
             ))

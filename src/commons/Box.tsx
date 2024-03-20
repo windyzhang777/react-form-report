@@ -1,20 +1,17 @@
 import { Box, styled } from "@mui/material";
 
-export interface IFlexRowProps {
-  placeEnd?: boolean;
-}
-
-export const FlexRow = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "placeEnd",
-})(({ placeEnd }: IFlexRowProps) => ({
+export const FlexRow = styled(Box)({
   display: "flex",
-  gap: "10px",
-  justifyContent: placeEnd ? "flex-end" : "unset",
   alignItems: "center",
-}));
+});
+
+export const FlexCenter = styled(Box)({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+});
 
 export const FlexColumn = styled(Box)({
   display: "flex",
   flexDirection: "column",
-  gap: "10px",
 });
