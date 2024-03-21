@@ -1,7 +1,7 @@
 import { array, number, object, string } from "yup";
 
 export const ValidationSchema = {
-  LogPageNumber: string().test("len", "Please add a valid Logpage Number", (val) =>
+  LogPageNumber: string().test("len", "Not valid Logpage Number", (val) =>
     val ? val.toString().trim().length === 7 : true
   ),
   Station: string().matches(/^[a-zA-Z]{3}$/, "Not a valid Station"),
@@ -40,6 +40,30 @@ export const ValidationSchema = {
       },
     }),
     ComponentLocation: string().when("ComponentName", {
+      is: (v: string) => !!v && v.trim().length > 0,
+      then(schema) {
+        return schema.required("Required field");
+      },
+    }),
+    PartTotalTime: string().when("ComponentName", {
+      is: (v: string) => !!v && v.trim().length > 0,
+      then(schema) {
+        return schema.required("Required field");
+      },
+    }),
+    PartTotalCycles: string().when("ComponentName", {
+      is: (v: string) => !!v && v.trim().length > 0,
+      then(schema) {
+        return schema.required("Required field");
+      },
+    }),
+    PartTimeSince: string().when("ComponentName", {
+      is: (v: string) => !!v && v.trim().length > 0,
+      then(schema) {
+        return schema.required("Required field");
+      },
+    }),
+    PartTimeSinceCode: string().when("ComponentName", {
       is: (v: string) => !!v && v.trim().length > 0,
       then(schema) {
         return schema.required("Required field");

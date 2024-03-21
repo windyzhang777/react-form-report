@@ -1,4 +1,4 @@
-import { CreateSDRReq } from "src/types/CreateSdrReq";
+import { CreateSDRReq, PartDetails } from "src/types/CreateSdrReq";
 import { GetAllEsfrRecordsResResult } from "src/types/GetAllEsfrRecordsRes";
 import { Employee } from "src/types/GetProfilerRes";
 import { GetSDREsfrRecordDetailsResResult } from "src/types/GetSdrEsfrRecordDetailsRes";
@@ -24,24 +24,18 @@ export enum SelectedStatus {
   ApprovedwithFollowup = 4,
 }
 
-export interface TabPanelProps {
-  children?: React.ReactNode;
-  index?: number;
-  value: number;
-}
-
 export interface ISaveSdrValues extends CreateSDRReq {
   Aircraft: MajorEquipmentIdentity;
   Powerplant: MajorEquipmentIdentity;
   NNumber: string;
   AtaCode: string;
   FlightNumber: string;
-  Discrepancy: string;
+  CorrectiveAction: string;
 }
 
-export interface IEditSdrValues extends CreateSDRReq {
+export interface IEditSdrValues extends Omit<CreateSDRReq, "PartDetails"> {
   AtaCode: string;
-  Discrepancy: string;
+  CorrectiveActions: string;
   SubmitterDesignator: string;
   SubmitterType: string;
   OperatorDesignator: string;
@@ -50,8 +44,16 @@ export interface IEditSdrValues extends CreateSDRReq {
   ReceivingDistrictOffice: string;
   PartManufacturerName: string;
   LocationDetails: ILocationDetails;
-  ComponentDetails: IComponentDetails;
+  ComponentDetails: IComponentDetails & AdditionalPartValues;
   StructureCausingDifficulty: IStructureCausingDifficulty;
+  PartDetails: PartDetails & AdditionalPartValues;
+}
+
+export interface AdditionalPartValues {
+  PartTotalTime: string;
+  PartTotalCycles: string;
+  PartTimeSince: string;
+  PartTimeSinceCode: string;
 }
 
 export interface IComponentDetails {

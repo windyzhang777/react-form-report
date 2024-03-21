@@ -98,9 +98,31 @@ export const theme = createTheme({
     },
     MuiButtonBase: {
       styleOverrides: {
-        root: ({ _, theme }) => ({
+        root: ({ theme }) => ({
           ".Mui-checked": {
             color: theme.palette.secondary.main + "!important",
+          },
+        }),
+      },
+    },
+    MuiCircularProgress: {
+      styleOverrides: {
+        svg: ({ theme }) => ({
+          color: theme.palette.secondary.main,
+        }),
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          ".MuiInputBase-input.MuiSelect-select": {
+            padding: "8.5px 30px 8.5px 14px !important",
+          },
+          ".MuiSvgIcon-root": {
+            color: theme.palette.secondary.main,
+          },
+          "&.Mui-focused fieldset": {
+            borderColor: theme.palette.secondary.main + " !important",
           },
         }),
       },
@@ -110,7 +132,7 @@ export const theme = createTheme({
         IconComponent: ExpandMoreIcon,
       },
       styleOverrides: {
-        root: ({ _, theme }) => ({
+        root: ({ theme }) => ({
           ".MuiInputBase-input.MuiSelect-select": {
             padding: "8.5px 14px !important",
           },
@@ -120,16 +142,14 @@ export const theme = createTheme({
         }),
       },
     },
-    MuiOutlinedInput: {
+    MuiFormHelperText: {
       styleOverrides: {
-        root: ({ _, theme }) => ({
-          ".MuiInputBase-input.MuiSelect-select": {
-            padding: "8.5px 30px 8.5px 14px !important",
-          },
-          ".MuiSvgIcon-root": {
-            color: theme.palette.secondary.main,
-          },
-        }),
+        root: {
+          marginLeft: 0,
+          marginRight: 0,
+          marginBottom: 2,
+          lineHeight: "15px",
+        },
       },
     },
     MuiGrid: {
@@ -153,16 +173,6 @@ export const theme = createTheme({
         },
       },
     },
-    MuiFormHelperText: {
-      styleOverrides: {
-        root: {
-          marginLeft: 0,
-          marginRight: 0,
-          marginBottom: 2,
-          lineHeight: "15px",
-        },
-      },
-    },
     MuiLink: {
       styleOverrides: {
         root: {
@@ -172,12 +182,32 @@ export const theme = createTheme({
     },
     MuiListItem: {
       styleOverrides: {
-        root: ({ _, theme }) => ({
+        root: ({ theme }) => ({
           display: "inline-block",
           ".required": {
             color: theme.palette.error.main,
           },
         }),
+      },
+    },
+    MuiMenu: {
+      styleOverrides: {
+        paper: {
+          // width
+          "&::-webkit-scrollbar": {
+            width: "10px",
+          },
+          // Handle
+          "&::-webkit-scrollbar-thumb": {
+            background: "#6244bb",
+            borderRadius: "12px",
+            cursor: "pointer",
+          },
+          // Handle on hover
+          "&::-webkit-scrollbar-thumb:hover": {
+            background: "#30118a",
+          },
+        },
       },
     },
     MuiMenuItem: {
@@ -187,13 +217,6 @@ export const theme = createTheme({
             backgroundColor: "#eaeaf3",
           },
         },
-      },
-    },
-    MuiCircularProgress: {
-      styleOverrides: {
-        svg: ({ _, theme }) => ({
-          color: theme.palette.secondary.main,
-        }),
       },
     },
   },

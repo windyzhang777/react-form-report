@@ -11,7 +11,7 @@ import { handleFocus, handleScroll } from "src/helpers";
 import { resetLogpageDataSuccess } from "src/redux/ducks/getEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import ValidationSchema from "src/validationSchema";
-import { object } from "yup";
+import { object, string } from "yup";
 import "./createSdrData.css";
 
 export interface ICreateSdrDataProps {
@@ -84,7 +84,7 @@ const CreateSdrData = ({
       NNumber: logpageData?.FleetInfo?.LicenseNumber || "",
       AtaCode: logpageData?.FleetInfo?.ATACode || "",
       FlightNumber: "",
-      Discrepancy: "",
+      CorrectiveAction: "",
     }),
     [esfrRecordDetailData, logpageData, profileData]
   );
@@ -97,6 +97,7 @@ const CreateSdrData = ({
     setEditable(true);
     return () => {
       setLogpageNumberValue("");
+      setEditable(false);
       dispatch(resetLogpageDataSuccess());
     };
   }, []);
@@ -121,6 +122,7 @@ const CreateSdrData = ({
         validationSchema={object().shape({
           ...ValidationSchema,
           LogPageNumber: ValidationSchema.LogPageNumber.required(),
+          AircraftNumber: string(),
         })}
       >
         {({
@@ -134,6 +136,7 @@ const CreateSdrData = ({
           values,
         }) => (
           <form onSubmit={handleSubmit}>
+            <div id="create-sdr-details" className="h-[80vh] overflow-y-auto pb-[6rem]">
             {/* Major Equipment Identity */}
             <Box
               className={"sdr-status-grid"}
@@ -676,12 +679,12 @@ const CreateSdrData = ({
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="Discrepancy"
-                        value={values.Discrepancy || ""}
+                        name="CorrectiveAction"
+                        value={values.CorrectiveAction || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={!!touched.Discrepancy && !!errors.Discrepancy}
-                        helperText={!!touched.Discrepancy && errors.Discrepancy}
+                        error={!!touched.CorrectiveAction && !!errors.CorrectiveAction}
+                        helperText={!!touched.CorrectiveAction && errors.CorrectiveAction}
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
@@ -842,6 +845,7 @@ const CreateSdrData = ({
                 </Grid>
               </Grid>
             </Box>
+            </div>
 
             <Grid
               sx={{
@@ -853,6 +857,9 @@ const CreateSdrData = ({
                 borderBottom: "1px solid #E6E6E6",
                 boxShadow: "0px -4px 8px 0px rgba(51, 51, 51, 0.12)",
                 paddingTop: "1px",
+                position: "sticky",
+                bottom: 0,
+                backgroundColor: "#fff",
               }}
             >
               <FlexRow mx={2} my={2} sx={{ justifyContent: "flex-end", gap: "10px" }}>

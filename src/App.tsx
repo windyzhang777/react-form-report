@@ -8,15 +8,13 @@ import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import config from "src/utils/env.config";
 
 const App = () => {
-  const { profileData, loading: loadingProfileData } = useAppSelector((state) => state.profile);
+  const { loading: loadingProfileData } = useAppSelector((state) => state.profile);
   const dispatch = useAppDispatch();
   let empId: string;
 
   const resetApp = () => {
     if (config.REACT_APP_ENVIRONMENT === "development") empId = "v130186";
-    if (!profileData) {
-      dispatch(getProfile(sessionStorage.id || empId || "v130186"));
-    }
+    dispatch(getProfile(sessionStorage.id || empId || "v130186"));
   };
 
   useEffect(() => {
