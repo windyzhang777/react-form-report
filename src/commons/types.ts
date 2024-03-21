@@ -24,24 +24,18 @@ export enum SelectedStatus {
   ApprovedwithFollowup = 4,
 }
 
-export interface TabPanelProps {
-  children?: React.ReactNode;
-  index?: number;
-  value: number;
-}
-
 export interface ISaveSdrValues extends CreateSDRReq {
   Aircraft: MajorEquipmentIdentity;
   Powerplant: MajorEquipmentIdentity;
   NNumber: string;
   AtaCode: string;
   FlightNumber: string;
-  Discrepancy: string;
+  CorrectiveAction: string;
 }
 
 export interface IEditSdrValues extends CreateSDRReq {
   AtaCode: string;
-  Discrepancy: string;
+  CorrectiveActions: string;
   SubmitterDesignator: string;
   SubmitterType: string;
   OperatorDesignator: string;

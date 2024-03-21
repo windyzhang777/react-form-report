@@ -1,3 +1,13 @@
+.datagridContainer {
+  height: 60vh;
+  @media screen and (max-height: 900px) and (min-height: 801px) {
+    height: 70vh;
+  }
+  @media screen and (min-height: 901px) {
+    height: 80vh;
+  }
+}
+
 .MuiDataGrid-root .MuiDataGrid-cell:focus-within,
 .MuiDataGrid-root .MuiDataGrid-columnHeader {
   outline: none !important;

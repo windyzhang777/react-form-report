@@ -3,10 +3,15 @@
 @tailwind utilities;
 
 body {
+  height: 100%;
+  overflow: hidden;
   margin: 0;
   font-family: "Open Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  @media screen and (max-height: 590px) {
+    overflow: auto;
+  }
 }
 
 code {
@@ -54,4 +59,21 @@ code {
 
 input::-webkit-calendar-picker-indicator {
   cursor: pointer;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb:vertical {
+  background: #6244bb;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:vertical:hover {
+  background: #30118a;
 }

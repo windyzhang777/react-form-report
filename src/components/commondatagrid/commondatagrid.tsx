@@ -1,5 +1,5 @@
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Button, Grid, Link, Typography } from "@mui/material";
+import { Button, Link, Typography } from "@mui/material";
 import {
   GridCellParams,
   GridColDef,
@@ -141,29 +141,9 @@ const CommonDataGrid = ({
   };
 
   return (
-    <Grid item md={12} mb={6}>
-      {confirmExtract && (
-        <CommonModal
-          name="confirm-extract"
-          onClose={() => setConfirmExtract(false)}
-          open={confirmExtract}
-        >
-          <Typography id="confirm-extract-modal-title" variant="h6" mb={2} fontWeight={600}>
-            Extract Confirmation
-          </Typography>
-          <Typography id="confirm-extract-modal-description" variant="body1" mb={6}>
-            Please confirm that you would like to extract the selected reports
-          </Typography>
-          <ButtonGroup
-            className="justify-end"
-            primaryLabel="Confirm"
-            secondaryLabel="Cancel"
-            primaryOnClick={handleConfirmExtract}
-            secondaryOnClick={() => setConfirmExtract(false)}
-          />
-        </CommonModal>
-      )}
+    <div className="datagridContainer">
       <DataGrid
+        autoPageSize
         disableColumnMenu
         columns={columnDefs as GridColDef<GridValidRowModel>[]}
         rows={sdrData}
@@ -190,11 +170,11 @@ const CommonDataGrid = ({
             // }
           }
         }}
-        initialState={{
-          pagination: {
-            paginationModel: { pageSize: 20 },
-          },
-        }}
+        // initialState={{
+        //   pagination: {
+        //     paginationModel: { pageSize: 6 },
+        //   },
+        // }}
       />
       {tabIndex === SelectedTab.Approved && (
         <FlexRow mx={2} my={4} sx={{ justifyContent: "flex-end", gap: "10px" }}>
@@ -242,7 +222,28 @@ const CommonDataGrid = ({
           </Menu>
         </FlexRow>
       )}
-    </Grid>
+      {confirmExtract && (
+        <CommonModal
+          name="confirm-extract"
+          onClose={() => setConfirmExtract(false)}
+          open={confirmExtract}
+        >
+          <Typography id="confirm-extract-modal-title" variant="h6" mb={2} fontWeight={600}>
+            Extract Confirmation
+          </Typography>
+          <Typography id="confirm-extract-modal-description" variant="body1" mb={6}>
+            Please confirm that you would like to extract the selected reports
+          </Typography>
+          <ButtonGroup
+            className="justify-end"
+            primaryLabel="Confirm"
+            secondaryLabel="Cancel"
+            primaryOnClick={handleConfirmExtract}
+            secondaryOnClick={() => setConfirmExtract(false)}
+          />
+        </CommonModal>
+      )}
+    </div>
   );
 };
 

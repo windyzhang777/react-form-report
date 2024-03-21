@@ -10,7 +10,7 @@ interface ICommonLinkProps {
 
 const CommonLink = ({ children, ...props }: ICommonLinkProps) => {
   return (
-    <Link {...props} component={RouterLink}>
+    <Link component={RouterLink} {...props}>
       {children}
     </Link>
   );

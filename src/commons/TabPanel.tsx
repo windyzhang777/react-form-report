@@ -1,7 +1,13 @@
-import { Box } from "@mui/material";
-import { TabPanelProps } from "src/commons/types";
+import { ReactNode } from "react";
 
-const TabPanel = ({ children, value, index, ...other }: TabPanelProps) => (
+export interface ITabPanelProps {
+  children?: ReactNode;
+  className?: string;
+  index?: number;
+  value: number;
+}
+
+const TabPanel = ({ children, value, index, ...other }: ITabPanelProps) => (
   <div
     role="tabpanel"
     // hidden={value !== index}
@@ -9,14 +15,7 @@ const TabPanel = ({ children, value, index, ...other }: TabPanelProps) => (
     aria-labelledby={`simple-tab-${value}`}
     {...other}
   >
-    {/* {value === index && (
-      <Box sx={{ padding: "30px 0 0" }}>
-        <Box>{children}</Box>
-      </Box>
-    )} */}
-    <Box sx={{ padding: "30px 0 0" }}>
-      <Box>{children}</Box>
-    </Box>
+    {children}
   </div>
 );
 

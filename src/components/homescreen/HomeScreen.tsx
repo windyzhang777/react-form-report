@@ -78,14 +78,9 @@ const HomeScreen = () => {
   }, [approvedSdrData, flaggedSdrData, newSdrData, tabIndex]);
 
   const resetSdrs = () => {
-    if (!newSdrData && !approvedSdrData && !flaggedSdrData && !loadingSdrData) {
-      dispatch(getAllSdrs(SdrStatus.New));
-      dispatch(getAllSdrs(SdrStatus.Flagged));
-      dispatch(getAllSdrs(SdrStatus.Approved));
-    }
-    if (!sfrMasterData) {
-      dispatch(getSfrMasterData());
-    }
+    dispatch(getAllSdrs(SdrStatus.New));
+    dispatch(getAllSdrs(SdrStatus.Flagged));
+    dispatch(getAllSdrs(SdrStatus.Approved));
     if (window) {
       window.scrollTo(0, 0);
     }
@@ -157,19 +152,21 @@ const HomeScreen = () => {
     axiosInstance
       .post(`${config.apiBaseAddress}${config.URL_CREATE_SDR}`, values)
       .then((res) => {
-        if (res?.data?.Result?.IsSuccess) {
-          setOpenSnackbar(1);
-          setSnackbarMessage("Save SDR successful");
-          setCreateSdrFlag("");
-          setViewSdrFlag(false);
-          setSelectedSdr(null);
-          setTimeout(() => {
-            resetSdrs();
-          }, 500);
-        } else {
-          setOpenSnackbar(-1);
-          setSnackbarMessage("Fail to Save SDR");
-        }
+        // TODO: need Prakash's update on /CreateSdr
+        // if (res?.data?.Result?.IsSuccess) {
+        setOpenSnackbar(1);
+        setSnackbarMessage("Save SDR successful");
+        setCreateSdrFlag("");
+        setViewSdrFlag(false);
+        setSelectedSdr(null);
+        setTimeout(() => {
+          resetSdrs();
+        }, 500);
+        // TODO: need Prakash's update on /CreateSdr
+        // } else {
+        //   setOpenSnackbar(-1);
+        //   setSnackbarMessage("Fail to Save SDR");
+        // }
       })
       .catch(() => {
         setOpenSnackbar(-1);
@@ -202,11 +199,16 @@ const HomeScreen = () => {
   }, [editable, selectedSdr, tabIndex]);
 
   useEffect(() => {
-    resetSdrs();
+    if (!newSdrData && !approvedSdrData && !flaggedSdrData && !loadingSdrData) {
+      resetSdrs();
+    }
+    if (!sfrMasterData) {
+      dispatch(getSfrMasterData());
+    }
   }, []);
 
   return (
-    <Grid container>
+    <>
       {!!openSnackbar && (
         <Snackbar
           onClose={() => setOpenSnackbar(0)}
@@ -216,7 +218,7 @@ const HomeScreen = () => {
         </Snackbar>
       )}
       {(isLoading || loadingSdrData || loadingEsfrRecordDetail) && <CommonLoader />}
-      <>
+      <Grid container>
         <Grid item lg={6} md={12}>
           <Box sx={{ ...sxBox }}>
             <Tabs value={tabIndex} onChange={handleTabChange} aria-label="homeScreenSdrTabs">
@@ -227,17 +229,17 @@ const HomeScreen = () => {
               />
               <Tab
                 {...a11yProps(1)}
-                label={`Flagged for Follow up (${approvedSdrData?.length || 0})`}
+                label={`Flagged for Follow up (${flaggedSdrData?.length || 0})`}
                 id="Flaggedforfollowup"
               />
               <Tab
                 {...a11yProps(2)}
-                label={`Approved SDRs (${flaggedSdrData?.length || 0})`}
+                label={`Approved SDRs (${approvedSdrData?.length || 0})`}
                 id="Approvedsdr"
               />
             </Tabs>
           </Box>
-          <TabPanel value={tabIndex}>
+          <TabPanel value={tabIndex} className="pt-[30px]">
             {sdrData && (
               <CommonDataGrid
                 createSdrFlag={createSdrFlag}
@@ -287,8 +289,8 @@ const HomeScreen = () => {
             </Grid>
           )}
         </Grid>
-      </>
-    </Grid>
+      </Grid>
+    </>
   );
 };
 

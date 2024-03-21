@@ -129,7 +129,7 @@ const ViewSdrData = ({
         WingStationToSide: "",
         StructuralOther: "",
       },
-      Discrepancy: esfrRecordDetailData?.FleetInfo?.CorrectiveActions || "",
+      CorrectiveActions: esfrRecordDetailData?.FleetInfo?.CorrectiveActions || "",
       LocationDetails: {
         ZoneId: esfrRecordDetailData?.LocationDetails?.ZoneId || 0,
         DefectLocationIdentifier:
@@ -266,7 +266,7 @@ const ViewSdrData = ({
             values,
           }) => (
             <form onSubmit={handleSubmit}>
-              <div id="view-sdr-details" className="h-screen overflow-x-hidden">
+              <div id="view-sdr-details" className="h-[80vh] overflow-y-auto pb-[10rem]">
                 {/* Problem Description */}
                 <Grid
                   className={"sdr-status-grid"}
@@ -610,12 +610,12 @@ const ViewSdrData = ({
                       <ListItem>
                         {editable ? (
                           <TextField
-                            name="Discrepancy"
-                            value={values.Discrepancy || ""}
+                            name="CorrectiveActions"
+                            value={values.CorrectiveActions || ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            error={!!touched.Discrepancy && !!errors.Discrepancy}
-                            helperText={!!touched.Discrepancy && errors.Discrepancy}
+                            error={!!touched.CorrectiveActions && !!errors.CorrectiveActions}
+                            helperText={!!touched.CorrectiveActions && errors.CorrectiveActions}
                             multiline
                             maxRows={4}
                             className={"sdr-status-edit textareaAutosize"}
@@ -853,6 +853,91 @@ const ViewSdrData = ({
                       </ListItem>
                     </Grid>
                   </Grid>
+                  {/* <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>Part Total Time (hours)</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>Part Total Cycles</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>Part Time Since (hours)</ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-description"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          type="number"
+                          name="StructureCausingDifficulty.CrackLength"
+                          value={values.StructureCausingDifficulty?.CrackLength || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.StructureCausingDifficulty?.CrackLength &&
+                            !!errors.StructureCausingDifficulty?.CrackLength
+                          }
+                          helperText={
+                            !!touched.StructureCausingDifficulty?.CrackLength &&
+                            errors.StructureCausingDifficulty?.CrackLength
+                          }
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        "--"
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          type="number"
+                          name="StructureCausingDifficulty.NumberofCracks"
+                          value={values.StructureCausingDifficulty?.NumberofCracks || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.StructureCausingDifficulty?.NumberofCracks &&
+                            !!errors.StructureCausingDifficulty?.NumberofCracks
+                          }
+                          helperText={
+                            !!touched.StructureCausingDifficulty?.NumberofCracks &&
+                            errors.StructureCausingDifficulty?.NumberofCracks
+                          }
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        "--"
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          type="number"
+                          name="StructureCausingDifficulty.NumberofCracks"
+                          value={values.StructureCausingDifficulty?.NumberofCracks || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.StructureCausingDifficulty?.NumberofCracks &&
+                            !!errors.StructureCausingDifficulty?.NumberofCracks
+                          }
+                          helperText={
+                            !!touched.StructureCausingDifficulty?.NumberofCracks &&
+                            errors.StructureCausingDifficulty?.NumberofCracks
+                          }
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        "--"
+                      )}
+                    </ListItem>
+                  </Grid>
+                </Grid> */}
                 </Grid>
 
                 {/* Component/Assembly That Includes Defective Part */}
@@ -1824,7 +1909,6 @@ const ViewSdrData = ({
           )}
         </Formik>
       </Grid>
-      {selectedSdr === null && <Grid>Please select on SDR to view it.</Grid>}
     </>
   );
 };

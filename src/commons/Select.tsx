@@ -30,6 +30,7 @@ const MenuProps: Partial<MenuPropsType> = {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
       minWidth: 250,
+      width: "14%",
       display: "flex",
       // justifyContent: "center",
       // alignItems: "center",
@@ -79,7 +80,7 @@ export const SimpleSingleSelect = ({
       >
         Select One
       </InputLabel>
-      <Select {...props} displayEmpty id={id && id + "-simple-single-select"} value={value}>
+      <Select displayEmpty id={id && id + "-simple-single-select"} value={value} {...props}>
         {!options ? (
           <Box>No options available</Box>
         ) : (
@@ -149,8 +150,8 @@ export const SingleSelect = ({
 );
 
 export interface IMultipleSelectProps extends ICommonSelectProps {
-  onChange: (value: string | number[]) => void;
   maxAllowed?: number;
+  onChange: (value: string | number[]) => void;
   options: OptionDocument[] | undefined;
   value: number[];
 }
@@ -159,6 +160,7 @@ export const MultipleSelect = ({
   className,
   helperText,
   id,
+  onChange,
   options,
   maxAllowed = options?.length || 0,
   value,
@@ -179,7 +181,6 @@ export const MultipleSelect = ({
         </InputLabel>
       )}
       <Select
-        {...props}
         displayEmpty
         id={id && id + "-multiple-select"}
         input={<OutlinedInput />}
@@ -187,15 +188,16 @@ export const MultipleSelect = ({
         multiple
         onChange={(e) => {
           if (value.length < maxAllowed) {
-            props.onChange(e.target.value);
+            onChange(e.target.value);
           } else {
-            props.onChange(e.target.value.slice(0, maxAllowed));
+            onChange(e.target.value.slice(0, maxAllowed));
           }
         }}
         renderValue={(selected) =>
           selected.map((v) => options?.find((option) => option.Id === v)?.Description).join(", ")
         }
         value={value}
+        {...props}
       >
         {options ? (
           options.map((option) => (
