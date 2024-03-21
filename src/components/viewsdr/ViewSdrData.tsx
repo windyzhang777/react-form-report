@@ -274,7 +274,7 @@ const ViewSdrData = ({
             values,
           }) => (
             <form onSubmit={handleSubmit}>
-              <div id="view-sdr-details" className="h-[80vh] overflow-y-auto pb-[10rem]">
+              <div id="view-sdr-details" className="h-[70vh] overflow-y-auto pb-0 md:pb-[4rem] sm:pb-[10rem]">
                 {/* Problem Description */}
                 <Grid
                   className={"sdr-status-grid"}
