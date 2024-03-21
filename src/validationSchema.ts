@@ -45,6 +45,30 @@ export const ValidationSchema = {
         return schema.required("Required field");
       },
     }),
+    PartTotalTime: string().when("ComponentName", {
+      is: (v: string) => !!v && v.trim().length > 0,
+      then(schema) {
+        return schema.required("Required field");
+      },
+    }),
+    PartTotalCycles: string().when("ComponentName", {
+      is: (v: string) => !!v && v.trim().length > 0,
+      then(schema) {
+        return schema.required("Required field");
+      },
+    }),
+    PartTimeSince: string().when("ComponentName", {
+      is: (v: string) => !!v && v.trim().length > 0,
+      then(schema) {
+        return schema.required("Required field");
+      },
+    }),
+    PartTimeSinceCode: string().when("ComponentName", {
+      is: (v: string) => !!v && v.trim().length > 0,
+      then(schema) {
+        return schema.required("Required field");
+      },
+    }),
   }),
   StructureCausingDifficulty: object().shape({
     CrackLength: number().test("len", "up to 5 digits", (val) =>

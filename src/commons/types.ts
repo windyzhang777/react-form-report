@@ -1,4 +1,4 @@
-import { CreateSDRReq } from "src/types/CreateSdrReq";
+import { CreateSDRReq, PartDetails } from "src/types/CreateSdrReq";
 import { GetAllEsfrRecordsResResult } from "src/types/GetAllEsfrRecordsRes";
 import { Employee } from "src/types/GetProfilerRes";
 import { GetSDREsfrRecordDetailsResResult } from "src/types/GetSdrEsfrRecordDetailsRes";
@@ -33,7 +33,7 @@ export interface ISaveSdrValues extends CreateSDRReq {
   CorrectiveAction: string;
 }
 
-export interface IEditSdrValues extends CreateSDRReq {
+export interface IEditSdrValues extends Omit<CreateSDRReq, "PartDetails"> {
   AtaCode: string;
   CorrectiveActions: string;
   SubmitterDesignator: string;
@@ -44,8 +44,16 @@ export interface IEditSdrValues extends CreateSDRReq {
   ReceivingDistrictOffice: string;
   PartManufacturerName: string;
   LocationDetails: ILocationDetails;
-  ComponentDetails: IComponentDetails;
+  ComponentDetails: IComponentDetails & AdditionalPartValues;
   StructureCausingDifficulty: IStructureCausingDifficulty;
+  PartDetails: PartDetails & AdditionalPartValues;
+}
+
+export interface AdditionalPartValues {
+  PartTotalTime: string;
+  PartTotalCycles: string;
+  PartTimeSince: string;
+  PartTimeSinceCode: string;
 }
 
 export interface IComponentDetails {
