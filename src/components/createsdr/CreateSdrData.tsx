@@ -97,6 +97,7 @@ const CreateSdrData = ({
     setEditable(true);
     return () => {
       setLogpageNumberValue("");
+      setEditable(false);
       dispatch(resetLogpageDataSuccess());
     };
   }, []);
