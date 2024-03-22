@@ -18,6 +18,9 @@ const StyledDataGrid = styled(DataGrid)(() => ({
   "& .MuiDataGrid-row": {
     cursor: "pointer",
   },
+  "& .MuiDataGrid-virtualScroller::-webkit-scrollbar": {
+    display: "none",
+  },
 }));
 
 export default StyledDataGrid;

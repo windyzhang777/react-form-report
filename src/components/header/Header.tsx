@@ -44,9 +44,8 @@ const Header = ({ resetApp }: IHeaderProps) => {
   };
 
   return (
-    <AppBar position={"static"}>
+    <AppBar position={"static"} sx={{ maxHeight: "10vh" }}>
       <Toolbar className="header-toolbar">
-        <div style={{ backgroundColor: openDrawer ? "#334E69" : "" }}>
           <IconButton
             edge={"start"}
             color={"default"}
@@ -57,11 +56,11 @@ const Header = ({ resetApp }: IHeaderProps) => {
               marginRight: "15px",
               paddingTop: "15px",
               paddingBottom: "17px",
+              bgcolor: openDrawer ? "#334E69" : "",
             }}
           >
             <MenuIcon sx={{ color: "#FFFFFF", width: "30px", height: "30px" }} />
           </IconButton>
-        </div>
         <Drawer
           anchor="left"
           variant="temporary"
@@ -80,7 +79,7 @@ const Header = ({ resetApp }: IHeaderProps) => {
             </List>
           </Box>
         </Drawer>
-        <IconButton onClick={redirectToAdmin}>
+        <IconButton onClick={redirectToAdmin} className="!hidden sm:!block">
           <img alt="Logo" src={UnitedLogo} className="unitedLogoIcon" />
         </IconButton>
         <header className={"headerTitle"}>SDR Web</header>
@@ -91,7 +90,7 @@ const Header = ({ resetApp }: IHeaderProps) => {
           </FlexColumn>
         </IconButton>
         {lastRefreshed !== null && (
-          <div className="last-refreshed">
+          <div className="last-refreshed !hidden sm:!block">
             Last Refreshed <div>{moment(lastRefreshed).format("MM/DD/YYYY@hh:mm")}</div>
           </div>
         )}

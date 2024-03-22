@@ -13,7 +13,11 @@ import ButtonGroup from "src/commons/ButtonGroup";
 import DataGrid from "src/commons/DataGrid";
 import Menu from "src/commons/Menu";
 import CommonModal from "src/commons/Modal";
-import { EsfrRecordDetailStateType, SelectedTab, TransformedSdrDataType } from "src/commons/types";
+import {
+  SdrEsfrRecordDetailsStateType,
+  SelectedTab,
+  TransformedSdrDataType,
+} from "src/commons/types";
 import { useAppSelector } from "src/redux/hooks";
 import config from "src/utils/env.config";
 import "./commondatagrid.css";
@@ -42,8 +46,8 @@ const CommonDataGrid = ({
   const [showCheckbox, setShowCheckbox] = useState<boolean>(false);
   const [selectedSdrsToExtract, setSelectedSdrsToExtract] = useState<GridRowSelectionModel>([]);
   const [isExtractDisabled, setIsExtractDisabled] = useState<boolean>(true);
-  const { sfrMasterData }: EsfrRecordDetailStateType = useAppSelector(
-    (state) => state.esfrRecordDetail
+  const { masterData }: SdrEsfrRecordDetailsStateType = useAppSelector(
+    (state) => state.sdrEsfrRecordDetails
   );
   const [confirmExtract, setConfirmExtract] = useState<boolean>(false);
 
@@ -141,7 +145,7 @@ const CommonDataGrid = ({
   };
 
   return (
-    <div className="datagridContainer">
+    <>
       <DataGrid
         autoPageSize
         disableColumnMenu
@@ -165,16 +169,12 @@ const CommonDataGrid = ({
         onCellClick={(data: GridCellParams) => {
           setViewSdrFlag(false);
           if (data.field !== "__check__") {
-            // if (!createSdrFlag) { // TODO: not allow viewing sdr while creating a new sdr
-            setSelectedSdr(data?.row);
-            // }
+            if (!createSdrFlag) {
+              // TODO: not allow viewing a new sdr while creating a new sdr
+              setSelectedSdr(data?.row);
+            }
           }
         }}
-        // initialState={{
-        //   pagination: {
-        //     paginationModel: { pageSize: 6 },
-        //   },
-        // }}
       />
       {tabIndex === SelectedTab.Approved && (
         <FlexRow mx={2} my={4} sx={{ justifyContent: "flex-end", gap: "10px" }}>
@@ -191,7 +191,7 @@ const CommonDataGrid = ({
             button={
               <Button
                 id={"create-sdr/sfr-button"}
-                disabled={!sfrMasterData}
+                disabled={!masterData}
                 endIcon={<div style={{ marginLeft: "1.5rem" }} />}
               >
                 Create
@@ -243,7 +243,7 @@ const CommonDataGrid = ({
           />
         </CommonModal>
       )}
-    </div>
+    </>
   );
 };
 

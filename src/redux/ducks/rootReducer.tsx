@@ -4,15 +4,15 @@ import {
   flaggedSdrsReducer,
   newSdrsReducer,
 } from "src/redux/ducks/getAllSdrs";
-import { esfrRecordDetailsReducer } from "src/redux/ducks/getEsfrRecordDetails";
 import profileReducer from "src/redux/ducks/getProfile";
+import { sdrEsfrRecordDetailsReducer } from "src/redux/ducks/getSdrEsfrRecordDetails";
 
 const rootReducer = combineReducers({
   profile: profileReducer,
   newSdrs: newSdrsReducer,
   flaggedSdrs: flaggedSdrsReducer,
   approvedSdrs: approvedSdrsReducer,
-  esfrRecordDetail: esfrRecordDetailsReducer,
+  sdrEsfrRecordDetails: sdrEsfrRecordDetailsReducer,
 });
 
 export default rootReducer;

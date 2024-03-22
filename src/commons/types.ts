@@ -132,21 +132,25 @@ export type SdrActionType =
   | FETCH_APPROVED_FAILURE
   | FETCH_FLAGGED_FAILURE;
 
-export type FETCH_ESFR_DETAIL = "FETCH_ESFR_DETAIL";
+export type FETCH_INIT = "FETCH_INIT";
 export type FETCH_ESFR_DETAIL_SUCCESS = "FETCH_ESFR_DETAIL_SUCCESS";
 export type FETCH_ESFR_DETAIL_FAILURE = "FETCH_ESFR_DETAIL_FAILURE";
-export type FETCH_SDR_MATER_DATA_SUCCESS = "FETCH_SDR_MATER_DATA_SUCCESS";
-export type FETCH_SDR_MATER_DATA_FAILURE = "FETCH_SDR_MATER_DATA_FAILURE";
+export type FETCH_SFR_MATER_DATA_SUCCESS = "FETCH_SFR_MATER_DATA_SUCCESS";
+export type FETCH_SFR_MATER_DATA_FAILURE = "FETCH_SFR_MATER_DATA_FAILURE";
 export type FETCH_LOGPAGE_DATA_SUCCESS = "FETCH_LOGPAGE_DATA_SUCCESS";
 export type FETCH_LOGPAGE_DATA_FAILURE = "FETCH_LOGPAGE_DATA_FAILURE";
-export type EsfrRecordDetailActionType =
-  | FETCH_ESFR_DETAIL
+export type SdrEsfrRecordDetailsActionType =
+  | FETCH_INIT
   | FETCH_ESFR_DETAIL_SUCCESS
   | FETCH_ESFR_DETAIL_FAILURE
-  | FETCH_SDR_MATER_DATA_SUCCESS
-  | FETCH_SDR_MATER_DATA_FAILURE
+  | FETCH_SFR_MATER_DATA_SUCCESS
+  | FETCH_SFR_MATER_DATA_FAILURE
   | FETCH_LOGPAGE_DATA_SUCCESS
   | FETCH_LOGPAGE_DATA_FAILURE;
+
+export type FETCH_FLAT_FILE_SUCCESS = "FETCH_FLAT_FILE_SUCCESS";
+export type FETCH_FLAT_FILE_FAILURE = "FETCH_FLAT_FILE_FAILURE";
+export type FlatFileActionType = FETCH_INIT | FETCH_FLAT_FILE_SUCCESS | FETCH_FLAT_FILE_FAILURE;
 
 export interface ProfileDispatchFuncType {
   type: ProfileActionType;
@@ -172,30 +176,43 @@ export interface SdrReducerAction {
   message: string;
 }
 
-export interface EsfrRecordDetailFuncType {
-  type: EsfrRecordDetailActionType;
+export interface SdrEsfrRecordDetailsFuncType {
+  type: SdrEsfrRecordDetailsActionType;
   data?: GetSDREsfrRecordDetailsResResult;
   message?: string;
 }
 
 export interface SfrMasterDataFuncType {
-  type: EsfrRecordDetailActionType;
+  type: SdrEsfrRecordDetailsActionType;
   data?: GetSfrMasterDataResResult;
   message?: string;
 }
 
-export interface EsfrRecordDetailReducerAcition {
-  type: EsfrRecordDetailActionType;
+export interface SdrEsfrRecordDetailsReducerAcition {
+  type: SdrEsfrRecordDetailsActionType;
   data: GetSDREsfrRecordDetailsResResult;
   message: string;
 }
 
 export type TransformedSdrDataType = GetAllEsfrRecordsResResult & { SdrStatus: string };
 
+export interface FlatFileDispatchFuncType {
+  type: FlatFileActionType;
+  data?: string;
+  message?: string;
+}
+
+export interface FlatFileReducerAction {
+  type: FlatFileActionType;
+  data: string;
+  message: string;
+}
+
 export type ReducerAction =
   | ProfileReducerAction
   | SdrReducerAction
-  | EsfrRecordDetailReducerAcition;
+  | SdrEsfrRecordDetailsReducerAcition
+  | FlatFileReducerAction;
 
 export type ProfileStateType = {
   loading: boolean;
@@ -209,11 +226,17 @@ export type SdrStateType = {
   error: string;
 };
 
-export type EsfrRecordDetailStateType = {
+export type SdrEsfrRecordDetailsStateType = {
   loading: boolean;
-  esfrRecordDetailData: GetSDREsfrRecordDetailsResResult | null;
-  sfrMasterData: GetSfrMasterDataResResult | null;
+  detailsData: GetSDREsfrRecordDetailsResResult | null;
+  masterData: GetSfrMasterDataResResult | null;
   logpageData: ViewLogpageResResult | null;
+  error: string;
+};
+
+export type FlatFileStateType = {
+  loading: boolean;
+  fileData: string | null;
   error: string;
 };
 
@@ -226,7 +249,7 @@ export interface EnvironmentConfig {
   REACT_APP_APPLICATION_KEY: string;
   URL_GET_PROFILE: string;
   URL_GET_ALL_SDRS: string;
-  URL_GET_ESFR_RECORD_DETAILS: string;
+  URL_GET_SDR_ESFR_RECORD_DETAILS: string;
   webTechApiBaseUrl: string;
   URL_LOGPAGE_SEARCH: string;
   URL_GET_SFR_MASTER_DATA: string;

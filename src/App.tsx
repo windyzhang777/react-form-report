@@ -6,6 +6,7 @@ import HomeScreen from "src/components/homescreen/HomeScreen";
 import { getProfile } from "src/redux/ducks/getProfile";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import config from "src/utils/env.config";
+import { FlexColumn } from "./commons/Box";
 
 const App = () => {
   const { loading: loadingProfileData } = useAppSelector((state) => state.profile);
@@ -13,8 +14,8 @@ const App = () => {
   let empId: string;
 
   const resetApp = () => {
-    if (config.REACT_APP_ENVIRONMENT === "development") empId = "v130186";
-    dispatch(getProfile(sessionStorage.id || empId || "v130186"));
+    if (config.REACT_APP_ENVIRONMENT === "localhost") empId = "v130186";
+    dispatch(getProfile(sessionStorage.id || empId));
   };
 
   useEffect(() => {
@@ -26,12 +27,12 @@ const App = () => {
   }
 
   return (
-    <div className="app">
+    <FlexColumn className="app">
       <Header resetApp={resetApp} />
       <Routes>
         <Route path="/esfr" element={<HomeScreen />} />
       </Routes>
-    </div>
+    </FlexColumn>
   );
 };
 

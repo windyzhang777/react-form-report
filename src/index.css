@@ -3,15 +3,20 @@
 @tailwind utilities;
 
 body {
-  height: 100%;
-  overflow: hidden;
+  height: 100vh;
   margin: 0;
   font-family: "Open Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  @media screen and (max-height: 590px) {
-    overflow: auto;
-  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#root,
+.app {
+  height: 100%;
 }
 
 code {

@@ -30,7 +30,6 @@ const MenuProps: Partial<MenuPropsType> = {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
       minWidth: 250,
-      width: "14%",
       display: "flex",
       // justifyContent: "center",
       // alignItems: "center",

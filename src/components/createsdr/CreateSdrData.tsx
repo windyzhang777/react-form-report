@@ -2,13 +2,14 @@ import { Box, Button, Grid } from "@mui/material";
 import { Formik } from "formik";
 import moment from "moment";
 import { Dispatch, SetStateAction, useEffect, useMemo, useRef } from "react";
-import { FlexRow } from "src/commons/Box";
+import { FlexColumn } from "src/commons/Box";
+import ButtonGroup from "src/commons/ButtonGroup";
 import ListItem from "src/commons/ListItem";
 import { MultipleSelect, SingleSelect } from "src/commons/Select";
 import TextField from "src/commons/TextField";
-import { EsfrRecordDetailStateType, ISaveSdrValues, SelectedStatus } from "src/commons/types";
+import { ISaveSdrValues, SdrEsfrRecordDetailsStateType, SelectedStatus } from "src/commons/types";
 import { handleFocus, handleScroll } from "src/helpers";
-import { resetLogpageDataSuccess } from "src/redux/ducks/getEsfrRecordDetails";
+import { resetLogpageDataSuccess } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import ValidationSchema from "src/validationSchema";
 import { object, string } from "yup";
@@ -16,30 +17,28 @@ import "./createSdrData.css";
 
 export interface ICreateSdrDataProps {
   createSdrFlag: string;
-  editable: boolean;
   handleFetchLogpageData: (a: string) => void;
   handleSaveSDR: (a: ISaveSdrValues) => void;
   logpageNumberValue: string;
   setCreateSdrFlag: Dispatch<SetStateAction<string>>;
-  setEditable: Dispatch<SetStateAction<boolean>>;
   setLogpageNumberValue: Dispatch<SetStateAction<string>>;
 }
 
 const CreateSdrData = ({
   createSdrFlag,
-  editable,
   handleFetchLogpageData,
   handleSaveSDR,
   logpageNumberValue,
   setCreateSdrFlag,
-  setEditable,
   setLogpageNumberValue,
 }: ICreateSdrDataProps) => {
+  const editable = true;
   const dispatch = useAppDispatch();
   const logPageNumberRef = useRef<HTMLInputElement>(null);
   const { profileData } = useAppSelector((state) => state.profile);
-  const { esfrRecordDetailData, logpageData, sfrMasterData }: EsfrRecordDetailStateType =
-    useAppSelector((state) => state.esfrRecordDetail);
+  const { detailsData, logpageData, masterData }: SdrEsfrRecordDetailsStateType = useAppSelector(
+    (state) => state.sdrEsfrRecordDetails
+  );
 
   const initialValues: ISaveSdrValues = useMemo(
     () => ({
@@ -86,7 +85,7 @@ const CreateSdrData = ({
       FlightNumber: "",
       CorrectiveAction: "",
     }),
-    [esfrRecordDetailData, logpageData, profileData]
+    [detailsData, logpageData, profileData]
   );
 
   const onClickCancle = () => {
@@ -94,10 +93,8 @@ const CreateSdrData = ({
   };
 
   useEffect(() => {
-    setEditable(true);
     return () => {
       setLogpageNumberValue("");
-      setEditable(false);
       dispatch(resetLogpageDataSuccess());
     };
   }, []);
@@ -108,7 +105,7 @@ const CreateSdrData = ({
   }, [logPageNumberRef]);
 
   return (
-    <Grid className={"create-sdr"} item md={12} mb={6}>
+    <FlexColumn className={"create-sdr h-full relative"}>
       <Box className={"subpage-title bottom-divider"} sx={{ pt: "1px", mb: 2 }}>
         <p>Create SDR</p>
       </Box>
@@ -135,8 +132,8 @@ const CreateSdrData = ({
           touched,
           values,
         }) => (
-          <form onSubmit={handleSubmit}>
-            <div id="create-sdr-details" className="h-[80vh] overflow-y-auto pb-[6rem]">
+          <form onSubmit={handleSubmit} className="overflow-hidden mb-[4rem]">
+            <div id="create-sdr-details" className="h-full overflow-y-auto">
             {/* Major Equipment Identity */}
             <Box
               className={"sdr-status-grid"}
@@ -581,12 +578,13 @@ const CreateSdrData = ({
                         }}
                         onBlur={handleBlur}
                         error={
-                          !!touched.PrecautionaryProcedureIds && !!errors.PrecautionaryProcedureIds
+                          !!touched.PrecautionaryProcedureIds &&
+                          !!errors.PrecautionaryProcedureIds
                         }
                         helperText={
                           !!touched.PrecautionaryProcedureIds && errors.PrecautionaryProcedureIds
                         }
-                        options={sfrMasterData?.PrecautionaryProcedures?.sort(
+                        options={masterData?.PrecautionaryProcedures?.sort(
                           (a, b) => a.DisplayOrder - b.DisplayOrder
                         )}
                         className={"sdr-status-edit"}
@@ -610,7 +608,7 @@ const CreateSdrData = ({
                         onBlur={handleBlur}
                         error={!!touched.NatureOfReportIds && !!errors.NatureOfReportIds}
                         helperText={!!touched.NatureOfReportIds && errors.NatureOfReportIds}
-                        options={sfrMasterData?.NatureofReports?.sort(
+                        options={masterData?.NatureofReports?.sort(
                           (a, b) => a.DisplayOrder - b.DisplayOrder
                         )}
                         className={"sdr-status-edit"}
@@ -632,7 +630,7 @@ const CreateSdrData = ({
                         onBlur={handleBlur}
                         error={!!touched.StageId && !!errors.StageId}
                         helperText={!!touched.StageId && errors.StageId}
-                        options={sfrMasterData?.Stage?.sort(
+                        options={masterData?.Stage?.sort(
                           (a, b) => a.DisplayOrder - b.DisplayOrder
                         )}
                         className={"sdr-status-edit"}
@@ -664,7 +662,7 @@ const CreateSdrData = ({
                         onBlur={handleBlur}
                         error={!!touched.HowDiscoveredId && !!errors.HowDiscoveredId}
                         helperText={!!touched.HowDiscoveredId && errors.HowDiscoveredId}
-                        options={sfrMasterData?.HowDiscovered?.sort(
+                        options={masterData?.HowDiscovered?.sort(
                           (a, b) => a.DisplayOrder - b.DisplayOrder
                         )}
                         className={"sdr-status-edit"}
@@ -813,7 +811,8 @@ const CreateSdrData = ({
                           !!errors.PartDetails?.PartCondition
                         }
                         helperText={
-                          !!touched.PartDetails?.PartCondition && errors.PartDetails?.PartCondition
+                          !!touched.PartDetails?.PartCondition &&
+                          errors.PartDetails?.PartCondition
                         }
                         className={"sdr-status-edit"}
                       />
@@ -831,7 +830,8 @@ const CreateSdrData = ({
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
-                          !!touched.PartDetails?.PartLocation && !!errors.PartDetails?.PartLocation
+                          !!touched.PartDetails?.PartLocation &&
+                          !!errors.PartDetails?.PartLocation
                         }
                         helperText={
                           !!touched.PartDetails?.PartLocation && errors.PartDetails?.PartLocation
@@ -847,44 +847,18 @@ const CreateSdrData = ({
             </Box>
             </div>
 
-            <Grid
-              sx={{
-                marginLeft: "-20px",
-                marginRight: "-20px",
-                borderLeft: 1,
-                borderRight: 1,
-                border: "none",
-                borderBottom: "1px solid #E6E6E6",
-                boxShadow: "0px -4px 8px 0px rgba(51, 51, 51, 0.12)",
-                paddingTop: "1px",
-                position: "sticky",
-                bottom: 0,
-                backgroundColor: "#fff",
-              }}
-            >
-              <FlexRow mx={2} my={2} sx={{ justifyContent: "flex-end", gap: "10px" }}>
-                <Button
-                  className="cancel-button"
-                  color="secondary"
-                  onClick={onClickCancle}
-                  type="button"
-                >
-                  {editable ? "Cancel" : "Edit"}
-                </Button>
-                <Button
-                  className={`submit-${createSdrFlag === "SDR" ? "SDR" : "SFR"}-button`}
-                  disabled={isSubmitting}
-                  onClick={handleSubmit as any}
-                  type="submit"
-                >
-                  Submit {createSdrFlag === "SDR" ? "SDR" : "SFR"}
-                </Button>
-              </FlexRow>
-            </Grid>
+            <ButtonGroup
+              className="bottom-button justify-end"
+              primaryDisabled={isSubmitting}
+              primaryLabel={`Submit ${createSdrFlag === "SDR" ? "SDR" : "SFR"}`}
+              primaryOnClick={handleSubmit}
+              secondaryLabel={editable ? "Cancel" : "Edit"}
+              secondaryOnClick={onClickCancle}
+            />
           </form>
         )}
       </Formik>
-    </Grid>
+    </FlexColumn>
   );
 };
 

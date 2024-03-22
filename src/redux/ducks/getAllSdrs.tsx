@@ -127,7 +127,7 @@ export const getAllSdrs = (statusId: StatusId) => {
       })
       .then((res) => {
         const sdrsInfo = res?.data?.Result;
-        sdrsInfo && dispatch(fetchSuccess(sdrsInfo, statusId));
+        dispatch(fetchSuccess(sdrsInfo, statusId));
       })
       .catch((error) => dispatch(fetchFailure(error.message, statusId)));
   };

@@ -4,6 +4,8 @@ import defaultConfig from "src/utils/default.config";
 let env = "qa";
 switch (window.location.hostname) {
   case "localhost":
+    env = "localhost";
+    break;
   case "mx.dev.dwz.aws.ual.com":
     env = "development";
     break;
@@ -23,6 +25,15 @@ switch (window.location.hostname) {
 
 const lineMxVersion = "v64";
 const config: EnvironmentConfig = {
+  localhost: {
+    ...defaultConfig,
+    apiBaseAddress: `https://unitedtech-linemx.dev.dtj.aws.ual.com/linemx/${lineMxVersion}`,
+    webTechApiBaseUrl: "https://logbook.qa.dsq.aws.ual.com",
+    REACT_APP_ENVIRONMENT: "localhost",
+    PUBLIC_URL: "/esfr/",
+    REACT_APP_APPLICATION_NAME: "MobileTech",
+    REACT_APP_APPLICATION_KEY: "188fba97-4473-48b6-8126-c0359e0b71a9",
+  },
   development: {
     ...defaultConfig,
     apiBaseAddress: `https://unitedtech-linemx.dev.dtj.aws.ual.com/linemx/${lineMxVersion}`,

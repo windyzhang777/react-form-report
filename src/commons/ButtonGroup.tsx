@@ -3,7 +3,7 @@ import { FlexRow } from "./Box";
 
 export interface ICommonButtonGroupProps {
   className?: string;
-  primarydisabled?: boolean;
+  primaryDisabled?: boolean;
   primaryLabel?: string;
   primaryOnClick?: () => void;
   secondaryLabel?: string;
@@ -12,18 +12,18 @@ export interface ICommonButtonGroupProps {
 
 const CommonButtonGroup = ({
   className,
-  primarydisabled,
+  primaryDisabled,
   primaryLabel,
   primaryOnClick,
   secondaryLabel,
   secondaryOnClick,
 }: ICommonButtonGroupProps) => (
-  <FlexRow className={`mx-2 my-2 gap-2 ${className}`}>
+  <FlexRow className={`p-2 gap-2 ${className}`}>
     {secondaryLabel && (
       <Button
-        className={`${secondaryLabel.toLowerCase()}-button`}
+        className={`${secondaryLabel.toLowerCase().split(" ").join("-")}-button`}
         color="secondary"
-        disabled={primarydisabled}
+        disabled={primaryDisabled}
         onClick={secondaryOnClick}
         type="button"
       >
@@ -32,7 +32,7 @@ const CommonButtonGroup = ({
     )}
     {primaryLabel && (
       <Button
-        className={`${primaryLabel.toLocaleLowerCase()}-button`}
+        className={`${primaryLabel.toLocaleLowerCase().split(" ").join("-")}-button`}
         onClick={primaryOnClick}
         type="submit"
       >

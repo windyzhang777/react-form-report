@@ -4,8 +4,8 @@ import CommonLoader from "src/commons/CommonLoader";
 import Snackbar from "src/commons/Snackbar";
 import TabPanel from "src/commons/TabPanel";
 import {
-  EsfrRecordDetailStateType,
   ISaveSdrValues,
+  SdrEsfrRecordDetailsStateType,
   SdrStatus,
   TransformedSdrDataType,
 } from "src/commons/types";
@@ -14,9 +14,9 @@ import ViewSdrData from "src/components/viewsdr/ViewSdrData";
 import { getAllSdrs } from "src/redux/ducks/getAllSdrs";
 import {
   fetchLogpageDataSuccess,
-  getEsfrRecordDetails,
+  getSdrEsfrRecordDetails,
   getSfrMasterData,
-} from "src/redux/ducks/getEsfrRecordDetails";
+} from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import axiosInstance from "src/utils/axiosInstance";
 import config from "src/utils/env.config";
@@ -50,10 +50,10 @@ const HomeScreen = () => {
   const { sdrData: flaggedSdrData } = useAppSelector((state) => state.flaggedSdrs);
   const {
     loading: loadingEsfrRecordDetail,
-    esfrRecordDetailData,
-    sfrMasterData,
+    detailsData,
+    masterData,
     error,
-  }: EsfrRecordDetailStateType = useAppSelector((state) => state.esfrRecordDetail);
+  }: SdrEsfrRecordDetailsStateType = useAppSelector((state) => state.sdrEsfrRecordDetails);
   const dispatch = useAppDispatch();
   const [tabIndex, setTabIndex] = useState<number>(0);
   const [viewSdrFlag, setViewSdrFlag] = useState<boolean>(false);
@@ -63,7 +63,7 @@ const HomeScreen = () => {
   const [openSnackbar, setOpenSnackbar] = useState<number>(0);
   const [snackbarMessage, setSnackbarMessage] = useState<string>("");
   const [logpageNumberValue, setLogpageNumberValue] = useState<string>("");
-  const [editable, setEditable] = useState(false);
+  const [editable, setEditable] = useState<boolean>(false);
   const isSdr = useMemo(() => selectedSdr?.Type === "SDR", [selectedSdr]);
   const sdrData = useMemo(() => {
     switch (tabIndex) {
@@ -182,15 +182,15 @@ const HomeScreen = () => {
       setViewSdrFlag(true); // TODO: hide view sdr when fetch detail failed
       setOpenSnackbar(-1);
       setSnackbarMessage(error);
-    } else if (esfrRecordDetailData) {
+    } else if (detailsData) {
       setViewSdrFlag(true);
     }
-  }, [error, esfrRecordDetailData]);
+  }, [error, detailsData]);
 
   useEffect(() => {
     setEditable(false);
     if (selectedSdr?.LogpageNumber) {
-      dispatch(getEsfrRecordDetails(selectedSdr.LogpageNumber));
+      dispatch(getSdrEsfrRecordDetails(selectedSdr.LogpageNumber));
     }
   }, [selectedSdr]);
 
@@ -202,7 +202,7 @@ const HomeScreen = () => {
     if (!newSdrData && !approvedSdrData && !flaggedSdrData && !loadingSdrData) {
       resetSdrs();
     }
-    if (!sfrMasterData) {
+    if (!masterData) {
       dispatch(getSfrMasterData());
     }
   }, []);
@@ -218,8 +218,8 @@ const HomeScreen = () => {
         </Snackbar>
       )}
       {(isLoading || loadingSdrData || loadingEsfrRecordDetail) && <CommonLoader />}
-      <Grid container>
-        <Grid item lg={6} md={12}>
+      <Grid container className="grow overflow-auto md:overflow-y-hidden">
+        <Grid item md={6} sm={12} className="h-full w-full flex !flex-col">
           <Box sx={{ ...sxBox }}>
             <Tabs value={tabIndex} onChange={handleTabChange} aria-label="homeScreenSdrTabs">
               <Tab
@@ -239,7 +239,7 @@ const HomeScreen = () => {
               />
             </Tabs>
           </Box>
-          <TabPanel value={tabIndex} className="pt-[30px]">
+          <TabPanel value={tabIndex} className="pt-[30px] h-[90%] grow flex flex-col">
             {sdrData && (
               <CommonDataGrid
                 createSdrFlag={createSdrFlag}
@@ -254,16 +254,14 @@ const HomeScreen = () => {
             )}
           </TabPanel>
         </Grid>
-        <Grid item lg={6} md={12}>
+        <Grid item md={6} sm={12} className="h-full w-full relative">
           {createSdrFlag === "SDR" ? (
             <CreateSdrData
               createSdrFlag={createSdrFlag}
-              editable={editable}
               handleFetchLogpageData={handleFetchLogpageData}
               handleSaveSDR={handleSaveSDR}
               logpageNumberValue={logpageNumberValue}
               setCreateSdrFlag={setCreateSdrFlag}
-              setEditable={setEditable}
               setLogpageNumberValue={setLogpageNumberValue}
             />
           ) : viewSdrFlag && selectedSdr?.LogpageNumber ? (
@@ -283,7 +281,7 @@ const HomeScreen = () => {
               direction="column"
               alignItems="center"
               justifyContent="center"
-              sx={{ minHeight: "85vh" }}
+              sx={{ minHeight: "100%" }}
             >
               <p className="sdrDefaultMsg">Please select an SDR to view it.</p>
             </Grid>

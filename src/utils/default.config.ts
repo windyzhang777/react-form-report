@@ -1,7 +1,7 @@
 const defaultConfig = {
   URL_GET_PROFILE: "/api/employee/getprofile",
   URL_GET_ALL_SDRS: "/api/Elb/GetAllEsfrRecords",
-  URL_GET_ESFR_RECORD_DETAILS: "/api/Elb/GetSdrEsfrRecordDetails",
+  URL_GET_SDR_ESFR_RECORD_DETAILS: "/api/Elb/GetSdrEsfrRecordDetails",
   URL_ESFR_APPROVE: "/api/Elb/UpdateEsfrRecordStatus",
   URL_LOGPAGE_SEARCH: "/Home/LogPageSearch",
   URL_GET_SFR_MASTER_DATA: "/api/Elb/GetSfrMasterData",

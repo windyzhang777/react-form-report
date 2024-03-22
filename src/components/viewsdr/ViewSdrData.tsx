@@ -2,16 +2,16 @@ import { Box, Checkbox, Grid } from "@mui/material";
 import { Formik } from "formik";
 import moment from "moment";
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
-import { FlexRow } from "src/commons/Box";
+import { FlexColumn, FlexRow } from "src/commons/Box";
 import ButtonGroup from "src/commons/ButtonGroup";
 import ListItem from "src/commons/ListItem";
 import { ArrowMenu } from "src/commons/Menu";
 import { MultipleSelect, SingleSelect } from "src/commons/Select";
 import TextField from "src/commons/TextField";
 import {
-  EsfrRecordDetailStateType,
   IEditSdrValues,
   ISaveSdrValues,
+  SdrEsfrRecordDetailsStateType,
   Sides,
   TransformedSdrDataType,
 } from "src/commons/types";
@@ -40,37 +40,34 @@ const ViewSdrData = ({
   tabIndex,
 }: IViewSdrDataProps) => {
   const { profileData } = useAppSelector((state) => state.profile);
-  const { esfrRecordDetailData, sfrMasterData }: EsfrRecordDetailStateType = useAppSelector(
-    (state) => state.esfrRecordDetail
+  const { detailsData, masterData }: SdrEsfrRecordDetailsStateType = useAppSelector(
+    (state) => state.sdrEsfrRecordDetails
   );
   const [flagFollowUp, setFlagFollowUp] = useState<boolean>(tabIndex === 1);
 
   const initialValues: IEditSdrValues = useMemo(
     () => ({
       LogPageCreationDate:
-        (isSdr
-          ? esfrRecordDetailData?.SdrDetails?.createdDate
-          : esfrRecordDetailData?.CreatedDate) || moment().toISOString(),
-      Station: esfrRecordDetailData?.SdrDetails?.Station || `${profileData?.Station}`,
-      LogPageNumber:
-        esfrRecordDetailData?.SdrDetails?.LogPageNumber || selectedSdr.LogpageNumber || "",
-      AircraftNumber: esfrRecordDetailData?.AirCraftNumber || "",
-      PrecautionaryProcedureIds: esfrRecordDetailData?.SdrDetails?.PrecautionaryProcedureIds || [],
-      NatureOfReportIds: esfrRecordDetailData?.SdrDetails?.NatureOfReportIds || [],
-      StageId: esfrRecordDetailData?.SdrDetails?.StageId || 0,
-      StatusId:
-        (isSdr ? esfrRecordDetailData?.SdrDetails?.StatusId : esfrRecordDetailData?.StatusId) || 2,
-      HowDiscoveredId: esfrRecordDetailData?.SdrDetails?.HowDiscoveredId || 0,
+        (isSdr ? detailsData?.SdrDetails?.createdDate : detailsData?.CreatedDate) ||
+        moment().toISOString(),
+      Station: detailsData?.SdrDetails?.Station || `${profileData?.Station}`,
+      LogPageNumber: detailsData?.SdrDetails?.LogPageNumber || selectedSdr.LogpageNumber || "",
+      AircraftNumber: detailsData?.AirCraftNumber || "",
+      PrecautionaryProcedureIds: detailsData?.SdrDetails?.PrecautionaryProcedureIds || [],
+      NatureOfReportIds: detailsData?.SdrDetails?.NatureOfReportIds || [],
+      StageId: detailsData?.SdrDetails?.StageId || 0,
+      StatusId: (isSdr ? detailsData?.SdrDetails?.StatusId : detailsData?.StatusId) || 2,
+      HowDiscoveredId: detailsData?.SdrDetails?.HowDiscoveredId || 0,
       EmployeeId: `${profileData?.EmployeeId}`,
       EmployeeName: `${profileData?.FirstName} ${profileData?.LastName}`,
       PartDetails: {
         PartTrackingNumber: "",
         PartManufacturerSerialNumber:
-          esfrRecordDetailData?.SdrDetails?.PartDetails?.PartManufacturerSerialNumber || "",
-        PartSerialNumber: esfrRecordDetailData?.SdrDetails?.PartDetails?.PartSerialNumber || "",
-        PartLocation: esfrRecordDetailData?.SdrDetails?.PartDetails?.PartLocation || "",
-        PartCondition: esfrRecordDetailData?.SdrDetails?.PartDetails?.PartCondition || "",
-        PartDescription: esfrRecordDetailData?.SdrDetails?.PartDetails?.PartDescription || "",
+          detailsData?.SdrDetails?.PartDetails?.PartManufacturerSerialNumber || "",
+        PartSerialNumber: detailsData?.SdrDetails?.PartDetails?.PartSerialNumber || "",
+        PartLocation: detailsData?.SdrDetails?.PartDetails?.PartLocation || "",
+        PartCondition: detailsData?.SdrDetails?.PartDetails?.PartCondition || "",
+        PartDescription: detailsData?.SdrDetails?.PartDetails?.PartDescription || "",
         PartTotalTime: "",
         PartTotalCycles: "",
         PartTimeSince: "",
@@ -90,16 +87,13 @@ const ViewSdrData = ({
         PartTimeSinceCode: "",
       },
       CreatedbyFirstName:
-        (isSdr
-          ? esfrRecordDetailData?.SdrDetails?.CreatedbyFirstName
-          : esfrRecordDetailData?.CreatedbyFirstName) || "",
+        (isSdr ? detailsData?.SdrDetails?.CreatedbyFirstName : detailsData?.CreatedbyFirstName) ||
+        "",
       CreatedbyLastName:
-        (isSdr
-          ? esfrRecordDetailData?.SdrDetails?.CreatedbyLastName
-          : esfrRecordDetailData?.CreatedbyLastName) || "",
+        (isSdr ? detailsData?.SdrDetails?.CreatedbyLastName : detailsData?.CreatedbyLastName) || "",
       ModifiedbyFirstName: `${profileData?.FirstName}`,
       ModifiedbyLastName: `${profileData?.LastName}`,
-      AtaCode: esfrRecordDetailData?.FleetInfo?.ATACode || "",
+      AtaCode: detailsData?.FleetInfo?.ATACode || "",
       SubmitterDesignator: "",
       SubmitterType: "",
       OperatorDesignator: "CALA",
@@ -107,28 +101,28 @@ const ViewSdrData = ({
       FAAReceivingRegionCode: "GL",
       ReceivingDistrictOffice: "33",
       StructureCausingDifficulty: {
-        FuselageFromSTA: esfrRecordDetailData?.LocationDetails?.FromSta || "",
-        FuselageToSTA: esfrRecordDetailData?.LocationDetails?.ToSta || "",
+        FuselageFromSTA: detailsData?.LocationDetails?.FromSta || "",
+        FuselageToSTA: detailsData?.LocationDetails?.ToSta || "",
         CorrosionLevel:
-          sfrMasterData?.CorrosionLevels.find(
-            (option) => option.Id === esfrRecordDetailData?.DiscrepancyDetails?.CorrosionLevelId
+          masterData?.CorrosionLevels.find(
+            (option) => option.Id === detailsData?.DiscrepancyDetails?.CorrosionLevelId
           )?.Description || "",
-        CrackLength: esfrRecordDetailData?.DiscrepancyDetails?.CrackLength || 0,
-        NumberofCracks: esfrRecordDetailData?.DiscrepancyDetails?.NumberOfCracks || 0,
+        CrackLength: detailsData?.DiscrepancyDetails?.CrackLength || 0,
+        NumberofCracks: detailsData?.DiscrepancyDetails?.NumberOfCracks || 0,
         CCCorrosionLevel:
-          sfrMasterData?.CorrosionLevels.find(
-            (option) => option.Id === esfrRecordDetailData?.DiscrepancyDetails?.CorrosionLevelId
+          masterData?.CorrosionLevels.find(
+            (option) => option.Id === detailsData?.DiscrepancyDetails?.CorrosionLevelId
           )?.Description || "",
-        CCCrackLength: esfrRecordDetailData?.DiscrepancyDetails?.CrackLength || 0,
+        CCCrackLength: detailsData?.DiscrepancyDetails?.CrackLength || 0,
         CCNumberofCracks: 0,
         WaterLineFrom: "",
         WaterLineAt: "",
         StringerFrom: "",
-        StringerFromSide: esfrRecordDetailData?.LocationDetails?.FromSide || "",
+        StringerFromSide: detailsData?.LocationDetails?.FromSide || "",
         StringerAt: "",
         StringerAtSide: "",
         ButtLineFrom: "",
-        ButtLineFromSide: esfrRecordDetailData?.LocationDetails?.FromSide || "",
+        ButtLineFromSide: detailsData?.LocationDetails?.FromSide || "",
         ButtLineAt: "",
         ButtLineAtSide: "",
         WingStationFromSTA: "",
@@ -137,16 +131,14 @@ const ViewSdrData = ({
         WingStationToSide: "",
         StructuralOther: "",
       },
-      CorrectiveActions: esfrRecordDetailData?.FleetInfo?.CorrectiveActions || "",
+      CorrectiveActions: detailsData?.FleetInfo?.CorrectiveActions || "",
       LocationDetails: {
-        ZoneId: esfrRecordDetailData?.LocationDetails?.ZoneId || 0,
-        DefectLocationIdentifier:
-          esfrRecordDetailData?.LocationDetails?.DefectLocationIdentifier || "",
-        CoordinateLocationDetails:
-          esfrRecordDetailData?.LocationDetails?.CoordinateLocationDetails || "",
+        ZoneId: detailsData?.LocationDetails?.ZoneId || 0,
+        DefectLocationIdentifier: detailsData?.LocationDetails?.DefectLocationIdentifier || "",
+        CoordinateLocationDetails: detailsData?.LocationDetails?.CoordinateLocationDetails || "",
       },
     }),
-    [esfrRecordDetailData, isSdr, profileData, selectedSdr]
+    [detailsData, isSdr, profileData, selectedSdr]
   );
 
   useEffect(() => {
@@ -163,7 +155,7 @@ const ViewSdrData = ({
 
   return (
     <>
-      <Grid className={"view-sdr"} item md={12} mb={2}>
+      <FlexColumn className={"view-sdr h-full relative"}>
         <Box className={"subpage-title bottom-divider"} sx={{ pt: "1px" }}>
           <p>Service Difficulty Report - #{selectedSdr.Id}</p>
         </Box>
@@ -177,7 +169,7 @@ const ViewSdrData = ({
         </Grid>
         <Grid container spacing={2} pb={2}>
           <Grid item xs={4}>
-            <ListItem>{esfrRecordDetailData?.OperatorControlNumber}</ListItem>
+            <ListItem>{detailsData?.OperatorControlNumber}</ListItem>
           </Grid>
           <Grid item>
             <ArrowMenu
@@ -193,7 +185,7 @@ const ViewSdrData = ({
                   <ListItem>A/C Number</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{esfrRecordDetailData?.FleetInfo?.LicenseNumber}</ListItem>
+                  <ListItem>{detailsData?.FleetInfo?.LicenseNumber}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -201,7 +193,7 @@ const ViewSdrData = ({
                   <ListItem>A/C Manufacturer</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{esfrRecordDetailData?.FleetInfo?.ManufacturedBy}</ListItem>
+                  <ListItem>{detailsData?.FleetInfo?.ManufacturedBy}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -209,7 +201,7 @@ const ViewSdrData = ({
                   <ListItem>A/C Model</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{esfrRecordDetailData?.FleetInfo?.ManufacturerPartNumber}</ListItem>
+                  <ListItem>{detailsData?.FleetInfo?.ManufacturerPartNumber}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -217,7 +209,7 @@ const ViewSdrData = ({
                   <ListItem>A/C Serial Number</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{esfrRecordDetailData?.FleetInfo?.ManufacturerSerialNumber}</ListItem>
+                  <ListItem>{detailsData?.FleetInfo?.ManufacturerSerialNumber}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -225,7 +217,7 @@ const ViewSdrData = ({
                   <ListItem>A/C Total Time</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{esfrRecordDetailData?.FleetInfo?.TotalAircraftTime}</ListItem>
+                  <ListItem>{detailsData?.FleetInfo?.TotalAircraftTime}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -233,7 +225,7 @@ const ViewSdrData = ({
                   <ListItem>A/C Total Cycles</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{esfrRecordDetailData?.FleetInfo?.TotalAircraftCycles}</ListItem>
+                  <ListItem>{detailsData?.FleetInfo?.TotalAircraftCycles}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -241,7 +233,7 @@ const ViewSdrData = ({
                   <ListItem>Flight #</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{esfrRecordDetailData?.FleetInfo?.TailNumber}</ListItem>
+                  <ListItem>{detailsData?.FleetInfo?.TailNumber}</ListItem>
                 </Grid>
               </Grid>
             </ArrowMenu>
@@ -273,8 +265,8 @@ const ViewSdrData = ({
             touched,
             values,
           }) => (
-            <form onSubmit={handleSubmit}>
-              <div id="view-sdr-details" className="h-[70vh] overflow-y-auto pb-0 md:pb-[4rem] sm:pb-[10rem]">
+            <form onSubmit={handleSubmit} className="overflow-hidden mb-[4rem]">
+              <div id="view-sdr-details" className="h-full overflow-y-auto">
                 {/* Problem Description */}
                 <Grid
                   className={"sdr-status-grid"}
@@ -325,8 +317,7 @@ const ViewSdrData = ({
                           />
                         ) : (
                           moment(
-                            esfrRecordDetailData?.SdrDetails?.createdDate ||
-                              esfrRecordDetailData?.CreatedDate
+                            detailsData?.SdrDetails?.createdDate || detailsData?.CreatedDate
                           ).format("MM/DD/YYYY")
                         )}
                       </ListItem>
@@ -344,8 +335,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          esfrRecordDetailData?.SdrDetails?.LogPageNumber ||
-                          selectedSdr.LogpageNumber
+                          detailsData?.SdrDetails?.LogPageNumber || selectedSdr.LogpageNumber
                         )}
                       </ListItem>
                     </Grid>
@@ -362,7 +352,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          esfrRecordDetailData?.SdrDetails?.Station
+                          detailsData?.SdrDetails?.Station
                         )}
                       </ListItem>
                     </Grid>
@@ -474,7 +464,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          esfrRecordDetailData?.FleetInfo?.ATACode
+                          detailsData?.FleetInfo?.ATACode
                         )}
                       </ListItem>
                     </Grid>
@@ -490,7 +480,7 @@ const ViewSdrData = ({
                             onBlur={handleBlur}
                             error={!!touched.NatureOfReportIds && !!errors.NatureOfReportIds}
                             helperText={!!touched.NatureOfReportIds && errors.NatureOfReportIds}
-                            options={sfrMasterData?.NatureofReports?.sort(
+                            options={masterData?.NatureofReports?.sort(
                               (a, b) => a.DisplayOrder - b.DisplayOrder
                             )}
                             className={"sdr-status-edit"}
@@ -498,10 +488,10 @@ const ViewSdrData = ({
                             maxAllowed={3}
                           />
                         ) : (
-                          esfrRecordDetailData?.SdrDetails?.NatureOfReportIds.reduce(
+                          detailsData?.SdrDetails?.NatureOfReportIds.reduce(
                             (acc, cur) =>
                               (acc += `${acc && ", "}${
-                                sfrMasterData?.NatureofReports?.find((option) => option.Id === cur)
+                                masterData?.NatureofReports?.find((option) => option.Id === cur)
                                   ?.Description
                               }`),
                             ""
@@ -540,7 +530,7 @@ const ViewSdrData = ({
                               !!touched.PrecautionaryProcedureIds &&
                               errors.PrecautionaryProcedureIds
                             }
-                            options={sfrMasterData?.PrecautionaryProcedures?.sort(
+                            options={masterData?.PrecautionaryProcedures?.sort(
                               (a, b) => a.DisplayOrder - b.DisplayOrder
                             )}
                             className={"sdr-status-edit"}
@@ -548,10 +538,10 @@ const ViewSdrData = ({
                             maxAllowed={4}
                           />
                         ) : (
-                          esfrRecordDetailData?.SdrDetails?.PrecautionaryProcedureIds.reduce(
+                          detailsData?.SdrDetails?.PrecautionaryProcedureIds.reduce(
                             (acc, cur) =>
                               (acc += `${acc && ", "}${
-                                sfrMasterData?.PrecautionaryProcedures?.find(
+                                masterData?.PrecautionaryProcedures?.find(
                                   (option) => option.Id === cur
                                 )?.Description
                               }`),
@@ -570,15 +560,15 @@ const ViewSdrData = ({
                             onBlur={handleBlur}
                             error={!!touched.StageId && !!errors.StageId}
                             helperText={!!touched.StageId && errors.StageId}
-                            options={sfrMasterData?.Stage?.sort(
+                            options={masterData?.Stage?.sort(
                               (a, b) => a.DisplayOrder - b.DisplayOrder
                             )}
                             className={"sdr-status-edit"}
                             id="StageId"
                           />
                         ) : (
-                          sfrMasterData?.Stage.find(
-                            (option) => option.Id === esfrRecordDetailData?.SdrDetails?.StageId
+                          masterData?.Stage.find(
+                            (option) => option.Id === detailsData?.SdrDetails?.StageId
                           )?.Description
                         )}
                       </ListItem>
@@ -593,16 +583,15 @@ const ViewSdrData = ({
                             onBlur={handleBlur}
                             error={!!touched.HowDiscoveredId && !!errors.HowDiscoveredId}
                             helperText={!!touched.HowDiscoveredId && errors.HowDiscoveredId}
-                            options={sfrMasterData?.HowDiscovered?.sort(
+                            options={masterData?.HowDiscovered?.sort(
                               (a, b) => a.DisplayOrder - b.DisplayOrder
                             )}
                             className={"sdr-status-edit"}
                             id="HowDiscovered"
                           />
                         ) : (
-                          sfrMasterData?.HowDiscovered.find(
-                            (option) =>
-                              option.Id === esfrRecordDetailData?.SdrDetails?.HowDiscoveredId
+                          masterData?.HowDiscovered.find(
+                            (option) => option.Id === detailsData?.SdrDetails?.HowDiscoveredId
                           )?.Description
                         )}
                       </ListItem>
@@ -630,7 +619,7 @@ const ViewSdrData = ({
                             inputProps={{ style: { resize: "both" } }}
                           />
                         ) : (
-                          esfrRecordDetailData?.FleetInfo?.CorrectiveActions
+                          detailsData?.FleetInfo?.CorrectiveActions
                         )}
                       </ListItem>
                     </Grid>
@@ -731,7 +720,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          esfrRecordDetailData?.SdrDetails?.PartDetails?.PartDescription
+                          detailsData?.SdrDetails?.PartDetails?.PartDescription
                         )}
                       </ListItem>
                     </Grid>
@@ -773,8 +762,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          esfrRecordDetailData?.SdrDetails?.PartDetails
-                            ?.PartManufacturerSerialNumber
+                          detailsData?.SdrDetails?.PartDetails?.PartManufacturerSerialNumber
                         )}
                       </ListItem>
                     </Grid>
@@ -810,7 +798,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          esfrRecordDetailData?.SdrDetails?.PartDetails?.PartSerialNumber
+                          detailsData?.SdrDetails?.PartDetails?.PartSerialNumber
                         )}
                       </ListItem>
                     </Grid>
@@ -833,7 +821,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          esfrRecordDetailData?.SdrDetails?.PartDetails?.PartCondition
+                          detailsData?.SdrDetails?.PartDetails?.PartCondition
                         )}
                       </ListItem>
                     </Grid>
@@ -856,7 +844,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          esfrRecordDetailData?.SdrDetails?.PartDetails?.PartLocation
+                          detailsData?.SdrDetails?.PartDetails?.PartLocation
                         )}
                       </ListItem>
                     </Grid>
@@ -1328,7 +1316,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          esfrRecordDetailData?.LocationDetails?.FromSta || "--"
+                          detailsData?.LocationDetails?.FromSta || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1351,7 +1339,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          esfrRecordDetailData?.LocationDetails?.ToSta || "--"
+                          detailsData?.LocationDetails?.ToSta || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1383,7 +1371,7 @@ const ViewSdrData = ({
                               !!touched.StructureCausingDifficulty?.CorrosionLevel &&
                               errors.StructureCausingDifficulty?.CorrosionLevel
                             }
-                            options={sfrMasterData?.CorrosionLevels?.sort(
+                            options={masterData?.CorrosionLevels?.sort(
                               (a, b) => a.DisplayOrder - b.DisplayOrder
                             )}
                             className={"sdr-status-edit"}
@@ -1491,7 +1479,7 @@ const ViewSdrData = ({
                               !!touched.StructureCausingDifficulty?.CCCorrosionLevel &&
                               errors.StructureCausingDifficulty?.CCCorrosionLevel
                             }
-                            options={sfrMasterData?.CorrosionLevels?.sort(
+                            options={masterData?.CorrosionLevels?.sort(
                               (a, b) => a.DisplayOrder - b.DisplayOrder
                             )}
                             className={"sdr-status-edit"}
@@ -2007,14 +1995,16 @@ const ViewSdrData = ({
                   </Grid>
                 </Grid>
 
-                <Box
-                  my={2}
-                  sx={{
-                    borderBottom: 1,
-                    borderColor: tabIndex !== 2 ? "divider" : "transparent",
-                    fontWeight: "600",
-                  }}
-                />
+                {tabIndex !== 2 && (
+                  <Box
+                    my={2}
+                    sx={{
+                      borderBottom: 1,
+                      borderColor: tabIndex !== 2 ? "divider" : "transparent",
+                      fontWeight: "600",
+                    }}
+                  />
+                )}
 
                 {/* Flag for follow up */}
                 {tabIndex !== 2 && (
@@ -2035,35 +2025,18 @@ const ViewSdrData = ({
                 )}
               </div>
 
-              <Grid
-                sx={{
-                  marginLeft: "-20px",
-                  marginRight: "-20px",
-                  borderLeft: 1,
-                  borderRight: 1,
-                  border: "none",
-                  borderBottom: "1px solid #E6E6E6",
-                  boxShadow: "0px -4px 8px 0px rgba(51, 51, 51, 0.12)",
-                  paddingTop: "10px",
-                  textTransform: "none",
-                  position: "sticky",
-                  bottom: 0,
-                  backgroundColor: "#fff",
-                }}
-              >
-                <ButtonGroup
-                  className="justify-end"
-                  primarydisabled={isSubmitting}
-                  primaryLabel={editable ? "Save" : tabIndex !== 2 ? "Approve" : ""}
-                  primaryOnClick={editable ? handleSubmit : onClickApprove}
-                  secondaryLabel={editable ? "Cancel" : tabIndex === 2 ? "Edit" : ""}
-                  secondaryOnClick={onClickEdit}
-                />
-              </Grid>
+              <ButtonGroup
+                className="bottom-button justify-end"
+                primaryDisabled={isSubmitting}
+                primaryLabel={editable ? "Save" : tabIndex !== 2 ? "Approve" : ""}
+                primaryOnClick={editable ? handleSubmit : onClickApprove}
+                secondaryLabel={editable ? "Cancel" : tabIndex === 2 ? "Edit" : ""}
+                secondaryOnClick={onClickEdit}
+              />
             </form>
           )}
         </Formik>
-      </Grid>
+      </FlexColumn>
     </>
   );
 };
