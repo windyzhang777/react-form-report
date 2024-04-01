@@ -1,7 +1,7 @@
 import moment from "moment";
 import { RefObject } from "react";
-import { TransformedSdrDataType, UserPermission } from "src/commons/types";
-import { GetAllEsfrRecordsResResult, StatusId } from "src/types/GetAllEsfrRecordsRes";
+import { SelectedStatus, TransformedSdrDataType, UserPermission } from "src/commons/types";
+import { GetAllEsfrRecordsResResult } from "src/types/GetAllEsfrRecordsRes";
 import { EsfrUserPolicy } from "src/types/GetProfilerRes";
 
 export const handleScroll = (ref: RefObject<HTMLDivElement> | null) => {
@@ -21,26 +21,28 @@ export const handleFocus = (ref: RefObject<HTMLDivElement> | null) => {
 
 export const transformSdrData = (
   sdrData: GetAllEsfrRecordsResResult[],
-  statusId: StatusId
+  statusId: SelectedStatus
 ): TransformedSdrDataType[] => {
   let sdrStatusText = "Open";
   switch (statusId) {
     case 4:
-      sdrStatusText = "Approved with Follow Up";
+      sdrStatusText = "Approved";
       break;
     case 3:
-      sdrStatusText = "Approved";
+      sdrStatusText = "Approved with Follow Up";
       break;
     case 2:
     default:
       sdrStatusText = "Open";
       break;
   }
-  return sdrData.map((data) => ({
-    ...data,
-    CreatedDate: moment(data.CreatedDate).format("MM/DD/YYYY hh:mm:ss A"),
-    SdrStatus: sdrStatusText,
-  }));
+  return sdrData
+    .map((data) => ({
+      ...data,
+      CreatedDate: moment(data.CreatedDate).format("MM/DD/YYYY hh:mm:ss A"),
+      SdrStatus: sdrStatusText,
+    }))
+    .sort((a, b) => +moment(b.CreatedDate) - +moment(a.CreatedDate));
 };
 
 export const isSame = (arr1: any[], arr2: any[]) => {
@@ -80,7 +82,7 @@ export const getUserPermission = (EsfrUserPolicies: EsfrUserPolicy[]): UserPermi
   };
   const permission = EsfrUserPolicies.reduce(
     (acc, cur) => (dict[cur.PolicyName] > acc ? dict[cur.PolicyName] : acc),
-    UserPermission.Invalid
+    UserPermission.CRU // TODO: UserPermission.Invalid to test user auth policy
   );
   return permission;
 };

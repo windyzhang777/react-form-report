@@ -126,7 +126,7 @@ export const SingleSelect = ({
         displayEmpty
         id={id && id + "-single-select"}
         MenuProps={MenuProps}
-        renderValue={(selected) => options?.find((option) => option.Id === selected)?.Description}
+        renderValue={(selected) => options?.find((option) => option.Id == selected)?.Description}
         value={value}
       >
         {!options ? (

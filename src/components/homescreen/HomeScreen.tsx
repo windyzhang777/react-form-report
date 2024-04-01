@@ -6,8 +6,11 @@ import Modal from "src/commons/Modal";
 import Snackbar from "src/commons/Snackbar";
 import TabPanel from "src/commons/TabPanel";
 import {
+  IEditSdrValues,
   ISaveSdrValues,
   SdrEsfrRecordDetailsStateType,
+  SelectedStatus,
+  SelectedTab,
   TransformedSdrDataType,
 } from "src/commons/types";
 import CommonDataGrid from "src/components/commondatagrid/commondatagrid";
@@ -27,10 +30,10 @@ import {
   getSfrMasterData,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
-import { StatusId } from "src/types/GetAllEsfrRecordsRes";
 import axiosInstance from "src/utils/axiosInstance";
 import config from "src/utils/env.config";
 import CreateSdrData from "../createsdr/CreateSdrData";
+import ViewSnapshotData from "../viewsdr/ViewSnapshotData";
 import "./homescreen.css";
 
 const sxBox = {
@@ -59,9 +62,8 @@ const HomeScreen = () => {
   const { sdrData: newSdrData } = useAppSelector((state) => state.newSdrs);
   const { sdrData: approvedSdrData } = useAppSelector((state) => state.approvedSdrs);
   const { sdrData: flaggedSdrData } = useAppSelector((state) => state.flaggedSdrs);
-  const { loading, detailsData, masterData, error }: SdrEsfrRecordDetailsStateType = useAppSelector(
-    (state) => state.sdrEsfrRecordDetails
-  );
+  const { loading, detailsData, snapshotData, masterData, error }: SdrEsfrRecordDetailsStateType =
+    useAppSelector((state) => state.sdrEsfrRecordDetails);
   const { fileData } = useAppSelector((state) => state.flatFile);
   const dispatch = useAppDispatch();
   const [tabIndex, setTabIndex] = useState<number>(0);
@@ -94,9 +96,9 @@ const HomeScreen = () => {
     setCreateSdrFlag("");
     setOpenSnackbar(0);
     setSelectedSdr(null);
-    dispatch(getAllSdrs(StatusId.New));
-    dispatch(getAllSdrs(StatusId.Flagged));
-    dispatch(getAllSdrs(StatusId.Approved));
+    dispatch(getAllSdrs(SelectedStatus.Open));
+    dispatch(getAllSdrs(SelectedStatus.ApprovedwithFollowup));
+    dispatch(getAllSdrs(SelectedStatus.Approved));
     if (window) {
       window.scrollTo(0, 0);
     }
@@ -106,38 +108,6 @@ const HomeScreen = () => {
     setTabIndex(tab);
     setViewSdrFlag(false);
     setSelectedSdr(null);
-  };
-
-  const handleApprove = (flag: boolean) => {
-    setIsLoading(true);
-    axiosInstance
-      .post(`${config.apiBaseAddress}${config.URL_ESFR_APPROVE}`, {
-        id: selectedSdr?.Id,
-        recordType: selectedSdr?.Type,
-        statusId: flag ? StatusId.Flagged : StatusId.Approved,
-      })
-      .then((res) => {
-        setIsLoading(false);
-        if (res && res.status === 200) {
-          setOpenSnackbar(1);
-          flag
-            ? setSnackbarMessage("SDR approved with flagged for follow-up")
-            : setSnackbarMessage("SDR approved");
-          setViewSdrFlag(false);
-          setSelectedSdr(null);
-          setTimeout(() => {
-            resetSdrs();
-          }, 500);
-        } else {
-          setOpenSnackbar(-1);
-          setSnackbarMessage("Fail to Approve");
-        }
-      })
-      .catch(() => {
-        setIsLoading(false);
-        setOpenSnackbar(-1);
-        setSnackbarMessage("Fail to Approve");
-      });
   };
 
   const handleFetchLogpageData = (logpageNumber: string) => {
@@ -163,26 +133,55 @@ const HomeScreen = () => {
     }
   };
 
+  const handleUpsertSdrSnapshot = (values: IEditSdrValues, followUpFlag: boolean = false) => {
+    const actionType = tabIndex === SelectedTab.Approved ? "Approve" : "Update";
+    setIsLoading(true);
+    axiosInstance
+      .post(`${config.apiBaseAddress}${config.URL_UPSERT_SDR_SNAPSHOT}`, values)
+      .then((res) => {
+        if (res?.data?.Result?.IsSuccess) {
+          setOpenSnackbar(1);
+          setSnackbarMessage(
+            `${actionType} SDR successful${followUpFlag ? " with flagged for follow-up" : ""}`
+          );
+          setCreateSdrFlag("");
+          setViewSdrFlag(false);
+          setSelectedSdr(null);
+          setTimeout(() => {
+            resetSdrs();
+          }, 500);
+        } else {
+          setOpenSnackbar(-1);
+          setSnackbarMessage(`Fail to ${actionType} SDR`);
+        }
+      })
+      .catch(() => {
+        setOpenSnackbar(-1);
+        setSnackbarMessage(`Fail to ${actionType} SDR`);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
   const handleSaveSDR = (values: Partial<ISaveSdrValues>) => {
     setIsLoading(true);
     axiosInstance
       .post(`${config.apiBaseAddress}${config.URL_CREATE_SDR}`, values)
       .then((res) => {
-        // TODO: need Prakash's update on /CreateSdr
-        // if (res?.data?.Result?.IsSuccess) {
-        setOpenSnackbar(1);
-        setSnackbarMessage("Save SDR successful");
-        setCreateSdrFlag("");
-        setViewSdrFlag(false);
-        setSelectedSdr(null);
-        setTimeout(() => {
-          resetSdrs();
-        }, 500);
-        // TODO: need Prakash's update on /CreateSdr
-        // } else {
-        //   setOpenSnackbar(-1);
-        //   setSnackbarMessage("Fail to Save SDR");
-        // }
+        if (res?.data?.Result?.IsSuccess) {
+          setOpenSnackbar(1);
+          setSnackbarMessage("Save SDR successful");
+          setCreateSdrFlag("");
+          setViewSdrFlag(false);
+          setSelectedSdr(null);
+          setTimeout(() => {
+            resetSdrs();
+          }, 500);
+        } else {
+          setOpenSnackbar(-1);
+          setSnackbarMessage("Fail to Save SDR");
+        }
       })
       .catch(() => {
         setOpenSnackbar(-1);
@@ -254,15 +253,15 @@ const HomeScreen = () => {
       setViewSdrFlag(true); // TODO: hide view sdr when fetch detail failed
       setOpenSnackbar(-1);
       setSnackbarMessage(error);
-    } else if (detailsData) {
+    } else if (detailsData || snapshotData) {
       setViewSdrFlag(true);
     }
-  }, [error, detailsData]);
+  }, [error, detailsData, snapshotData]);
 
   useEffect(() => {
     setEditable(false);
     if (selectedSdr && selectedSdr.LogpageNumber !== detailsData?.LogPageNumber) {
-      if (selectedSdr.StatusId === StatusId.Approved) {
+      if (selectedSdr.StatusId === SelectedStatus.Approved && selectedSdr.OperatorControlNumber) {
         dispatch(getApprovedSdr(selectedSdr.OperatorControlNumber));
       } else {
         dispatch(getSdrEsfrRecordDetails(selectedSdr.LogpageNumber));
@@ -340,16 +339,26 @@ const HomeScreen = () => {
               setLogpageNumberValue={setLogpageNumberValue}
             />
           ) : viewSdrFlag && selectedSdr?.LogpageNumber ? (
-            <ViewSdrData
-              editable={editable}
-              handleApprove={handleApprove}
-              handleSaveSDR={handleSaveSDR}
-              isSdr={isSdr}
-              selectedSdr={selectedSdr}
-              setEditable={setEditable}
-              setViewSdrFlag={setViewSdrFlag}
-              tabIndex={tabIndex}
-            />
+            tabIndex === SelectedTab.Approved ? (
+              <ViewSnapshotData
+                editable={editable}
+                handleUpsertSdrSnapshot={handleUpsertSdrSnapshot}
+                isSdr={isSdr}
+                selectedSdr={selectedSdr}
+                setEditable={setEditable}
+                setViewSdrFlag={setViewSdrFlag}
+                tabIndex={tabIndex}
+              />
+            ) : (
+              <ViewSdrData
+                editable={editable}
+                handleUpsertSdrSnapshot={handleUpsertSdrSnapshot}
+                isSdr={isSdr}
+                selectedSdr={selectedSdr}
+                setViewSdrFlag={setViewSdrFlag}
+                tabIndex={tabIndex}
+              />
+            )
           ) : (
             <Grid
               container
@@ -382,14 +391,14 @@ const HomeScreen = () => {
             Save Confirmation
           </Typography>
           <Typography id="confirm-extract-modal-description" variant="body1" mb={6}>
-            Please confirm that you have the extracted SDR reports saved to your local as the
-            extracted items will be removed and re-extraction is not availabled after the point
+            Please confirm that extracted SDR reports have been saved to your local, as
+            re-extraction is not available after this point.
           </Typography>
           <ButtonGroup
             className="justify-end"
-            primaryLabel="Confirm"
+            primaryLabel="Continue"
             primaryOnClick={handleConfirmFileSaved}
-            secondaryLabel="Save Reports"
+            secondaryLabel="Save"
             secondaryOnClick={() => {
               if (fileData) {
                 saveTextAsFile(fileData.SdrRecords?.join("\n"), fileData.FileName);

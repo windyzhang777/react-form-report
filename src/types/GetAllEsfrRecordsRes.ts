@@ -1,3 +1,5 @@
+import { SelectedStatus } from "src/commons/types";
+
 export interface GetAllEsfrRecordsRes {
   Timestamp: string;
   ResponseTime: number;
@@ -13,11 +15,11 @@ export interface GetAllEsfrRecordsResResult {
   CreatedDate: string;
   Id: number;
   IsOlderThan72Hours: boolean;
-  OperatorControlNumber: string;
   LogpageNumber: string;
   LogpageStatus: LogpageStatus | null;
+  OperatorControlNumber: string | null;
   Status: Status;
-  StatusId: StatusId;
+  StatusId: SelectedStatus;
   Type: Type;
 }
 
@@ -30,12 +32,6 @@ export enum Status {
   "Approved" = "Approved",
   "ApprovedWithFollowUp" = "Approved with Follow Up",
   "Open" = "Open",
-}
-
-export enum StatusId {
-  New = 2,
-  Approved = 3,
-  Flagged = 4,
 }
 
 export enum Type {

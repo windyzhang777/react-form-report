@@ -1,11 +1,13 @@
 import { Dispatch } from "redux";
 import {
+  ApprovedSdrFuncType,
   SdrEsfrRecordDetailsActionType,
   SdrEsfrRecordDetailsFuncType,
   SdrEsfrRecordDetailsReducerAcition,
   SdrEsfrRecordDetailsStateType,
   SfrMasterDataFuncType,
 } from "src/commons/types";
+import { GetApprovedSDRResResult } from "src/types/GetApprovedSdrRes";
 import { GetSDREsfrRecordDetailsResResult } from "src/types/GetSdrEsfrRecordDetailsRes";
 import { GetSfrMasterDataResResult } from "src/types/GetSfrMasterDataRes";
 import { ViewLogpageResResult } from "src/types/ViewLogpageRes";
@@ -15,6 +17,7 @@ import config from "src/utils/env.config";
 const initialState: SdrEsfrRecordDetailsStateType = {
   loading: false,
   detailsData: null,
+  snapshotData: null,
   masterData: null,
   logpageData: null,
   error: "",
@@ -34,6 +37,14 @@ const fetchFailure = (message: string) => {
 
 export const resetEsfrRecordDetailData = () => {
   return { type: SdrEsfrRecordDetailsActionType.FETCH_ESFR_DETAIL_SUCCESS, data: null };
+};
+
+const fetchApprovedSdrSuccess = (data: GetApprovedSDRResResult) => {
+  return { type: SdrEsfrRecordDetailsActionType.FETCH_APPROVED_SDR_SUCCESS, data };
+};
+
+const fetchApprovedSdrFailure = (message: string) => {
+  return { type: SdrEsfrRecordDetailsActionType.FETCH_APPROVED_SDR_FAILURE, message };
 };
 
 const fetchSfrMaterDataSuccess = (data: GetSfrMasterDataResResult) => {
@@ -69,6 +80,17 @@ export const sdrEsfrRecordDetailsReducer = (
         loading: false,
         detailsData: null,
         error: `Fail to get Esfr Detail (${action.message})`,
+      };
+    }
+    case SdrEsfrRecordDetailsActionType.FETCH_APPROVED_SDR_SUCCESS: {
+      return { ...state, loading: false, snapshotData: action.data, error: "" };
+    }
+    case SdrEsfrRecordDetailsActionType.FETCH_APPROVED_SDR_FAILURE: {
+      return {
+        ...state,
+        loading: false,
+        snapshotData: null,
+        error: `Fail to get Snapshot Detail (${action.message})`,
       };
     }
     case SdrEsfrRecordDetailsActionType.FETCH_SFR_MATER_DATA_SUCCESS: {
@@ -114,7 +136,7 @@ export const getSdrEsfrRecordDetails = (logpageNumber: string) => {
 };
 
 export const getApprovedSdr = (OperatorControlNumber: string) => {
-  return function (dispatch: Dispatch<SdrEsfrRecordDetailsFuncType>) {
+  return function (dispatch: Dispatch<ApprovedSdrFuncType>) {
     dispatch(initFetch());
     axiosInstance
       .get(
@@ -122,9 +144,9 @@ export const getApprovedSdr = (OperatorControlNumber: string) => {
       )
       .then((res) => {
         const esfrRecordDetail = res?.data?.Result;
-        dispatch(fetchSuccess(esfrRecordDetail));
+        dispatch(fetchApprovedSdrSuccess(esfrRecordDetail));
       })
-      .catch((error) => dispatch(fetchFailure(error.message)));
+      .catch((error) => dispatch(fetchApprovedSdrFailure(error.message)));
   };
 };
 

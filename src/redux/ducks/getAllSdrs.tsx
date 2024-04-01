@@ -4,9 +4,10 @@ import {
   SdrDispatchFuncType,
   SdrReducerAction,
   SdrStateType,
+  SelectedStatus,
 } from "src/commons/types";
 import { transformSdrData } from "src/helpers";
-import { GetAllEsfrRecordsResResult, StatusId } from "src/types/GetAllEsfrRecordsRes";
+import { GetAllEsfrRecordsResResult } from "src/types/GetAllEsfrRecordsRes";
 import axiosInstance from "src/utils/axiosInstance";
 import config from "src/utils/env.config";
 
@@ -16,37 +17,37 @@ const initialState: SdrStateType = {
   error: "",
 };
 
-const initFetch = (statusId: StatusId) => {
+const initFetch = (statusId: SelectedStatus) => {
   switch (statusId) {
-    case StatusId.Approved:
+    case SelectedStatus.Approved:
       return { type: SdrActionType.FETCH_APPROVED_SDRS };
-    case StatusId.Flagged:
+    case SelectedStatus.ApprovedwithFollowup:
       return { type: SdrActionType.FETCH_FLAGGED_SDRS };
-    case StatusId.New:
+    case SelectedStatus.Open:
     default:
       return { type: SdrActionType.FETCH_NEW_SDRS };
   }
 };
 
-const fetchSuccess = (data: GetAllEsfrRecordsResResult[], statusId: StatusId) => {
+const fetchSuccess = (data: GetAllEsfrRecordsResResult[], statusId: SelectedStatus) => {
   switch (statusId) {
-    case StatusId.Approved:
+    case SelectedStatus.Approved:
       return { type: SdrActionType.FETCH_APPROVED_SUCCESS, data: transformSdrData(data, statusId) };
-    case StatusId.Flagged:
+    case SelectedStatus.ApprovedwithFollowup:
       return { type: SdrActionType.FETCH_FLAGGED_SUCCESS, data: transformSdrData(data, statusId) };
-    case StatusId.New:
+    case SelectedStatus.Open:
     default:
       return { type: SdrActionType.FETCH_NEW_SUCCESS, data: transformSdrData(data, statusId) };
   }
 };
 
-const fetchFailure = (message: string, statusId: StatusId) => {
+const fetchFailure = (message: string, statusId: SelectedStatus) => {
   switch (statusId) {
-    case StatusId.Approved:
+    case SelectedStatus.Approved:
       return { type: SdrActionType.FETCH_APPROVED_FAILURE, message };
-    case StatusId.Flagged:
+    case SelectedStatus.ApprovedwithFollowup:
       return { type: SdrActionType.FETCH_FLAGGED_FAILURE, message };
-    case StatusId.New:
+    case SelectedStatus.Open:
     default:
       return { type: SdrActionType.FETCH_NEW_FAILURE, message };
   }
@@ -106,7 +107,7 @@ export const flaggedSdrsReducer = (
   }
 };
 
-export const getAllSdrs = (statusId: StatusId) => {
+export const getAllSdrs = (statusId: SelectedStatus) => {
   return function (dispatch: Dispatch<SdrDispatchFuncType>) {
     dispatch(initFetch(statusId));
     axiosInstance

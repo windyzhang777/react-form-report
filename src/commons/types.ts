@@ -1,9 +1,11 @@
-import { CreateSDRReq, PartDetails } from "src/types/CreateSdrReq";
+import { CreateSDRReq } from "src/types/CreateSdrReq";
 import { ExtractSDRRecordsResResult } from "src/types/ExtractSdrRecordsRes";
 import { GetAllEsfrRecordsResResult } from "src/types/GetAllEsfrRecordsRes";
+import { GetApprovedSDRResResult } from "src/types/GetApprovedSdrRes";
 import { Employee, GetProfileResResult } from "src/types/GetProfilerRes";
 import { GetSDREsfrRecordDetailsResResult } from "src/types/GetSdrEsfrRecordDetailsRes";
 import { GetSfrMasterDataResResult, OptionDocument } from "src/types/GetSfrMasterDataRes";
+import { PartDetails, UpsertSDRSnapshotReq } from "src/types/UpsertSdrSnapshotReq";
 import { ViewLogpageResResult } from "src/types/ViewLogpageRes";
 import config from "src/utils/env.config";
 
@@ -21,9 +23,9 @@ export enum SelectedTab {
 
 export enum SelectedStatus {
   Draft = 1,
-  Submitted = 2,
-  Approved = 3,
-  ApprovedwithFollowup = 4,
+  Open = 2,
+  ApprovedwithFollowup = 3,
+  Approved = 4,
 }
 
 export interface ISaveSdrValues extends CreateSDRReq {
@@ -35,20 +37,13 @@ export interface ISaveSdrValues extends CreateSDRReq {
   CorrectiveAction: string;
 }
 
-export interface IEditSdrValues extends Omit<CreateSDRReq, "PartDetails"> {
-  AtaCode: string;
-  CorrectiveActions: string;
-  SubmitterDesignator: string;
-  SubmitterType: string;
-  OperatorDesignator: string;
-  OperatorType: string;
-  FAAReceivingRegionCode: string;
-  ReceivingDistrictOffice: string;
-  PartManufacturerName: string;
+export interface IEditSdrValues extends Omit<UpsertSDRSnapshotReq, "PartDetails"> {
   LocationDetails: ILocationDetails;
   ComponentDetails: IComponentDetails & AdditionalPartValues;
-  StructureCausingDifficulty: IStructureCausingDifficulty;
   PartDetails: PartDetails & AdditionalPartValues;
+  CCCorrosionLevel: string;
+  CCCrackLength: string;
+  CCNumberofCracks: number;
 }
 
 export interface AdditionalPartValues {
@@ -68,27 +63,27 @@ export interface IComponentDetails {
 }
 
 export interface IStructureCausingDifficulty {
-  FuselageFromSTA: string;
-  FuselageToSTA: string;
-  CorrosionLevel: string;
+  FuselageFromSta: string;
+  FuselageToSta: string;
+  CorrisionLevel: string;
   CrackLength: number;
   NumberofCracks: number;
-  CCCorrosionLevel: string;
+  CCCorrisionLevel: string;
   CCCrackLength: number;
   CCNumberofCracks: number;
-  WaterLineFrom: string;
-  WaterLineAt: string;
+  WaterlineFrom: string;
+  WaterlineAt: string;
   StringerFrom: string;
   StringerFromSide: string;
   StringerAt: string;
   StringerAtSide: string;
-  ButtLineFrom: string;
-  ButtLineFromSide: string;
-  ButtLineAt: string;
-  ButtLineAtSide: string;
-  WingStationFromSTA: string;
+  ButtlineFrom: string;
+  ButtlineFromSide: string;
+  ButtlineAt: string;
+  ButtlineAtSide: string;
+  WingStationFrom: string;
   WingStationFromSide: string;
-  WingStationToSTA: string;
+  WingStationTo: string;
   WingStationToSide: string;
   StructuralOther: string;
 }
@@ -129,6 +124,8 @@ export enum SdrEsfrRecordDetailsActionType {
   FETCH_DETAILS = "FETCH_DETAILS",
   FETCH_ESFR_DETAIL_SUCCESS = "FETCH_ESFR_DETAIL_SUCCESS",
   FETCH_ESFR_DETAIL_FAILURE = "FETCH_ESFR_DETAIL_FAILURE",
+  FETCH_APPROVED_SDR_SUCCESS = "FETCH_APPROVED_SDR_SUCCESS",
+  FETCH_APPROVED_SDR_FAILURE = "FETCH_APPROVED_SDR_FAILURE",
   FETCH_SFR_MATER_DATA_SUCCESS = "FETCH_SFR_MATER_DATA_SUCCESS",
   FETCH_SFR_MATER_DATA_FAILURE = "FETCH_SFR_MATER_DATA_FAILURE",
   FETCH_LOGPAGE_DATA_SUCCESS = "FETCH_LOGPAGE_DATA_SUCCESS",
@@ -174,6 +171,12 @@ export interface SdrEsfrRecordDetailsFuncType {
   message?: string;
 }
 
+export interface ApprovedSdrFuncType {
+  type: SdrEsfrRecordDetailsActionType;
+  data?: GetApprovedSDRResResult;
+  message?: string;
+}
+
 export interface SfrMasterDataFuncType {
   type: SdrEsfrRecordDetailsActionType;
   data?: GetSfrMasterDataResResult;
@@ -182,7 +185,11 @@ export interface SfrMasterDataFuncType {
 
 export interface SdrEsfrRecordDetailsReducerAcition {
   type: SdrEsfrRecordDetailsActionType;
-  data: GetSDREsfrRecordDetailsResResult;
+  data:
+    | GetSDREsfrRecordDetailsResResult
+    | GetApprovedSDRResResult
+    | GetSfrMasterDataResResult
+    | ViewLogpageResResult;
   message: string;
 }
 
@@ -222,6 +229,7 @@ export type SdrStateType = {
 export type SdrEsfrRecordDetailsStateType = {
   loading: boolean;
   detailsData: GetSDREsfrRecordDetailsResResult | null;
+  snapshotData: GetApprovedSDRResResult | null;
   masterData: GetSfrMasterDataResResult | null;
   logpageData: ViewLogpageResResult | null;
   error: string;
@@ -244,15 +252,16 @@ export interface EnvironmentConfig {
   URL_GET_ALL_SDRS: string;
   URL_GET_SDR_ESFR_RECORD_DETAILS: string;
   URL_GET_APPROVED_SDR: string;
-  URL_ESFR_APPROVE: string;
+  // URL_ESFR_APPROVE: string;
   URL_LOGPAGE_SEARCH: string;
   URL_GET_SFR_MASTER_DATA: string;
-  URL_ADD_SDR: string;
+  // URL_ADD_SDR: string;
   URL_CREATE_SDR: string;
   URL_VIEW_LOGPAGE: string;
   URL_EXTRACT_SDR_RECORDS: string;
   URL_UPDATE_SNAPSHOT_SDR_EXTRACTION_STATUS: string;
   URL_INSERT_SNAPSHOT_SDR_FILENAME: string;
+  URL_UPSERT_SDR_SNAPSHOT: string;
 }
 
 export type EnvTypes = "localhost" | "development" | "qa" | "stage" | "production";

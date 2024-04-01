@@ -2,9 +2,10 @@ import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { FlexCenter, FlexColumn } from "src/commons/Box";
 import CommonLoader from "src/commons/CommonLoader";
-import { UserPermission } from "src/commons/types";
+import { SelectedStatus, UserPermission } from "src/commons/types";
 import Header from "src/components/header/Header";
 import HomeScreen from "src/components/homescreen/HomeScreen";
+import { getAllSdrs } from "src/redux/ducks/getAllSdrs";
 import { getProfile } from "src/redux/ducks/getProfile";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import config from "src/utils/env.config";
@@ -15,12 +16,16 @@ const App = () => {
     profileData,
     auth,
   } = useAppSelector((state) => state.profile);
+
   const dispatch = useAppDispatch();
   let empId: string;
 
   const resetApp = () => {
-    if (config.REACT_APP_ENVIRONMENT === "localhost") empId = "v130186";
+    if (config.REACT_APP_ENVIRONMENT === "localhost") empId = "U381697";
     dispatch(getProfile(sessionStorage.id || empId));
+    dispatch(getAllSdrs(SelectedStatus.Open));
+    dispatch(getAllSdrs(SelectedStatus.ApprovedwithFollowup));
+    dispatch(getAllSdrs(SelectedStatus.Approved));
   };
 
   useEffect(() => {
