@@ -4,23 +4,11 @@ import {
   SdrDispatchFuncType,
   SdrReducerAction,
   SdrStateType,
-  SdrStatus,
-  StatusId,
 } from "src/commons/types";
 import { transformSdrData } from "src/helpers";
-import { GetAllEsfrRecordsResResult } from "src/types/GetAllEsfrRecordsRes";
+import { GetAllEsfrRecordsResResult, StatusId } from "src/types/GetAllEsfrRecordsRes";
 import axiosInstance from "src/utils/axiosInstance";
 import config from "src/utils/env.config";
-
-const FETCH_NEW_SDRS: SdrActionType = "FETCH_NEW_SDRS";
-const FETCH_APPROVED_SDRS: SdrActionType = "FETCH_APPROVED_SDRS";
-const FETCH_FLAGGED_SDRS: SdrActionType = "FETCH_FLAGGED_SDRS";
-const FETCH_NEW_SUCCESS: SdrActionType = "FETCH_NEW_SUCCESS";
-const FETCH_APPROVED_SUCCESS: SdrActionType = "FETCH_APPROVED_SUCCESS";
-const FETCH_FLAGGED_SUCCESS: SdrActionType = "FETCH_FLAGGED_SUCCESS";
-const FETCH_NEW_FAILURE: SdrActionType = "FETCH_NEW_FAILURE";
-const FETCH_APPROVED_FAILURE: SdrActionType = "FETCH_APPROVED_FAILURE";
-const FETCH_FLAGGED_FAILURE: SdrActionType = "FETCH_FLAGGED_FAILURE";
 
 const initialState: SdrStateType = {
   loading: false,
@@ -30,49 +18,49 @@ const initialState: SdrStateType = {
 
 const initFetch = (statusId: StatusId) => {
   switch (statusId) {
-    case SdrStatus.Approved:
-      return { type: FETCH_APPROVED_SDRS };
-    case SdrStatus.Flagged:
-      return { type: FETCH_FLAGGED_SDRS };
-    case SdrStatus.New:
+    case StatusId.Approved:
+      return { type: SdrActionType.FETCH_APPROVED_SDRS };
+    case StatusId.Flagged:
+      return { type: SdrActionType.FETCH_FLAGGED_SDRS };
+    case StatusId.New:
     default:
-      return { type: FETCH_NEW_SDRS };
+      return { type: SdrActionType.FETCH_NEW_SDRS };
   }
 };
 
 const fetchSuccess = (data: GetAllEsfrRecordsResResult[], statusId: StatusId) => {
   switch (statusId) {
-    case SdrStatus.Approved:
-      return { type: FETCH_APPROVED_SUCCESS, data: transformSdrData(data, statusId) };
-    case SdrStatus.Flagged:
-      return { type: FETCH_FLAGGED_SUCCESS, data: transformSdrData(data, statusId) };
-    case SdrStatus.New:
+    case StatusId.Approved:
+      return { type: SdrActionType.FETCH_APPROVED_SUCCESS, data: transformSdrData(data, statusId) };
+    case StatusId.Flagged:
+      return { type: SdrActionType.FETCH_FLAGGED_SUCCESS, data: transformSdrData(data, statusId) };
+    case StatusId.New:
     default:
-      return { type: FETCH_NEW_SUCCESS, data: transformSdrData(data, statusId) };
+      return { type: SdrActionType.FETCH_NEW_SUCCESS, data: transformSdrData(data, statusId) };
   }
 };
 
 const fetchFailure = (message: string, statusId: StatusId) => {
   switch (statusId) {
-    case SdrStatus.Approved:
-      return { type: FETCH_APPROVED_FAILURE, message };
-    case SdrStatus.Flagged:
-      return { type: FETCH_FLAGGED_FAILURE, message };
-    case SdrStatus.New:
+    case StatusId.Approved:
+      return { type: SdrActionType.FETCH_APPROVED_FAILURE, message };
+    case StatusId.Flagged:
+      return { type: SdrActionType.FETCH_FLAGGED_FAILURE, message };
+    case StatusId.New:
     default:
-      return { type: FETCH_NEW_FAILURE, message };
+      return { type: SdrActionType.FETCH_NEW_FAILURE, message };
   }
 };
 
 export const newSdrsReducer = (state: SdrStateType = initialState, action: SdrReducerAction) => {
   switch (action.type) {
-    case FETCH_NEW_SDRS: {
+    case SdrActionType.FETCH_NEW_SDRS: {
       return { ...state, loading: true };
     }
-    case FETCH_NEW_SUCCESS: {
+    case SdrActionType.FETCH_NEW_SUCCESS: {
       return { ...state, loading: false, sdrData: action.data, error: "" };
     }
-    case FETCH_NEW_FAILURE: {
+    case SdrActionType.FETCH_NEW_FAILURE: {
       return { ...state, loading: false, sdrData: null, error: action.message };
     }
     default:
@@ -85,13 +73,13 @@ export const approvedSdrsReducer = (
   action: SdrReducerAction
 ) => {
   switch (action.type) {
-    case FETCH_APPROVED_SDRS: {
+    case SdrActionType.FETCH_APPROVED_SDRS: {
       return { ...state, loading: true };
     }
-    case FETCH_APPROVED_SUCCESS: {
+    case SdrActionType.FETCH_APPROVED_SUCCESS: {
       return { ...state, loading: false, sdrData: action.data, error: "" };
     }
-    case FETCH_APPROVED_FAILURE: {
+    case SdrActionType.FETCH_APPROVED_FAILURE: {
       return { ...state, loading: false, sdrData: null, error: action.message };
     }
     default:
@@ -104,13 +92,13 @@ export const flaggedSdrsReducer = (
   action: SdrReducerAction
 ) => {
   switch (action.type) {
-    case FETCH_FLAGGED_SDRS: {
+    case SdrActionType.FETCH_FLAGGED_SDRS: {
       return { ...state, loading: true };
     }
-    case FETCH_FLAGGED_SUCCESS: {
+    case SdrActionType.FETCH_FLAGGED_SUCCESS: {
       return { ...state, loading: false, sdrData: action.data, error: "" };
     }
-    case FETCH_FLAGGED_FAILURE: {
+    case SdrActionType.FETCH_FLAGGED_FAILURE: {
       return { ...state, loading: false, sdrData: null, error: action.message };
     }
     default:

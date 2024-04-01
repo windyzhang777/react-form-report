@@ -1,8 +1,9 @@
-import { Box, Checkbox, Grid } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import { Box, Checkbox, Grid, IconButton } from "@mui/material";
 import { Formik } from "formik";
 import moment from "moment";
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
-import { FlexColumn, FlexRow } from "src/commons/Box";
+import { FlexBetween, FlexColumn, FlexRow } from "src/commons/Box";
 import ButtonGroup from "src/commons/ButtonGroup";
 import ListItem from "src/commons/ListItem";
 import { ArrowMenu } from "src/commons/Menu";
@@ -14,6 +15,7 @@ import {
   SdrEsfrRecordDetailsStateType,
   Sides,
   TransformedSdrDataType,
+  UserPermission,
 } from "src/commons/types";
 import { useAppSelector } from "src/redux/hooks";
 import ValidationSchema from "src/validationSchema";
@@ -27,6 +29,7 @@ export interface IViewSdrDataProps {
   isSdr: boolean;
   selectedSdr: TransformedSdrDataType;
   setEditable: Dispatch<SetStateAction<boolean>>;
+  setViewSdrFlag: Dispatch<SetStateAction<boolean>>;
   tabIndex: number;
 }
 
@@ -37,9 +40,10 @@ const ViewSdrData = ({
   isSdr,
   selectedSdr,
   setEditable,
-  tabIndex,
+  setViewSdrFlag,
+  tabIndex = 3,
 }: IViewSdrDataProps) => {
-  const { profileData } = useAppSelector((state) => state.profile);
+  const { profileData, auth } = useAppSelector((state) => state.profile);
   const { detailsData, masterData }: SdrEsfrRecordDetailsStateType = useAppSelector(
     (state) => state.sdrEsfrRecordDetails
   );
@@ -51,7 +55,7 @@ const ViewSdrData = ({
         (isSdr ? detailsData?.SdrDetails?.createdDate : detailsData?.CreatedDate) ||
         moment().toISOString(),
       Station: detailsData?.SdrDetails?.Station || `${profileData?.Station}`,
-      LogPageNumber: detailsData?.SdrDetails?.LogPageNumber || selectedSdr.LogpageNumber || "",
+      LogPageNumber: detailsData?.SdrDetails?.LogPageNumber || selectedSdr?.LogpageNumber || "",
       AircraftNumber: detailsData?.AirCraftNumber || "",
       PrecautionaryProcedureIds: detailsData?.SdrDetails?.PrecautionaryProcedureIds || [],
       NatureOfReportIds: detailsData?.SdrDetails?.NatureOfReportIds || [],
@@ -97,7 +101,7 @@ const ViewSdrData = ({
       SubmitterDesignator: "",
       SubmitterType: "",
       OperatorDesignator: "CALA",
-      OperatorType: selectedSdr.Type || "",
+      OperatorType: selectedSdr?.Type || "",
       FAAReceivingRegionCode: "GL",
       ReceivingDistrictOffice: "33",
       StructureCausingDifficulty: {
@@ -156,9 +160,16 @@ const ViewSdrData = ({
   return (
     <>
       <FlexColumn className={"view-sdr h-full relative"}>
-        <Box className={"subpage-title bottom-divider"} sx={{ pt: "1px" }}>
-          <p>Service Difficulty Report - #{selectedSdr.Id}</p>
-        </Box>
+        <FlexBetween className={"subpage-title bottom-divider"} sx={{ pt: "1px" }}>
+          <p>Service Difficulty Report - #{selectedSdr?.Id}</p>
+          <IconButton
+            onClick={() => {
+              setViewSdrFlag(false);
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </FlexBetween>
         <Grid container spacing={2} sx={{ marginTop: "10px", color: "#666666", fontWeight: 400 }}>
           <Grid item xs={4}>
             <ListItem>Operator Control Number</ListItem>
@@ -335,7 +346,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          detailsData?.SdrDetails?.LogPageNumber || selectedSdr.LogpageNumber
+                          detailsData?.SdrDetails?.LogPageNumber || selectedSdr?.LogpageNumber
                         )}
                       </ListItem>
                     </Grid>
@@ -447,7 +458,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          selectedSdr.Type
+                          selectedSdr?.Type
                         )}
                       </ListItem>
                     </Grid>
@@ -1995,19 +2006,19 @@ const ViewSdrData = ({
                   </Grid>
                 </Grid>
 
-                {tabIndex !== 2 && (
+                {tabIndex < 2 && (
                   <Box
                     my={2}
                     sx={{
                       borderBottom: 1,
-                      borderColor: tabIndex !== 2 ? "divider" : "transparent",
+                      borderColor: tabIndex < 2 ? "divider" : "transparent",
                       fontWeight: "600",
                     }}
                   />
                 )}
 
                 {/* Flag for follow up */}
-                {tabIndex !== 2 && (
+                {tabIndex < 2 && (
                   <FlexRow mb={2}>
                     <Checkbox
                       sx={{
@@ -2025,14 +2036,16 @@ const ViewSdrData = ({
                 )}
               </div>
 
-              <ButtonGroup
-                className="bottom-button justify-end"
-                primaryDisabled={isSubmitting}
-                primaryLabel={editable ? "Save" : tabIndex !== 2 ? "Approve" : ""}
-                primaryOnClick={editable ? handleSubmit : onClickApprove}
-                secondaryLabel={editable ? "Cancel" : tabIndex === 2 ? "Edit" : ""}
-                secondaryOnClick={onClickEdit}
-              />
+              {auth === UserPermission.CRU && (
+                <ButtonGroup
+                  className="bottom-button justify-end"
+                  primaryDisabled={isSubmitting}
+                  primaryLabel={editable ? "Save" : tabIndex < 2 ? "Approve" : ""}
+                  primaryOnClick={editable ? handleSubmit : onClickApprove}
+                  secondaryLabel={editable ? "Cancel" : tabIndex === 2 ? "Edit" : ""}
+                  secondaryOnClick={onClickEdit}
+                />
+              )}
             </form>
           )}
         </Formik>

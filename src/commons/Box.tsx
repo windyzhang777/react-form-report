@@ -11,6 +11,12 @@ export const FlexCenter = styled(Box)({
   alignItems: "center",
 });
 
+export const FlexBetween = styled(Box)({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+});
+
 export const FlexColumn = styled(Box)({
   display: "flex",
   flexDirection: "column",

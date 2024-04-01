@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import { FlexRow } from "./Box";
+import { FlexRow } from "src/commons/Box";
 
 export interface ICommonButtonGroupProps {
   className?: string;
@@ -17,29 +17,30 @@ const CommonButtonGroup = ({
   primaryOnClick,
   secondaryLabel,
   secondaryOnClick,
-}: ICommonButtonGroupProps) => (
-  <FlexRow className={`p-2 gap-2 ${className}`}>
-    {secondaryLabel && (
-      <Button
-        className={`${secondaryLabel.toLowerCase().split(" ").join("-")}-button`}
-        color="secondary"
-        disabled={primaryDisabled}
-        onClick={secondaryOnClick}
-        type="button"
-      >
-        {secondaryLabel}
-      </Button>
-    )}
-    {primaryLabel && (
-      <Button
-        className={`${primaryLabel.toLocaleLowerCase().split(" ").join("-")}-button`}
-        onClick={primaryOnClick}
-        type="submit"
-      >
-        {primaryLabel}
-      </Button>
-    )}
-  </FlexRow>
-);
+}: ICommonButtonGroupProps) =>
+  primaryLabel || secondaryLabel ? (
+    <FlexRow className={`p-2 gap-2 ${className}`}>
+      {secondaryLabel && (
+        <Button
+          className={`${secondaryLabel.toLowerCase().split(" ").join("-")}-button`}
+          color="secondary"
+          disabled={primaryDisabled}
+          onClick={secondaryOnClick}
+          type="button"
+        >
+          {secondaryLabel}
+        </Button>
+      )}
+      {primaryLabel && (
+        <Button
+          className={`${primaryLabel.toLocaleLowerCase().split(" ").join("-")}-button`}
+          onClick={primaryOnClick}
+          type="submit"
+        >
+          {primaryLabel}
+        </Button>
+      )}
+    </FlexRow>
+  ) : null;
 
 export default CommonButtonGroup;

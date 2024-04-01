@@ -12,8 +12,13 @@ export interface ICommonModalProps {
 const CommonModal = ({ children, name, onClose, open, sx, ...props }: ICommonModalProps) => {
   return (
     <Modal
+      disableEscapeKeyDown
       open={open}
-      onClose={onClose}
+      onClose={(e, reason) => {
+        if (reason !== "backdropClick" && reason !== "escapeKeyDown") {
+          onClose();
+        }
+      }}
       aria-labelledby={`${name}-modal-title`}
       aria-describedby={`${name}-modal-description`}
       {...props}

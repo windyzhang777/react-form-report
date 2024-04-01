@@ -1,23 +1,33 @@
-import { Box, Grid, Tab, Tabs } from "@mui/material";
+import { Box, Grid, Tab, Tabs, Typography } from "@mui/material";
 import { SyntheticEvent, useEffect, useMemo, useState } from "react";
+import ButtonGroup from "src/commons/ButtonGroup";
 import CommonLoader from "src/commons/CommonLoader";
+import Modal from "src/commons/Modal";
 import Snackbar from "src/commons/Snackbar";
 import TabPanel from "src/commons/TabPanel";
 import {
   ISaveSdrValues,
   SdrEsfrRecordDetailsStateType,
-  SdrStatus,
   TransformedSdrDataType,
 } from "src/commons/types";
 import CommonDataGrid from "src/components/commondatagrid/commondatagrid";
 import ViewSdrData from "src/components/viewsdr/ViewSdrData";
+import { isSame, saveTextAsFile } from "src/helpers";
 import { getAllSdrs } from "src/redux/ducks/getAllSdrs";
 import {
+  InsertSnapshotSdrFilename,
+  fetchFailure,
+  fetchSuccess,
+  updateExtractionStatus,
+} from "src/redux/ducks/getFlatFile";
+import {
   fetchLogpageDataSuccess,
+  getApprovedSdr,
   getSdrEsfrRecordDetails,
   getSfrMasterData,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
+import { StatusId } from "src/types/GetAllEsfrRecordsRes";
 import axiosInstance from "src/utils/axiosInstance";
 import config from "src/utils/env.config";
 import CreateSdrData from "../createsdr/CreateSdrData";
@@ -45,15 +55,14 @@ function a11yProps(index: number) {
 }
 
 const HomeScreen = () => {
-  const { sdrData: newSdrData, loading: loadingSdrData } = useAppSelector((state) => state.newSdrs);
+  const { profileData } = useAppSelector((state) => state.profile);
+  const { sdrData: newSdrData } = useAppSelector((state) => state.newSdrs);
   const { sdrData: approvedSdrData } = useAppSelector((state) => state.approvedSdrs);
   const { sdrData: flaggedSdrData } = useAppSelector((state) => state.flaggedSdrs);
-  const {
-    loading: loadingEsfrRecordDetail,
-    detailsData,
-    masterData,
-    error,
-  }: SdrEsfrRecordDetailsStateType = useAppSelector((state) => state.sdrEsfrRecordDetails);
+  const { loading, detailsData, masterData, error }: SdrEsfrRecordDetailsStateType = useAppSelector(
+    (state) => state.sdrEsfrRecordDetails
+  );
+  const { fileData } = useAppSelector((state) => state.flatFile);
   const dispatch = useAppDispatch();
   const [tabIndex, setTabIndex] = useState<number>(0);
   const [viewSdrFlag, setViewSdrFlag] = useState<boolean>(false);
@@ -64,6 +73,8 @@ const HomeScreen = () => {
   const [snackbarMessage, setSnackbarMessage] = useState<string>("");
   const [logpageNumberValue, setLogpageNumberValue] = useState<string>("");
   const [editable, setEditable] = useState<boolean>(false);
+  const [extractedIds, setExtractedIds] = useState<number[]>([]);
+  const [openConfirmSaved, setOpenConfirmSaved] = useState<boolean>(false);
   const isSdr = useMemo(() => selectedSdr?.Type === "SDR", [selectedSdr]);
   const sdrData = useMemo(() => {
     switch (tabIndex) {
@@ -78,9 +89,14 @@ const HomeScreen = () => {
   }, [approvedSdrData, flaggedSdrData, newSdrData, tabIndex]);
 
   const resetSdrs = () => {
-    dispatch(getAllSdrs(SdrStatus.New));
-    dispatch(getAllSdrs(SdrStatus.Flagged));
-    dispatch(getAllSdrs(SdrStatus.Approved));
+    // setTabIndex(0); // TODO: reset to tab 1
+    setViewSdrFlag(false);
+    setCreateSdrFlag("");
+    setOpenSnackbar(0);
+    setSelectedSdr(null);
+    dispatch(getAllSdrs(StatusId.New));
+    dispatch(getAllSdrs(StatusId.Flagged));
+    dispatch(getAllSdrs(StatusId.Approved));
     if (window) {
       window.scrollTo(0, 0);
     }
@@ -98,7 +114,7 @@ const HomeScreen = () => {
       .post(`${config.apiBaseAddress}${config.URL_ESFR_APPROVE}`, {
         id: selectedSdr?.Id,
         recordType: selectedSdr?.Type,
-        statusId: flag ? SdrStatus.Flagged : SdrStatus.Approved,
+        statusId: flag ? StatusId.Flagged : StatusId.Approved,
       })
       .then((res) => {
         setIsLoading(false);
@@ -177,6 +193,62 @@ const HomeScreen = () => {
       });
   };
 
+  const handleExtractSdrRecords = (ids: number[]) => {
+    setExtractedIds(ids);
+    if (!isSame(ids, extractedIds) || !fileData) {
+      setIsLoading(true);
+      axiosInstance
+        .post(`${config.apiBaseAddress}${config.URL_EXTRACT_SDR_RECORDS}`, ids)
+        .then((res) => {
+          setIsLoading(false);
+          if (res?.data?.Result?.IsSuccess) {
+            const fileData_ = res.data.Result;
+            if (fileData_ && profileData) {
+              dispatch(fetchSuccess(res.data.Result));
+              setOpenSnackbar(1);
+              setSnackbarMessage("Extract SDR Records successful");
+              saveTextAsFile(fileData_?.SdrRecords?.join("\n"), fileData_?.FileName);
+              dispatch(updateExtractionStatus(ids));
+              dispatch(
+                InsertSnapshotSdrFilename({
+                  NewFilename: fileData_?.FileName,
+                  CreatedBy: profileData?.EmployeeId,
+                  CreatedByLastName: profileData?.LastName,
+                  CreatedByFirstName: profileData?.FirstName,
+                })
+              );
+              setTimeout(() => {
+                setOpenConfirmSaved(true);
+              }, 500);
+            }
+          } else {
+            setOpenSnackbar(-1);
+            setSnackbarMessage("Fail to Extract SDR Records");
+          }
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          dispatch(fetchFailure(error));
+          setOpenSnackbar(-1);
+          setSnackbarMessage("Fail to Extract SDR Records");
+        });
+    } else {
+      if (fileData) {
+        saveTextAsFile(fileData.SdrRecords?.join("\n"), fileData.FileName);
+        setTimeout(() => {
+          setOpenConfirmSaved(true);
+        }, 5000);
+      }
+    }
+  };
+
+  const handleConfirmFileSaved = () => {
+    setOpenConfirmSaved(false);
+    setTimeout(() => {
+      resetSdrs();
+    }, 500);
+  };
+
   useEffect(() => {
     if (error) {
       setViewSdrFlag(true); // TODO: hide view sdr when fetch detail failed
@@ -189,8 +261,12 @@ const HomeScreen = () => {
 
   useEffect(() => {
     setEditable(false);
-    if (selectedSdr?.LogpageNumber) {
-      dispatch(getSdrEsfrRecordDetails(selectedSdr.LogpageNumber));
+    if (selectedSdr && selectedSdr.LogpageNumber !== detailsData?.LogPageNumber) {
+      if (selectedSdr.StatusId === StatusId.Approved) {
+        dispatch(getApprovedSdr(selectedSdr.OperatorControlNumber));
+      } else {
+        dispatch(getSdrEsfrRecordDetails(selectedSdr.LogpageNumber));
+      }
     }
   }, [selectedSdr]);
 
@@ -199,7 +275,13 @@ const HomeScreen = () => {
   }, [editable, selectedSdr, tabIndex]);
 
   useEffect(() => {
-    if (!newSdrData && !approvedSdrData && !flaggedSdrData && !loadingSdrData) {
+    if (!viewSdrFlag) {
+      setOpenSnackbar(0);
+    }
+  }, [viewSdrFlag]);
+
+  useEffect(() => {
+    if (!newSdrData && !approvedSdrData && !flaggedSdrData) {
       resetSdrs();
     }
     if (!masterData) {
@@ -209,15 +291,7 @@ const HomeScreen = () => {
 
   return (
     <>
-      {!!openSnackbar && (
-        <Snackbar
-          onClose={() => setOpenSnackbar(0)}
-          severity={openSnackbar > 0 ? "success" : "error"}
-        >
-          {snackbarMessage}
-        </Snackbar>
-      )}
-      {(isLoading || loadingSdrData || loadingEsfrRecordDetail) && <CommonLoader />}
+      {(isLoading || loading) && <CommonLoader />}
       <Grid container className="grow overflow-auto md:overflow-y-hidden">
         <Grid item md={6} sm={12} className="h-full w-full flex !flex-col">
           <Box sx={{ ...sxBox }}>
@@ -243,6 +317,7 @@ const HomeScreen = () => {
             {sdrData && (
               <CommonDataGrid
                 createSdrFlag={createSdrFlag}
+                handleExtractSdrRecords={handleExtractSdrRecords}
                 sdrData={sdrData}
                 selectedSdr={selectedSdr}
                 setCreateSdrFlag={setCreateSdrFlag}
@@ -272,6 +347,7 @@ const HomeScreen = () => {
               isSdr={isSdr}
               selectedSdr={selectedSdr}
               setEditable={setEditable}
+              setViewSdrFlag={setViewSdrFlag}
               tabIndex={tabIndex}
             />
           ) : (
@@ -288,6 +364,40 @@ const HomeScreen = () => {
           )}
         </Grid>
       </Grid>
+      {!!openSnackbar && (
+        <Snackbar
+          onClose={() => setOpenSnackbar(0)}
+          severity={openSnackbar > 0 ? "success" : "error"}
+        >
+          {snackbarMessage}
+        </Snackbar>
+      )}
+      {openConfirmSaved && (
+        <Modal
+          name="confirm save"
+          open={openConfirmSaved}
+          onClose={() => setOpenConfirmSaved(false)}
+        >
+          <Typography id="confirm-extract-modal-title" variant="h6" mb={2} fontWeight={600}>
+            Save Confirmation
+          </Typography>
+          <Typography id="confirm-extract-modal-description" variant="body1" mb={6}>
+            Please confirm that you have the extracted SDR reports saved to your local as the
+            extracted items will be removed and re-extraction is not availabled after the point
+          </Typography>
+          <ButtonGroup
+            className="justify-end"
+            primaryLabel="Confirm"
+            primaryOnClick={handleConfirmFileSaved}
+            secondaryLabel="Save Reports"
+            secondaryOnClick={() => {
+              if (fileData) {
+                saveTextAsFile(fileData.SdrRecords?.join("\n"), fileData.FileName);
+              }
+            }}
+          />
+        </Modal>
+      )}
     </>
   );
 };

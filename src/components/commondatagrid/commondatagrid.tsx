@@ -12,29 +12,34 @@ import { FlexRow } from "src/commons/Box";
 import ButtonGroup from "src/commons/ButtonGroup";
 import DataGrid from "src/commons/DataGrid";
 import Menu from "src/commons/Menu";
-import CommonModal from "src/commons/Modal";
+import Modal from "src/commons/Modal";
 import {
   SdrEsfrRecordDetailsStateType,
   SelectedTab,
   TransformedSdrDataType,
+  UserPermission,
 } from "src/commons/types";
 import { useAppSelector } from "src/redux/hooks";
 import config from "src/utils/env.config";
 import "./commondatagrid.css";
 
 export interface CommonDataGridProps {
-  createSdrFlag: string;
+  autoPageSize?: boolean;
+  createSdrFlag?: string;
+  handleExtractSdrRecords?: (a: number[]) => void;
   sdrData: TransformedSdrDataType[];
   selectedSdr: TransformedSdrDataType | null;
-  setCreateSdrFlag: Dispatch<SetStateAction<string>>;
+  setCreateSdrFlag?: Dispatch<SetStateAction<string>>;
   setSelectedSdr: Dispatch<SetStateAction<TransformedSdrDataType | null>>;
   setViewSdrFlag: Dispatch<SetStateAction<boolean>>;
-  tabIndex: number;
+  tabIndex?: number;
   viewSdrFlag: boolean;
 }
 
 const CommonDataGrid = ({
+  autoPageSize = true,
   createSdrFlag,
+  handleExtractSdrRecords,
   sdrData,
   selectedSdr,
   setCreateSdrFlag,
@@ -43,17 +48,19 @@ const CommonDataGrid = ({
   tabIndex,
   viewSdrFlag,
 }: CommonDataGridProps) => {
-  const [showCheckbox, setShowCheckbox] = useState<boolean>(false);
-  const [selectedSdrsToExtract, setSelectedSdrsToExtract] = useState<GridRowSelectionModel>([]);
-  const [isExtractDisabled, setIsExtractDisabled] = useState<boolean>(true);
+  const { auth } = useAppSelector((state) => state.profile);
+  const { loading } = useAppSelector((state) => state.approvedSdrs);
   const { masterData }: SdrEsfrRecordDetailsStateType = useAppSelector(
     (state) => state.sdrEsfrRecordDetails
   );
+  const [showCheckbox, setShowCheckbox] = useState<boolean>(false);
+  const [selectedSdrsToExtract, setSelectedSdrsToExtract] = useState<GridRowSelectionModel>([]);
+  const [isExtractDisabled, setIsExtractDisabled] = useState<boolean>(true);
   const [confirmExtract, setConfirmExtract] = useState<boolean>(false);
 
   const handleCreateSDR = (type: string) => {
     // if (!viewSdrFlag) { // TODO: not allow creating sdr while editing sdr
-    setCreateSdrFlag(type);
+    setCreateSdrFlag && setCreateSdrFlag(type);
     // }
   };
 
@@ -137,27 +144,26 @@ const CommonDataGrid = ({
 
   const handleConfirmExtract = () => {
     setConfirmExtract(false);
-    console.log("selectedSdrsToExtract :", selectedSdrsToExtract);
-    // TODO: [TASK 1227082] eSFR Flat file creation for sending to external system
-    // const found = approvedSdrs.sdrData.find(s=>s.Id===selectedSdrsToExtract[0])
-    // Type
-    // moment(CreatedDate).format("yyyymmdd")
+    handleExtractSdrRecords && handleExtractSdrRecords(selectedSdrsToExtract as number[]);
   };
 
   return (
     <>
       <DataGrid
-        autoPageSize
+        autoPageSize={autoPageSize}
+        loading={loading}
         disableColumnMenu
         columns={columnDefs as GridColDef<GridValidRowModel>[]}
         rows={sdrData}
         getRowId={(row) => row.Id}
         checkboxSelection={showCheckbox}
         // hideFooter={true}
+        rowSelectionModel={selectedSdrsToExtract}
         onRowSelectionModelChange={(sdrIds) => {
           setSelectedSdrsToExtract([...sdrIds]);
           if (sdrIds && sdrIds.length > 0) setIsExtractDisabled(false);
           else setIsExtractDisabled(true);
+          if (loading) setSelectedSdrsToExtract([]);
         }}
         getRowClassName={(params) => {
           let rowStyles = "";
@@ -167,16 +173,19 @@ const CommonDataGrid = ({
         }}
         disableRowSelectionOnClick
         onCellClick={(data: GridCellParams) => {
-          setViewSdrFlag(false);
+          // setViewSdrFlag(false);
           if (data.field !== "__check__") {
             if (!createSdrFlag) {
               // TODO: not allow viewing a new sdr while creating a new sdr
               setSelectedSdr(data?.row);
+              if (selectedSdr?.Id === data?.row?.Id) {
+                setViewSdrFlag(true);
+              }
             }
           }
         }}
       />
-      {tabIndex === SelectedTab.Approved && (
+      {tabIndex === SelectedTab.Approved && auth === UserPermission.CRU && (
         <FlexRow mx={2} my={4} sx={{ justifyContent: "flex-end", gap: "10px" }}>
           <Button
             className="extract-button"
@@ -223,7 +232,7 @@ const CommonDataGrid = ({
         </FlexRow>
       )}
       {confirmExtract && (
-        <CommonModal
+        <Modal
           name="confirm-extract"
           onClose={() => setConfirmExtract(false)}
           open={confirmExtract}
@@ -241,7 +250,7 @@ const CommonDataGrid = ({
             primaryOnClick={handleConfirmExtract}
             secondaryOnClick={() => setConfirmExtract(false)}
           />
-        </CommonModal>
+        </Modal>
       )}
     </>
   );

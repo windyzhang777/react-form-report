@@ -4,7 +4,6 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { FlexColumn } from "src/commons/Box";
 import ButtonGroup from "src/commons/ButtonGroup";
-import RouterLink from "src/commons/Link";
 import Menu from "src/commons/Menu";
 import RefreshIcon from "src/icons/Refresh.png";
 import ProfileIcon from "src/icons/Traveler.png";
@@ -46,21 +45,21 @@ const Header = ({ resetApp }: IHeaderProps) => {
   return (
     <AppBar position={"static"} sx={{ maxHeight: "10vh" }}>
       <Toolbar className="header-toolbar">
-          <IconButton
-            edge={"start"}
-            color={"default"}
-            aria-label={"open drawer"}
-            onClick={() => setOpenDrawer(true)}
-            sx={{
-              marginLeft: "15px",
-              marginRight: "15px",
-              paddingTop: "15px",
-              paddingBottom: "17px",
-              bgcolor: openDrawer ? "#334E69" : "",
-            }}
-          >
-            <MenuIcon sx={{ color: "#FFFFFF", width: "30px", height: "30px" }} />
-          </IconButton>
+        <IconButton
+          edge={"start"}
+          color={"default"}
+          aria-label={"open drawer"}
+          onClick={() => setOpenDrawer(true)}
+          sx={{
+            marginLeft: "15px",
+            marginRight: "15px",
+            paddingTop: "15px",
+            paddingBottom: "17px",
+            bgcolor: openDrawer ? "#334E69" : "",
+          }}
+        >
+          <MenuIcon sx={{ color: "#FFFFFF", width: "30px", height: "30px" }} />
+        </IconButton>
         <Drawer
           anchor="left"
           variant="temporary"
@@ -69,13 +68,9 @@ const Header = ({ resetApp }: IHeaderProps) => {
         >
           <Box>
             <List>
-              <MenuItem>
-                <RouterLink to="/esfr/search" onClick={() => setOpenDrawer(false)}>
-                  SDR Search Function
-                </RouterLink>
-              </MenuItem>
-              <MenuItem>CPCP Report</MenuItem>
-              <MenuItem>Parts Reporting</MenuItem>
+              <MenuItem>Report Search</MenuItem>
+              <MenuItem>CPCP Report Search</MenuItem>
+              <MenuItem>Discrepancy Parts Report</MenuItem>
             </List>
           </Box>
         </Drawer>
@@ -109,9 +104,9 @@ const Header = ({ resetApp }: IHeaderProps) => {
               sessionStorage.lname
             } | ${sessionStorage.id?.toLowerCase()}`}</div>
             <div>{`Role: ${sessionStorage.jobRole}`}</div>
-            <div>{`Station: ${sessionStorage.station}`}</div>
           </FlexColumn>
           <ButtonGroup
+            className="pt-0"
             primaryLabel="Logout"
             secondaryLabel="Site Feedback"
             primaryOnClick={onLogoutClick}

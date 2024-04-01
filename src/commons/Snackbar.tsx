@@ -21,7 +21,7 @@ const CommonSnackbar = ({ children, onClose, severity }: ICommonSnackbarProps) =
   return (
     <Snackbar
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      autoHideDuration={6000}
+      autoHideDuration={2000}
       onClose={handleClose}
       open={open}
     >

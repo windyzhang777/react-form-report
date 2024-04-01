@@ -13,10 +13,11 @@ export interface GetAllEsfrRecordsResResult {
   CreatedDate: string;
   Id: number;
   IsOlderThan72Hours: boolean;
+  OperatorControlNumber: string;
   LogpageNumber: string;
   LogpageStatus: LogpageStatus | null;
   Status: Status;
-  StatusId: number;
+  StatusId: StatusId;
   Type: Type;
 }
 
@@ -29,6 +30,12 @@ export enum Status {
   "Approved" = "Approved",
   "ApprovedWithFollowUp" = "Approved with Follow Up",
   "Open" = "Open",
+}
+
+export enum StatusId {
+  New = 2,
+  Approved = 3,
+  Flagged = 4,
 }
 
 export enum Type {

@@ -45,7 +45,7 @@ const CreateSdrData = ({
       LogPageCreationDate:
         moment(logpageData?.FleetInfo?.Date).toISOString() || moment().toISOString(),
       Station: logpageData?.FleetInfo?.Station || "",
-      AircraftNumber: logpageData?.FleetInfo.TailNumber || "",
+      AircraftNumber: logpageData?.FleetInfo?.TailNumber || "",
       LogPageNumber: logpageNumberValue || "",
       PrecautionaryProcedureIds: [],
       NatureOfReportIds: [],

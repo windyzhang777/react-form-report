@@ -1,14 +1,16 @@
 import { CreateSDRReq, PartDetails } from "src/types/CreateSdrReq";
+import { ExtractSDRRecordsResResult } from "src/types/ExtractSdrRecordsRes";
 import { GetAllEsfrRecordsResResult } from "src/types/GetAllEsfrRecordsRes";
-import { Employee } from "src/types/GetProfilerRes";
+import { Employee, GetProfileResResult } from "src/types/GetProfilerRes";
 import { GetSDREsfrRecordDetailsResResult } from "src/types/GetSdrEsfrRecordDetailsRes";
 import { GetSfrMasterDataResResult, OptionDocument } from "src/types/GetSfrMasterDataRes";
 import { ViewLogpageResResult } from "src/types/ViewLogpageRes";
+import config from "src/utils/env.config";
 
-export enum SdrStatus {
-  New = 2,
-  Approved = 3,
-  Flagged = 4,
+export enum UserPermission {
+  Invalid = 0,
+  R = 1,
+  CRU = 2,
 }
 
 export enum SelectedTab {
@@ -105,62 +107,52 @@ export interface MajorEquipmentIdentity {
   TotalCycles: number;
 }
 
-export type StatusId = 2 | 3 | 4;
+export enum ProfileActionType {
+  FETCH_PROFILE = "FETCH_PROFILE",
+  FETCH_PROFILE_SUCCESS = "FETCH_PROFILE_SUCCESS",
+  FETCH_PROFILE_FAILURE = "FETCH_PROFILE_FAILURE",
+}
 
-export type FETCH_PROFILE = "FETCH_PROFILE";
-export type FETCH_SUCCESS = "FETCH_SUCCESS";
-export type FETCH_FAILURE = "FETCH_FAILURE";
-export type ProfileActionType = FETCH_PROFILE | FETCH_SUCCESS | FETCH_FAILURE;
+export enum SdrActionType {
+  FETCH_NEW_SDRS = "FETCH_NEW_SDRS",
+  FETCH_APPROVED_SDRS = "FETCH_APPROVED_SDRS",
+  FETCH_FLAGGED_SDRS = "FETCH_FLAGGED_SDRS",
+  FETCH_NEW_SUCCESS = "FETCH_NEW_SUCCESS",
+  FETCH_APPROVED_SUCCESS = "FETCH_APPROVED_SUCCESS",
+  FETCH_FLAGGED_SUCCESS = "FETCH_FLAGGED_SUCCESS",
+  FETCH_NEW_FAILURE = "FETCH_NEW_FAILURE",
+  FETCH_APPROVED_FAILURE = "FETCH_APPROVED_FAILURE",
+  FETCH_FLAGGED_FAILURE = "FETCH_FLAGGED_FAILURE",
+}
 
-export type FETCH_NEW_SDRS = "FETCH_NEW_SDRS";
-export type FETCH_APPROVED_SDRS = "FETCH_APPROVED_SDRS";
-export type FETCH_FLAGGED_SDRS = "FETCH_FLAGGED_SDRS";
-export type FETCH_NEW_SUCCESS = "FETCH_NEW_SUCCESS";
-export type FETCH_APPROVED_SUCCESS = "FETCH_APPROVED_SUCCESS";
-export type FETCH_FLAGGED_SUCCESS = "FETCH_FLAGGED_SUCCESS";
-export type FETCH_NEW_FAILURE = "FETCH_NEW_FAILURE";
-export type FETCH_APPROVED_FAILURE = "FETCH_APPROVED_FAILURE";
-export type FETCH_FLAGGED_FAILURE = "FETCH_FLAGGED_FAILURE";
-export type SdrActionType =
-  | FETCH_NEW_SDRS
-  | FETCH_APPROVED_SDRS
-  | FETCH_FLAGGED_SDRS
-  | FETCH_NEW_SUCCESS
-  | FETCH_APPROVED_SUCCESS
-  | FETCH_FLAGGED_SUCCESS
-  | FETCH_NEW_FAILURE
-  | FETCH_APPROVED_FAILURE
-  | FETCH_FLAGGED_FAILURE;
+export enum SdrEsfrRecordDetailsActionType {
+  FETCH_DETAILS = "FETCH_DETAILS",
+  FETCH_ESFR_DETAIL_SUCCESS = "FETCH_ESFR_DETAIL_SUCCESS",
+  FETCH_ESFR_DETAIL_FAILURE = "FETCH_ESFR_DETAIL_FAILURE",
+  FETCH_SFR_MATER_DATA_SUCCESS = "FETCH_SFR_MATER_DATA_SUCCESS",
+  FETCH_SFR_MATER_DATA_FAILURE = "FETCH_SFR_MATER_DATA_FAILURE",
+  FETCH_LOGPAGE_DATA_SUCCESS = "FETCH_LOGPAGE_DATA_SUCCESS",
+  FETCH_LOGPAGE_DATA_FAILURE = "FETCH_LOGPAGE_DATA_FAILURE",
+}
 
-export type FETCH_INIT = "FETCH_INIT";
-export type FETCH_ESFR_DETAIL_SUCCESS = "FETCH_ESFR_DETAIL_SUCCESS";
-export type FETCH_ESFR_DETAIL_FAILURE = "FETCH_ESFR_DETAIL_FAILURE";
-export type FETCH_SFR_MATER_DATA_SUCCESS = "FETCH_SFR_MATER_DATA_SUCCESS";
-export type FETCH_SFR_MATER_DATA_FAILURE = "FETCH_SFR_MATER_DATA_FAILURE";
-export type FETCH_LOGPAGE_DATA_SUCCESS = "FETCH_LOGPAGE_DATA_SUCCESS";
-export type FETCH_LOGPAGE_DATA_FAILURE = "FETCH_LOGPAGE_DATA_FAILURE";
-export type SdrEsfrRecordDetailsActionType =
-  | FETCH_INIT
-  | FETCH_ESFR_DETAIL_SUCCESS
-  | FETCH_ESFR_DETAIL_FAILURE
-  | FETCH_SFR_MATER_DATA_SUCCESS
-  | FETCH_SFR_MATER_DATA_FAILURE
-  | FETCH_LOGPAGE_DATA_SUCCESS
-  | FETCH_LOGPAGE_DATA_FAILURE;
-
-export type FETCH_FLAT_FILE_SUCCESS = "FETCH_FLAT_FILE_SUCCESS";
-export type FETCH_FLAT_FILE_FAILURE = "FETCH_FLAT_FILE_FAILURE";
-export type FlatFileActionType = FETCH_INIT | FETCH_FLAT_FILE_SUCCESS | FETCH_FLAT_FILE_FAILURE;
-
+export enum FlatFileActionType {
+  FETCH_FLAT_FILE = "FETCH_FLAT_FILE",
+  FETCH_FLAT_FILE_SUCCESS = "FETCH_FLAT_FILE_SUCCESS",
+  FETCH_FLAT_FILE_FAILURE = "FETCH_FLAT_FILE_FAILURE",
+  UPDATE_SNAPSHOT_SDR_EXTRACTION_STATUS_SUCCESS = "UPDATE_SNAPSHOT_SDR_EXTRACTION_STATUS_SUCCESS",
+  UPDATE_SNAPSHOT_SDR_EXTRACTION_STATUS_FAILURE = "UPDATE_SNAPSHOT_SDR_EXTRACTION_STATUS_FAILURE",
+  INSERT_SNAPSHOT_SDR_FILENAME_SUCCESS = "INSERT_SNAPSHOT_SDR_FILENAME_SUCCESS",
+  INSERT_SNAPSHOT_SDR_FILENAME_FAILURE = "INSERT_SNAPSHOT_SDR_FILENAME_FAILURE",
+}
 export interface ProfileDispatchFuncType {
   type: ProfileActionType;
-  data?: Employee;
+  data?: GetProfileResResult;
   message?: string;
 }
 
 export interface ProfileReducerAction {
   type: ProfileActionType;
-  data: Employee;
+  data: GetProfileResResult;
   message: string;
 }
 
@@ -198,13 +190,13 @@ export type TransformedSdrDataType = GetAllEsfrRecordsResResult & { SdrStatus: s
 
 export interface FlatFileDispatchFuncType {
   type: FlatFileActionType;
-  data?: string;
+  data?: ExtractSDRRecordsResResult;
   message?: string;
 }
 
 export interface FlatFileReducerAction {
   type: FlatFileActionType;
-  data: string;
+  data: ExtractSDRRecordsResResult;
   message: string;
 }
 
@@ -217,6 +209,7 @@ export type ReducerAction =
 export type ProfileStateType = {
   loading: boolean;
   profileData: Employee | null;
+  auth: UserPermission;
   error: string;
 };
 
@@ -236,13 +229,13 @@ export type SdrEsfrRecordDetailsStateType = {
 
 export type FlatFileStateType = {
   loading: boolean;
-  fileData: string | null;
+  fileData: ExtractSDRRecordsResResult | null;
   error: string;
 };
 
 export interface EnvironmentConfig {
-  URL_ESFR_APPROVE: string;
-  apiBaseAddress: string;
+  apiBaseAddress?: string;
+  webTechApiBaseUrl?: string;
   REACT_APP_ENVIRONMENT: string;
   PUBLIC_URL: string;
   REACT_APP_APPLICATION_NAME: string;
@@ -250,16 +243,22 @@ export interface EnvironmentConfig {
   URL_GET_PROFILE: string;
   URL_GET_ALL_SDRS: string;
   URL_GET_SDR_ESFR_RECORD_DETAILS: string;
-  webTechApiBaseUrl: string;
+  URL_GET_APPROVED_SDR: string;
+  URL_ESFR_APPROVE: string;
   URL_LOGPAGE_SEARCH: string;
   URL_GET_SFR_MASTER_DATA: string;
   URL_ADD_SDR: string;
   URL_CREATE_SDR: string;
   URL_VIEW_LOGPAGE: string;
+  URL_EXTRACT_SDR_RECORDS: string;
+  URL_UPDATE_SNAPSHOT_SDR_EXTRACTION_STATUS: string;
+  URL_INSERT_SNAPSHOT_SDR_FILENAME: string;
 }
 
+export type EnvTypes = "localhost" | "development" | "qa" | "stage" | "production";
+
 export type AppConfig = {
-  [key in keyof typeof process.env.REACT_APP_ENVIRONMENT]: EnvironmentConfig;
+  [key in keyof typeof config.REACT_APP_ENVIRONMENT]: EnvironmentConfig;
 };
 
 export const InspectionType = new Map<number, string>([

@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import flatFileReducer from "src/redux/ducks//getFlatFile";
 import {
   approvedSdrsReducer,
   flaggedSdrsReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   flaggedSdrs: flaggedSdrsReducer,
   approvedSdrs: approvedSdrsReducer,
   sdrEsfrRecordDetails: sdrEsfrRecordDetailsReducer,
+  flatFile: flatFileReducer,
 });
 
 export default rootReducer;

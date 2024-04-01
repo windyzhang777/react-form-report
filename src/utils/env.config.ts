@@ -1,7 +1,7 @@
-import { AppConfig, EnvironmentConfig } from "src/commons/types";
+import { EnvTypes, EnvironmentConfig } from "src/commons/types";
 import defaultConfig from "src/utils/default.config";
 
-let env = "qa";
+let env: EnvTypes = "qa";
 switch (window.location.hostname) {
   case "localhost":
     env = "localhost";
@@ -19,7 +19,7 @@ switch (window.location.hostname) {
     env = "production";
     break;
   default:
-    env = "dev";
+    env = "development";
     break;
 }
 
@@ -80,6 +80,6 @@ const config: EnvironmentConfig = {
     REACT_APP_APPLICATION_NAME: "MobileTech",
     REACT_APP_APPLICATION_KEY: "1807c0b6-17a3-4730-8b5c-61a0fee8f754",
   },
-}[env as keyof AppConfig];
+}[env];
 
 export default config;

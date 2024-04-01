@@ -16,6 +16,7 @@ export interface GetProfileResResult {
   Employee: Employee;
   EmployeeMenuActions: number[];
   ErrorMessage: null;
+  EsfrUserPolicies: EsfrUserPolicy[];
   IsASCMFeatureEnabled: boolean;
   IsBaseFlow: boolean;
   IsEtaWebEnabled: boolean;
@@ -70,6 +71,12 @@ export interface Employee {
   Station: string;
   UpgradeReason: string;
   UpgradeType: string;
+}
+
+export interface EsfrUserPolicy {
+  AppName: string;
+  EmployeeId: string;
+  PolicyName: string;
 }
 
 export interface Banner {
