@@ -5,14 +5,14 @@ export const ValidationSchema = {
     val ? val.toString().trim().length === 7 : true
   ),
   Station: string().matches(/^[a-zA-Z]{3}$/, "Not a valid Station"),
-  AircraftNumber: number().test("len", "Not a valid Aircraft Number", (val) =>
+  AircraftNumber: string().test("len", "Not a valid Aircraft Number", (val) =>
     val ? val.toString().trim().length === 4 : true
   ),
   PrecautionaryProcedureIds: array().min(1, "Required field").max(4),
   NatureOfReportIds: array().min(1, "Required field").max(3),
   StageId: number().min(1, "Required field"),
   HowDiscoveredId: number().min(1, "Required field"),
-  SubmitterDesignator: string().length(10, "Up to 10 characters"),
+  SubmitterDesignator: string().max(10, "Up to 10 characters"),
   ComponentDetails: object().shape({
     ComponentName: string().ensure(),
     ComponentManufactureName: string().when("ComponentName", {
@@ -100,6 +100,12 @@ export const ValidationSchema = {
     PartDescription: string().test("len", "Not a valid value", (val) =>
       val ? val.toString().trim().length >= 0 : true
     ),
+  }),
+  OperatorControlNumber: string().max(17, "Up to 17 characters"),
+  ReportedBy: string().max(30, "Up to 30 characters"),
+  Keyword: string().max(30, "Up to 30 characters"),
+  SfrAdditionalDetails: object().shape({
+    NumberOfCracks: number().min(0).max(255),
   }),
 };
 

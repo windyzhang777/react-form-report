@@ -24,7 +24,6 @@ const CommonButtonGroup = ({
         <Button
           className={`${secondaryLabel.toLowerCase().split(" ").join("-")}-button`}
           color="secondary"
-          disabled={primaryDisabled}
           onClick={secondaryOnClick}
           type="button"
         >
@@ -34,6 +33,7 @@ const CommonButtonGroup = ({
       {primaryLabel && (
         <Button
           className={`${primaryLabel.toLocaleLowerCase().split(" ").join("-")}-button`}
+          disabled={primaryDisabled}
           onClick={primaryOnClick}
           type="submit"
         >

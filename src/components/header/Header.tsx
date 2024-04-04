@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { FlexColumn } from "src/commons/Box";
 import ButtonGroup from "src/commons/ButtonGroup";
 import Menu from "src/commons/Menu";
+import { DATETIME_REFRESH } from "src/helpers";
 import RefreshIcon from "src/icons/Refresh.png";
 import ProfileIcon from "src/icons/Traveler.png";
 import UnitedLogo from "src/icons/logo-united.svg";
@@ -17,10 +18,10 @@ export interface IHeaderProps {
 
 const Header = ({ resetApp }: IHeaderProps) => {
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
-  const [lastRefreshed, setLastRefreshed] = useState<string>(moment().format("MM/DD/YYYY hh:mm"));
+  const [lastRefreshed, setLastRefreshed] = useState<string>(moment().format(DATETIME_REFRESH));
 
   useEffect(() => {
-    setLastRefreshed(moment().format("MM/DD/YYYY hh:mm"));
+    setLastRefreshed(moment().format(DATETIME_REFRESH));
   }, [window.location]);
 
   const redirectToAdmin = () => {
@@ -33,11 +34,11 @@ const Header = ({ resetApp }: IHeaderProps) => {
 
   const refreshData = () => {
     resetApp();
-    setLastRefreshed(moment().format("MM/DD/YYYY hh:mm"));
+    setLastRefreshed(moment().format(DATETIME_REFRESH));
   };
 
   const onLogoutClick = () => {
-    const logoutURL = process.env.REACT_APP_LOGOUT_URL;
+    const logoutURL = config.REACT_APP_LOGOUT_URL;
     window.open(logoutURL, "_self");
     sessionStorage.clear();
   };
@@ -86,7 +87,7 @@ const Header = ({ resetApp }: IHeaderProps) => {
         </IconButton>
         {lastRefreshed !== null && (
           <div className="last-refreshed !hidden sm:!block">
-            Last Refreshed <div>{moment(lastRefreshed).format("MM/DD/YYYY@hh:mm")}</div>
+            Last Refreshed <div>{moment(lastRefreshed).format(DATETIME_REFRESH)}</div>
           </div>
         )}
         <Menu

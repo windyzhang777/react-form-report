@@ -24,14 +24,19 @@ export interface GetAllEsfrRecordsResResult {
 }
 
 export enum LogpageStatus {
+  "Carry" = "CARRY",
   "Cleared" = "Cleared",
-  "OpenO" = "OPEN-O",
+  "OPEND" = "OPEN-D",
+  "OPENO" = "OPEN-O",
+  "Voided" = "Voided",
 }
 
 export enum Status {
-  "Approved" = "Approved",
-  "ApprovedWithFollowUp" = "Approved with Follow Up",
+  "All" = "All",
   "Open" = "Open",
+  "ApprovedWithFollowUp" = "Approved with Follow Up",
+  "Approved" = "Approved",
+  "SentToFAA" = "Sent to FAA",
 }
 
 export enum Type {

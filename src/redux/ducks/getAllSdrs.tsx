@@ -21,7 +21,7 @@ const initFetch = (statusId: SelectedStatus) => {
   switch (statusId) {
     case SelectedStatus.Approved:
       return { type: SdrActionType.FETCH_APPROVED_SDRS };
-    case SelectedStatus.ApprovedwithFollowup:
+    case SelectedStatus.ApprovedWithFollowUp:
       return { type: SdrActionType.FETCH_FLAGGED_SDRS };
     case SelectedStatus.Open:
     default:
@@ -33,7 +33,7 @@ const fetchSuccess = (data: GetAllEsfrRecordsResResult[], statusId: SelectedStat
   switch (statusId) {
     case SelectedStatus.Approved:
       return { type: SdrActionType.FETCH_APPROVED_SUCCESS, data: transformSdrData(data, statusId) };
-    case SelectedStatus.ApprovedwithFollowup:
+    case SelectedStatus.ApprovedWithFollowUp:
       return { type: SdrActionType.FETCH_FLAGGED_SUCCESS, data: transformSdrData(data, statusId) };
     case SelectedStatus.Open:
     default:
@@ -45,7 +45,7 @@ const fetchFailure = (message: string, statusId: SelectedStatus) => {
   switch (statusId) {
     case SelectedStatus.Approved:
       return { type: SdrActionType.FETCH_APPROVED_FAILURE, message };
-    case SelectedStatus.ApprovedwithFollowup:
+    case SelectedStatus.ApprovedWithFollowUp:
       return { type: SdrActionType.FETCH_FLAGGED_FAILURE, message };
     case SelectedStatus.Open:
     default:

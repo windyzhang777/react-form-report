@@ -1,7 +1,6 @@
-import { CreateSDRReq } from "src/types/CreateSdrReq";
 import { ExtractSDRRecordsResResult } from "src/types/ExtractSdrRecordsRes";
-import { GetAllEsfrRecordsResResult } from "src/types/GetAllEsfrRecordsRes";
-import { GetApprovedSDRResResult } from "src/types/GetApprovedSdrRes";
+import { GetAllEsfrRecordsResResult, Status } from "src/types/GetAllEsfrRecordsRes";
+import { AircraftDetails, GetApprovedSDRResResult } from "src/types/GetApprovedSdrRes";
 import { Employee, GetProfileResResult } from "src/types/GetProfilerRes";
 import { GetSDREsfrRecordDetailsResResult } from "src/types/GetSdrEsfrRecordDetailsRes";
 import { GetSfrMasterDataResResult, OptionDocument } from "src/types/GetSfrMasterDataRes";
@@ -24,17 +23,14 @@ export enum SelectedTab {
 export enum SelectedStatus {
   Draft = 1,
   Open = 2,
-  ApprovedwithFollowup = 3,
+  ApprovedWithFollowUp = 3,
   Approved = 4,
 }
 
-export interface ISaveSdrValues extends CreateSDRReq {
-  Aircraft: MajorEquipmentIdentity;
-  Powerplant: MajorEquipmentIdentity;
-  NNumber: string;
+export interface ISaveSdrValues extends Omit<UpsertSDRSnapshotReq, "SfrAdditionalDetails"> {
+  Powerplant: Omit<AircraftDetails, "RegistryNNumber">;
   AtaCode: string;
   FlightNumber: string;
-  CorrectiveAction: string;
 }
 
 export interface IEditSdrValues extends Omit<UpsertSDRSnapshotReq, "PartDetails"> {
@@ -94,14 +90,6 @@ export interface ILocationDetails {
   CoordinateLocationDetails: string;
 }
 
-export interface MajorEquipmentIdentity {
-  Manufacturer: string;
-  Model: string;
-  SerialNumber: string;
-  TotalTime: number;
-  TotalCycles: number;
-}
-
 export enum ProfileActionType {
   FETCH_PROFILE = "FETCH_PROFILE",
   FETCH_PROFILE_SUCCESS = "FETCH_PROFILE_SUCCESS",
@@ -141,6 +129,7 @@ export enum FlatFileActionType {
   INSERT_SNAPSHOT_SDR_FILENAME_SUCCESS = "INSERT_SNAPSHOT_SDR_FILENAME_SUCCESS",
   INSERT_SNAPSHOT_SDR_FILENAME_FAILURE = "INSERT_SNAPSHOT_SDR_FILENAME_FAILURE",
 }
+
 export interface ProfileDispatchFuncType {
   type: ProfileActionType;
   data?: GetProfileResResult;
@@ -183,16 +172,6 @@ export interface SfrMasterDataFuncType {
   message?: string;
 }
 
-export interface SdrEsfrRecordDetailsReducerAcition {
-  type: SdrEsfrRecordDetailsActionType;
-  data:
-    | GetSDREsfrRecordDetailsResResult
-    | GetApprovedSDRResResult
-    | GetSfrMasterDataResResult
-    | ViewLogpageResResult;
-  message: string;
-}
-
 export type TransformedSdrDataType = GetAllEsfrRecordsResResult & { SdrStatus: string };
 
 export interface FlatFileDispatchFuncType {
@@ -210,8 +189,18 @@ export interface FlatFileReducerAction {
 export type ReducerAction =
   | ProfileReducerAction
   | SdrReducerAction
-  | SdrEsfrRecordDetailsReducerAcition
+  | SdrEsfrRecordDetailsReducerAction
   | FlatFileReducerAction;
+
+export interface SdrEsfrRecordDetailsReducerAction {
+  type: SdrEsfrRecordDetailsActionType;
+  data:
+    | GetSDREsfrRecordDetailsResResult
+    | GetApprovedSDRResResult
+    | GetSfrMasterDataResResult
+    | ViewLogpageResResult;
+  message: string;
+}
 
 export type ProfileStateType = {
   loading: boolean;
@@ -248,6 +237,11 @@ export interface EnvironmentConfig {
   PUBLIC_URL: string;
   REACT_APP_APPLICATION_NAME: string;
   REACT_APP_APPLICATION_KEY: string;
+  REACT_APP_URL_AMT_BASE: string;
+  REACT_APP_AWS_URL: string;
+  REACT_APP_AWS_CLIENT_ID: string;
+  REACT_APP_REDIRECT_URI: string;
+  REACT_APP_LOGOUT_URL: string;
   URL_GET_PROFILE: string;
   URL_GET_ALL_SDRS: string;
   URL_GET_SDR_ESFR_RECORD_DETAILS: string;
@@ -262,6 +256,7 @@ export interface EnvironmentConfig {
   URL_UPDATE_SNAPSHOT_SDR_EXTRACTION_STATUS: string;
   URL_INSERT_SNAPSHOT_SDR_FILENAME: string;
   URL_UPSERT_SDR_SNAPSHOT: string;
+  URL_GET_ESFR_REPORT: string;
 }
 
 export type EnvTypes = "localhost" | "development" | "qa" | "stage" | "production";
@@ -286,6 +281,47 @@ export const Sides: OptionDocument[] = [
   },
   {
     Description: "Right",
+    DisplayOrder: 2,
+    Id: 2,
+  },
+];
+
+export const ReportStatus: OptionDocument[] = [
+  {
+    Description: Status.All,
+    DisplayOrder: 1,
+    Id: 0,
+  },
+  {
+    Description: Status.Open,
+    DisplayOrder: 2,
+    Id: 1,
+  },
+  {
+    Description: Status.ApprovedWithFollowUp,
+    DisplayOrder: 3,
+    Id: 2,
+  },
+  {
+    Description: Status.Approved,
+    DisplayOrder: 4,
+    Id: 3,
+  },
+  {
+    Description: Status.SentToFAA,
+    DisplayOrder: 5,
+    Id: 4,
+  },
+];
+
+export const ReportType: OptionDocument[] = [
+  {
+    Description: "SDR",
+    DisplayOrder: 1,
+    Id: 1,
+  },
+  {
+    Description: "SFR",
     DisplayOrder: 2,
     Id: 2,
   },

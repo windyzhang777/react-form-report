@@ -8,9 +8,16 @@ import ListItem from "src/commons/ListItem";
 import { MultipleSelect, SingleSelect } from "src/commons/Select";
 import TextField from "src/commons/TextField";
 import { ISaveSdrValues, SdrEsfrRecordDetailsStateType, SelectedStatus } from "src/commons/types";
-import { handleFocus, handleScroll } from "src/helpers";
+import {
+  DATETIME_REQUEST,
+  DATE_HTML_DISPLAY,
+  handleFocus,
+  handleScroll,
+  toFixed,
+} from "src/helpers";
 import { resetLogpageDataSuccess } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
+import { Type } from "src/types/GetAllEsfrRecordsRes";
 import ValidationSchema from "src/validationSchema";
 import { object, string } from "yup";
 import "./createSdrData.css";
@@ -18,7 +25,7 @@ import "./createSdrData.css";
 export interface ICreateSdrDataProps {
   createSdrFlag: string;
   handleFetchLogpageData: (a: string) => void;
-  handleSaveSDR: (a: ISaveSdrValues) => void;
+  handleUpsertSdrSnapshot: (a: ISaveSdrValues) => void;
   logpageNumberValue: string;
   setCreateSdrFlag: Dispatch<SetStateAction<string>>;
   setLogpageNumberValue: Dispatch<SetStateAction<string>>;
@@ -27,7 +34,7 @@ export interface ICreateSdrDataProps {
 const CreateSdrData = ({
   createSdrFlag,
   handleFetchLogpageData,
-  handleSaveSDR,
+  handleUpsertSdrSnapshot,
   logpageNumberValue,
   setCreateSdrFlag,
   setLogpageNumberValue,
@@ -42,8 +49,16 @@ const CreateSdrData = ({
 
   const initialValues: ISaveSdrValues = useMemo(
     () => ({
+      SdrId: 0,
+      SnapshotId: "",
+      Type: "",
+      SfrAdditionalDetails: null,
+      OperatorControlNumber: "",
+      CreatedDate: moment().format(DATETIME_REQUEST),
+      IsExtracted: false,
       LogPageCreationDate:
-        moment(logpageData?.FleetInfo?.Date).toISOString() || moment().toISOString(),
+        moment(logpageData?.FleetInfo?.Date).format(DATETIME_REQUEST) ||
+        moment().format(DATETIME_REQUEST),
       Station: logpageData?.FleetInfo?.Station || "",
       AircraftNumber: logpageData?.FleetInfo?.TailNumber || "",
       LogPageNumber: logpageNumberValue || "",
@@ -66,21 +81,21 @@ const CreateSdrData = ({
       CreatedbyLastName: `${profileData?.LastName || ""}`,
       ModifiedbyFirstName: "",
       ModifiedbyLastName: "",
-      Aircraft: {
-        Manufacturer: logpageData?.FleetInfo?.ManufacturerPartNumber || "",
-        Model: logpageData?.FleetInfo?.ManufacturerSerialNumber || "",
-        SerialNumber: "",
-        TotalTime: logpageData?.FleetInfo?.TotalAircraftTime || 0,
-        TotalCycles: logpageData?.FleetInfo?.TotalAircraftCycles || 0,
+      AircraftDetails: {
+        RegistryNNumber: logpageData?.FleetInfo?.LicenseNumber || "",
+        Manufacturer: logpageData?.FleetInfo?.ManufacturedBy || "",
+        Model: logpageData?.FleetInfo?.ManufacturerPartNumber || "",
+        SerialNumber: logpageData?.FleetInfo?.ManufacturerSerialNumber || "",
+        TotalTime: String(toFixed(logpageData?.FleetInfo?.TotalAircraftTime) || ""),
+        TotalCycles: String(toFixed(logpageData?.FleetInfo?.TotalAircraftCycles) || ""),
       },
       Powerplant: {
         Manufacturer: "",
         Model: "",
         SerialNumber: "",
-        TotalTime: 0,
-        TotalCycles: 0,
+        TotalTime: "",
+        TotalCycles: "",
       },
-      NNumber: logpageData?.FleetInfo?.LicenseNumber || "",
       AtaCode: logpageData?.FleetInfo?.ATACode || "",
       FlightNumber: "",
       CorrectiveAction: "",
@@ -113,7 +128,7 @@ const CreateSdrData = ({
         initialValues={initialValues}
         enableReinitialize
         onSubmit={(values, { resetForm }) => {
-          handleSaveSDR(values);
+          handleUpsertSdrSnapshot(values);
           resetForm();
         }}
         validationSchema={object().shape({
@@ -206,9 +221,9 @@ const CreateSdrData = ({
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="Aircraft.Manufacturer"
+                        name="AircraftDetails.Manufacturer"
                         disabled={true}
-                        value={values.Aircraft?.Manufacturer || ""}
+                        value={values.AircraftDetails?.Manufacturer || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         className={"sdr-status-edit"}
@@ -222,9 +237,9 @@ const CreateSdrData = ({
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="Aircraft.Model"
+                        name="AircraftDetails.Model"
                         disabled={true}
-                        value={values.Aircraft?.Model || ""}
+                        value={values.AircraftDetails?.Model || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         className={"sdr-status-edit"}
@@ -238,9 +253,9 @@ const CreateSdrData = ({
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="Aircraft.SerialNumber"
+                        name="AircraftDetails.SerialNumber"
                         disabled={true}
-                        value={values.Aircraft?.SerialNumber || ""}
+                        value={values.AircraftDetails?.SerialNumber || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         className={"sdr-status-edit"}
@@ -264,9 +279,9 @@ const CreateSdrData = ({
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="Aircraft.TotalTime"
+                        name="AircraftDetails.TotalTime"
                         disabled={true}
-                        value={values.Aircraft?.TotalTime || ""}
+                        value={values.AircraftDetails?.TotalTime || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         className={"sdr-status-edit"}
@@ -280,9 +295,9 @@ const CreateSdrData = ({
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="Aircraft.TotalCycles"
+                        name="AircraftDetails.TotalCycles"
                         disabled={true}
-                        value={values.Aircraft?.TotalCycles || ""}
+                        value={values.AircraftDetails?.TotalCycles || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         className={"sdr-status-edit"}
@@ -439,7 +454,7 @@ const CreateSdrData = ({
                         //   ),
                         // }}
                         name="LogPageCreationDate"
-                        value={moment(values.LogPageCreationDate).format("YYYY-MM-DD")}
+                        value={moment(values.LogPageCreationDate).format(DATE_HTML_DISPLAY)}
                         onChange={(e) => {
                           setFieldValue(
                             "LogPageCreationDate",
@@ -507,12 +522,18 @@ const CreateSdrData = ({
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="NNumber"
-                        value={values.NNumber || ""}
+                        name="AircraftDetails.RegistryNNumber"
+                        value={values?.AircraftDetails?.RegistryNNumber || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={!!touched.NNumber && !!errors.NNumber}
-                        helperText={!!touched.NNumber && errors.NNumber}
+                        error={
+                          !!touched?.AircraftDetails?.RegistryNNumber &&
+                          !!errors?.AircraftDetails?.RegistryNNumber
+                        }
+                        helperText={
+                          !!touched?.AircraftDetails?.RegistryNNumber &&
+                          errors?.AircraftDetails?.RegistryNNumber
+                        }
                         className={"sdr-status-edit"}
                       />
                     ) : (
@@ -850,7 +871,7 @@ const CreateSdrData = ({
             <ButtonGroup
               className="bottom-button justify-end"
               primaryDisabled={isSubmitting}
-              primaryLabel={`Submit ${createSdrFlag === "SDR" ? "SDR" : "SFR"}`}
+              primaryLabel={`Submit ${createSdrFlag === Type.SDR ? Type.SDR : Type.SFR}`}
               primaryOnClick={handleSubmit}
               secondaryLabel={editable ? "Cancel" : "Edit"}
               secondaryOnClick={onClickCancle}

@@ -1,6 +1,7 @@
-import { Box, Grid, Tab, Tabs, Typography } from "@mui/material";
+import { Grid, Tab, Tabs, Typography } from "@mui/material";
 import { SyntheticEvent, useEffect, useMemo, useState } from "react";
 import ButtonGroup from "src/commons/ButtonGroup";
+import { a11yProps } from "src/commons/Common";
 import CommonLoader from "src/commons/CommonLoader";
 import Modal from "src/commons/Modal";
 import Snackbar from "src/commons/Snackbar";
@@ -13,8 +14,11 @@ import {
   SelectedTab,
   TransformedSdrDataType,
 } from "src/commons/types";
+import { allEsfrRecordsColumns } from "src/components/commondatagrid/allEsfrRecordsColumns";
 import CommonDataGrid from "src/components/commondatagrid/commondatagrid";
+import CreateSdrData from "src/components/createsdr/CreateSdrData";
 import ViewSdrData from "src/components/viewsdr/ViewSdrData";
+import ViewSnapshotData from "src/components/viewsdr/ViewSnapshotData";
 import { isSame, saveTextAsFile } from "src/helpers";
 import { getAllSdrs } from "src/redux/ducks/getAllSdrs";
 import {
@@ -30,32 +34,10 @@ import {
   getSfrMasterData,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
+import { Type } from "src/types/GetAllEsfrRecordsRes";
 import axiosInstance from "src/utils/axiosInstance";
 import config from "src/utils/env.config";
-import CreateSdrData from "../createsdr/CreateSdrData";
-import ViewSnapshotData from "../viewsdr/ViewSnapshotData";
 import "./homescreen.css";
-
-const sxBox = {
-  borderBottom: 1,
-  borderColor: "divider",
-};
-
-function a11yProps(index: number) {
-  return {
-    id: `esfr-tabs-${index}`,
-    "aria-controls": `esfr-tabpanels-${index}`,
-    sx: {
-      color: "#666666",
-      fontWeight: 500,
-      fontSize: "16px",
-      textTransform: "capitalize",
-      minWidth: "20%",
-      width: "25%",
-      // whiteSpace: "nowrap",
-    },
-  };
-}
 
 const HomeScreen = () => {
   const { profileData } = useAppSelector((state) => state.profile);
@@ -68,7 +50,7 @@ const HomeScreen = () => {
   const dispatch = useAppDispatch();
   const [tabIndex, setTabIndex] = useState<number>(0);
   const [viewSdrFlag, setViewSdrFlag] = useState<boolean>(false);
-  const [createSdrFlag, setCreateSdrFlag] = useState<string>("");
+  const [createSdrFlag, setCreateSdrFlag] = useState<string>("SFR");
   const [selectedSdr, setSelectedSdr] = useState<TransformedSdrDataType | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [openSnackbar, setOpenSnackbar] = useState<number>(0);
@@ -77,14 +59,14 @@ const HomeScreen = () => {
   const [editable, setEditable] = useState<boolean>(false);
   const [extractedIds, setExtractedIds] = useState<number[]>([]);
   const [openConfirmSaved, setOpenConfirmSaved] = useState<boolean>(false);
-  const isSdr = useMemo(() => selectedSdr?.Type === "SDR", [selectedSdr]);
+  const isSdr = useMemo(() => selectedSdr?.Type === Type.SDR, [selectedSdr]);
   const sdrData = useMemo(() => {
     switch (tabIndex) {
-      case 1:
+      case SelectedTab.FlaggedForFollowUp:
         return flaggedSdrData;
-      case 2:
+      case SelectedTab.Approved:
         return approvedSdrData;
-      case 0:
+      case SelectedTab.Open:
       default:
         return newSdrData;
     }
@@ -97,7 +79,7 @@ const HomeScreen = () => {
     setOpenSnackbar(0);
     setSelectedSdr(null);
     dispatch(getAllSdrs(SelectedStatus.Open));
-    dispatch(getAllSdrs(SelectedStatus.ApprovedwithFollowup));
+    dispatch(getAllSdrs(SelectedStatus.ApprovedWithFollowUp));
     dispatch(getAllSdrs(SelectedStatus.Approved));
     if (window) {
       window.scrollTo(0, 0);
@@ -118,8 +100,8 @@ const HomeScreen = () => {
         .get(`${config.apiBaseAddress}${config.URL_VIEW_LOGPAGE}?logPageNumber=${logpageNumber}`)
         .then((res) => {
           if (res?.status === 200) {
-            setOpenSnackbar(1);
-            setSnackbarMessage("Get Logpage data successful");
+            // setOpenSnackbar(1);
+            // setSnackbarMessage("Get Logpage data successful");
             dispatch(fetchLogpageDataSuccess(res?.data?.Result));
           }
         })
@@ -133,8 +115,11 @@ const HomeScreen = () => {
     }
   };
 
-  const handleUpsertSdrSnapshot = (values: IEditSdrValues, followUpFlag: boolean = false) => {
-    const actionType = tabIndex === SelectedTab.Approved ? "Approve" : "Update";
+  const handleUpsertSdrSnapshot = (
+    values: IEditSdrValues | ISaveSdrValues,
+    status: SelectedStatus = SelectedStatus.Approved
+  ) => {
+    const actionType = status === SelectedStatus.Approved ? "Update" : "Approve";
     setIsLoading(true);
     axiosInstance
       .post(`${config.apiBaseAddress}${config.URL_UPSERT_SDR_SNAPSHOT}`, values)
@@ -142,7 +127,9 @@ const HomeScreen = () => {
         if (res?.data?.Result?.IsSuccess) {
           setOpenSnackbar(1);
           setSnackbarMessage(
-            `${actionType} SDR successful${followUpFlag ? " with flagged for follow-up" : ""}`
+            `${actionType} SDR successful${
+              status === SelectedStatus.ApprovedWithFollowUp ? " with flagged for follow-up" : ""
+            }`
           );
           setCreateSdrFlag("");
           setViewSdrFlag(false);
@@ -158,34 +145,6 @@ const HomeScreen = () => {
       .catch(() => {
         setOpenSnackbar(-1);
         setSnackbarMessage(`Fail to ${actionType} SDR`);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
-
-  const handleSaveSDR = (values: Partial<ISaveSdrValues>) => {
-    setIsLoading(true);
-    axiosInstance
-      .post(`${config.apiBaseAddress}${config.URL_CREATE_SDR}`, values)
-      .then((res) => {
-        if (res?.data?.Result?.IsSuccess) {
-          setOpenSnackbar(1);
-          setSnackbarMessage("Save SDR successful");
-          setCreateSdrFlag("");
-          setViewSdrFlag(false);
-          setSelectedSdr(null);
-          setTimeout(() => {
-            resetSdrs();
-          }, 500);
-        } else {
-          setOpenSnackbar(-1);
-          setSnackbarMessage("Fail to Save SDR");
-        }
-      })
-      .catch(() => {
-        setOpenSnackbar(-1);
-        setSnackbarMessage("Fail to Save SDR");
       })
       .finally(() => {
         setIsLoading(false);
@@ -250,7 +209,6 @@ const HomeScreen = () => {
 
   useEffect(() => {
     if (error) {
-      setViewSdrFlag(true); // TODO: hide view sdr when fetch detail failed
       setOpenSnackbar(-1);
       setSnackbarMessage(error);
     } else if (detailsData || snapshotData) {
@@ -261,6 +219,7 @@ const HomeScreen = () => {
   useEffect(() => {
     setEditable(false);
     if (selectedSdr && selectedSdr.LogpageNumber !== detailsData?.LogPageNumber) {
+      handleFetchLogpageData(selectedSdr.LogpageNumber);
       if (selectedSdr.StatusId === SelectedStatus.Approved && selectedSdr.OperatorControlNumber) {
         dispatch(getApprovedSdr(selectedSdr.OperatorControlNumber));
       } else {
@@ -270,14 +229,11 @@ const HomeScreen = () => {
   }, [selectedSdr]);
 
   useEffect(() => {
-    setOpenSnackbar(0);
-  }, [editable, selectedSdr, tabIndex]);
-
-  useEffect(() => {
     if (!viewSdrFlag) {
       setOpenSnackbar(0);
+      setSnackbarMessage("");
     }
-  }, [viewSdrFlag]);
+  }, [editable, selectedSdr, tabIndex, viewSdrFlag]);
 
   useEffect(() => {
     if (!newSdrData && !approvedSdrData && !flaggedSdrData) {
@@ -292,29 +248,33 @@ const HomeScreen = () => {
     <>
       {(isLoading || loading) && <CommonLoader />}
       <Grid container className="grow overflow-auto md:overflow-y-hidden">
-        <Grid item md={6} sm={12} className="h-full w-full flex !flex-col">
-          <Box sx={{ ...sxBox }}>
-            <Tabs value={tabIndex} onChange={handleTabChange} aria-label="homeScreenSdrTabs">
-              <Tab
-                {...a11yProps(0)}
-                label={`New SDR/SFRs (${newSdrData?.length || 0})`}
-                id="NewsdrTab"
-              />
-              <Tab
-                {...a11yProps(1)}
-                label={`Flagged for Follow up (${flaggedSdrData?.length || 0})`}
-                id="Flaggedforfollowup"
-              />
-              <Tab
-                {...a11yProps(2)}
-                label={`Approved SDRs (${approvedSdrData?.length || 0})`}
-                id="Approvedsdr"
-              />
-            </Tabs>
-          </Box>
-          <TabPanel value={tabIndex} className="pt-[30px] h-[90%] grow flex flex-col">
+        <Grid item md={6} sm={12} className="h-full w-full flex !flex-col !px-[20px]">
+          <Tabs
+            className="bottom-divider"
+            value={tabIndex}
+            onChange={handleTabChange}
+            aria-label="homeScreenSdrTabs"
+          >
+            <Tab
+              {...a11yProps("home", 0)}
+              label={`New SDR/SFRs (${newSdrData?.length || 0})`}
+              id="NewsdrTab"
+            />
+            <Tab
+              {...a11yProps("home", 1)}
+              label={`Flagged for Follow up (${flaggedSdrData?.length || 0})`}
+              id="Flaggedforfollowup"
+            />
+            <Tab
+              {...a11yProps("home", 2)}
+              label={`Approved SDRs (${approvedSdrData?.length || 0})`}
+              id="Approvedsdr"
+            />
+          </Tabs>
+          <TabPanel value={tabIndex} index={tabIndex}>
             {sdrData && (
               <CommonDataGrid
+                columns={allEsfrRecordsColumns()}
                 createSdrFlag={createSdrFlag}
                 handleExtractSdrRecords={handleExtractSdrRecords}
                 sdrData={sdrData}
@@ -329,11 +289,11 @@ const HomeScreen = () => {
           </TabPanel>
         </Grid>
         <Grid item md={6} sm={12} className="h-full w-full relative">
-          {createSdrFlag === "SDR" ? (
+          {createSdrFlag === Type.SDR ? (
             <CreateSdrData
               createSdrFlag={createSdrFlag}
               handleFetchLogpageData={handleFetchLogpageData}
-              handleSaveSDR={handleSaveSDR}
+              handleUpsertSdrSnapshot={handleUpsertSdrSnapshot}
               logpageNumberValue={logpageNumberValue}
               setCreateSdrFlag={setCreateSdrFlag}
               setLogpageNumberValue={setLogpageNumberValue}
@@ -347,7 +307,6 @@ const HomeScreen = () => {
                 selectedSdr={selectedSdr}
                 setEditable={setEditable}
                 setViewSdrFlag={setViewSdrFlag}
-                tabIndex={tabIndex}
               />
             ) : (
               <ViewSdrData

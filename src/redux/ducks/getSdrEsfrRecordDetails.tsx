@@ -3,7 +3,7 @@ import {
   ApprovedSdrFuncType,
   SdrEsfrRecordDetailsActionType,
   SdrEsfrRecordDetailsFuncType,
-  SdrEsfrRecordDetailsReducerAcition,
+  SdrEsfrRecordDetailsReducerAction,
   SdrEsfrRecordDetailsStateType,
   SfrMasterDataFuncType,
 } from "src/commons/types";
@@ -65,11 +65,11 @@ export const resetLogpageDataSuccess = () => {
 
 export const sdrEsfrRecordDetailsReducer = (
   state: SdrEsfrRecordDetailsStateType = initialState,
-  action: SdrEsfrRecordDetailsReducerAcition
+  action: SdrEsfrRecordDetailsReducerAction
 ) => {
   switch (action.type) {
     case SdrEsfrRecordDetailsActionType.FETCH_DETAILS: {
-      return { ...state, loading: true, error: "" };
+      return { ...state, loading: true, detailsData: null, snapshot: null, error: "" };
     }
     case SdrEsfrRecordDetailsActionType.FETCH_ESFR_DETAIL_SUCCESS: {
       return { ...state, loading: false, detailsData: action.data, error: "" };

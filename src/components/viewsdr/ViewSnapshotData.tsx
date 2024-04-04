@@ -17,9 +17,10 @@ import {
   TransformedSdrDataType,
   UserPermission,
 } from "src/commons/types";
+import { DATETIME_REQUEST, DATE_HTML_DISPLAY, toFixed } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
 import ValidationSchema from "src/validationSchema";
-import { array, number, object } from "yup";
+import { array, number, object, string } from "yup";
 import "./viewSdrData.css";
 
 export interface IViewSnapshotDataProps {
@@ -29,7 +30,6 @@ export interface IViewSnapshotDataProps {
   selectedSdr: TransformedSdrDataType;
   setEditable: Dispatch<SetStateAction<boolean>>;
   setViewSdrFlag: Dispatch<SetStateAction<boolean>>;
-  tabIndex: number;
 }
 
 const ViewSnapshotData = ({
@@ -39,10 +39,9 @@ const ViewSnapshotData = ({
   selectedSdr,
   setEditable,
   setViewSdrFlag,
-  tabIndex,
 }: IViewSnapshotDataProps) => {
   const { profileData, auth } = useAppSelector((state) => state.profile);
-  const { snapshotData, masterData }: SdrEsfrRecordDetailsStateType = useAppSelector(
+  const { snapshotData, masterData, logpageData }: SdrEsfrRecordDetailsStateType = useAppSelector(
     (state) => state.sdrEsfrRecordDetails
   );
 
@@ -54,11 +53,11 @@ const ViewSnapshotData = ({
       Type: selectedSdr.Type,
       SfrAdditionalDetails: {
         SnapshotId: "",
-        AtaCode: snapshotData?.SfrDetails?.AtaCode || "",
+        AtaCode: logpageData?.FleetInfo?.ATACode || "",
         SubmitterDesignator: snapshotData?.SfrDetails?.SubmitterDesignator || "",
         SubmitterType: snapshotData?.SfrDetails?.SubmitterType || "",
         OperatorDesignator: snapshotData?.SfrDetails?.OperatorDesignator || "CALA",
-        OperatorType: selectedSdr?.Type || "",
+        OperatorType: snapshotData?.SfrDetails?.OperatorType || "",
         FAAReceivingRegionCode: "GL",
         ReceivingDistrictOffice: "33",
         PartName: snapshotData?.SfrDetails?.PartName || "",
@@ -99,7 +98,7 @@ const ViewSnapshotData = ({
         TotalTime: snapshotData?.AircraftDetails?.TotalTime || "",
         TotalCycles: snapshotData?.AircraftDetails?.TotalCycles || "",
       },
-      LogPageCreationDate: snapshotData?.LogPageCreationDate || moment().toISOString(),
+      LogPageCreationDate: snapshotData?.LogPageCreationDate || moment().format(DATETIME_REQUEST),
       Station: snapshotData?.Station || `${profileData?.Station}`,
       LogPageNumber: snapshotData?.LogPageNumber || selectedSdr?.LogpageNumber || "",
       AircraftNumber: snapshotData?.AircraftNumber || "",
@@ -228,7 +227,7 @@ const ViewSnapshotData = ({
                   <ListItem>A/C Total Time</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{snapshotData?.AircraftDetails?.TotalTime}</ListItem>
+                  <ListItem>{toFixed(snapshotData?.AircraftDetails?.TotalTime)}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -236,7 +235,7 @@ const ViewSnapshotData = ({
                   <ListItem>A/C Total Cycles</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{snapshotData?.AircraftDetails?.TotalCycles}</ListItem>
+                  <ListItem>{toFixed(snapshotData?.AircraftDetails?.TotalCycles)}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -260,6 +259,7 @@ const ViewSnapshotData = ({
           }}
           validationSchema={object().shape({
             ...ValidationSchema,
+            LogPageNumber: string(),
             PrecautionaryProcedureIds: array(),
             NatureOfReportIds: array(),
             StageId: number(),
@@ -314,7 +314,7 @@ const ViewSnapshotData = ({
                             //   ),
                             // }}
                             name="LogPageCreationDate"
-                            value={moment(values.LogPageCreationDate).format("YYYY-MM-DD")}
+                            value={moment(values.LogPageCreationDate).format(DATE_HTML_DISPLAY)}
                             onChange={(e) => {
                               setFieldValue(
                                 "LogPageCreationDate",
@@ -327,7 +327,7 @@ const ViewSnapshotData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          moment(snapshotData?.CreatedDate).format("MM/DD/YYYY")
+                          moment(snapshotData?.CreatedDate).format(DATE_HTML_DISPLAY)
                         )}
                       </ListItem>
                     </Grid>
@@ -342,6 +342,7 @@ const ViewSnapshotData = ({
                             error={!!touched.LogPageNumber && !!errors.LogPageNumber}
                             helperText={!!touched.LogPageNumber && errors.LogPageNumber}
                             className={"sdr-status-edit"}
+                            disabled
                           />
                         ) : (
                           values?.LogPageNumber || selectedSdr?.LogpageNumber
@@ -501,6 +502,7 @@ const ViewSnapshotData = ({
                               errors?.SfrAdditionalDetails?.AtaCode
                             }
                             className={"sdr-status-edit"}
+                            disabled
                           />
                         ) : (
                           values?.SfrAdditionalDetails?.AtaCode

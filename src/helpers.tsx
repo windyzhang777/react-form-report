@@ -1,8 +1,13 @@
 import moment from "moment";
 import { RefObject } from "react";
 import { SelectedStatus, TransformedSdrDataType, UserPermission } from "src/commons/types";
-import { GetAllEsfrRecordsResResult } from "src/types/GetAllEsfrRecordsRes";
+import { GetAllEsfrRecordsResResult, Status } from "src/types/GetAllEsfrRecordsRes";
 import { EsfrUserPolicy } from "src/types/GetProfilerRes";
+
+export const DATETIME_REQUEST = "YYYY-MM-DDTHH:mm:ss";
+export const DATETIME_REFRESH = "MM/DD/YYYY@HH:mm";
+export const DATETIME_DISPLAY = "MM/DD/YYYY HH:mm:ss";
+export const DATE_HTML_DISPLAY = "YYYY-MM-DD";
 
 export const handleScroll = (ref: RefObject<HTMLDivElement> | null) => {
   if (ref?.current) {
@@ -23,23 +28,22 @@ export const transformSdrData = (
   sdrData: GetAllEsfrRecordsResResult[],
   statusId: SelectedStatus
 ): TransformedSdrDataType[] => {
-  let sdrStatusText = "Open";
+  let sdrStatusText = Status.Open;
   switch (statusId) {
     case 4:
-      sdrStatusText = "Approved";
+      sdrStatusText = Status.Approved;
       break;
     case 3:
-      sdrStatusText = "Approved with Follow Up";
+      sdrStatusText = Status.ApprovedWithFollowUp;
       break;
     case 2:
     default:
-      sdrStatusText = "Open";
+      sdrStatusText = Status.Open;
       break;
   }
   return sdrData
     .map((data) => ({
       ...data,
-      CreatedDate: moment(data.CreatedDate).format("MM/DD/YYYY hh:mm:ss A"),
       SdrStatus: sdrStatusText,
     }))
     .sort((a, b) => +moment(b.CreatedDate) - +moment(a.CreatedDate));
@@ -82,7 +86,29 @@ export const getUserPermission = (EsfrUserPolicies: EsfrUserPolicy[]): UserPermi
   };
   const permission = EsfrUserPolicies.reduce(
     (acc, cur) => (dict[cur.PolicyName] > acc ? dict[cur.PolicyName] : acc),
-    UserPermission.CRU // TODO: UserPermission.Invalid to test user auth policy
+    UserPermission.Invalid
   );
   return permission;
+};
+
+export const clearLocalStorage = () => {
+  let storage: any = {};
+  Object.keys(window.localStorage).filter((key) => {
+    if (key && key.indexOf("user_") > -1) {
+      let data = window.localStorage.getItem(key);
+      if (data) {
+        storage[key] = JSON.parse(data);
+      }
+    }
+  });
+  // clear the localStorage
+  window.localStorage.clear();
+  // add the user preferences back to localStorage
+  Object.entries(storage).map(([key, value]) => {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  });
+};
+
+export const toFixed = (a: number | string | undefined) => {
+  return !!a && !!Number(a) ? Number(a).toFixed(2) : 0;
 };

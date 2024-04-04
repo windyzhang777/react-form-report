@@ -18,12 +18,13 @@ import {
   TransformedSdrDataType,
   UserPermission,
 } from "src/commons/types";
+import { DATETIME_REQUEST, DATE_HTML_DISPLAY, toFixed } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
 import "./viewSdrData.css";
 
 export interface IViewSdrDataProps {
   editable: boolean;
-  handleUpsertSdrSnapshot: (a: IEditSdrValues, b: boolean) => void;
+  handleUpsertSdrSnapshot: (a: IEditSdrValues, b: SelectedStatus) => void;
   isSdr: boolean;
   selectedSdr: TransformedSdrDataType;
   setViewSdrFlag: Dispatch<SetStateAction<boolean>>;
@@ -50,14 +51,14 @@ const ViewSdrData = ({
     () => ({
       SdrId: detailsData?.SdrDetails?.sdrNumber ? +detailsData.SdrDetails.sdrNumber : 0,
       SnapshotId: "",
-      Type: selectedSdr.Type,
+      Type: selectedSdr?.Type,
       SfrAdditionalDetails: {
         SnapshotId: "",
         AtaCode: detailsData?.FleetInfo?.ATACode || "",
         SubmitterDesignator: "",
         SubmitterType: "",
         OperatorDesignator: "CALA",
-        OperatorType: selectedSdr?.Type || "",
+        OperatorType: "G",
         FAAReceivingRegionCode: "GL",
         ReceivingDistrictOffice: "33",
         PartName: "",
@@ -69,8 +70,10 @@ const ViewSdrData = ({
         FuselageFromSta: "",
         FuselageToSta: "",
         CorrisionLevel: "",
-        CrackLength: "",
-        NumberOfCracks: 0,
+        CrackLength: detailsData?.DiscrepancyDetails?.CrackLength
+          ? "" + detailsData.DiscrepancyDetails.CrackLength
+          : "",
+        NumberOfCracks: detailsData?.DiscrepancyDetails?.NumberOfCracks || 0,
         WaterlineFrom: "",
         WaterlineTo: "",
         StringerFrom: "",
@@ -85,7 +88,7 @@ const ViewSdrData = ({
         WingStationFromSide: "",
         WingStationTo: "",
         WingStationToSide: "",
-        StructuralOther: "",
+        StructuralOther: detailsData?.LocationDetails?.Other || "",
       },
       CCCorrosionLevel: "",
       CCCrackLength: "",
@@ -98,14 +101,16 @@ const ViewSdrData = ({
         TotalTime: "" + detailsData?.FleetInfo?.TotalAircraftTime || "",
         TotalCycles: "" + detailsData?.FleetInfo?.TotalAircraftCycles || "",
       },
-      LogPageCreationDate: detailsData?.SdrDetails?.LogPageCreationDate || moment().toISOString(),
-      Station: detailsData?.Station || `${profileData?.Station}`,
+      LogPageCreationDate:
+        (isSdr ? detailsData?.SdrDetails?.CreatedDate : detailsData?.CreatedDate) ||
+        moment().format(DATETIME_REQUEST),
+      Station: detailsData?.Station || "",
       LogPageNumber: detailsData?.LogPageNumber || selectedSdr?.LogpageNumber || "",
       AircraftNumber: detailsData?.AirCraftNumber || "",
       PrecautionaryProcedureIds: detailsData?.SdrDetails?.PrecautionaryProcedureIds || [],
       NatureOfReportIds: detailsData?.SdrDetails?.NatureOfReportIds || [],
       StageId: detailsData?.SdrDetails?.StageId || 0,
-      StatusId: followUpFlag ? SelectedStatus.ApprovedwithFollowup : SelectedStatus.Approved,
+      StatusId: followUpFlag ? SelectedStatus.ApprovedWithFollowUp : SelectedStatus.Approved,
       HowDiscoveredId: detailsData?.SdrDetails?.HowDiscoveredId || 0,
       EmployeeId: `${profileData?.EmployeeId}`,
       EmployeeName: `${profileData?.FirstName} ${profileData?.LastName}`,
@@ -228,7 +233,7 @@ const ViewSdrData = ({
                   <ListItem>A/C Total Time</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{detailsData?.FleetInfo?.TotalAircraftTime}</ListItem>
+                  <ListItem>{toFixed(detailsData?.FleetInfo?.TotalAircraftTime)}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -236,7 +241,7 @@ const ViewSdrData = ({
                   <ListItem>A/C Total Cycles</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{detailsData?.FleetInfo?.TotalAircraftCycles}</ListItem>
+                  <ListItem>{toFixed(detailsData?.FleetInfo?.TotalAircraftCycles)}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -255,7 +260,10 @@ const ViewSdrData = ({
           initialValues={initialValues}
           enableReinitialize
           onSubmit={(values, { resetForm }) => {
-            handleUpsertSdrSnapshot(values, followUpFlag);
+            handleUpsertSdrSnapshot(
+              values,
+              followUpFlag ? SelectedStatus.ApprovedWithFollowUp : SelectedStatus.Approved
+            );
             resetForm();
           }}
         >
@@ -307,7 +315,7 @@ const ViewSdrData = ({
                             //   ),
                             // }}
                             name="LogPageCreationDate"
-                            value={moment(values.LogPageCreationDate).format("YYYY-MM-DD")}
+                            value={moment(values.LogPageCreationDate).format(DATE_HTML_DISPLAY)}
                             onChange={(e) => {
                               setFieldValue(
                                 "LogPageCreationDate",
@@ -320,9 +328,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          moment(
-                            detailsData?.SdrDetails?.createdDate || detailsData?.CreatedDate
-                          ).format("MM/DD/YYYY")
+                          moment(values?.LogPageCreationDate).format(DATE_HTML_DISPLAY)
                         )}
                       </ListItem>
                     </Grid>
@@ -2053,7 +2059,7 @@ const ViewSdrData = ({
                 )}
 
                 {/* Flag for follow up */}
-                {tabIndex < 2 && (
+                {auth === UserPermission.CRU && tabIndex < 2 && (
                   <FlexRow mb={2}>
                     <Checkbox
                       sx={{

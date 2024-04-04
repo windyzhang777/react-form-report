@@ -9,13 +9,14 @@ export interface ITabPanelProps {
 
 const TabPanel = ({ children, value, index, ...other }: ITabPanelProps) => (
   <div
+    className={`${value !== index && "hidden"} pt-[30px] h-[90%] grow flex flex-col`}
     role="tabpanel"
-    // hidden={value !== index}
-    id={`simple-tabpanel-${value}`}
-    aria-labelledby={`simple-tab-${value}`}
+    hidden={value !== index}
+    id={`simple-tabpanel-${index}`}
+    aria-labelledby={`simple-tab-${index}`}
     {...other}
   >
-    {children}
+    {value === index && children}
   </div>
 );
 

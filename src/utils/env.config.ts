@@ -33,6 +33,12 @@ const config: EnvironmentConfig = {
     PUBLIC_URL: "/esfr/",
     REACT_APP_APPLICATION_NAME: "MobileTech",
     REACT_APP_APPLICATION_KEY: "188fba97-4473-48b6-8126-c0359e0b71a9",
+    REACT_APP_URL_AMT_BASE: "https://techops-oqa.ual.com/TisPortal",
+    REACT_APP_AWS_URL: "https://dwz-995298.auth.us-east-2.amazoncognito.com",
+    REACT_APP_AWS_CLIENT_ID: "c1reik2h5sp35dpslua4lttvh",
+    REACT_APP_REDIRECT_URI: "https://stationplan.dev.dwz.aws.ual.com",
+    REACT_APP_LOGOUT_URL:
+      "https://dwz-995298.auth.us-east-2.amazoncognito.com/logout?client_id=c1reik2h5sp35dpslua4lttvh&logout_uri=https://signon-oqa.ual.com/oam/server/logout?end_url=https://signon-oqa.ual.com/oamsso/global/logout.html",
   },
   development: {
     ...defaultConfig,
@@ -42,6 +48,12 @@ const config: EnvironmentConfig = {
     PUBLIC_URL: "/esfr/",
     REACT_APP_APPLICATION_NAME: "MobileTech",
     REACT_APP_APPLICATION_KEY: "188fba97-4473-48b6-8126-c0359e0b71a9",
+    REACT_APP_URL_AMT_BASE: "https://techops-oqa.ual.com/TisPortal",
+    REACT_APP_AWS_URL: "https://dwz-995298.auth.us-east-2.amazoncognito.com",
+    REACT_APP_AWS_CLIENT_ID: "c1reik2h5sp35dpslua4lttvh",
+    REACT_APP_REDIRECT_URI: "https://mx.dev.dwz.aws.ual.com/esfr",
+    REACT_APP_LOGOUT_URL:
+      "https://dwz-995298.auth.us-east-2.amazoncognito.com/logout?client_id=c1reik2h5sp35dpslua4lttvh&logout_uri=https://signon-oqa.ual.com/oam/server/logout?end_url=https://signon-oqa.ual.com/oamsso/global/logout.html",
   },
   qa: {
     ...defaultConfig,
@@ -51,6 +63,12 @@ const config: EnvironmentConfig = {
     PUBLIC_URL: "/esfr/",
     REACT_APP_APPLICATION_NAME: "MobileTech",
     REACT_APP_APPLICATION_KEY: "188fba97-4473-48b6-8126-c0359e0b71a9",
+    REACT_APP_URL_AMT_BASE: "https://techops-oqa.ual.com/TisPortal",
+    REACT_APP_AWS_URL: "https://dwz-635169.auth.us-east-2.amazoncognito.com",
+    REACT_APP_AWS_CLIENT_ID: "1prn71gc5oe1kf3dc1cs3kg958",
+    REACT_APP_REDIRECT_URI: "https://mx.qa.dwz.aws.ual.com/esfr",
+    REACT_APP_LOGOUT_URL:
+      "https://dwz-635169.auth.us-east-2.amazoncognito.com/logout?client_id=1prn71gc5oe1kf3dc1cs3kg958&logout_uri=https://signon-oqa.ual.com/oam/server/logout?end_url=https://signon-oqa.ual.com/oamsso/global/logout.html",
   },
   stage: {
     ...defaultConfig,
@@ -58,6 +76,12 @@ const config: EnvironmentConfig = {
     PUBLIC_URL: "/esfr/",
     REACT_APP_APPLICATION_NAME: "MobileTech",
     REACT_APP_APPLICATION_KEY: "188FBA97-4473-48B6-8126-C0359E0B71A9",
+    REACT_APP_URL_AMT_BASE: "https://techops.ual.com/TisPortal",
+    REACT_APP_AWS_URL: "https://dwz-739743.auth.us-east-2.amazoncognito.com",
+    REACT_APP_AWS_CLIENT_ID: "32kg70e09kvgj7av90n5rf3cvo",
+    REACT_APP_REDIRECT_URI: "https://mx-stg.ual.com/esfr",
+    REACT_APP_LOGOUT_URL:
+      "https://dwz-739743.auth.us-east-2.amazoncognito.com/logout?client_id=32kg70e09kvgj7av90n5rf3cvo&logout_uri=https://signon.ual.com/oam/server/logout?end_url=https://signon.ual.com/oamsso/global/logout.html",
   },
   stagedr: {
     ...defaultConfig,
@@ -65,6 +89,12 @@ const config: EnvironmentConfig = {
     PUBLIC_URL: "/esfr/",
     REACT_APP_APPLICATION_NAME: "MobileTech",
     REACT_APP_APPLICATION_KEY: "188FBA97-4473-48B6-8126-C0359E0B71A9",
+    REACT_APP_URL_AMT_BASE: "https://techops.ual.com/TisPortal",
+    REACT_APP_AWS_URL: "https://dwz-739743.auth.us-east-1.amazoncognito.com",
+    REACT_APP_AWS_CLIENT_ID: "1qe1vgkv349jqa1gqjhbob9vim",
+    REACT_APP_REDIRECT_URI: "https://mx-stg.ual.com/esfr",
+    REACT_APP_LOGOUT_URL:
+      "https://dwz-739743.auth.us-east-1.amazoncognito.com/logout?client_id=1qe1vgkv349jqa1gqjhbob9vim&logout_uri=https://signon.ual.com/oam/server/logout?end_url=https://signon.ual.com/oamsso/global/logout.html",
   },
   production: {
     ...defaultConfig,
@@ -72,6 +102,12 @@ const config: EnvironmentConfig = {
     PUBLIC_URL: "/esfr/",
     REACT_APP_APPLICATION_NAME: "MobileTech",
     REACT_APP_APPLICATION_KEY: "1807c0b6-17a3-4730-8b5c-61a0fee8f754",
+    REACT_APP_URL_AMT_BASE: "https://techops.ual.com/TisPortal",
+    REACT_APP_AWS_URL: "https://dwz-810431.auth.us-east-2.amazoncognito.com",
+    REACT_APP_AWS_CLIENT_ID: "70ule75qskqei9k0od1464ag3i",
+    REACT_APP_REDIRECT_URI: "https://mx.ual.com/esfr",
+    REACT_APP_LOGOUT_URL:
+      "https://dwz-810431.auth.us-east-2.amazoncognito.com/logout?client_id=70ule75qskqei9k0od1464ag3i&logout_uri=https://signon.ual.com/oam/server/logout?end_url=https://signon.ual.com/oamsso/global/logout.html",
   },
   productiondr: {
     ...defaultConfig,
@@ -79,6 +115,12 @@ const config: EnvironmentConfig = {
     PUBLIC_URL: "/esfr/",
     REACT_APP_APPLICATION_NAME: "MobileTech",
     REACT_APP_APPLICATION_KEY: "1807c0b6-17a3-4730-8b5c-61a0fee8f754",
+    REACT_APP_URL_AMT_BASE: "https://techops.ual.com/TisPortal",
+    REACT_APP_AWS_URL: "https://dwz-810431.auth.us-east-2.amazoncognito.com",
+    REACT_APP_AWS_CLIENT_ID: "73ntlelgdvvsb8746blgb1f3ug",
+    REACT_APP_REDIRECT_URI: "https://mx.ual.com/esfr",
+    REACT_APP_LOGOUT_URL:
+      "https://dwz-810431.auth.us-east-1.amazoncognito.com/logout?client_id=73ntlelgdvvsb8746blgb1f3ug&logout_uri=https://signon.ual.com/oam/server/logout?end_url=https://signon.ual.com/oamsso/global/logout.html",
   },
 }[env];
 
