@@ -20,7 +20,7 @@ import {
 import { DATETIME_REQUEST, DATE_HTML_DISPLAY, toFixed } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
 import ValidationSchema from "src/validationSchema";
-import { array, number, object, string } from "yup";
+import { object, string } from "yup";
 import "./viewSdrData.css";
 
 export interface IViewSnapshotDataProps {
@@ -260,10 +260,7 @@ const ViewSnapshotData = ({
           validationSchema={object().shape({
             ...ValidationSchema,
             LogPageNumber: string(),
-            PrecautionaryProcedureIds: array(),
-            NatureOfReportIds: array(),
-            StageId: number(),
-            HowDiscoveredId: number(),
+            CorrectiveAction: string().required(),
           })}
         >
           {({
@@ -458,7 +455,7 @@ const ViewSnapshotData = ({
                       <ListItem>ATA Code</ListItem>
                     </Grid>
                     <Grid item xs={4}>
-                      <ListItem>Nature of Condition</ListItem>
+                      <ListItem required={editable}>Nature of Condition</ListItem>
                     </Grid>
                   </Grid>
                   <Grid className={"sdr-status-description"} container spacing={3}>
@@ -543,13 +540,13 @@ const ViewSnapshotData = ({
                   </Grid>
                   <Grid className={"sdr-status-item"} container spacing={3}>
                     <Grid item xs={4}>
-                      <ListItem>Precautionary Procedure</ListItem>
+                      <ListItem required={editable}>Precautionary Procedure</ListItem>
                     </Grid>
                     <Grid item xs={4}>
-                      <ListItem>Stage of Operation</ListItem>
+                      <ListItem required={editable}>Stage of Operation</ListItem>
                     </Grid>
                     <Grid item xs={4}>
-                      <ListItem>How Discovered</ListItem>
+                      <ListItem required={editable}>How Discovered</ListItem>
                     </Grid>
                   </Grid>
                   <Grid className={"sdr-status-description"} container spacing={3}>
@@ -639,7 +636,7 @@ const ViewSnapshotData = ({
                   </Grid>
                   <Grid className={"sdr-status-item"} container spacing={1}>
                     <Grid item xs={12}>
-                      <ListItem>Discrepancy/Corrective Action Summary</ListItem>
+                      <ListItem required={editable}>Discrepancy/Corrective Action Summary</ListItem>
                     </Grid>
                   </Grid>
                   <Grid className={"sdr-status-description"} container spacing={1}>

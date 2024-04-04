@@ -19,7 +19,7 @@ import CommonDataGrid from "src/components/commondatagrid/commondatagrid";
 import CreateSdrData from "src/components/createsdr/CreateSdrData";
 import ViewSdrData from "src/components/viewsdr/ViewSdrData";
 import ViewSnapshotData from "src/components/viewsdr/ViewSnapshotData";
-import { isSame, saveTextAsFile } from "src/helpers";
+import { saveTextAsFile } from "src/helpers";
 import { getAllSdrs } from "src/redux/ducks/getAllSdrs";
 import {
   InsertSnapshotSdrFilename,
@@ -50,14 +50,13 @@ const HomeScreen = () => {
   const dispatch = useAppDispatch();
   const [tabIndex, setTabIndex] = useState<number>(0);
   const [viewSdrFlag, setViewSdrFlag] = useState<boolean>(false);
-  const [createSdrFlag, setCreateSdrFlag] = useState<string>("SFR");
+  const [createSdrFlag, setCreateSdrFlag] = useState<string>("");
   const [selectedSdr, setSelectedSdr] = useState<TransformedSdrDataType | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [openSnackbar, setOpenSnackbar] = useState<number>(0);
   const [snackbarMessage, setSnackbarMessage] = useState<string>("");
   const [logpageNumberValue, setLogpageNumberValue] = useState<string>("");
   const [editable, setEditable] = useState<boolean>(false);
-  const [extractedIds, setExtractedIds] = useState<number[]>([]);
   const [openConfirmSaved, setOpenConfirmSaved] = useState<boolean>(false);
   const isSdr = useMemo(() => selectedSdr?.Type === Type.SDR, [selectedSdr]);
   const sdrData = useMemo(() => {
@@ -152,52 +151,42 @@ const HomeScreen = () => {
   };
 
   const handleExtractSdrRecords = (ids: number[]) => {
-    setExtractedIds(ids);
-    if (!isSame(ids, extractedIds) || !fileData) {
-      setIsLoading(true);
-      axiosInstance
-        .post(`${config.apiBaseAddress}${config.URL_EXTRACT_SDR_RECORDS}`, ids)
-        .then((res) => {
-          setIsLoading(false);
-          if (res?.data?.Result?.IsSuccess) {
-            const fileData_ = res.data.Result;
-            if (fileData_ && profileData) {
-              dispatch(fetchSuccess(res.data.Result));
-              setOpenSnackbar(1);
-              setSnackbarMessage("Extract SDR Records successful");
-              saveTextAsFile(fileData_?.SdrRecords?.join("\n"), fileData_?.FileName);
-              dispatch(updateExtractionStatus(ids));
-              dispatch(
-                InsertSnapshotSdrFilename({
-                  NewFilename: fileData_?.FileName,
-                  CreatedBy: profileData?.EmployeeId,
-                  CreatedByLastName: profileData?.LastName,
-                  CreatedByFirstName: profileData?.FirstName,
-                })
-              );
-              setTimeout(() => {
-                setOpenConfirmSaved(true);
-              }, 500);
-            }
-          } else {
-            setOpenSnackbar(-1);
-            setSnackbarMessage("Fail to Extract SDR Records");
+    setIsLoading(true);
+    axiosInstance
+      .post(`${config.apiBaseAddress}${config.URL_EXTRACT_SDR_RECORDS}`, ids)
+      .then((res) => {
+        setIsLoading(false);
+        if (res?.data?.Result?.IsSuccess) {
+          const fileData_ = res.data.Result;
+          if (fileData_ && profileData) {
+            dispatch(fetchSuccess(res.data.Result));
+            setOpenSnackbar(1);
+            setSnackbarMessage("Extract SDR Records successful");
+            saveTextAsFile(fileData_?.SdrRecords?.join("\n"), fileData_?.FileName);
+            dispatch(updateExtractionStatus(ids));
+            dispatch(
+              InsertSnapshotSdrFilename({
+                NewFilename: fileData_?.FileName,
+                CreatedBy: profileData?.EmployeeId,
+                CreatedByLastName: profileData?.LastName,
+                CreatedByFirstName: profileData?.FirstName,
+              })
+            );
+            setTimeout(() => {
+              setOpenConfirmSaved(true);
+            }, 500);
           }
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          dispatch(fetchFailure(error));
+        } else {
           setOpenSnackbar(-1);
           setSnackbarMessage("Fail to Extract SDR Records");
-        });
-    } else {
-      if (fileData) {
-        saveTextAsFile(fileData.SdrRecords?.join("\n"), fileData.FileName);
-        setTimeout(() => {
-          setOpenConfirmSaved(true);
-        }, 5000);
-      }
-    }
+        }
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        dispatch(fetchFailure(error));
+        setOpenSnackbar(-1);
+        setSnackbarMessage("Fail to Extract SDR Records");
+      });
   };
 
   const handleConfirmFileSaved = () => {
@@ -218,7 +207,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     setEditable(false);
-    if (selectedSdr && selectedSdr.LogpageNumber !== detailsData?.LogPageNumber) {
+    if (selectedSdr) {
       handleFetchLogpageData(selectedSdr.LogpageNumber);
       if (selectedSdr.StatusId === SelectedStatus.Approved && selectedSdr.OperatorControlNumber) {
         dispatch(getApprovedSdr(selectedSdr.OperatorControlNumber));
@@ -234,6 +223,11 @@ const HomeScreen = () => {
       setSnackbarMessage("");
     }
   }, [editable, selectedSdr, tabIndex, viewSdrFlag]);
+
+  useEffect(() => {
+    setSelectedSdr(null);
+    setViewSdrFlag(false);
+  }, [tabIndex]);
 
   useEffect(() => {
     if (!newSdrData && !approvedSdrData && !flaggedSdrData) {

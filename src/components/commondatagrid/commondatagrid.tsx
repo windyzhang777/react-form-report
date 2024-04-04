@@ -1,13 +1,12 @@
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Button, Link, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import {
   GridCellParams,
   GridColDef,
   GridRowSelectionModel,
   GridValidRowModel,
 } from "@mui/x-data-grid";
-import moment from "moment";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { FlexRow } from "src/commons/Box";
 import ButtonGroup from "src/commons/ButtonGroup";
 import DataGrid from "src/commons/DataGrid";
@@ -20,26 +19,27 @@ import {
   UserPermission,
 } from "src/commons/types";
 import { useAppSelector } from "src/redux/hooks";
-import config from "src/utils/env.config";
 import "./commondatagrid.css";
 
 export interface CommonDataGridProps {
-  autoPageSize?: boolean;
+  columns: any;
   createSdrFlag?: string;
   handleExtractSdrRecords?: (a: number[]) => void;
+  isReport?: boolean;
   sdrData: TransformedSdrDataType[];
-  selectedSdr: TransformedSdrDataType | null;
+  selectedSdr: any;
   setCreateSdrFlag?: Dispatch<SetStateAction<string>>;
-  setSelectedSdr: Dispatch<SetStateAction<TransformedSdrDataType | null>>;
+  setSelectedSdr: Dispatch<SetStateAction<any>>;
   setViewSdrFlag: Dispatch<SetStateAction<boolean>>;
   tabIndex?: number;
   viewSdrFlag: boolean;
 }
 
 const CommonDataGrid = ({
-  autoPageSize = true,
+  columns,
   createSdrFlag,
   handleExtractSdrRecords,
+  isReport = false,
   sdrData,
   selectedSdr,
   setCreateSdrFlag,
@@ -53,94 +53,16 @@ const CommonDataGrid = ({
   const { masterData }: SdrEsfrRecordDetailsStateType = useAppSelector(
     (state) => state.sdrEsfrRecordDetails
   );
-  const [showCheckbox, setShowCheckbox] = useState<boolean>(false);
   const [selectedSdrsToExtract, setSelectedSdrsToExtract] = useState<GridRowSelectionModel>([]);
   const [isExtractDisabled, setIsExtractDisabled] = useState<boolean>(true);
   const [confirmExtract, setConfirmExtract] = useState<boolean>(false);
+  const showCheckbox = useMemo(() => tabIndex === SelectedTab.Approved, [tabIndex]);
 
   const handleCreateSDR = (type: string) => {
     // if (!viewSdrFlag) { // TODO: not allow creating sdr while editing sdr
     setCreateSdrFlag && setCreateSdrFlag(type);
     // }
   };
-
-  const openLogPage = (logpageNumber: string) => {
-    let width = window.innerWidth;
-    let url = `${config.webTechApiBaseUrl}${
-      config.URL_LOGPAGE_SEARCH
-    }?logPageNumber=${logpageNumber}&fleetCode=null&role=${sessionStorage.getItem("jobRole")}`;
-    window.open(
-      url,
-      "_blank",
-      "width=" +
-        (width - 450) / 2 +
-        ",height=" +
-        (window.innerHeight - 320) +
-        ",left=" +
-        (width / 2 - 50) +
-        ",top=450"
-    );
-  };
-
-  const columnDefs: GridColDef<TransformedSdrDataType>[] = [
-    {
-      field: "LogpageNumber",
-      headerName: "Log Page Number",
-      sortable: false,
-      minWidth: 150,
-      renderCell: ({ row }) => (
-        <Link
-          onClick={() => openLogPage(row?.LogpageNumber)}
-          sx={{ cursor: "pointer", color: "#6244BB" }}
-        >
-          {row?.LogpageNumber}
-        </Link>
-      ),
-    },
-    {
-      field: "ReportedBy",
-      headerName: "Reported By",
-      sortable: false,
-      minWidth: 150,
-      renderCell: ({ row }) =>
-        `${row?.CreatedbyFirstName || ""} ${row?.CreatebyLastName || ""} (${row?.CreatedBy || ""})`,
-    },
-    {
-      field: "CreatedDate",
-      headerName: "Date & Time",
-      minWidth: 180,
-      type: "dateTime",
-      sortable: true,
-      sortingOrder: ["desc", "asc"],
-      valueFormatter: ({ value }) => new Date(value),
-      renderCell: ({ row }) => (
-        <p className={row.IsOlderThan72Hours ? "paragraph-text" : ""}>
-          {moment(row?.CreatedDate).format("MM/DD/YYYY hh:mm:ss")}
-        </p>
-      ),
-    },
-    {
-      field: "LogpageStatus",
-      headerName: "Log Page Status",
-      minWidth: 150,
-      sortable: false,
-    },
-    {
-      field: "Type",
-      headerName: "SDR/SFR",
-      sortable: false,
-    },
-    {
-      field: "SdrStatus",
-      headerName: "SDR Status",
-      minWidth: 200,
-      sortable: false,
-    },
-  ];
-
-  useEffect(() => {
-    setShowCheckbox(tabIndex === SelectedTab.Approved);
-  }, [tabIndex]);
 
   const handleConfirmExtract = () => {
     setConfirmExtract(false);
@@ -150,14 +72,15 @@ const CommonDataGrid = ({
   return (
     <>
       <DataGrid
-        autoPageSize={autoPageSize}
+        className={`${isReport && "!h-[140vh]"}`}
+        autoPageSize={true}
         loading={loading}
         disableColumnMenu
-        columns={columnDefs as GridColDef<GridValidRowModel>[]}
+        columns={columns as GridColDef<GridValidRowModel>[]}
         rows={sdrData}
         getRowId={(row) => row.Id}
         checkboxSelection={showCheckbox}
-        // hideFooter={true}
+        hideFooter={isReport}
         rowSelectionModel={selectedSdrsToExtract}
         onRowSelectionModelChange={(sdrIds) => {
           setSelectedSdrsToExtract([...sdrIds]);
@@ -173,15 +96,10 @@ const CommonDataGrid = ({
         }}
         disableRowSelectionOnClick
         onCellClick={(data: GridCellParams) => {
-          // setViewSdrFlag(false);
-          if (data.field !== "__check__") {
-            if (!createSdrFlag) {
-              // TODO: not allow viewing a new sdr while creating a new sdr
-              setSelectedSdr(data?.row);
-              if (selectedSdr?.Id === data?.row?.Id) {
-                setViewSdrFlag(true);
-              }
-            }
+          setViewSdrFlag(false);
+          if (data.field !== "__check__" && !createSdrFlag) {
+            setSelectedSdr(data?.row);
+            setViewSdrFlag(true);
           }
         }}
       />
