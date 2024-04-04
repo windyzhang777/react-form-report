@@ -256,7 +256,6 @@ export interface EnvironmentConfig {
   URL_UPDATE_SNAPSHOT_SDR_EXTRACTION_STATUS: string;
   URL_INSERT_SNAPSHOT_SDR_FILENAME: string;
   URL_UPSERT_SDR_SNAPSHOT: string;
-  URL_GET_ESFR_REPORT: string;
 }
 
 export type EnvTypes = "localhost" | "development" | "qa" | "stage" | "production";
