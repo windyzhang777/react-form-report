@@ -159,6 +159,10 @@ export const getSfrMasterData = () => {
         const masterData = res?.data?.Result;
         dispatch(fetchSfrMaterDataSuccess(masterData));
       })
-      .catch((error) => dispatch(fetchSfrMaterDataFailure(error.message)));
+      .catch((error) => {
+        dispatch(fetchSfrMaterDataFailure(error.message));
+        const masterData = require("src/types/GetSfrMasterDataRes.json");
+        dispatch(fetchSfrMaterDataSuccess(masterData.Result));
+      });
   };
 };

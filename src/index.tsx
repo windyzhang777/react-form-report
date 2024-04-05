@@ -26,16 +26,16 @@ const authService = new AuthService({
 
 root.render(
   <StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <AuthProvider authService={authService}>
+    <AuthProvider authService={authService}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Provider store={store}>
           <BrowserRouter>
             <App />
           </BrowserRouter>
         </Provider>
-      </AuthProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </AuthProvider>
   </StrictMode>
 );
 

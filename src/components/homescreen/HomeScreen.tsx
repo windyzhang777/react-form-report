@@ -72,10 +72,7 @@ const HomeScreen = () => {
   }, [approvedSdrData, flaggedSdrData, newSdrData, tabIndex]);
 
   const resetSdrs = () => {
-    // setTabIndex(0); // TODO: reset to tab 1
     setViewSdrFlag(false);
-    setCreateSdrFlag("");
-    setOpenSnackbar(0);
     setSelectedSdr(null);
     dispatch(getAllSdrs(SelectedStatus.Open));
     dispatch(getAllSdrs(SelectedStatus.ApprovedWithFollowUp));
@@ -92,26 +89,24 @@ const HomeScreen = () => {
   };
 
   const handleFetchLogpageData = (logpageNumber: string) => {
-    if (logpageNumberValue !== logpageNumber) {
-      setLogpageNumberValue(logpageNumber);
-      setIsLoading(true);
-      axiosInstance
-        .get(`${config.apiBaseAddress}${config.URL_VIEW_LOGPAGE}?logPageNumber=${logpageNumber}`)
-        .then((res) => {
-          if (res?.status === 200) {
-            // setOpenSnackbar(1);
-            // setSnackbarMessage("Get Logpage data successful");
-            dispatch(fetchLogpageDataSuccess(res?.data?.Result));
-          }
-        })
-        .catch(() => {
-          setOpenSnackbar(-1);
-          setSnackbarMessage("Fail to get Logpage data");
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }
+    setLogpageNumberValue(logpageNumber);
+    setIsLoading(true);
+    axiosInstance
+      .get(`${config.apiBaseAddress}${config.URL_VIEW_LOGPAGE}?logPageNumber=${logpageNumber}`)
+      .then((res) => {
+        if (res?.status === 200) {
+          // setOpenSnackbar(1);
+          // setSnackbarMessage("Get Logpage data successful");
+          dispatch(fetchLogpageDataSuccess(res?.data?.Result));
+        }
+      })
+      .catch(() => {
+        setOpenSnackbar(-1);
+        setSnackbarMessage("Fail to get Logpage data");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const handleUpsertSdrSnapshot = (
@@ -216,13 +211,6 @@ const HomeScreen = () => {
       }
     }
   }, [selectedSdr]);
-
-  useEffect(() => {
-    if (!viewSdrFlag) {
-      setOpenSnackbar(0);
-      setSnackbarMessage("");
-    }
-  }, [editable, selectedSdr, tabIndex, viewSdrFlag]);
 
   useEffect(() => {
     setSelectedSdr(null);

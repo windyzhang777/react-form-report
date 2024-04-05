@@ -23,7 +23,13 @@ export interface GetApprovedSDRResResult {
   ModifiedbyLastName: string;
   NatureOfReportIds: number[];
   OperatorControlNumber: string;
-  PartDetails: PartDetails | null;
+  PartCondition: string;
+  PartDescription: string;
+  PartDetails: null;
+  PartLocation: string;
+  PartManufacturerSerialNumber: string;
+  PartSerialNumber: string;
+  PartTrackingNumber: string;
   PrecautionaryProcedureIds: number[];
   SdrId: number;
   SfrDetails: SfrDetails;
@@ -43,15 +49,6 @@ export interface AircraftDetails {
   TotalTime: string;
 }
 
-export interface PartDetails {
-  PartTrackingNumber: string;
-  PartManufacturerSerialNumber: string;
-  PartSerialNumber: string;
-  PartLocation: string;
-  PartCondition: string;
-  PartDescription: string;
-}
-
 export interface SfrDetails {
   AtaCode: string;
   ButtlineFrom: string;
@@ -61,7 +58,7 @@ export interface SfrDetails {
   ComponentManufacturerName: string;
   ComponentName: string;
   CorrisionLevel: string;
-  CrackLength: string;
+  CrackLength: string | null;
   FAAReceivingRegionCode: string;
   FuselageFromSta: string;
   FuselageToSta: string;

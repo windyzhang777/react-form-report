@@ -40,7 +40,7 @@ const App = () => {
       if (authService) {
         setLoginError(null);
         if (authService && !authService.isAuthenticated() && !authService.isPending()) {
-          return authService.authorize();
+          authService.authorize();
         } else {
           try {
             const logginedUserData = authService.getUser();
