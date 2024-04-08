@@ -4,6 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 interface ICommonLinkProps {
   children: ReactNode;
+  className?: string;
   onClick?: () => void;
   to: string;
 }

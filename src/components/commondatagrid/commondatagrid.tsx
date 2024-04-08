@@ -9,7 +9,7 @@ import {
 import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { FlexRow } from "src/commons/Box";
 import ButtonGroup from "src/commons/ButtonGroup";
-import DataGrid from "src/commons/DataGrid";
+import DataGrid, { CommonDataGridFooter, ReportDataGridFooter } from "src/commons/DataGrid";
 import Menu from "src/commons/Menu";
 import Modal from "src/commons/Modal";
 import {
@@ -19,16 +19,17 @@ import {
   UserPermission,
 } from "src/commons/types";
 import { useAppSelector } from "src/redux/hooks";
+import { GetEsfrReportResResult } from "src/types/GetEsfrReportRes";
 import "./commondatagrid.css";
 
 export interface CommonDataGridProps {
   columns: any;
   createSdrFlag?: string;
-  handleExtractSdrRecords?: (a: number[]) => void;
+  handleExtractSdrRecords: (a: number[]) => void;
   isReport?: boolean;
-  sdrData: TransformedSdrDataType[];
+  sdrData: TransformedSdrDataType[] | GetEsfrReportResResult[];
   selectedSdr: any;
-  setCreateSdrFlag?: Dispatch<SetStateAction<string>>;
+  setCreateSdrFlag: Dispatch<SetStateAction<string>>;
   setSelectedSdr: Dispatch<SetStateAction<any>>;
   setViewSdrFlag: Dispatch<SetStateAction<boolean>>;
   tabIndex?: number;
@@ -60,27 +61,27 @@ const CommonDataGrid = ({
 
   const handleCreateSDR = (type: string) => {
     // if (!viewSdrFlag) { // TODO: not allow creating sdr while editing sdr
-    setCreateSdrFlag && setCreateSdrFlag(type);
+    setCreateSdrFlag(type);
     // }
   };
 
   const handleConfirmExtract = () => {
     setConfirmExtract(false);
-    handleExtractSdrRecords && handleExtractSdrRecords(selectedSdrsToExtract as number[]);
+    handleExtractSdrRecords(selectedSdrsToExtract.map((s) => +(s as string).split("-")[0]));
   };
 
   return (
     <>
       <DataGrid
-        className={`${isReport && "!h-[140vh]"}`}
+        className={`${isReport && "!h-[80vh]"}`}
         autoPageSize={true}
         loading={loading}
         disableColumnMenu
         columns={columns as GridColDef<GridValidRowModel>[]}
         rows={sdrData}
-        getRowId={(row) => row.Id}
+        getRowId={(row) => `${row?.Id}-${isReport ? row?.ReportType : row?.Type}`}
         checkboxSelection={showCheckbox}
-        hideFooter={isReport}
+        // hideFooter={isReport}
         rowSelectionModel={selectedSdrsToExtract}
         onRowSelectionModelChange={(sdrIds) => {
           setSelectedSdrsToExtract([...sdrIds]);
@@ -90,7 +91,11 @@ const CommonDataGrid = ({
         }}
         getRowClassName={(params) => {
           let rowStyles = "";
-          rowStyles += params.id === selectedSdr?.Id ? "Mui-selection " : "";
+          rowStyles +=
+            params.id ===
+            `${selectedSdr?.Id}-${isReport ? selectedSdr?.ReportType : selectedSdr?.Type}`
+              ? "Mui-selection "
+              : "";
           rowStyles += params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd";
           return rowStyles;
         }}
@@ -101,6 +106,13 @@ const CommonDataGrid = ({
             setSelectedSdr(data?.row);
             setViewSdrFlag(true);
           }
+        }}
+        slots={{
+          footer: isReport ? ReportDataGridFooter : CommonDataGridFooter,
+        }}
+        sx={{
+          display: "flex",
+          flexDirection: isReport ? "column-reverse" : "column",
         }}
       />
       {tabIndex === SelectedTab.Approved && auth === UserPermission.CRU && (

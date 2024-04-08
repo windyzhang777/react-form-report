@@ -133,7 +133,7 @@ const ViewSdrData = ({
         (isSdr ? detailsData?.CreatedbyLastName : detailsData?.CreatedbyLastName) || "",
       ModifiedbyFirstName: `${profileData?.FirstName}`,
       ModifiedbyLastName: `${profileData?.LastName}`,
-      CreatedDate: moment(detailsData?.CreatedDate).toISOString() || "",
+      CreatedDate: moment(detailsData?.CreatedDate).format(DATETIME_REQUEST) || "",
       CorrectiveAction: detailsData?.FleetInfo?.CorrectiveActions || "",
       OperatorControlNumber: "",
       IsExtracted: true,
@@ -319,7 +319,7 @@ const ViewSdrData = ({
                             onChange={(e) => {
                               setFieldValue(
                                 "LogPageCreationDate",
-                                moment(e.target.value).toISOString()
+                                moment(e.target.value).format(DATE_HTML_DISPLAY)
                               );
                             }}
                             onBlur={handleBlur}

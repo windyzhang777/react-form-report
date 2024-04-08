@@ -1,0 +1,765 @@
+{
+	"Timestamp": "2024-04-05T16:19:36Z",
+	"ResponseTime": 0,
+	"Errors": [],
+	"ErrorCode": null,
+	"Result": {
+		"CalDocuments": [
+			{
+				"Description": "Work Card",
+				"DisplayOrder": 1,
+				"Id": 1
+			},
+			{
+				"Description": "EA",
+				"DisplayOrder": 2,
+				"Id": 2
+			},
+			{
+				"Description": "FCD",
+				"DisplayOrder": 3,
+				"Id": 3
+			},
+			{
+				"Description": "DIP",
+				"DisplayOrder": 4,
+				"Id": 4
+			},
+			{
+				"Description": "Log Page",
+				"DisplayOrder": 5,
+				"Id": 5
+			}
+		],
+		"CorrosionCauses": [
+			{
+				"Description": "Environmental",
+				"DisplayOrder": 1,
+				"Id": 1
+			},
+			{
+				"Description": "Blocked Drain",
+				"DisplayOrder": 2,
+				"Id": 2
+			},
+			{
+				"Description": "Lav/Galley Spill",
+				"DisplayOrder": 3,
+				"Id": 3
+			},
+			{
+				"Description": "Chemical Spill",
+				"DisplayOrder": 4,
+				"Id": 4
+			},
+			{
+				"Description": "Internal Leakage",
+				"DisplayOrder": 5,
+				"Id": 5
+			},
+			{
+				"Description": "Wet Insulation Blanket",
+				"DisplayOrder": 6,
+				"Id": 6
+			},
+			{
+				"Description": "Unknown",
+				"DisplayOrder": 7,
+				"Id": 7
+			},
+			{
+				"Description": "Other",
+				"DisplayOrder": 8,
+				"Id": 8
+			}
+		],
+		"CorrosionExtent": [
+			{
+				"Description": "Local",
+				"DisplayOrder": 1,
+				"Id": 1
+			},
+			{
+				"Description": "Widespread",
+				"DisplayOrder": 2,
+				"Id": 2
+			}
+		],
+		"CorrosionLevels": [
+			{
+				"Description": "1 = Non-PSE Corrosion",
+				"DisplayOrder": 1,
+				"Id": 1
+			},
+			{
+				"Description": "2 = Corrosion Out-of-Limits (Primary/PSE)",
+				"DisplayOrder": 2,
+				"Id": 2
+			},
+			{
+				"Description": "3 = Airworthiness Concern",
+				"DisplayOrder": 3,
+				"Id": 3
+			}
+		],
+		"DefectLocations": [
+			{
+				"Description": "Aileron",
+				"DisplayOrder": 1,
+				"Id": 1
+			},
+			{
+				"Description": "Aileron Tab",
+				"DisplayOrder": 2,
+				"Id": 2
+			},
+			{
+				"Description": "APB",
+				"DisplayOrder": 3,
+				"Id": 3
+			},
+			{
+				"Description": "Cabin Floor",
+				"DisplayOrder": 4,
+				"Id": 4
+			},
+			{
+				"Description": "Cargo Floor",
+				"DisplayOrder": 5,
+				"Id": 5
+			},
+			{
+				"Description": "Elevator",
+				"DisplayOrder": 6,
+				"Id": 6
+			},
+			{
+				"Description": "Elevator Tab",
+				"DisplayOrder": 7,
+				"Id": 7
+			},
+			{
+				"Description": "Fuselage",
+				"DisplayOrder": 8,
+				"Id": 8
+			},
+			{
+				"Description": "NLG",
+				"DisplayOrder": 12,
+				"Id": 10
+			},
+			{
+				"Description": "LE Flap",
+				"DisplayOrder": 10,
+				"Id": 11
+			},
+			{
+				"Description": "MLG",
+				"DisplayOrder": 11,
+				"Id": 12
+			},
+			{
+				"Description": "Pylon",
+				"DisplayOrder": 13,
+				"Id": 13
+			},
+			{
+				"Description": "Rudder Tab",
+				"DisplayOrder": 15,
+				"Id": 14
+			},
+			{
+				"Description": "Slat",
+				"DisplayOrder": 16,
+				"Id": 15
+			},
+			{
+				"Description": "Spoiler",
+				"DisplayOrder": 17,
+				"Id": 16
+			},
+			{
+				"Description": "TE Flap",
+				"DisplayOrder": 18,
+				"Id": 17
+			},
+			{
+				"Description": "Vertical Stab",
+				"DisplayOrder": 19,
+				"Id": 18
+			},
+			{
+				"Description": "Wing",
+				"DisplayOrder": 20,
+				"Id": 19
+			},
+			{
+				"Description": "Other",
+				"DisplayOrder": 21,
+				"Id": 20
+			},
+			{
+				"Description": "Rudder",
+				"DisplayOrder": 14,
+				"Id": 21
+			},
+			{
+				"Description": "Horizontal Stab",
+				"DisplayOrder": 9,
+				"Id": 9
+			}
+		],
+		"DetectionMethods": [
+			{
+				"Description": "Dye Penetrant",
+				"DisplayOrder": 1,
+				"Id": 1
+			},
+			{
+				"Description": "HFEC",
+				"DisplayOrder": 2,
+				"Id": 2
+			},
+			{
+				"Description": "LFEC",
+				"DisplayOrder": 3,
+				"Id": 3
+			},
+			{
+				"Description": "Magnetic Particle",
+				"DisplayOrder": 4,
+				"Id": 4
+			},
+			{
+				"Description": "Tap Test/Sound",
+				"DisplayOrder": 5,
+				"Id": 5
+			},
+			{
+				"Description": "Ultrasonic",
+				"DisplayOrder": 6,
+				"Id": 6
+			},
+			{
+				"Description": "Visual",
+				"DisplayOrder": 7,
+				"Id": 7
+			},
+			{
+				"Description": "X-Ray",
+				"DisplayOrder": 8,
+				"Id": 8
+			},
+			{
+				"Description": "OTHER",
+				"DisplayOrder": 9,
+				"Id": 9
+			}
+		],
+		"DiscrepancyParts": [
+			{
+				"Description": "Angle",
+				"DisplayOrder": 1,
+				"Id": 1
+			},
+			{
+				"Description": "Beam",
+				"DisplayOrder": 2,
+				"Id": 2
+			},
+			{
+				"Description": "Bracket",
+				"DisplayOrder": 3,
+				"Id": 3
+			},
+			{
+				"Description": "Bushing",
+				"DisplayOrder": 4,
+				"Id": 4
+			},
+			{
+				"Description": "Channel",
+				"DisplayOrder": 5,
+				"Id": 5
+			},
+			{
+				"Description": "Chord",
+				"DisplayOrder": 6,
+				"Id": 6
+			},
+			{
+				"Description": "Fastener",
+				"DisplayOrder": 7,
+				"Id": 7
+			},
+			{
+				"Description": "Fitting",
+				"DisplayOrder": 8,
+				"Id": 8
+			},
+			{
+				"Description": "Flap Track",
+				"DisplayOrder": 9,
+				"Id": 9
+			},
+			{
+				"Description": "Floor Support",
+				"DisplayOrder": 10,
+				"Id": 10
+			},
+			{
+				"Description": "Frame Bulkhead",
+				"DisplayOrder": 11,
+				"Id": 11
+			},
+			{
+				"Description": "Intercostal",
+				"DisplayOrder": 12,
+				"Id": 12
+			},
+			{
+				"Description": "Joint",
+				"DisplayOrder": 13,
+				"Id": 13
+			},
+			{
+				"Description": "Keel Beam",
+				"DisplayOrder": 14,
+				"Id": 14
+			},
+			{
+				"Description": "Landing Gear Beam",
+				"DisplayOrder": 15,
+				"Id": 15
+			},
+			{
+				"Description": "Link/Rod",
+				"DisplayOrder": 16,
+				"Id": 16
+			},
+			{
+				"Description": "Lug",
+				"DisplayOrder": 17,
+				"Id": 17
+			},
+			{
+				"Description": "Pin",
+				"DisplayOrder": 18,
+				"Id": 18
+			},
+			{
+				"Description": "Plate/Panel",
+				"DisplayOrder": 19,
+				"Id": 19
+			},
+			{
+				"Description": "Pressure Bulkhead",
+				"DisplayOrder": 20,
+				"Id": 20
+			},
+			{
+				"Description": "Rib",
+				"DisplayOrder": 21,
+				"Id": 21
+			},
+			{
+				"Description": "Seat Track",
+				"DisplayOrder": 22,
+				"Id": 22
+			},
+			{
+				"Description": "Skin",
+				"DisplayOrder": 23,
+				"Id": 23
+			},
+			{
+				"Description": "Spar",
+				"DisplayOrder": 24,
+				"Id": 24
+			},
+			{
+				"Description": "Stringer",
+				"DisplayOrder": 25,
+				"Id": 25
+			},
+			{
+				"Description": "Strut/Brace",
+				"DisplayOrder": 26,
+				"Id": 26
+			},
+			{
+				"Description": "Window Forging",
+				"DisplayOrder": 27,
+				"Id": 27
+			},
+			{
+				"Description": "Other",
+				"DisplayOrder": 28,
+				"Id": 28
+			}
+		],
+		"DiscrepancyTypes": [
+			{
+				"Description": "Buckled/Wrinkled",
+				"DisplayOrder": 1,
+				"Id": 1
+			},
+			{
+				"Description": "Burned",
+				"DisplayOrder": 2,
+				"Id": 2
+			},
+			{
+				"Description": "Contaminated",
+				"DisplayOrder": 3,
+				"Id": 3
+			},
+			{
+				"Description": "Corrosion",
+				"DisplayOrder": 4,
+				"Id": 4
+			},
+			{
+				"Description": "Crack",
+				"DisplayOrder": 5,
+				"Id": 5
+			},
+			{
+				"Description": "Corrosion and Crack",
+				"DisplayOrder": 6,
+				"Id": 6
+			},
+			{
+				"Description": "Delaminated/Disbonded",
+				"DisplayOrder": 7,
+				"Id": 7
+			},
+			{
+				"Description": "Dented/Deformed",
+				"DisplayOrder": 8,
+				"Id": 8
+			},
+			{
+				"Description": "Loose",
+				"DisplayOrder": 9,
+				"Id": 9
+			},
+			{
+				"Description": "Other Structural Defect",
+				"DisplayOrder": 13,
+				"Id": 10
+			},
+			{
+				"Description": "Struck",
+				"DisplayOrder": 11,
+				"Id": 11
+			},
+			{
+				"Description": "Missing",
+				"DisplayOrder": 10,
+				"Id": 12
+			},
+			{
+				"Description": "Worn",
+				"DisplayOrder": 12,
+				"Id": 13
+			}
+		],
+		"HowDiscovered": [
+			{
+				"Description": "Unknown",
+				"DisplayOrder": 1,
+				"Id": 1
+			},
+			{
+				"Description": "Boroscope",
+				"DisplayOrder": 2,
+				"Id": 2
+			},
+			{
+				"Description": "Functional Check",
+				"DisplayOrder": 3,
+				"Id": 3
+			},
+			{
+				"Description": "Dye Penetrant",
+				"DisplayOrder": 4,
+				"Id": 4
+			},
+			{
+				"Description": "Eddy Current",
+				"DisplayOrder": 5,
+				"Id": 5
+			},
+			{
+				"Description": "Light Source",
+				"DisplayOrder": 6,
+				"Id": 6
+			},
+			{
+				"Description": "Magnetic Particle",
+				"DisplayOrder": 7,
+				"Id": 7
+			},
+			{
+				"Description": "Other",
+				"DisplayOrder": 8,
+				"Id": 8
+			},
+			{
+				"Description": "Thermal",
+				"DisplayOrder": 9,
+				"Id": 9
+			},
+			{
+				"Description": "Ultrasonic",
+				"DisplayOrder": 10,
+				"Id": 10
+			},
+			{
+				"Description": "Visual",
+				"DisplayOrder": 11,
+				"Id": 11
+			},
+			{
+				"Description": "Magnified Visual",
+				"DisplayOrder": 12,
+				"Id": 12
+			},
+			{
+				"Description": "X-Ray",
+				"DisplayOrder": 13,
+				"Id": 13
+			}
+		],
+		"MfrSources": [
+			{
+				"Description": "NONE",
+				"DisplayOrder": 6,
+				"Id": 6
+			},
+			{
+				"Description": "OTHER",
+				"DisplayOrder": 5,
+				"Id": 5
+			},
+			{
+				"Description": "SSID",
+				"DisplayOrder": 4,
+				"Id": 4
+			},
+			{
+				"Description": "SID",
+				"DisplayOrder": 3,
+				"Id": 3
+			},
+			{
+				"Description": "SSI",
+				"DisplayOrder": 2,
+				"Id": 2
+			},
+			{
+				"Description": "CTN",
+				"DisplayOrder": 1,
+				"Id": 1
+			}
+		],
+		"NatureofReports": [
+			{
+				"Description": "Flame",
+				"DisplayOrder": 1,
+				"Id": 1
+			},
+			{
+				"Description": "Smoke/Odor/Fumes",
+				"DisplayOrder": 2,
+				"Id": 2
+			},
+			{
+				"Description": "F.O.D.",
+				"DisplayOrder": 3,
+				"Id": 3
+			},
+			{
+				"Description": "Inflight Separation",
+				"DisplayOrder": 4,
+				"Id": 4
+			},
+			{
+				"Description": "Vibration/Buffet",
+				"DisplayOrder": 5,
+				"Id": 5
+			},
+			{
+				"Description": "Flight Control Affected",
+				"DisplayOrder": 6,
+				"Id": 6
+			},
+			{
+				"Description": "Multiple Failure",
+				"DisplayOrder": 7,
+				"Id": 7
+			},
+			{
+				"Description": " Elect Power Loss 50%",
+				"DisplayOrder": 8,
+				"Id": 8
+			},
+			{
+				"Description": " Flt Att Inst Malfunction",
+				"DisplayOrder": 9,
+				"Id": 9
+			},
+			{
+				"Description": "Warning Indication",
+				"DisplayOrder": 10,
+				"Id": 10
+			},
+			{
+				"Description": "Fluid Loss",
+				"DisplayOrder": 11,
+				"Id": 11
+			},
+			{
+				"Description": "No Test",
+				"DisplayOrder": 12,
+				"Id": 12
+			},
+			{
+				"Description": "Over Temp",
+				"DisplayOrder": 13,
+				"Id": 13
+			},
+			{
+				"Description": " False Warning",
+				"DisplayOrder": 14,
+				"Id": 14
+			},
+			{
+				"Description": "Other",
+				"DisplayOrder": 15,
+				"Id": 15
+			},
+			{
+				"Description": "No Warning Indicated",
+				"DisplayOrder": 16,
+				"Id": 16
+			},
+			{
+				"Description": " Partial RPM/Pwr Loss",
+				"DisplayOrder": 17,
+				"Id": 17
+			},
+			{
+				"Description": "Other Sys Affected",
+				"DisplayOrder": 18,
+				"Id": 18
+			},
+			{
+				"Description": "Engine Case Penetration",
+				"DisplayOrder": 19,
+				"Id": 19
+			},
+			{
+				"Description": "Inadequate QC",
+				"DisplayOrder": 20,
+				"Id": 20
+			},
+			{
+				"Description": "Engine Flameout",
+				"DisplayOrder": 21,
+				"Id": 21
+			},
+			{
+				"Description": "Engine Stoppage",
+				"DisplayOrder": 22,
+				"Id": 22
+			},
+			{
+				"Description": "Significant Failure",
+				"DisplayOrder": 23,
+				"Id": 23
+			}
+		],
+		"PrecautionaryProcedures": [
+			{
+				"Description": "Unscheduled Landing",
+				"DisplayOrder": 1,
+				"Id": 1
+			},
+			{
+				"Description": "Emergency Descent",
+				"DisplayOrder": 2,
+				"Id": 2
+			},
+			{
+				"Description": "Aborted Takeoff",
+				"DisplayOrder": 3,
+				"Id": 3
+			},
+			{
+				"Description": "Return to Block",
+				"DisplayOrder": 4,
+				"Id": 4
+			}
+		],
+		"ReportableItems": "<!DOCTYPE html><html><body><table><tr><td style=\"padding-bottom: 1em;\">Mechanical Reliability / Service Difficulty Reports Reportable Occurrences<p style=\"margin-top: 1em;\">The following events are reportable by United Airlines. United shall report the occurrence or detection of each failure, malfunction, or defect concerning:</p><table style=\"border-collapse: collapse; margin-top: 1em;\"> <tbody> <tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(1)</td><td style=\"padding-bottom: 1em;\">Fires during flight and whether the related fire−warning system functioned properly.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(2)</td><td style=\"padding-bottom: 1em;\">Fires during flight not protected by a related fire−warning system. </td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(3)</td><td style=\"padding-bottom: 1em;\">False fire warning during flight.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(4)</td><td style=\"padding-bottom: 1em;\">An engine exhaust system that causes damage during flight to the engine, adjacent structure, equipment, or components.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(5)</td><td style=\"padding-bottom: 1em;\">An aircraft component that causes accumulation or circulation of smoke, vapor, or toxic or noxious fumes in the crew compartment or passenger cabin during flight.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(6)</td><td style=\"padding-bottom: 1em;\">Engine shutdown during flight because of flameout.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(7)</td><td style=\"padding-bottom: 1em;\">Engine shutdown during flight when external damage to the engine or airplane structure occurs.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(8)</td><td style=\"padding-bottom: 1em;\">Engine shutdown during flight due to foreign object ingestion or icing. </td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(9)</td><td style=\"padding-bottom: 1em;\">Engine shutdown during flight of more than one engine.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(10)</td><td style=\"padding-bottom: 1em;\">A propeller feathering system or ability of the system to control overspeed during flight.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(11)</td><td style=\"padding-bottom: 1em;\">A fuel or fuel−dumping system that affects fuel flow or causes hazardous leakage during flight.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(12)</td><td style=\"padding-bottom: 1em;\">An unwanted landing gear extension or retraction, or an unwanted opening or closing of landing gear doors during flight.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(13)</td><td style=\"padding-bottom: 1em;\">Brake system components that result in loss of brake actuating force when the airplane is in motion on the ground.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(14)</td><td style=\"padding-bottom: 1em;\">Aircraft structure that requires major repair.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(15)</td><td style=\"padding-bottom: 1em;\">Cracks, permanent deformation, or corrosion of aircraft structures, if more than the maximum acceptable to the manufacturer or the FAA.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(16)</td><td style=\"padding-bottom: 1em;\">Aircraft components or systems that result in taking emergency actions during flight (except action to shut down an engine); and</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(17)</td><td style=\"padding-bottom: 1em;\">Emergency evacuation systems or components including all exit doors, passenger emergency evacuation lighting systems, or evacuation equipment that are found defective, or that fail to perform the intended functions during an actual emergency or during training, testing, maintenance, demonstrations, or inadvertent deployments.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(18)</td><td style=\"padding-bottom: 1em;\">For the purpose of this section, during flight means the period from the moment the aircraft leaves the surface of the earth on takeoff until it touches down on landing. </td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(19)</td><td style=\"padding-bottom: 1em;\">In addition to the reports required above, United shall report any other failure, malfunction, or defect in an aircraft that occurs or is detected at any time if, in its opinion, that failure, malfunction, or defect has endangered or may endanger the safe operation of an aircraft used by it.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(20)</td><td style=\"padding-bottom: 1em;\">Any part of the aircraft that would endanger the aircraft or any person by becoming detached in flight or during operations on the ground (IOSA Requirement).</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(21)</td><td style=\"padding-bottom: 1em;\">Un−commanded loss of thrust / power, shutdown or failure of any engine (IOSA Requirement − Related to Items 6 through 9 above).</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(22)</td><td style=\"padding-bottom: 1em;\">Uncontained failure of engine compressor, turbines (IOSA Requirement − Related to items 6 through 9 above) .</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(23)</td><td style=\"padding-bottom: 1em;\">RVSM altitude-keeping errors as defined in GMM Section 05-20-65 Reduced Vertical Separation Minimums (RVSM).</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(24)</td><td style=\"padding-bottom: 1em;\">In addition to the reporting requirements listed above, to meet the requirements of the aircraft Type Certificate Data Sheet (TCDS) and Boeing 787 system Airworthiness Limitations, number 13, United shall report any uncontrolled high thrust failure condition that may endanger the safe operation of an aircraft. In many cases, a reportable failure or malfunction will be obvious. The following information is provided to assist the operators in identifying reportable malfunctions related to uncontrollable high thrust. This includes any malfunctions having one or more of the following characteristics:<table style=\"border-collapse: collapse; margin-top: 1em;\"> <tbody> <tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\"> (a)</td><td style=\"padding-bottom: 1em;\"> Auto−acceleration or uncommanded thrust change to higher power</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\"> (b)</td><td style=\"padding-bottom: 1em;\"> Stuck thrust lever above idle power</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\"> (c)</td><td style=\"padding-bottom: 1em;\"> Inability to reduce thrust</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\"> (d)</td><td style=\"padding-bottom: 1em;\">When filing a report of such an event with the FAA, include in the description of the event one or more of the following phrases:<table style=\"border-collapse: collapse; margin-top: 1em;\"> <tbody> <tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: underline; width: 2em;\"> 1</td><td style=\"padding-bottom: 1em;\">Thrust control</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: underline; width: 2em;\"> 2</td><td style=\"padding-bottom: 1em;\"> No response to thrust lever</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: underline; width: 2em;\"> 3</td><td style=\"padding-bottom: 1em;\"> Auto−acceleration</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: underline; width: 2em;\"> 4</td><td style=\"padding-bottom: 1em;\"> Uncontrolled high thrust</td></tr></tbody> </table> </td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\"> (e)</td><td style=\"padding-bottom: 1em;\"> The following information must also be included in the report:<table style=\"border-collapse: collapse; margin-top: 1em;\"> <tbody> <tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: underline; width: 2em;\"> 1</td><td style=\"padding-bottom: 1em;\">Event description</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: underline; width: 2em;\"> 2</td><td style=\"padding-bottom: 1em;\"> Flight Crew action</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: underline; width: 2em;\"> 3</td><td style=\"padding-bottom: 1em;\">Maintenance action</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: underline; width: 2em;\"> 4</td><td style=\"padding-bottom: 1em;\">List of affected or removed components </td></tr></tbody> </table> </td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\"> (f)</td><td style=\"padding-bottom: 1em;\"> Send a copy of the report to Boeing and to the engine manufacturer</td></tr></tbody> </table> </td></tr></tbody> </table></td></tr></table></body></html>",
+		"Stage": [
+			{
+				"Description": "Approach",
+				"DisplayOrder": 1,
+				"Id": 1
+			},
+			{
+				"Description": "Climb",
+				"DisplayOrder": 2,
+				"Id": 2
+			},
+			{
+				"Description": "Cruise",
+				"DisplayOrder": 3,
+				"Id": 3
+			},
+			{
+				"Description": "Descent",
+				"DisplayOrder": 4,
+				"Id": 4
+			},
+			{
+				"Description": "External Load",
+				"DisplayOrder": 5,
+				"Id": 5
+			},
+			{
+				"Description": "Insp/Maint",
+				"DisplayOrder": 6,
+				"Id": 6
+			},
+			{
+				"Description": "Landing",
+				"DisplayOrder": 7,
+				"Id": 7
+			},
+			{
+				"Description": "Not Reported",
+				"DisplayOrder": 8,
+				"Id": 8
+			},
+			{
+				"Description": "Take Off",
+				"DisplayOrder": 9,
+				"Id": 9
+			},
+			{
+				"Description": "Taxi/Grnd Handle",
+				"DisplayOrder": 10,
+				"Id": 10
+			},
+			{
+				"Description": "Unknown",
+				"DisplayOrder": 11,
+				"Id": 11
+			}
+		]
+	}
+}

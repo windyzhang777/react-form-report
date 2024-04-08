@@ -4,6 +4,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { FlexColumn } from "src/commons/Box";
 import ButtonGroup from "src/commons/ButtonGroup";
+import RouterLink from "src/commons/Link";
 import Menu from "src/commons/Menu";
 import { DATETIME_REFRESH } from "src/helpers";
 import RefreshIcon from "src/icons/Refresh.png";
@@ -69,9 +70,15 @@ const Header = ({ resetApp }: IHeaderProps) => {
         >
           <Box>
             <List>
-              <MenuItem>Report Search</MenuItem>
-              <MenuItem>CPCP Report Search</MenuItem>
-              <MenuItem>Discrepancy Parts Report</MenuItem>
+              <RouterLink to="/esfr/report" onClick={() => setOpenDrawer(false)}>
+                <MenuItem>Report Search</MenuItem>
+              </RouterLink>
+              <RouterLink to="/esfr/cpcp" onClick={() => setOpenDrawer(false)}>
+                <MenuItem>CPCP Report Search</MenuItem>
+              </RouterLink>
+              <RouterLink to="/esfr/parts" onClick={() => setOpenDrawer(false)}>
+                <MenuItem>Discrepancy Parts Report</MenuItem>
+              </RouterLink>
             </List>
           </Box>
         </Drawer>

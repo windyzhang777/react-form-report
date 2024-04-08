@@ -99,7 +99,7 @@ export const theme = createTheme({
     MuiButtonBase: {
       styleOverrides: {
         root: ({ theme }) => ({
-          ".Mui-checked": {
+          "&.Mui-checked": {
             color: theme.palette.secondary.main + "!important",
           },
         }),

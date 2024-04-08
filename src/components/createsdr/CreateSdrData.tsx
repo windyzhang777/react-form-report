@@ -446,19 +446,12 @@ const CreateSdrData = ({
                     {editable ? (
                       <TextField
                         type="date"
-                        // InputProps={{
-                        //   endAdornment: (
-                        //     <InputAdornment position="end">
-                        //       <CalendarMonthIcon />
-                        //     </InputAdornment>
-                        //   ),
-                        // }}
                         name="LogPageCreationDate"
                         value={moment(values.LogPageCreationDate).format(DATE_HTML_DISPLAY)}
                         onChange={(e) => {
                           setFieldValue(
                             "LogPageCreationDate",
-                            moment(e.target.value).toISOString()
+                            moment(e.target.value).format(DATE_HTML_DISPLAY)
                           );
                         }}
                         onBlur={handleBlur}

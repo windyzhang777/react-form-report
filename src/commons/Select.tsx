@@ -111,16 +111,18 @@ export const SingleSelect = ({
 }: ISingleSelectProps) => (
   <Box className={className} sx={{ minWidth: 120 }}>
     <FormControl fullWidth>
-      <InputLabel
-        variant="outlined"
-        shrink={false}
-        sx={{
-          color: value ? "transparent !important" : "rgba(0, 0, 0, 0.6) !important",
-          marginTop: "-8px",
-        }}
-      >
-        Select One
-      </InputLabel>
+      {!value && value !== 0 && (
+        <InputLabel
+          variant="outlined"
+          shrink={false}
+          sx={{
+            color: value ? "transparent !important" : "rgba(0, 0, 0, 0.6) !important",
+            marginTop: "-8px",
+          }}
+        >
+          Select One
+        </InputLabel>
+      )}
       <Select
         {...props}
         displayEmpty

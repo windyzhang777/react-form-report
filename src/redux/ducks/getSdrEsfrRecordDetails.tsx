@@ -6,6 +6,7 @@ import {
   SdrEsfrRecordDetailsReducerAction,
   SdrEsfrRecordDetailsStateType,
   SfrMasterDataFuncType,
+  ViewLogPageDetailsFuncType,
 } from "src/commons/types";
 import { GetApprovedSDRResResult } from "src/types/GetApprovedSdrRes";
 import { GetSDREsfrRecordDetailsResResult } from "src/types/GetSdrEsfrRecordDetailsRes";
@@ -55,12 +56,20 @@ const fetchSfrMaterDataFailure = (message: string) => {
   return { type: SdrEsfrRecordDetailsActionType.FETCH_SFR_MATER_DATA_FAILURE, message };
 };
 
-export const fetchLogpageDataSuccess = (data: ViewLogpageResResult) => {
+const fetchLogpageDataSuccess = (data: ViewLogpageResResult) => {
   return { type: SdrEsfrRecordDetailsActionType.FETCH_LOGPAGE_DATA_SUCCESS, data };
 };
 
 export const resetLogpageDataSuccess = () => {
   return { type: SdrEsfrRecordDetailsActionType.FETCH_LOGPAGE_DATA_SUCCESS, data: null };
+};
+
+const fetchLogpageDataFailure = (message: string) => {
+  return { type: SdrEsfrRecordDetailsActionType.FETCH_LOGPAGE_DATA_FAILURE, message };
+};
+
+export const setDetailsLoaderOff = () => {
+  return { type: SdrEsfrRecordDetailsActionType.FETCH_SET_DETAILS_LOADER_OFF };
 };
 
 export const sdrEsfrRecordDetailsReducer = (
@@ -69,10 +78,17 @@ export const sdrEsfrRecordDetailsReducer = (
 ) => {
   switch (action.type) {
     case SdrEsfrRecordDetailsActionType.FETCH_DETAILS: {
-      return { ...state, loading: true, detailsData: null, snapshot: null, error: "" };
+      return {
+        ...state,
+        loading: true,
+        detailsData: null,
+        snapshot: null,
+        logpageData: null,
+        error: "",
+      };
     }
     case SdrEsfrRecordDetailsActionType.FETCH_ESFR_DETAIL_SUCCESS: {
-      return { ...state, loading: false, detailsData: action.data, error: "" };
+      return { ...state, detailsData: action.data, error: "" };
     }
     case SdrEsfrRecordDetailsActionType.FETCH_ESFR_DETAIL_FAILURE: {
       return {
@@ -83,7 +99,7 @@ export const sdrEsfrRecordDetailsReducer = (
       };
     }
     case SdrEsfrRecordDetailsActionType.FETCH_APPROVED_SDR_SUCCESS: {
-      return { ...state, loading: false, snapshotData: action.data, error: "" };
+      return { ...state, snapshotData: action.data, error: "" };
     }
     case SdrEsfrRecordDetailsActionType.FETCH_APPROVED_SDR_FAILURE: {
       return {
@@ -105,7 +121,7 @@ export const sdrEsfrRecordDetailsReducer = (
       };
     }
     case SdrEsfrRecordDetailsActionType.FETCH_LOGPAGE_DATA_SUCCESS: {
-      return { ...state, loading: false, logpageData: action.data, error: "" };
+      return { ...state, logpageData: action.data, error: "" };
     }
     case SdrEsfrRecordDetailsActionType.FETCH_LOGPAGE_DATA_FAILURE: {
       return {
@@ -113,6 +129,12 @@ export const sdrEsfrRecordDetailsReducer = (
         loading: false,
         logpageData: null,
         error: `Fail to get Logpage Data (${action.message})`,
+      };
+    }
+    case SdrEsfrRecordDetailsActionType.FETCH_SET_DETAILS_LOADER_OFF: {
+      return {
+        ...state,
+        loading: false,
       };
     }
     default:
@@ -132,6 +154,19 @@ export const getSdrEsfrRecordDetails = (logpageNumber: string) => {
         dispatch(fetchSuccess(esfrRecordDetail));
       })
       .catch((error) => dispatch(fetchFailure(error.message)));
+  };
+};
+
+export const viewLogPageDetails = (logpageNumber: string) => {
+  return function (dispatch: Dispatch<ViewLogPageDetailsFuncType>) {
+    dispatch(initFetch());
+    axiosInstance
+      .get(`${config.apiBaseAddress}${config.URL_VIEW_LOGPAGE}?logpageNumber=${logpageNumber}`)
+      .then((res) => {
+        const logpageData = res?.data?.Result;
+        dispatch(fetchLogpageDataSuccess(logpageData));
+      })
+      .catch((error) => dispatch(fetchLogpageDataFailure(error.message)));
   };
 };
 

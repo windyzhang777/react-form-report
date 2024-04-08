@@ -1,11 +1,10 @@
 import { Grid, Tab, Tabs, Typography } from "@mui/material";
 import { SyntheticEvent, useEffect, useMemo, useState } from "react";
 import ButtonGroup from "src/commons/ButtonGroup";
-import { a11yProps } from "src/commons/Common";
 import CommonLoader from "src/commons/CommonLoader";
 import Modal from "src/commons/Modal";
 import Snackbar from "src/commons/Snackbar";
-import TabPanel from "src/commons/TabPanel";
+import TabPanel, { a11yProps } from "src/commons/TabPanel";
 import {
   IEditSdrValues,
   ISaveSdrValues,
@@ -28,10 +27,11 @@ import {
   updateExtractionStatus,
 } from "src/redux/ducks/getFlatFile";
 import {
-  fetchLogpageDataSuccess,
   getApprovedSdr,
   getSdrEsfrRecordDetails,
   getSfrMasterData,
+  setDetailsLoaderOff,
+  viewLogPageDetails,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
@@ -42,10 +42,18 @@ import "./homescreen.css";
 const HomeScreen = () => {
   const { profileData } = useAppSelector((state) => state.profile);
   const { sdrData: newSdrData } = useAppSelector((state) => state.newSdrs);
-  const { sdrData: approvedSdrData } = useAppSelector((state) => state.approvedSdrs);
+  const { loading: loadingSdrs, sdrData: approvedSdrData } = useAppSelector(
+    (state) => state.approvedSdrs
+  );
   const { sdrData: flaggedSdrData } = useAppSelector((state) => state.flaggedSdrs);
-  const { loading, detailsData, snapshotData, masterData, error }: SdrEsfrRecordDetailsStateType =
-    useAppSelector((state) => state.sdrEsfrRecordDetails);
+  const {
+    loading: loadingDetailsData,
+    detailsData,
+    snapshotData,
+    masterData,
+    logpageData,
+    error,
+  }: SdrEsfrRecordDetailsStateType = useAppSelector((state) => state.sdrEsfrRecordDetails);
   const { fileData } = useAppSelector((state) => state.flatFile);
   const dispatch = useAppDispatch();
   const [tabIndex, setTabIndex] = useState<number>(0);
@@ -90,23 +98,7 @@ const HomeScreen = () => {
 
   const handleFetchLogpageData = (logpageNumber: string) => {
     setLogpageNumberValue(logpageNumber);
-    setIsLoading(true);
-    axiosInstance
-      .get(`${config.apiBaseAddress}${config.URL_VIEW_LOGPAGE}?logPageNumber=${logpageNumber}`)
-      .then((res) => {
-        if (res?.status === 200) {
-          // setOpenSnackbar(1);
-          // setSnackbarMessage("Get Logpage data successful");
-          dispatch(fetchLogpageDataSuccess(res?.data?.Result));
-        }
-      })
-      .catch(() => {
-        setOpenSnackbar(-1);
-        setSnackbarMessage("Fail to get Logpage data");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    dispatch(viewLogPageDetails(logpageNumber));
   };
 
   const handleUpsertSdrSnapshot = (
@@ -213,6 +205,12 @@ const HomeScreen = () => {
   }, [selectedSdr]);
 
   useEffect(() => {
+    if (detailsData && logpageData) {
+      dispatch(setDetailsLoaderOff());
+    }
+  }, [detailsData, logpageData]);
+
+  useEffect(() => {
     setSelectedSdr(null);
     setViewSdrFlag(false);
   }, [tabIndex]);
@@ -226,9 +224,15 @@ const HomeScreen = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (!viewSdrFlag) {
+      setSelectedSdr(null);
+    }
+  }, [viewSdrFlag]);
+
   return (
     <>
-      {(isLoading || loading) && <CommonLoader />}
+      {(isLoading || loadingSdrs || loadingDetailsData) && <CommonLoader />}
       <Grid container className="grow overflow-auto md:overflow-y-hidden">
         <Grid item md={6} sm={12} className="h-full w-full flex !flex-col !px-[20px]">
           <Tabs
@@ -239,17 +243,21 @@ const HomeScreen = () => {
           >
             <Tab
               {...a11yProps("home", 0)}
-              label={`New SDR/SFRs (${newSdrData?.length || 0})`}
+              label={`New SDR/SFRs (${(Array.isArray(newSdrData) && newSdrData.length) || 0})`}
               id="NewsdrTab"
             />
             <Tab
               {...a11yProps("home", 1)}
-              label={`Flagged for Follow up (${flaggedSdrData?.length || 0})`}
+              label={`Flagged for Follow up (${
+                (Array.isArray(flaggedSdrData) && flaggedSdrData.length) || 0
+              })`}
               id="Flaggedforfollowup"
             />
             <Tab
               {...a11yProps("home", 2)}
-              label={`Approved SDRs (${approvedSdrData?.length || 0})`}
+              label={`Approved SDRs (${
+                (Array.isArray(approvedSdrData) && approvedSdrData.length) || 0
+              })`}
               id="Approvedsdr"
             />
           </Tabs>

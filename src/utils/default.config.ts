@@ -13,6 +13,7 @@ const defaultConfig = {
   URL_UPDATE_SNAPSHOT_SDR_EXTRACTION_STATUS: "/api/Elb/UpdateSnapshotSdrExtractionStatus",
   URL_INSERT_SNAPSHOT_SDR_FILENAME: "/api/Elb/InsertSnapshotSdrFilename",
   URL_UPSERT_SDR_SNAPSHOT: "/api/Elb/UpsertSdrSnapshot",
+  URL_GET_ESFR_REPORT: "/api/Elb/GetEsfrReport",
 };
 
 export default defaultConfig;

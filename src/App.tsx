@@ -5,6 +5,7 @@ import CommonLoader from "src/commons/CommonLoader";
 import { SelectedStatus, UserPermission } from "src/commons/types";
 import Header from "src/components/header/Header";
 import HomeScreen from "src/components/homescreen/HomeScreen";
+import ReportSearchScreen from "src/components/reportsearch/ReportSearchScreen";
 import { clearLocalStorage } from "src/helpers";
 import { getAllSdrs } from "src/redux/ducks/getAllSdrs";
 import { getProfile } from "src/redux/ducks/getProfile";
@@ -98,6 +99,9 @@ const App = () => {
       <Header resetApp={resetApp} />
       <Routes>
         <Route path="/esfr" element={<HomeScreen />} />
+        <Route path="/esfr/report" element={<ReportSearchScreen />} />
+        <Route path="/esfr/cpcp" element={<ReportSearchScreen />} />
+        <Route path="/esfr/parts" element={<ReportSearchScreen />} />
       </Routes>
     </FlexColumn>
   );

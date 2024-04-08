@@ -1,6 +1,8 @@
 import { ExtractSDRRecordsResResult } from "src/types/ExtractSdrRecordsRes";
 import { GetAllEsfrRecordsResResult, Status } from "src/types/GetAllEsfrRecordsRes";
 import { AircraftDetails, GetApprovedSDRResResult } from "src/types/GetApprovedSdrRes";
+import { GetEsfrReportReq } from "src/types/GetEsfrReportReq";
+import { GetEsfrReportResResult } from "src/types/GetEsfrReportRes";
 import { Employee, GetProfileResResult } from "src/types/GetProfilerRes";
 import { GetSDREsfrRecordDetailsResResult } from "src/types/GetSdrEsfrRecordDetailsRes";
 import { GetSfrMasterDataResResult, OptionDocument } from "src/types/GetSfrMasterDataRes";
@@ -26,6 +28,8 @@ export enum SelectedStatus {
   ApprovedWithFollowUp = 3,
   Approved = 4,
 }
+
+export interface IReportSearchValues extends GetEsfrReportReq {}
 
 export interface ISaveSdrValues extends Omit<UpsertSDRSnapshotReq, "SfrAdditionalDetails"> {
   Powerplant: Omit<AircraftDetails, "RegistryNNumber">;
@@ -118,6 +122,7 @@ export enum SdrEsfrRecordDetailsActionType {
   FETCH_SFR_MATER_DATA_FAILURE = "FETCH_SFR_MATER_DATA_FAILURE",
   FETCH_LOGPAGE_DATA_SUCCESS = "FETCH_LOGPAGE_DATA_SUCCESS",
   FETCH_LOGPAGE_DATA_FAILURE = "FETCH_LOGPAGE_DATA_FAILURE",
+  FETCH_SET_DETAILS_LOADER_OFF = "FETCH_SET_DETAILS_LOADER_OFF",
 }
 
 export enum FlatFileActionType {
@@ -128,6 +133,12 @@ export enum FlatFileActionType {
   UPDATE_SNAPSHOT_SDR_EXTRACTION_STATUS_FAILURE = "UPDATE_SNAPSHOT_SDR_EXTRACTION_STATUS_FAILURE",
   INSERT_SNAPSHOT_SDR_FILENAME_SUCCESS = "INSERT_SNAPSHOT_SDR_FILENAME_SUCCESS",
   INSERT_SNAPSHOT_SDR_FILENAME_FAILURE = "INSERT_SNAPSHOT_SDR_FILENAME_FAILURE",
+}
+
+export enum EsfrReportActionType {
+  FETCH_ESFR_REPORT = "FETCH_ESFR_REPORT",
+  FETCH_ESFR_REPORT_SUCCESS = "FETCH_ESFR_REPORT_SUCCESS",
+  FETCH_ESFR_REPORT_FAILURE = "FETCH_ESFR_REPORT_FAILURE",
 }
 
 export interface ProfileDispatchFuncType {
@@ -160,6 +171,12 @@ export interface SdrEsfrRecordDetailsFuncType {
   message?: string;
 }
 
+export interface ViewLogPageDetailsFuncType {
+  type: SdrEsfrRecordDetailsActionType;
+  data?: ViewLogpageResResult;
+  message?: string;
+}
+
 export interface ApprovedSdrFuncType {
   type: SdrEsfrRecordDetailsActionType;
   data?: GetApprovedSDRResResult;
@@ -169,6 +186,12 @@ export interface ApprovedSdrFuncType {
 export interface SfrMasterDataFuncType {
   type: SdrEsfrRecordDetailsActionType;
   data?: GetSfrMasterDataResResult;
+  message?: string;
+}
+
+export interface EsfrReportDispatchFuncType {
+  type: EsfrReportActionType;
+  data?: GetEsfrReportResResult[];
   message?: string;
 }
 
@@ -202,6 +225,12 @@ export interface SdrEsfrRecordDetailsReducerAction {
   message: string;
 }
 
+export interface EsfrReportReducerAction {
+  type: EsfrReportActionType;
+  data: GetEsfrReportResResult[];
+  message: string;
+}
+
 export type ProfileStateType = {
   loading: boolean;
   profileData: Employee | null;
@@ -227,6 +256,12 @@ export type SdrEsfrRecordDetailsStateType = {
 export type FlatFileStateType = {
   loading: boolean;
   fileData: ExtractSDRRecordsResResult | null;
+  error: string;
+};
+
+export type EsfrReportStateType = {
+  loading: boolean;
+  esfrReport: GetEsfrReportResResult[] | null;
   error: string;
 };
 
@@ -256,6 +291,7 @@ export interface EnvironmentConfig {
   URL_UPDATE_SNAPSHOT_SDR_EXTRACTION_STATUS: string;
   URL_INSERT_SNAPSHOT_SDR_FILENAME: string;
   URL_UPSERT_SDR_SNAPSHOT: string;
+  URL_GET_ESFR_REPORT: string;
 }
 
 export type EnvTypes = "localhost" | "development" | "qa" | "stage" | "production";
