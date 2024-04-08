@@ -200,15 +200,15 @@ export const MultipleSelect = ({
         value={value}
         {...props}
       >
-        {options ? (
+        {!options ? (
+          <Box>No options available</Box>
+        ) : (
           options.map((option) => (
             <MenuItem className="!pl-0 !pr-5" key={option.Id} value={option.Id}>
               <Checkbox className="!py-1 !pr-1" checked={value.indexOf(option.Id) > -1} />
               <ListItemText primary={option.Description} />
             </MenuItem>
           ))
-        ) : (
-          <Box>No options available</Box>
         )}
       </Select>
       {props.error && <FormHelperText error={props.error}>{helperText}</FormHelperText>}

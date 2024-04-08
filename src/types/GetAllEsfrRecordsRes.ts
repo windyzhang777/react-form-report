@@ -33,6 +33,7 @@ export enum LogpageStatus {
 
 export enum Status {
   "All" = "All",
+  "Draft" = "Draft",
   "Open" = "Open",
   "ApprovedWithFollowUp" = "Approved with Follow Up",
   "Approved" = "Approved",

@@ -328,24 +328,29 @@ export const ReportStatus: OptionDocument[] = [
     Id: 0,
   },
   {
-    Description: Status.Open,
+    Description: Status.Draft,
     DisplayOrder: 2,
     Id: 1,
   },
   {
-    Description: Status.ApprovedWithFollowUp,
+    Description: Status.Open,
     DisplayOrder: 3,
     Id: 2,
   },
   {
-    Description: Status.Approved,
+    Description: Status.ApprovedWithFollowUp,
     DisplayOrder: 4,
     Id: 3,
   },
   {
-    Description: Status.SentToFAA,
+    Description: Status.Approved,
     DisplayOrder: 5,
     Id: 4,
+  },
+  {
+    Description: Status.SentToFAA,
+    DisplayOrder: 6,
+    Id: 5,
   },
 ];
 

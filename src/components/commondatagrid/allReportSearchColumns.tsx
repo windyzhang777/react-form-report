@@ -89,7 +89,7 @@ export const allReportSearchColumns = (
       field: "AircraftNumber",
       headerName: "Report Status",
       sortable: false,
-      minWidth: 120,
+      minWidth: 220,
       renderCell: () => ReportStatus.find((r) => r.Id === reportStatus)?.Description,
     },
   ];
