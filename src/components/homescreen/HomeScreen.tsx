@@ -348,7 +348,8 @@ const HomeScreen = () => {
                 tabIndex={tabIndex}
               />
             )
-          ) : (
+          ) : null}
+          {!viewSdrFlag && !createSdrFlag && (
             <Grid
               container
               spacing={0}
