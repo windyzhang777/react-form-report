@@ -8,7 +8,7 @@ import {
 } from "react";
 
 export interface ICommonTextFieldProps {
-  className: string;
+  className?: string;
   disabled?: boolean;
   error?: boolean;
   helperText?: ReactNode;

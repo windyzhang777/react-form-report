@@ -18,6 +18,7 @@ import {
   SelectedSfrTab,
   TypeOptions,
 } from "src/commons/types";
+import { UseUpdateCodes } from "src/components/createsfr/useUpdateCodes";
 import { getCtnData, getSidData } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 
@@ -31,8 +32,9 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
   const { loading, masterData, ctnData }: SdrEsfrRecordDetailsStateType = useAppSelector(
     (state) => state.sdrEsfrRecordDetails
   );
-  const { errors, handleBlur, handleChange, setFieldValue, touched, values } =
+  const { errors, handleBlur, handleChange, setFieldValue, touched } =
     useFormikContext<ISaveSfrValues>();
+  const values = UseUpdateCodes();
   const [openSelectCtn, setOpenSelect] = useState<boolean>(false);
   const selectedMFRSource = useMemo(
     () =>
@@ -129,7 +131,8 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                     {editable ? (
                       <TextFieldGroup
                         count={4}
-                        name="OriginDetails.CalDocIdentifier"
+                        maxAllowed={[2, 4, 1, 4]}
+                        name="CalDocIdentifier"
                         values={values}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -147,7 +150,8 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                     {editable ? (
                       <TextFieldGroup
                         count={2}
-                        name="OriginDetails.CalDocIdentifier"
+                        maxAllowed={[4, 5]}
+                        name="CalDocIdentifier"
                         values={values}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -165,7 +169,8 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                     {editable ? (
                       <TextFieldGroup
                         count={2}
-                        name="OriginDetails.CalDocIdentifier"
+                        maxAllowed={[4, 5]}
+                        name="CalDocIdentifier"
                         values={values}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -280,7 +285,8 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                   {editable ? (
                     <TextFieldGroup
                       count={4}
-                      name="OriginDetails.SpecIdentifier"
+                      maxAllowed={[4, 2, 1, 4]}
+                      name="SpecIdentifier"
                       values={values}
                       onChange={handleChange}
                       onBlur={handleBlur}

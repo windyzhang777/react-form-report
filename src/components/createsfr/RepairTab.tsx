@@ -9,6 +9,7 @@ import TabPanel from "src/commons/TabPanel";
 import TextField from "src/commons/TextField";
 import TextFieldGroup from "src/commons/TextFieldGroup";
 import { DocumentTypeOptions, ISaveSfrValues, SelectedSfrTab } from "src/commons/types";
+import { UseUpdateCodes } from "src/components/createsfr/useUpdateCodes";
 
 type RepairTabProps = {
   editable: any;
@@ -16,8 +17,9 @@ type RepairTabProps = {
 };
 
 export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
-  const { errors, handleBlur, handleChange, setFieldValue, touched, values } =
+  const { errors, handleBlur, handleChange, setFieldValue, touched } =
     useFormikContext<ISaveSfrValues>();
+  const values = UseUpdateCodes();
 
   return (
     <>
@@ -252,13 +254,14 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
                 );
               case 4:
                 return (
-                  <Grid container>
+                  <Grid container key={dt}>
                     <Grid item xs={6}>
                       <ListItem>Repair ECRA</ListItem>
                       <ListItem>
                         {editable ? (
                           <TextFieldGroup
                             count={2}
+                            maxAllowed={[4, 5]}
                             name="RepairDetails.RepairECRA"
                             values={values}
                             onChange={handleChange}
@@ -294,7 +297,7 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
                 );
               case 5:
                 return (
-                  <div>
+                  <div key={dt}>
                     <ListItem>Other</ListItem>
                     <ListItem>
                       {editable ? (
@@ -399,6 +402,7 @@ const DocumentGrid = ({ editable, handleBlur, handleChange, name, values }: IDoc
         {editable ? (
           <TextFieldGroup
             count={3}
+            maxAllowed={[2, 2, 2]}
             name={`${name}1`}
             values={values}
             onChange={handleChange}
@@ -415,6 +419,7 @@ const DocumentGrid = ({ editable, handleBlur, handleChange, name, values }: IDoc
         {editable ? (
           <TextFieldGroup
             count={3}
+            maxAllowed={[2, 2, 2]}
             name={`${name}2`}
             values={values}
             onChange={handleChange}
@@ -431,6 +436,7 @@ const DocumentGrid = ({ editable, handleBlur, handleChange, name, values }: IDoc
         {editable ? (
           <TextFieldGroup
             count={3}
+            maxAllowed={[2, 2, 2]}
             name={`${name}3`}
             values={values}
             onChange={handleChange}
@@ -452,6 +458,7 @@ const DocumentGrid = ({ editable, handleBlur, handleChange, name, values }: IDoc
             onBlur={handleBlur}
             placeholder="xxx"
             className={"sdr-status-edit"}
+            inputProps={{ maxLength: 3 }}
           />
         ) : (
           ""
@@ -469,6 +476,7 @@ const DocumentGrid = ({ editable, handleBlur, handleChange, name, values }: IDoc
             onBlur={handleBlur}
             placeholder="xxx"
             className={"sdr-status-edit"}
+            inputProps={{ maxLength: 3 }}
           />
         ) : (
           ""
