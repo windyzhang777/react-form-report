@@ -511,9 +511,12 @@ const ViewSnapshotData = ({
                             onBlur={handleBlur}
                             error={!!touched.NatureOfReportIds && !!errors.NatureOfReportIds}
                             helperText={!!touched.NatureOfReportIds && errors.NatureOfReportIds}
-                            options={masterData?.NatureofReports?.sort(
-                              (a, b) => a.DisplayOrder - b.DisplayOrder
-                            )}
+                            options={
+                              masterData?.NatureofReports &&
+                              [...masterData.NatureofReports].sort(
+                                (a, b) => a.DisplayOrder - b.DisplayOrder
+                              )
+                            }
                             className={"sdr-status-edit"}
                             id="NatureofReports"
                             maxAllowed={3}
@@ -561,9 +564,12 @@ const ViewSnapshotData = ({
                               !!touched.PrecautionaryProcedureIds &&
                               errors.PrecautionaryProcedureIds
                             }
-                            options={masterData?.PrecautionaryProcedures?.sort(
-                              (a, b) => a.DisplayOrder - b.DisplayOrder
-                            )}
+                            options={
+                              masterData?.PrecautionaryProcedures &&
+                              [...masterData.PrecautionaryProcedures].sort(
+                                (a, b) => a.DisplayOrder - b.DisplayOrder
+                              )
+                            }
                             className={"sdr-status-edit"}
                             id="PrecautionaryProcedures"
                             maxAllowed={4}
@@ -591,9 +597,10 @@ const ViewSnapshotData = ({
                             onBlur={handleBlur}
                             error={!!touched.StageId && !!errors.StageId}
                             helperText={!!touched.StageId && errors.StageId}
-                            options={masterData?.Stage?.sort(
-                              (a, b) => a.DisplayOrder - b.DisplayOrder
-                            )}
+                            options={
+                              masterData?.Stage &&
+                              [...masterData.Stage].sort((a, b) => a.DisplayOrder - b.DisplayOrder)
+                            }
                             className={"sdr-status-edit"}
                             id="StageId"
                           />
@@ -613,9 +620,12 @@ const ViewSnapshotData = ({
                             onBlur={handleBlur}
                             error={!!touched.HowDiscoveredId && !!errors.HowDiscoveredId}
                             helperText={!!touched.HowDiscoveredId && errors.HowDiscoveredId}
-                            options={masterData?.HowDiscovered?.sort(
-                              (a, b) => a.DisplayOrder - b.DisplayOrder
-                            )}
+                            options={
+                              masterData?.HowDiscovered &&
+                              [...masterData.HowDiscovered].sort(
+                                (a, b) => a.DisplayOrder - b.DisplayOrder
+                              )
+                            }
                             className={"sdr-status-edit"}
                             id="HowDiscovered"
                           />
@@ -1409,9 +1419,12 @@ const ViewSnapshotData = ({
                               !!touched?.SfrAdditionalDetails?.CorrisionLevel &&
                               errors?.SfrAdditionalDetails?.CorrisionLevel
                             }
-                            options={masterData?.CorrosionLevels?.sort(
-                              (a, b) => a.DisplayOrder - b.DisplayOrder
-                            )}
+                            options={
+                              masterData?.CorrosionLevels &&
+                              [...masterData.CorrosionLevels].sort(
+                                (a, b) => a.DisplayOrder - b.DisplayOrder
+                              )
+                            }
                             className={"sdr-status-edit"}
                             id="SfrAdditionalDetails.CorrisionLevel"
                           />
@@ -1513,9 +1526,12 @@ const ViewSnapshotData = ({
                             onBlur={handleBlur}
                             error={!!touched.CCCorrosionLevel && !!errors.CCCorrosionLevel}
                             helperText={!!touched.CCCorrosionLevel && errors.CCCorrosionLevel}
-                            options={masterData?.CorrosionLevels?.sort(
-                              (a, b) => a.DisplayOrder - b.DisplayOrder
-                            )}
+                            options={
+                              masterData?.CorrosionLevels &&
+                              [...masterData.CorrosionLevels].sort(
+                                (a, b) => a.DisplayOrder - b.DisplayOrder
+                              )
+                            }
                             className={"sdr-status-edit"}
                             id="SfrAdditionalDetails.CCCorrosionLevel"
                           />

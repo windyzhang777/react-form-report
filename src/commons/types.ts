@@ -1,6 +1,9 @@
+import { CreateSfrReq } from "src/types/CreateSfrReq";
 import { ExtractSDRRecordsResResult } from "src/types/ExtractSdrRecordsRes";
 import { GetAllEsfrRecordsResResult, Status } from "src/types/GetAllEsfrRecordsRes";
 import { AircraftDetails, GetApprovedSDRResResult } from "src/types/GetApprovedSdrRes";
+import { GetCpcpReportReq } from "src/types/GetCpcpReportReq";
+import { GetCtnResResult } from "src/types/GetCtnRes";
 import { GetEsfrReportReq } from "src/types/GetEsfrReportReq";
 import { GetEsfrReportResResult } from "src/types/GetEsfrReportRes";
 import { Employee, GetProfileResResult } from "src/types/GetProfilerRes";
@@ -22,6 +25,13 @@ export enum SelectedTab {
   Approved = 2,
 }
 
+export enum SelectedSfrTab {
+  Origin = 0,
+  Discrepancy = 1,
+  Location = 2,
+  Repair = 3,
+}
+
 export enum SelectedStatus {
   Draft = 1,
   Open = 2,
@@ -29,7 +39,74 @@ export enum SelectedStatus {
   Approved = 4,
 }
 
+export enum RadioType {
+  Yes = "Yes",
+  No = "No",
+}
+
+export interface ISaveSfrValues extends Omit<CreateSfrReq, "Type"> {
+  Type: number;
+  searchDescription: String;
+  ATAChapter: string;
+  ATASubChapter: string;
+  PartNumber: string;
+  Structure: string;
+  DiscrepancyPartInformationCode: number;
+  DocumentType: number[];
+  SpecIdentifier1: string;
+  SpecIdentifier2: string;
+  SpecIdentifier3: string;
+  SpecIdentifier4: string;
+  CalDocIdentifier1: string;
+  CalDocIdentifier2: string;
+  CalDocIdentifier3: string;
+  CalDocIdentifier4: string;
+  SRM1: string;
+  SRM11: string;
+  SRM12: string;
+  SRM13: string;
+  SRM2: string;
+  SRM21: string;
+  SRM22: string;
+  SRM23: string;
+  SRM3: string;
+  SRM31: string;
+  SRM32: string;
+  SRM33: string;
+  SRMPage: string;
+  SRMFig: string;
+  AMM1: string;
+  AMM11: string;
+  AMM12: string;
+  AMM13: string;
+  AMM2: string;
+  AMM21: string;
+  AMM22: string;
+  AMM23: string;
+  AMM3: string;
+  AMM31: string;
+  AMM32: string;
+  AMM33: string;
+  AMMPage: string;
+  AMMFig: string;
+  CMM1: string;
+  CMM11: string;
+  CMM12: string;
+  CMM13: string;
+  CMM2: string;
+  CMM21: string;
+  CMM22: string;
+  CMM23: string;
+  CMM3: string;
+  CMM31: string;
+  CMM32: string;
+  CMM33: string;
+  CMMPage: string;
+  CMMFig: string;
+}
+
 export interface IReportSearchValues extends GetEsfrReportReq {}
+export interface ICpcpReportSearchValues extends GetCpcpReportReq {}
 
 export interface ISaveSdrValues extends Omit<UpsertSDRSnapshotReq, "SfrAdditionalDetails"> {
   Powerplant: Omit<AircraftDetails, "RegistryNNumber">;
@@ -122,6 +199,8 @@ export enum SdrEsfrRecordDetailsActionType {
   FETCH_SFR_MATER_DATA_FAILURE = "FETCH_SFR_MATER_DATA_FAILURE",
   FETCH_LOGPAGE_DATA_SUCCESS = "FETCH_LOGPAGE_DATA_SUCCESS",
   FETCH_LOGPAGE_DATA_FAILURE = "FETCH_LOGPAGE_DATA_FAILURE",
+  FETCH_CTN_DATA_SUCCESS = "FETCH_CTN_DATA_SUCCESS",
+  FETCH_CTN_DATA_FAILURE = "FETCH_CTN_DATA_FAILURE",
   FETCH_SET_DETAILS_LOADER_OFF = "FETCH_SET_DETAILS_LOADER_OFF",
 }
 
@@ -189,6 +268,12 @@ export interface SfrMasterDataFuncType {
   message?: string;
 }
 
+export interface CtnDataFuncType {
+  type: SdrEsfrRecordDetailsActionType;
+  data?: GetCtnResResult;
+  message?: string;
+}
+
 export interface EsfrReportDispatchFuncType {
   type: EsfrReportActionType;
   data?: GetEsfrReportResResult[];
@@ -221,7 +306,8 @@ export interface SdrEsfrRecordDetailsReducerAction {
     | GetSDREsfrRecordDetailsResResult
     | GetApprovedSDRResResult
     | GetSfrMasterDataResResult
-    | ViewLogpageResResult;
+    | ViewLogpageResResult
+    | GetCtnResResult;
   message: string;
 }
 
@@ -250,6 +336,7 @@ export type SdrEsfrRecordDetailsStateType = {
   snapshotData: GetApprovedSDRResResult | null;
   masterData: GetSfrMasterDataResResult | null;
   logpageData: ViewLogpageResResult | null;
+  ctnData: GetCtnResResult | null;
   error: string;
 };
 
@@ -286,12 +373,16 @@ export interface EnvironmentConfig {
   URL_GET_SFR_MASTER_DATA: string;
   // URL_ADD_SDR: string;
   URL_CREATE_SDR: string;
+  URL_CREATE_SFR: string;
   URL_VIEW_LOGPAGE: string;
   URL_EXTRACT_SDR_RECORDS: string;
   URL_UPDATE_SNAPSHOT_SDR_EXTRACTION_STATUS: string;
   URL_INSERT_SNAPSHOT_SDR_FILENAME: string;
   URL_UPSERT_SDR_SNAPSHOT: string;
   URL_GET_ESFR_REPORT: string;
+  URL_GET_CPCP_REPORT: string;
+  URL_GET_CTN: string;
+  URL_GET_SID: string;
 }
 
 export type EnvTypes = "localhost" | "development" | "qa" | "stage" | "production";
@@ -318,6 +409,157 @@ export const Sides: OptionDocument[] = [
     Description: "Right",
     DisplayOrder: 2,
     Id: 2,
+  },
+];
+
+export const SurfaceOptions: OptionDocument[] = [
+  {
+    Description: "Upper",
+    DisplayOrder: 1,
+    Id: 1,
+  },
+  {
+    Description: "Lower",
+    DisplayOrder: 2,
+    Id: 2,
+  },
+  {
+    Description: "Other",
+    DisplayOrder: 3,
+    Id: 3,
+  },
+];
+
+export const BLOptions: OptionDocument[] = [
+  {
+    Description: "Left",
+    DisplayOrder: 1,
+    Id: 1,
+  },
+  {
+    Description: "Right",
+    DisplayOrder: 2,
+    Id: 2,
+  },
+  {
+    Description: "BL0",
+    DisplayOrder: 3,
+    Id: 3,
+  },
+];
+
+export const SpecificsOptions: OptionDocument[] = [
+  {
+    Description: "Inboard",
+    DisplayOrder: 1,
+    Id: 1,
+  },
+  {
+    Description: "Outboard",
+    DisplayOrder: 2,
+    Id: 2,
+  },
+];
+
+export const RudderDamageProximityOptions: OptionDocument[] = [
+  {
+    Description: "LE",
+    DisplayOrder: 1,
+    Id: 1,
+  },
+  {
+    Description: "TE",
+    DisplayOrder: 2,
+    Id: 2,
+  },
+  {
+    Description: "Middle",
+    DisplayOrder: 3,
+    Id: 3,
+  },
+];
+
+export const StabDamageProximityOptions: OptionDocument[] = [
+  {
+    Description: "Front Spar",
+    DisplayOrder: 1,
+    Id: 1,
+  },
+  {
+    Description: "LE",
+    DisplayOrder: 2,
+    Id: 2,
+  },
+  {
+    Description: "Rear Spar",
+    DisplayOrder: 3,
+    Id: 3,
+  },
+  {
+    Description: "STR",
+    DisplayOrder: 4,
+    Id: 4,
+  },
+  {
+    Description: "TE",
+    DisplayOrder: 5,
+    Id: 5,
+  },
+];
+
+export const WingDamageProximityOptions: OptionDocument[] = [
+  {
+    Description: "Front Spar Spar",
+    DisplayOrder: 1,
+    Id: 1,
+  },
+  {
+    Description: "LE",
+    DisplayOrder: 2,
+    Id: 2,
+  },
+  {
+    Description: "Rear Spar Spar",
+    DisplayOrder: 3,
+    Id: 3,
+  },
+  {
+    Description: "STR",
+    DisplayOrder: 4,
+    Id: 4,
+  },
+  {
+    Description: "TE",
+    DisplayOrder: 5,
+    Id: 5,
+  },
+  {
+    Description: "Middle",
+    DisplayOrder: 6,
+    Id: 6,
+  },
+];
+
+export const OtherOptions: OptionDocument[] = [
+  {
+    Description: "Main",
+    DisplayOrder: 1,
+    Id: 1,
+  },
+  {
+    Description: "Fwd",
+    DisplayOrder: 2,
+    Id: 2,
+  },
+  {
+    Description: "Mid",
+    DisplayOrder: 3,
+    Id: 3,
+  },
+  {
+    Description: "Aft",
+    DisplayOrder: 4,
+    Id: 4,
   },
 ];
 
@@ -364,5 +606,69 @@ export const ReportType: OptionDocument[] = [
     Description: "SFR",
     DisplayOrder: 2,
     Id: 2,
+  },
+];
+
+export const TypeOptions: OptionDocument[] = [
+  {
+    Description: "Pre-Flight/Walk Around",
+    DisplayOrder: 1,
+    Id: 1,
+  },
+  {
+    Description: "Line MX Discovery",
+    DisplayOrder: 2,
+    Id: 2,
+  },
+  {
+    Description: "Special Inspection",
+    DisplayOrder: 3,
+    Id: 3,
+  },
+  {
+    Description: "Accident investigation",
+    DisplayOrder: 4,
+    Id: 4,
+  },
+  {
+    Description: "Other",
+    DisplayOrder: 5,
+    Id: 5,
+  },
+];
+
+export const DocumentTypeOptions: OptionDocument[] = [
+  {
+    Description: "SRM",
+    DisplayOrder: 1,
+    Id: 1,
+  },
+  {
+    Description: "AMM",
+    DisplayOrder: 2,
+    Id: 2,
+  },
+  {
+    Description: "CMM",
+    DisplayOrder: 3,
+    Id: 3,
+  },
+  {
+    Description: "Repair ECRA",
+    DisplayOrder: 4,
+    Id: 4,
+  },
+  {
+    Description: "Other",
+    DisplayOrder: 5,
+    Id: 5,
+  },
+];
+
+export const ZoneOptions: OptionDocument[] = [
+  {
+    Description: "1",
+    DisplayOrder: 1,
+    Id: 1,
   },
 ];

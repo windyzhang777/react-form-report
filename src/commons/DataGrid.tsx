@@ -25,6 +25,18 @@ const StyledDataGrid = styled(DataGrid)(() => ({
   },
 }));
 
+export const ScrollableDataGrid = styled(DataGrid)(() => ({
+  "& .MuiDataGrid-columnHeaders": {
+    backgroundColor: theme.palette.primary.main,
+  },
+  "& .MuiDataGrid-columnHeaderTitle": {
+    color: theme.palette.primary.contrastText,
+  },
+  "& .MuiDataGrid-row": {
+    cursor: "pointer",
+  },
+}));
+
 export const CommonDataGridFooter = () => (
   <GridFooterContainer>
     <Box />

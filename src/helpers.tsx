@@ -9,7 +9,7 @@ export const DATETIME_REFRESH = "MM/DD/YYYY@HH:mm";
 export const DATETIME_DISPLAY = "MM/DD/YYYY HH:mm:ss";
 export const DATE_HTML_DISPLAY = "YYYY-MM-DD";
 
-export const handleScroll = (ref: RefObject<HTMLDivElement> | null) => {
+export const handleScroll = (ref: RefObject<any> | null) => {
   if (ref?.current) {
     ref.current.scrollTo({ top: 0, left: 0 });
   }
@@ -54,6 +54,30 @@ export const isSame = (arr1: any[], arr2: any[]) => {
   if (arr1.length === 0 && arr2.length === 0) return true;
   if (arr1.length === 0 || arr2.length === 0) return false;
   return arr1.sort().join("") === arr2.sort().join("");
+};
+
+export const formatCodes = (arr: string[]) => {
+  let res = "";
+  for (const a of arr) {
+    if (!a) {
+      break;
+    } else {
+      res += "-" + a;
+    }
+  }
+  return res.slice(1);
+};
+
+export const joinCodes = (arr: string[]) => {
+  let res = "";
+  for (const a of arr) {
+    if (!a) {
+      break;
+    } else {
+      res += ", " + a;
+    }
+  }
+  return res.slice(2);
 };
 
 export const saveTextAsFile = (textToWrite: string, fileNameToSaveAs: string) => {

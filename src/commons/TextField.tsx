@@ -8,7 +8,7 @@ import {
 } from "react";
 
 export interface ICommonTextFieldProps {
-  className: string;
+  className?: string;
   disabled?: boolean;
   error?: boolean;
   helperText?: ReactNode;
@@ -44,6 +44,14 @@ const CommonTextField = ({ placeholder, type, ...props }: ICommonTextFieldProps)
       {...props}
     />
   );
+};
+
+export interface IClickableTextFieldProps extends Partial<ICommonTextFieldProps> {
+  onClick: () => void;
+}
+
+export const ClickableTextField = ({ className, ...props }: IClickableTextFieldProps) => {
+  return <TextField className={`cursor-pointer ${className}`} size={"small"} {...props} />;
 };
 
 export default CommonTextField;

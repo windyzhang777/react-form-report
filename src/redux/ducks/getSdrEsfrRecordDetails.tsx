@@ -1,6 +1,7 @@
 import { Dispatch } from "redux";
 import {
   ApprovedSdrFuncType,
+  CtnDataFuncType,
   SdrEsfrRecordDetailsActionType,
   SdrEsfrRecordDetailsFuncType,
   SdrEsfrRecordDetailsReducerAction,
@@ -9,6 +10,7 @@ import {
   ViewLogPageDetailsFuncType,
 } from "src/commons/types";
 import { GetApprovedSDRResResult } from "src/types/GetApprovedSdrRes";
+import { GetCtnResResult } from "src/types/GetCtnRes";
 import { GetSDREsfrRecordDetailsResResult } from "src/types/GetSdrEsfrRecordDetailsRes";
 import { GetSfrMasterDataResResult } from "src/types/GetSfrMasterDataRes";
 import { ViewLogpageResResult } from "src/types/ViewLogpageRes";
@@ -21,6 +23,7 @@ const initialState: SdrEsfrRecordDetailsStateType = {
   snapshotData: null,
   masterData: null,
   logpageData: null,
+  ctnData: null,
   error: "",
 };
 
@@ -66,6 +69,14 @@ export const resetLogpageDataSuccess = () => {
 
 const fetchLogpageDataFailure = (message: string) => {
   return { type: SdrEsfrRecordDetailsActionType.FETCH_LOGPAGE_DATA_FAILURE, message };
+};
+
+const fetchCtnDataSuccess = (data: GetCtnResResult) => {
+  return { type: SdrEsfrRecordDetailsActionType.FETCH_CTN_DATA_SUCCESS, data };
+};
+
+const fetchCtnDataFailure = (message: string) => {
+  return { type: SdrEsfrRecordDetailsActionType.FETCH_CTN_DATA_FAILURE, message };
 };
 
 export const setDetailsLoaderOff = () => {
@@ -129,6 +140,17 @@ export const sdrEsfrRecordDetailsReducer = (
         loading: false,
         logpageData: null,
         error: `Fail to get Logpage Data (${action.message})`,
+      };
+    }
+    case SdrEsfrRecordDetailsActionType.FETCH_CTN_DATA_SUCCESS: {
+      return { ...state, loading: false, ctnData: action.data, error: "" };
+    }
+    case SdrEsfrRecordDetailsActionType.FETCH_CTN_DATA_FAILURE: {
+      return {
+        ...state,
+        loading: false,
+        ctnData: null,
+        error: `Fail to get Data (${action.message})`,
       };
     }
     case SdrEsfrRecordDetailsActionType.FETCH_SET_DETAILS_LOADER_OFF: {
@@ -199,5 +221,31 @@ export const getSfrMasterData = () => {
         const masterData = require("src/types/GetSfrMasterDataRes.json");
         dispatch(fetchSfrMaterDataSuccess(masterData.Result));
       });
+  };
+};
+
+export const getCtnData = (fleetCode: string) => {
+  return function (dispatch: Dispatch<CtnDataFuncType>) {
+    dispatch(initFetch());
+    axiosInstance
+      .post(`${config.apiBaseAddress}${config.URL_GET_CTN}`, { fleetCode })
+      .then((res) => {
+        const ctnData = res?.data?.Result;
+        dispatch(fetchCtnDataSuccess(ctnData));
+      })
+      .catch((error) => dispatch(fetchCtnDataFailure(error.message)));
+  };
+};
+
+export const getSidData = (fleetCode: string) => {
+  return function (dispatch: Dispatch<CtnDataFuncType>) {
+    dispatch(initFetch());
+    axiosInstance
+      .post(`${config.apiBaseAddress}${config.URL_GET_SID}`, { fleetCode })
+      .then((res) => {
+        const ctnData = res?.data?.Result;
+        dispatch(fetchCtnDataSuccess(ctnData));
+      })
+      .catch((error) => dispatch(fetchCtnDataFailure(error.message)));
   };
 };
