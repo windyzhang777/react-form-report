@@ -73,9 +73,9 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
             {editable ? (
               <SimpleRadio
                 name="OriginDetails.IsScheduledInspection"
-                value={values?.OriginDetails?.IsScheduledInspection || ""}
-                onChange={(values) => {
-                  setFieldValue("OriginDetails.IsScheduledInspection", values);
+                value={values?.OriginDetails?.IsScheduledInspection}
+                onChange={(value) => {
+                  setFieldValue("OriginDetails.IsScheduledInspection", value === "true");
                 }}
                 error={
                   !!touched?.OriginDetails?.IsScheduledInspection &&

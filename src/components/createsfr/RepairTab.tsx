@@ -34,9 +34,9 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
             {editable ? (
               <SimpleRadio
                 name="RepairDetails.IsDeferred"
-                value={values?.RepairDetails?.IsDeferred || ""}
+                value={values?.RepairDetails?.IsDeferred}
                 onChange={(values) => {
-                  setFieldValue("RepairDetails.IsDeferred", values);
+                  setFieldValue("RepairDetails.IsDeferred", values === "true");
                 }}
                 error={!!touched?.RepairDetails?.IsDeferred && !!errors?.RepairDetails?.IsDeferred}
                 helperText={
@@ -81,9 +81,9 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
                   {editable ? (
                     <SimpleRadio
                       name="RepairDetails.IsMajorRepair"
-                      value={values?.RepairDetails?.IsMajorRepair || ""}
-                      onChange={(values) => {
-                        setFieldValue("RepairDetails.IsMajorRepair", values);
+                      value={values?.RepairDetails?.IsMajorRepair}
+                      onChange={(value) => {
+                        setFieldValue("RepairDetails.IsMajorRepair", value === "true");
                       }}
                       error={
                         !!touched?.RepairDetails?.IsMajorRepair &&
@@ -107,8 +107,8 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
                     <Radio
                       name="RepairDetails.DamageStructureStatus"
                       value={values?.RepairDetails?.DamageStructureStatus || ""}
-                      onChange={(values) => {
-                        setFieldValue("RepairDetails.DamageStructureStatus", values);
+                      onChange={(value) => {
+                        setFieldValue("RepairDetails.DamageStructureStatus", value);
                       }}
                       error={
                         !!touched?.RepairDetails?.DamageStructureStatus &&
@@ -134,9 +134,9 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
                   {editable ? (
                     <SimpleRadio
                       name="RepairDetails.IsRepairOrRework"
-                      value={values?.RepairDetails?.IsRepairOrRework || ""}
-                      onChange={(values) => {
-                        setFieldValue("RepairDetails.IsRepairOrRework", values);
+                      value={values?.RepairDetails?.IsRepairOrRework}
+                      onChange={(value) => {
+                        setFieldValue("RepairDetails.IsRepairOrRework", value === "true");
                       }}
                       error={
                         !!touched?.RepairDetails?.IsRepairOrRework &&
@@ -161,9 +161,9 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
                   {editable ? (
                     <SimpleRadio
                       name="RepairDetails.IsSdrReportable"
-                      value={values?.RepairDetails?.IsSdrReportable || ""}
-                      onChange={(values) => {
-                        setFieldValue("RepairDetails.IsSdrReportable", values);
+                      value={values?.RepairDetails?.IsSdrReportable}
+                      onChange={(value) => {
+                        setFieldValue("RepairDetails.IsSdrReportable", value === "true");
                       }}
                       error={
                         !!touched?.RepairDetails?.IsSdrReportable &&
@@ -186,9 +186,9 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
                   {editable ? (
                     <SimpleRadio
                       name="RepairDetails.IsOverWeight"
-                      value={values?.RepairDetails?.IsOverWeight || ""}
-                      onChange={(values) => {
-                        setFieldValue("RepairDetails.IsOverWeight", values);
+                      value={values?.RepairDetails?.IsOverWeight}
+                      onChange={(value) => {
+                        setFieldValue("RepairDetails.IsOverWeight", value === "true");
                       }}
                       error={
                         !!touched?.RepairDetails?.IsOverWeight &&

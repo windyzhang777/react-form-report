@@ -33,9 +33,12 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
             {editable ? (
               <SimpleRadio
                 name="DiscrepancyDetails.IsManufacturingLimitExceeded"
-                value={values?.DiscrepancyDetails?.IsManufacturingLimitExceeded || ""}
+                value={values?.DiscrepancyDetails?.IsManufacturingLimitExceeded}
                 onChange={(values) => {
-                  setFieldValue("DiscrepancyDetails.IsManufacturingLimitExceeded", values);
+                  setFieldValue(
+                    "DiscrepancyDetails.IsManufacturingLimitExceeded",
+                    values === "true"
+                  );
                 }}
                 error={
                   !!touched?.DiscrepancyDetails?.IsManufacturingLimitExceeded &&
@@ -221,11 +224,11 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                     {editable ? (
                       <SimpleRadio
                         name="DiscrepancyDetails.AreMultipleCracksInTheSameLocation"
-                        value={values?.DiscrepancyDetails?.AreMultipleCracksInTheSameLocation || ""}
-                        onChange={(values) => {
+                        value={values?.DiscrepancyDetails?.AreMultipleCracksInTheSameLocation}
+                        onChange={(value) => {
                           setFieldValue(
                             "DiscrepancyDetails.AreMultipleCracksInTheSameLocation",
-                            values
+                            value === "true"
                           );
                         }}
                         error={
