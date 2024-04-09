@@ -16,6 +16,7 @@ const defaultConfig = {
   URL_UPSERT_SDR_SNAPSHOT: "/api/Elb/UpsertSdrSnapshot",
   URL_GET_ESFR_REPORT: "/api/Elb/GetEsfrReport",
   URL_GET_CPCP_REPORT: "/api/Elb/GetCpcpReport",
+  URL_GET_PARTS_REPORT: "/api/Elb/GetPartsDiscrepancyReport",
   URL_GET_CTN: "/api/Elb/GetCtn",
   URL_GET_SID: "/api/Elb/GetSid",
 };

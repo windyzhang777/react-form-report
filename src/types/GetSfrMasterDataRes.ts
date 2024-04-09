@@ -21,6 +21,7 @@ export interface GetSfrMasterDataResResult {
   PrecautionaryProcedures: OptionDocument[];
   ReportableItems: string;
   Stage: OptionDocument[];
+  Fleet: OptionDocument[];
 }
 
 export interface OptionDocument {

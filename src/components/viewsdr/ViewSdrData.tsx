@@ -185,7 +185,7 @@ const ViewSdrData = ({
         </Grid>
         <Grid container spacing={2} pb={2}>
           <Grid item xs={4}>
-            <ListItem>{detailsData?.OperatorControlNumber}</ListItem>
+            <ListItem>{detailsData?.SdrDetails?.OperatorControlNumber}</ListItem>
           </Grid>
           <Grid item>
             <ArrowMenu

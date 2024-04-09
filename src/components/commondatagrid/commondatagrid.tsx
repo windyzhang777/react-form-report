@@ -21,13 +21,15 @@ import {
 import { useAppSelector } from "src/redux/hooks";
 import { GetEsfrReportResResult } from "src/types/GetEsfrReportRes";
 import "./commondatagrid.css";
+import { GetCpcpReportResResult } from "src/types/GetCpcpReportRes";
+import { GetPartsReportResResult } from "src/types/GetDiscrepancyPartsReportRes";
 
 export interface CommonDataGridProps {
   columns: any;
   createSdrFlag?: string;
   handleExtractSdrRecords: (a: number[]) => void;
   isReport?: boolean;
-  sdrData: TransformedSdrDataType[] | GetEsfrReportResResult[];
+  sdrData: TransformedSdrDataType[] | GetEsfrReportResResult[] | GetCpcpReportResResult[] | GetPartsReportResResult[];
   selectedSdr: any;
   setCreateSdrFlag: Dispatch<SetStateAction<string>>;
   setSelectedSdr: Dispatch<SetStateAction<any>>;

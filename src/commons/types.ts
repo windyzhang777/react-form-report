@@ -3,6 +3,9 @@ import { ExtractSDRRecordsResResult } from "src/types/ExtractSdrRecordsRes";
 import { GetAllEsfrRecordsResResult, Status } from "src/types/GetAllEsfrRecordsRes";
 import { AircraftDetails, GetApprovedSDRResResult } from "src/types/GetApprovedSdrRes";
 import { GetCpcpReportReq } from "src/types/GetCpcpReportReq";
+import { GetCpcpReportResResult } from 'src/types/GetCpcpReportRes';
+import { GetDiscrepancyPartsReportReq } from "src/types/GetDiscrepancyPartsReportReq";
+import { GetPartsReportResResult } from "src/types/GetDiscrepancyPartsReportRes";
 import { GetCtnResResult } from "src/types/GetCtnRes";
 import { GetEsfrReportReq } from "src/types/GetEsfrReportReq";
 import { GetEsfrReportResResult } from "src/types/GetEsfrReportRes";
@@ -107,7 +110,10 @@ export interface ISaveSfrValues extends CreateSfrReq {
 }
 
 export interface IReportSearchValues extends GetEsfrReportReq {}
+
 export interface ICpcpReportSearchValues extends GetCpcpReportReq {}
+
+export interface IDiscrepancyPartsReportSearchValues extends GetDiscrepancyPartsReportReq {}
 
 export interface ISaveSdrValues extends Omit<UpsertSDRSnapshotReq, "SfrAdditionalDetails"> {
   Powerplant: Omit<AircraftDetails, "RegistryNNumber">;
@@ -221,6 +227,17 @@ export enum EsfrReportActionType {
   FETCH_ESFR_REPORT_FAILURE = "FETCH_ESFR_REPORT_FAILURE",
 }
 
+export enum CpcpReportActionType {
+    FETCH_CPCP_REPORT = "FETCH_CPCP_REPORT",
+    FETCH_CPCP_REPORT_SUCCESS = "FETCH_CPCP_REPORT_SUCCESS",
+    FETCH_CPCP_REPORT_FAILURE = "FETCH_CPCP_REPORT_FAILURE",
+}
+
+export enum PartsReportActionType {
+    FETCH_PARTS_REPORT = "FETCH_PARTS_REPORT",
+    FETCH_PARTS_REPORT_SUCCESS = "FETCH_PARTS_REPORT_SUCCESS",
+    FETCH_PARTS_REPORT_FAILURE = "FETCH_PARTS_REPORT_FAILURE",
+}
 export interface ProfileDispatchFuncType {
   type: ProfileActionType;
   data?: GetProfileResResult;
@@ -281,6 +298,18 @@ export interface EsfrReportDispatchFuncType {
   message?: string;
 }
 
+export interface CpcpReportDispatchFuncType {
+    type: CpcpReportActionType;
+    data?: GetCpcpReportResResult[];
+    message?: string;
+}
+
+export interface PartsReportDispatchFuncType {
+    type: PartsReportActionType;
+    data?: GetPartsReportResResult[];
+    message?: string;
+}
+
 export type TransformedSdrDataType = GetAllEsfrRecordsResResult & { SdrStatus: string };
 
 export interface FlatFileDispatchFuncType {
@@ -318,6 +347,18 @@ export interface EsfrReportReducerAction {
   message: string;
 }
 
+export interface CpcpReportReducerAction {
+    type: CpcpReportActionType;
+    data: GetCpcpReportResResult[];
+    message: string;
+}
+
+export interface PartsReportReducerAction {
+    type: PartsReportActionType;
+    data: GetPartsReportResResult[];
+    message: string;
+}
+
 export type ProfileStateType = {
   loading: boolean;
   profileData: Employee | null;
@@ -353,6 +394,18 @@ export type EsfrReportStateType = {
   error: string;
 };
 
+export type CpcpReportStateType = {
+    loading: boolean;
+    cpcpReport: GetCpcpReportResResult[] | null;
+    error: string;
+};
+
+export type PartsReportStateType = {
+  loading: boolean,
+  partsReport: GetPartsReportResResult[] | null,
+  error: string
+};
+
 export interface EnvironmentConfig {
   apiBaseAddress?: string;
   webTechApiBaseUrl?: string;
@@ -384,6 +437,7 @@ export interface EnvironmentConfig {
   URL_GET_CPCP_REPORT: string;
   URL_GET_CTN: string;
   URL_GET_SID: string;
+  URL_GET_PARTS_REPORT: string;
 }
 
 export type EnvTypes = "localhost" | "development" | "qa" | "stage" | "production";

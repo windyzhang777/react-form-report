@@ -1,14 +1,13 @@
 import { Link } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
-import { ReportStatus } from "src/commons/types";
 import { DATETIME_DISPLAY } from "src/helpers";
-import { GetEsfrReportResResult } from "src/types/GetEsfrReportRes";
+import { GetCpcpReportResResult } from "src/types/GetCpcpReportRes";
 import config from "src/utils/env.config";
 
-export const allReportSearchColumns = (
+export const cpcpReportSearchColumns = (
   reportStatus: number
-): GridColDef<GetEsfrReportResResult>[] => {
+): GridColDef<GetCpcpReportResResult>[] => {
   const openLogPage = (logpageNumber: string) => {
     let width = window.innerWidth;
     let url = `${config.webTechApiBaseUrl}${
@@ -29,16 +28,10 @@ export const allReportSearchColumns = (
 
   return [
     {
-      field: "ReportType",
-      headerName: "Report Type",
-      sortable: false,
-      minWidth: 120,
-    },
-    {
       field: "OperatorControlNumber",
       headerName: "Audit Number",
       sortable: false,
-      minWidth: 120,
+      minWidth: 200,
     },
     {
       field: "LogpageNumber",
@@ -54,43 +47,63 @@ export const allReportSearchColumns = (
         </Link>
       ),
     },
-
     {
-      field: "ReportedById",
-      headerName: "Reported By Status",
-      sortable: false,
-      minWidth: 250,
-      renderCell: ({ row }) =>
-        `${row?.ReportedByFirstName || ""} ${row?.ReportedByLastName || ""}${
-          row?.ReportedById ? ` (${row.ReportedById})` : ""
-        }`,
-    },
-    {
-      field: "ApprovedById",
-      headerName: "Approved By",
-      sortable: false,
-      minWidth: 250,
-      renderCell: ({ row }) =>
-        `${row?.ApprovedByFirstName || ""} ${row?.ApprovedByLastName || ""}${
-          row?.ApprovedById ? ` (${row.ApprovedById})` : ""
-        }`,
-    },
-    {
-      field: "DateReported",
-      headerName: "Date Reported",
+      field: "DateCreated",
+      headerName: "Date Created",
       minWidth: 180,
       type: "dateTime",
       sortable: true,
       sortingOrder: ["desc", "asc"],
       valueFormatter: ({ value }) => new Date(value),
-      renderCell: ({ row }) => moment(row?.DateReported).format(DATETIME_DISPLAY),
+      renderCell: ({ row }) => moment(row?.DateCreated).format(DATETIME_DISPLAY),
     },
     {
       field: "AircraftNumber",
-      headerName: "Report Status",
+      headerName: "A/c Number",
       sortable: false,
-      minWidth: 220,
-      renderCell: () => ReportStatus.find((r) => r.Id === reportStatus)?.Description,
+      minWidth: 120,
     },
+    {
+      field: "Fleet",
+      headerName: "Fleet",
+      sortable: false,
+      minWidth: 120,
+    },
+    {
+      field: "Station",
+      headerName: "Station",
+      sortable: false,
+      minWidth: 120,
+    },
+    {
+      field: "AtaCode",
+      headerName: "ATA Code",
+      sortable: false,
+      minWidth: 120,
+    },
+    {
+      field: "CtnNumber",
+      headerName: "CTN Number",
+      sortable: false,
+      minWidth: 120,
+    },
+    {
+      field: "MajorRepair",
+      headerName: "Major Repair",
+      sortable: false,
+      minWidth: 120,
+    },
+    {
+      field: "CorrosionLevel",
+      headerName: "Corrosion Level",
+      sortable: false,
+      minWidth: 200,
+    },
+    {
+      field: "RepairDocNumber",
+      headerName: "Repair Doc#",
+      sortable: false,
+      minWidth: 120
+    }
   ];
 };

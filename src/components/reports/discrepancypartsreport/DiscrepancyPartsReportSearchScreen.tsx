@@ -4,13 +4,7 @@ import { useEffect, useState } from "react";
 import { WarningBox } from "src/commons/Box";
 import CommonLoader from "src/commons/CommonLoader";
 import RouterLink from "src/commons/Link";
-import Snackbar from "src/commons/Snackbar";
-import { IReportSearchValues, SdrEsfrRecordDetailsStateType } from "src/commons/types";
-import { allReportSearchColumns } from "src/components/commondatagrid/allReportSearchColumns";
-import CommonDataGrid from "src/components/commondatagrid/commondatagrid";
-import ReportSearch from "src/components/reportsearch/ReportSearch";
-import ViewReportData from "src/components/viewsdr/ViewReportData";
-import { getEsfrReport, resetEsfrReportSuccess } from "src/redux/ducks/getEsfrReport";
+import { IDiscrepancyPartsReportSearchValues, PartsReportStateType, SdrEsfrRecordDetailsStateType } from "src/commons/types";
 import {
   getSdrEsfrRecordDetails,
   getSfrMasterData,
@@ -18,60 +12,57 @@ import {
   viewLogPageDetails,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
-import { Type } from "src/types/GetAllEsfrRecordsRes";
-import { GetEsfrReportResResult } from "src/types/GetEsfrReportRes";
+import DiscrepancyPartsReportSearch from "src/components/reports/discrepancypartsreport/DiscrepancyPartReportSearch";
+import CommonDataGrid from "src/components/commondatagrid/commondatagrid";
+import Snackbar from "src/commons/Snackbar";
+import { getPartsReport, resetPartsReportSuccess } from "src/redux/ducks/getPartsReport";
+import { partsReportSearchColumns } from "src/components/commondatagrid/partsReportSearchColumns";
+import { GetPartsReportResResult } from "src/types/GetDiscrepancyPartsReportRes";
 
 export interface ISearchScreenProps {}
 
-const ReportSearchScreen = () => {
+const DiscrepancyPartsReportSearchScreen = () => {
   const dispatch = useAppDispatch();
   const {
     loading: loadingDetailsData,
     detailsData,
     masterData,
     logpageData,
-    error: detailsDataError,
   }: SdrEsfrRecordDetailsStateType = useAppSelector((state) => state.sdrEsfrRecordDetails);
+
   const {
-    loading: loadingEsfrReport,
-    esfrReport,
-    error: esfrReportError,
-  } = useAppSelector((state) => state.esfrReport);
+    loading: loadingPartsReport,
+    partsReport,
+    error: partsReportError
+  }: PartsReportStateType = useAppSelector((state) => state.partsReport);
+  
   const [openSnackbar, setOpenSnackbar] = useState<number>(0);
   const [snackbarMessage, setSnackbarMessage] = useState<string>("");
   const [viewSdrFlag, setViewSdrFlag] = useState<boolean>(false);
-  const [selectedSdr, setSelectedSdr] = useState<GetEsfrReportResResult | null>(null);
-  const [reportStatus, setReportStatus] = useState<number>(0);
+  const [selectedSdr, setSelectedSdr] = useState<GetPartsReportResResult | null>(null);
 
-  const handleSearchReport = (values: IReportSearchValues | null) => {
+  const handleSearchReport = (values: IDiscrepancyPartsReportSearchValues | null) => {
     if (values) {
-      setReportStatus(values.reportStatus);
-      dispatch(getEsfrReport(values));
+      dispatch(getPartsReport(values));
     } else {
-      dispatch(resetEsfrReportSuccess());
+      dispatch(resetPartsReportSuccess());
     }
   };
 
   useEffect(() => {
     setViewSdrFlag(false);
     setSelectedSdr(null);
-    setOpenSnackbar(0);
-    setSnackbarMessage("");
     if (!masterData) {
       dispatch(getSfrMasterData());
     }
   }, []);
 
   useEffect(() => {
-    if (detailsDataError) {
+    if (partsReportError) {
       setOpenSnackbar(-1);
-      setSnackbarMessage(detailsDataError);
+      setSnackbarMessage(partsReportError);
     }
-    if (esfrReportError) {
-      setOpenSnackbar(-1);
-      setSnackbarMessage(esfrReportError);
-    }
-  }, [esfrReport, esfrReportError, detailsDataError, detailsData]);
+  }, [partsReport, partsReportError]);
 
   useEffect(() => {
     if (selectedSdr) {
@@ -88,20 +79,13 @@ const ReportSearchScreen = () => {
 
   useEffect(() => {
     if (!viewSdrFlag) {
-      setOpenSnackbar(0);
-      setSnackbarMessage("");
-    }
-  }, [selectedSdr, viewSdrFlag]);
-
-  useEffect(() => {
-    if (!viewSdrFlag) {
       setSelectedSdr(null);
     }
   }, [viewSdrFlag]);
 
   return (
     <>
-      {(loadingDetailsData || loadingEsfrReport) && <CommonLoader />}
+      {(loadingDetailsData || loadingPartsReport) && <CommonLoader />}
       <Grid container flex={1}>
         <Grid item md={viewSdrFlag ? 6 : 12} xs={12} className="flex !flex-col">
           {/* TITLE */}
@@ -110,20 +94,20 @@ const ReportSearchScreen = () => {
               <ChevronLeftIcon />
               <Box className="font-semibold">Back to SDR Web</Box>
             </RouterLink>
-            <Box className="page-title">Report Search</Box>
+            <Box className="page-title">Discrepancy Parts Report</Box>
             <Box className="flex-1 md:none" />
           </Box>
           {/* SEARCH */}
           <Box className="elevate-paper" m={2} p={2} flex={1}>
-            <ReportSearch handleSearchReport={handleSearchReport} viewSdrFlag={viewSdrFlag} />
+            <DiscrepancyPartsReportSearch handleSearchReport={handleSearchReport} viewSdrFlag={viewSdrFlag} />
             <Divider className="!mt-6 !mb-10" />
-            {esfrReport ? (
-              esfrReport.length > 0 ? (
+            {partsReport ? (
+              partsReport.length > 0 ? (
                 <CommonDataGrid
-                  columns={allReportSearchColumns(reportStatus)}
+                  columns={partsReportSearchColumns(1)}
                   handleExtractSdrRecords={() => {}}
                   isReport={true}
-                  sdrData={esfrReport}
+                  sdrData={partsReport}
                   selectedSdr={selectedSdr}
                   setCreateSdrFlag={() => {}}
                   setSelectedSdr={setSelectedSdr}
@@ -138,18 +122,6 @@ const ReportSearchScreen = () => {
             )}
           </Box>
         </Grid>
-        {viewSdrFlag && selectedSdr && (
-          <Grid item md={6} xs={12}>
-            <ViewReportData
-              editable={false}
-              handleUpsertSdrSnapshot={() => {}}
-              isSdr={selectedSdr.ReportType === Type.SDR}
-              selectedSdr={selectedSdr}
-              setViewSdrFlag={setViewSdrFlag}
-              tabIndex={3}
-            />
-          </Grid>
-        )}
       </Grid>
       {!!openSnackbar && (
         <Snackbar
@@ -163,4 +135,4 @@ const ReportSearchScreen = () => {
   );
 };
 
-export default ReportSearchScreen;
+export default DiscrepancyPartsReportSearchScreen;

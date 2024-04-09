@@ -1,10 +1,10 @@
 export interface GetCpcpReportReq {
-  DateFrom: string;
-  DateTo: string;
-  CorrosionLevel: string;
-  Fleet: string;
-  AcNumber: string;
-  Station: string;
-  PageIndex: number;
-  PageSize: number;
-}
+    pageIndex: number;
+    pageSize: number;
+    corrosionLevel: string;
+    fleet: string;
+    acNumber: string;
+    station: string;
+    dateFrom: string;
+    dateTo: string;
+  }
