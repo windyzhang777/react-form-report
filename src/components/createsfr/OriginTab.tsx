@@ -1,13 +1,13 @@
 import { Grid, Typography } from "@mui/material";
 import { GridCellParams } from "@mui/x-data-grid";
 import { useFormikContext } from "formik";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { InfoBox, WarningBox } from "src/commons/Box";
 import ButtonGroup from "src/commons/ButtonGroup";
 import { ScrollableDataGrid as DataGrid } from "src/commons/DataGrid";
 import ListItem from "src/commons/ListItem";
 import Modal from "src/commons/Modal";
-import Radio from "src/commons/Radio";
+import { SimpleRadio } from "src/commons/Radio";
 import { SingleSelect } from "src/commons/Select";
 import TabPanel from "src/commons/TabPanel";
 import TextField, { ClickableTextField } from "src/commons/TextField";
@@ -33,21 +33,29 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
   );
   const { errors, handleBlur, handleChange, setFieldValue, touched, values } =
     useFormikContext<ISaveSfrValues>();
-  const [openSelectCtn, setOpenSelectCtn] = useState<boolean>(false);
-  const [openSelectSid, setOpenSelectSid] = useState<boolean>(false);
+  const [openSelectCtn, setOpenSelect] = useState<boolean>(false);
+  const selectedMFRSource = useMemo(
+    () =>
+      masterData?.MfrSources?.find((m) => m.Id === values?.OriginDetails?.MfrSourceId)?.Description,
+    [values?.OriginDetails?.MfrSourceId]
+  );
 
-  const toggleSelectCtn = () => {
-    setOpenSelectCtn(!openSelectCtn);
-  };
-  const handleGetCtnData = (fleetCode: string) => {
-    dispatch(getCtnData(fleetCode));
+  const toggleSelect = () => {
+    setOpenSelect(!openSelectCtn);
   };
 
-  const toggleSelectSid = () => {
-    setOpenSelectSid(!openSelectSid);
-  };
-  const handleGetSidData = (fleetCode: string) => {
-    dispatch(getSidData(fleetCode));
+  const handleGetData = (fleetCode: string) => {
+    switch (values?.OriginDetails?.MfrSourceId) {
+      case 1:
+        dispatch(getCtnData(fleetCode));
+        break;
+      case 2:
+      case 3:
+        dispatch(getSidData(fleetCode));
+        break;
+      default:
+        break;
+    }
   };
 
   return (
@@ -61,15 +69,20 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
           <ListItem>Scheduled Inspection</ListItem>
           <ListItem className="!absolute !px-0 left-0 top-[20px]">
             {editable ? (
-              <Radio
-                name="ScheduledInspection"
-                value={values.ScheduledInspection || ""}
+              <SimpleRadio
+                name="OriginDetails.IsScheduledInspection"
+                value={values?.OriginDetails?.IsScheduledInspection || ""}
                 onChange={(values) => {
-                  setFieldValue("ScheduledInspection", values);
+                  setFieldValue("OriginDetails.IsScheduledInspection", values);
                 }}
-                error={!!touched.ScheduledInspection && !!errors.ScheduledInspection}
-                helperText={!!touched.ScheduledInspection && errors.ScheduledInspection}
-                options={["Yes", "No"]}
+                error={
+                  !!touched?.OriginDetails?.IsScheduledInspection &&
+                  !!errors?.OriginDetails?.IsScheduledInspection
+                }
+                helperText={
+                  !!touched?.OriginDetails?.IsScheduledInspection &&
+                  errors?.OriginDetails?.IsScheduledInspection
+                }
                 className={"sdr-status-edit gap-5"}
               />
             ) : (
@@ -77,7 +90,7 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
             )}
           </ListItem>
         </div>
-        {values.ScheduledInspection === "Yes" && (
+        {values?.OriginDetails?.IsScheduledInspection && (
           <Grid container>
             <Grid item xs={6} className="flex !flex-col gap-6">
               {/* CAL Document */}
@@ -86,18 +99,22 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                 <ListItem>
                   {editable ? (
                     <SingleSelect
-                      name="CALDocument"
-                      value={values.CALDocument || ""}
+                      name="OriginDetails.CalDocId"
+                      value={values?.OriginDetails?.CalDocId || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={!!touched.CALDocument && !!errors.CALDocument}
-                      helperText={!!touched.CALDocument && errors.CALDocument}
+                      error={
+                        !!touched?.OriginDetails?.CalDocId && !!errors?.OriginDetails?.CalDocId
+                      }
+                      helperText={
+                        !!touched?.OriginDetails?.CalDocId && errors?.OriginDetails?.CalDocId
+                      }
                       options={
                         masterData?.CalDocuments &&
                         [...masterData.CalDocuments].sort((a, b) => a.DisplayOrder - b.DisplayOrder)
                       }
                       className={"sdr-status-edit"}
-                      id="CALDocument"
+                      id="OriginDetails.CalDocId"
                     />
                   ) : (
                     ""
@@ -105,14 +122,14 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                 </ListItem>
               </div>
 
-              {values.CALDocument === 1 && (
+              {values?.OriginDetails?.CalDocId === 1 && (
                 <div>
                   <ListItem>Work Card #</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextFieldGroup
                         count={4}
-                        name="WorkCard"
+                        name="OriginDetails.CalDocIdentifier"
                         values={values}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -123,14 +140,14 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                   </ListItem>
                 </div>
               )}
-              {values.CALDocument === 2 && (
+              {values?.OriginDetails?.CalDocId === 2 && (
                 <div>
                   <ListItem>EA #</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextFieldGroup
                         count={2}
-                        name="EA"
+                        name="OriginDetails.CalDocIdentifier"
                         values={values}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -141,14 +158,14 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                   </ListItem>
                 </div>
               )}
-              {values.CALDocument === 3 && (
+              {values?.OriginDetails?.CalDocId === 3 && (
                 <div>
                   <ListItem>FCD #</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextFieldGroup
                         count={2}
-                        name="FCD"
+                        name="OriginDetails.CalDocIdentifier"
                         values={values}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -159,18 +176,24 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                   </ListItem>
                 </div>
               )}
-              {values.CALDocument === 4 && (
+              {values?.OriginDetails?.CalDocId === 4 && (
                 <div>
                   <ListItem>DIP #</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="DIP"
-                        value={values.DIP || ""}
+                        name="OriginDetails.CalDocIdentifier"
+                        value={values?.OriginDetails?.CalDocIdentifier || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={!!touched.DIP && !!errors.DIP}
-                        helperText={!!touched.DIP && errors.DIP}
+                        error={
+                          !!touched?.OriginDetails?.CalDocIdentifier &&
+                          !!errors?.OriginDetails?.CalDocIdentifier
+                        }
+                        helperText={
+                          !!touched?.OriginDetails?.CalDocIdentifier &&
+                          errors?.OriginDetails?.CalDocIdentifier
+                        }
                         className={"sdr-status-edit"}
                       />
                     ) : (
@@ -179,18 +202,24 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                   </ListItem>
                 </div>
               )}
-              {values.CALDocument === 5 && (
+              {values?.OriginDetails?.CalDocId === 5 && (
                 <div>
                   <ListItem>Log Page #</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="LogPageNumber"
-                        value={values.LogPageNumber || ""}
+                        name="OriginDetails.CalDocIdentifier"
+                        value={values?.OriginDetails?.CalDocIdentifier || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={!!touched.LogPageNumber && !!errors.LogPageNumber}
-                        helperText={!!touched.LogPageNumber && errors.LogPageNumber}
+                        error={
+                          !!touched?.OriginDetails?.CalDocIdentifier &&
+                          !!errors?.OriginDetails?.CalDocIdentifier
+                        }
+                        helperText={
+                          !!touched?.OriginDetails?.CalDocIdentifier &&
+                          errors?.OriginDetails?.CalDocIdentifier
+                        }
                         className={"sdr-status-edit"}
                       />
                     ) : (
@@ -201,18 +230,18 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
               )}
 
               {/* REV */}
-              {(values.CALDocument === 2 || values.CALDocument === 3) && (
+              {(values?.OriginDetails?.CalDocId === 2 || values?.OriginDetails?.CalDocId === 3) && (
                 <div>
                   <ListItem>Rev #</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="REV"
-                        value={values.REV || ""}
+                        name="OriginDetails.Rev"
+                        value={values?.OriginDetails?.Rev || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        // error={!!touched.REV && !!errors.REV}
-                        // helperText={!!touched.REV && errors.REV}
+                        error={!!touched?.OriginDetails?.Rev && !!errors?.OriginDetails?.Rev}
+                        helperText={!!touched?.OriginDetails?.Rev && errors?.OriginDetails?.Rev}
                         className={"sdr-status-edit"}
                       />
                     ) : (
@@ -223,18 +252,18 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
               )}
 
               {/* OP */}
-              {values.CALDocument === 2 && (
+              {values?.OriginDetails?.CalDocId === 2 && (
                 <div>
                   <ListItem>Op #</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="OP"
-                        value={values.OP || ""}
+                        name="OriginDetails.Op"
+                        value={values?.OriginDetails?.Op || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        // error={!!touched.OP && !!errors.OP}
-                        // helperText={!!touched.OP && errors.OP}
+                        error={!!touched?.OriginDetails?.Op && !!errors?.OriginDetails?.Op}
+                        helperText={!!touched?.OriginDetails?.Op && errors?.OriginDetails?.Op}
                         className={"sdr-status-edit"}
                       />
                     ) : (
@@ -251,7 +280,7 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                   {editable ? (
                     <TextFieldGroup
                       count={4}
-                      name="Spec"
+                      name="OriginDetails.SpecIdentifier"
                       values={values}
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -269,18 +298,23 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                 <ListItem>
                   {editable ? (
                     <SingleSelect
-                      name="MFRSource"
-                      value={values.MFRSource || ""}
+                      name="OriginDetails.MfrSourceId"
+                      value={values?.OriginDetails?.MfrSourceId || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={!!touched.MFRSource && !!errors.MFRSource}
-                      helperText={!!touched.MFRSource && errors.MFRSource}
+                      error={
+                        !!touched?.OriginDetails?.MfrSourceId &&
+                        !!errors?.OriginDetails?.MfrSourceId
+                      }
+                      helperText={
+                        !!touched?.OriginDetails?.MfrSourceId && errors?.OriginDetails?.MfrSourceId
+                      }
                       options={
                         masterData?.MfrSources &&
                         [...masterData.MfrSources].sort((a, b) => a.DisplayOrder - b.DisplayOrder)
                       }
                       className={"sdr-status-edit"}
-                      id="MFRSource"
+                      id="OriginDetails.MfrSourceId"
                     />
                   ) : (
                     ""
@@ -288,18 +322,24 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                 </ListItem>
               </div>
 
-              {values.MFRSource === 1 && (
+              {values?.OriginDetails?.MfrSourceId === 1 && (
                 <div>
                   <ListItem>CTN</ListItem>
                   <ListItem>
                     {editable ? (
                       <ClickableTextField
-                        name="MFRSourceCTN"
-                        value={values.MFRSourceCTN || ""}
-                        onClick={toggleSelectCtn}
+                        name="OriginDetails.MfrSourceIdentifier"
+                        value={values?.OriginDetails?.MfrSourceIdentifier || ""}
+                        onClick={toggleSelect}
                         onBlur={handleBlur}
-                        // error={!!touched.MFRSourceCTN && !!errors.MFRSourceCTN}
-                        // helperText={!!touched.MFRSourceCTN && errors.MFRSourceCTN}
+                        error={
+                          !!touched?.OriginDetails?.MfrSourceIdentifier &&
+                          !!errors?.OriginDetails?.MfrSourceIdentifier
+                        }
+                        helperText={
+                          !!touched?.OriginDetails?.MfrSourceIdentifier &&
+                          errors?.OriginDetails?.MfrSourceIdentifier
+                        }
                         className={"sdr-status-edit"}
                       />
                     ) : (
@@ -308,18 +348,24 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                   </ListItem>
                 </div>
               )}
-              {values.MFRSource === 2 && (
+              {values?.OriginDetails?.MfrSourceId === 2 && (
                 <div>
                   <ListItem>SSI</ListItem>
                   <ListItem>
                     {editable ? (
-                      <TextField
-                        name="MFRSourceSSI"
-                        value={values.MFRSourceSSI || ""}
-                        onChange={handleChange}
+                      <ClickableTextField
+                        name="OriginDetails.MfrSourceIdentifier"
+                        value={values?.OriginDetails?.MfrSourceIdentifier || ""}
+                        onClick={toggleSelect}
                         onBlur={handleBlur}
-                        // error={!!touched.MFRSourceSSI && !!errors.MFRSourceSSI}
-                        // helperText={!!touched.MFRSourceSSI && errors.MFRSourceSSI}
+                        error={
+                          !!touched?.OriginDetails?.MfrSourceIdentifier &&
+                          !!errors?.OriginDetails?.MfrSourceIdentifier
+                        }
+                        helperText={
+                          !!touched?.OriginDetails?.MfrSourceIdentifier &&
+                          errors?.OriginDetails?.MfrSourceIdentifier
+                        }
                         className={"sdr-status-edit"}
                       />
                     ) : (
@@ -328,18 +374,24 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                   </ListItem>
                 </div>
               )}
-              {values.MFRSource === 3 && (
+              {values?.OriginDetails?.MfrSourceId === 3 && (
                 <div>
                   <ListItem>SID</ListItem>
                   <ListItem>
                     {editable ? (
                       <ClickableTextField
-                        name="MFRSourceSID"
-                        value={values.MFRSourceSID || ""}
-                        onClick={toggleSelectSid}
+                        name="OriginDetails.MfrSourceIdentifier"
+                        value={values?.OriginDetails?.MfrSourceIdentifier || ""}
+                        onClick={toggleSelect}
                         onBlur={handleBlur}
-                        // error={!!touched.MFRSourceSID && !!errors.MFRSourceSID}
-                        // helperText={!!touched.MFRSourceSID && errors.MFRSourceSID}
+                        error={
+                          !!touched?.OriginDetails?.MfrSourceIdentifier &&
+                          !!errors?.OriginDetails?.MfrSourceIdentifier
+                        }
+                        helperText={
+                          !!touched?.OriginDetails?.MfrSourceIdentifier &&
+                          errors?.OriginDetails?.MfrSourceIdentifier
+                        }
                         className={"sdr-status-edit"}
                       />
                     ) : (
@@ -348,18 +400,24 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                   </ListItem>
                 </div>
               )}
-              {values.MFRSource === 4 && (
+              {values?.OriginDetails?.MfrSourceId === 4 && (
                 <div>
                   <ListItem>SSID</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="MFRSourceSSID"
-                        value={values.MFRSourceSSID || ""}
+                        name="OriginDetails.MfrSourceIdentifier"
+                        value={values?.OriginDetails?.MfrSourceIdentifier || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        // error={!!touched.MFRSourceSSID && !!errors.MFRSourceSSID}
-                        // helperText={!!touched.MFRSourceSSID && errors.MFRSourceSSID}
+                        error={
+                          !!touched?.OriginDetails?.MfrSourceIdentifier &&
+                          !!errors?.OriginDetails?.MfrSourceIdentifier
+                        }
+                        helperText={
+                          !!touched?.OriginDetails?.MfrSourceIdentifier &&
+                          errors?.OriginDetails?.MfrSourceIdentifier
+                        }
                         className={"sdr-status-edit"}
                       />
                     ) : (
@@ -369,18 +427,24 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                 </div>
               )}
               {/* Comments */}
-              {values.MFRSource === 4 && (
+              {values?.OriginDetails?.MfrSourceId === 4 && (
                 <div>
                   <ListItem>Comments</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="Comments"
-                        value={values.Comments || ""}
+                        name="OriginDetails.MfrSourceComments"
+                        value={values?.OriginDetails?.MfrSourceComments || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        // error={!!touched.Comments && !!errors.Comments}
-                        // helperText={!!touched.Comments && errors.Comments}
+                        error={
+                          !!touched?.OriginDetails?.MfrSourceComments &&
+                          !!errors?.OriginDetails?.MfrSourceComments
+                        }
+                        helperText={
+                          !!touched?.OriginDetails?.MfrSourceComments &&
+                          errors?.OriginDetails?.MfrSourceComments
+                        }
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
@@ -393,18 +457,24 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                 </div>
               )}
               {/* Specify */}
-              {values.MFRSource === 5 && (
+              {values?.OriginDetails?.MfrSourceId === 5 && (
                 <div>
                   <ListItem>Specify</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="Specify"
-                        value={values.Specify || ""}
+                        name="OriginDetails.MfrSourceComments"
+                        value={values?.OriginDetails?.MfrSourceComments || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        // error={!!touched.Specify && !!errors.Specify}
-                        // helperText={!!touched.Specify && errors.Specify}
+                        error={
+                          !!touched?.OriginDetails?.MfrSourceComments &&
+                          !!errors?.OriginDetails?.MfrSourceComments
+                        }
+                        helperText={
+                          !!touched?.OriginDetails?.MfrSourceComments &&
+                          errors?.OriginDetails?.MfrSourceComments
+                        }
                         className={"sdr-status-edit"}
                       />
                     ) : (
@@ -420,12 +490,18 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                 <ListItem>
                   {editable ? (
                     <SingleSelect
-                      name="DetectionMethod"
-                      value={values.DetectionMethod || ""}
+                      name="OriginDetails.DetectionMethodId"
+                      value={values?.OriginDetails?.DetectionMethodId || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={!!touched.DetectionMethod && !!errors.DetectionMethod}
-                      helperText={!!touched.DetectionMethod && errors.DetectionMethod}
+                      error={
+                        !!touched?.OriginDetails?.DetectionMethodId &&
+                        !!errors?.OriginDetails?.DetectionMethodId
+                      }
+                      helperText={
+                        !!touched?.OriginDetails?.DetectionMethodId &&
+                        errors?.OriginDetails?.DetectionMethodId
+                      }
                       options={
                         masterData?.DetectionMethods &&
                         [...masterData.DetectionMethods].sort(
@@ -433,7 +509,7 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                         )
                       }
                       className={"sdr-status-edit"}
-                      id="DetectionMethod"
+                      id="OriginDetails.DetectionMethodId"
                     />
                   ) : (
                     ""
@@ -443,7 +519,7 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
             </Grid>
           </Grid>
         )}
-        {values.ScheduledInspection === "No" && (
+        {!values?.OriginDetails?.IsScheduledInspection && (
           <Grid container>
             <Grid item xs={6} className="flex !flex-col gap-6">
               {/* Type */}
@@ -452,33 +528,45 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                 <ListItem>
                   {editable ? (
                     <SingleSelect
-                      name="Type"
-                      value={values.Type || ""}
+                      name="OriginDetails.UnscheduledInspectionTypeId"
+                      value={values?.OriginDetails?.UnscheduledInspectionTypeId || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={!!touched.Type && !!errors.Type}
-                      helperText={!!touched.Type && errors.Type}
+                      error={
+                        !!touched?.OriginDetails?.UnscheduledInspectionTypeId &&
+                        !!errors?.OriginDetails?.UnscheduledInspectionTypeId
+                      }
+                      helperText={
+                        !!touched?.OriginDetails?.UnscheduledInspectionTypeId &&
+                        errors?.OriginDetails?.UnscheduledInspectionTypeId
+                      }
                       options={TypeOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                       className={"sdr-status-edit"}
-                      id="Type"
+                      id="OriginDetails.UnscheduledInspectionTypeId"
                     />
                   ) : (
                     ""
                   )}
                 </ListItem>
               </div>
-              {values.Type === 3 && (
+              {values?.OriginDetails?.UnscheduledInspectionTypeId === 3 && (
                 <div>
                   <ListItem>Comments</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="Comments"
-                        value={values.Comments || ""}
+                        name="OriginDetails.UnscheduledInspectionTypeComments"
+                        value={values?.OriginDetails?.UnscheduledInspectionTypeComments || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={!!touched.Comments && !!errors.Comments}
-                        helperText={!!touched.Comments && errors.Comments}
+                        error={
+                          !!touched?.OriginDetails?.UnscheduledInspectionTypeComments &&
+                          !!errors?.OriginDetails?.UnscheduledInspectionTypeComments
+                        }
+                        helperText={
+                          !!touched?.OriginDetails?.UnscheduledInspectionTypeComments &&
+                          errors?.OriginDetails?.UnscheduledInspectionTypeComments
+                        }
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
@@ -490,18 +578,24 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                   </ListItem>
                 </div>
               )}
-              {values.Type === 5 && (
+              {values?.OriginDetails?.UnscheduledInspectionTypeId === 5 && (
                 <div>
                   <ListItem>Specify</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="Specify"
-                        value={values.Specify || ""}
+                        name="OriginDetails.UnscheduledInspectionTypeComments"
+                        value={values?.OriginDetails?.UnscheduledInspectionTypeComments || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={!!touched.Specify && !!errors.Specify}
-                        helperText={!!touched.Specify && errors.Specify}
+                        error={
+                          !!touched?.OriginDetails?.UnscheduledInspectionTypeComments &&
+                          !!errors?.OriginDetails?.UnscheduledInspectionTypeComments
+                        }
+                        helperText={
+                          !!touched?.OriginDetails?.UnscheduledInspectionTypeComments &&
+                          errors?.OriginDetails?.UnscheduledInspectionTypeComments
+                        }
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
@@ -521,12 +615,18 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                 <ListItem>
                   {editable ? (
                     <SingleSelect
-                      name="DetectionMethod"
-                      value={values.DetectionMethod || ""}
+                      name="OriginDetails.DetectionMethodId"
+                      value={values?.OriginDetails?.DetectionMethodId || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={!!touched.DetectionMethod && !!errors.DetectionMethod}
-                      helperText={!!touched.DetectionMethod && errors.DetectionMethod}
+                      error={
+                        !!touched?.OriginDetails?.DetectionMethodId &&
+                        !!errors?.OriginDetails?.DetectionMethodId
+                      }
+                      helperText={
+                        !!touched?.OriginDetails?.DetectionMethodId &&
+                        errors?.OriginDetails?.DetectionMethodId
+                      }
                       options={
                         masterData?.DetectionMethods &&
                         [...masterData.DetectionMethods].sort(
@@ -534,7 +634,7 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                         )
                       }
                       className={"sdr-status-edit"}
-                      id="DetectionMethod"
+                      id="OriginDetails.DetectionMethodId"
                     />
                   ) : (
                     ""
@@ -542,18 +642,24 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                 </ListItem>
               </div>
 
-              {values.DetectionMethod === 9 && (
+              {values?.OriginDetails?.DetectionMethodId === 9 && (
                 <div>
                   <ListItem>Comments</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="OtherComments"
-                        value={values.OtherComments || ""}
+                        name="OriginDetails.DetectionMethodComments"
+                        value={values?.OriginDetails?.DetectionMethodComments || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={!!touched.OtherComments && !!errors.OtherComments}
-                        helperText={!!touched.OtherComments && errors.OtherComments}
+                        error={
+                          !!touched?.OriginDetails?.DetectionMethodComments &&
+                          !!errors?.OriginDetails?.DetectionMethodComments
+                        }
+                        helperText={
+                          !!touched?.OriginDetails?.DetectionMethodComments &&
+                          errors?.OriginDetails?.DetectionMethodComments
+                        }
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
@@ -571,33 +677,42 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
       </TabPanel>
       {openSelectCtn && (
         <Modal
-          name="select-ctn"
-          onClose={toggleSelectCtn}
+          name={`select-${selectedMFRSource}`}
+          onClose={toggleSelect}
           open={true}
           className="max-h-[80%] !w-[60%]"
         >
-          <Typography id="select-ctn-modal-title" variant="h6" mb={2} fontWeight={600}>
-            Select CTN
+          <Typography
+            id={`select-${selectedMFRSource}-modal-title`}
+            variant="h6"
+            mb={2}
+            fontWeight={600}
+          >
+            Select {selectedMFRSource}
           </Typography>
           <TextField
             name="searchDescription"
             value={values.searchDescription || ""}
-            placeholder="Search for CTN"
+            placeholder={`Search for ${selectedMFRSource}`}
             onChange={handleChange}
             onBlur={handleBlur}
             className="w-full !mb-4"
           />
-          <InfoBox className="!w-full mb-4">CTNs for B737</InfoBox>
+          <InfoBox className="!w-full mb-4">{selectedMFRSource}s for B737</InfoBox>
 
           {!(ctnData && ctnData.FleetMasterResponse?.length > 0) ? (
-            <WarningBox>no CTN data found for the current fleet</WarningBox>
+            touched?.searchDescription ? (
+              <WarningBox>no {selectedMFRSource} data found for the current fleet</WarningBox>
+            ) : (
+              <b className="ml-1">Search Description</b>
+            )
           ) : (
             <DataGrid
               className="!h-[400px]"
               columns={[
                 {
                   field: "Code",
-                  headerName: "CTN Number",
+                  headerName: `${selectedMFRSource} Number`,
                   sortable: false,
                   minWidth: 120,
                 },
@@ -612,8 +727,8 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
               disableColumnMenu
               disableRowSelectionOnClick
               onCellClick={(data: GridCellParams) => {
-                setFieldValue("MFRSourceCTN", data?.row?.Code);
-                toggleSelectCtn();
+                setFieldValue("OriginDetails.MfrSourceIdentifier", data?.row?.Code);
+                toggleSelect();
               }}
               getRowId={(row) => row.Code}
               getRowClassName={(params) =>
@@ -627,71 +742,8 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
             className="justify-end mt-4"
             primaryLabel="Select"
             secondaryLabel="Cancel"
-            primaryOnClick={() => handleGetCtnData("19")}
-            secondaryOnClick={toggleSelectCtn}
-          />
-        </Modal>
-      )}
-      {openSelectSid && (
-        <Modal
-          name="select-sid"
-          onClose={toggleSelectSid}
-          open={true}
-          className="max-h-[80%] !w-[60%]"
-        >
-          <Typography id="select-sid-modal-title" variant="h6" mb={2} fontWeight={600}>
-            Select SID
-          </Typography>
-          <TextField
-            name="searchDescription"
-            value={values.searchDescription || ""}
-            placeholder="Search for SID"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            className="w-full !mb-4"
-          />
-          <InfoBox className="!w-full mb-4">SIDs for B737</InfoBox>
-
-          {!(ctnData && ctnData.FleetMasterResponse?.length > 0) ? (
-            <WarningBox>no SID data found for the current fleet</WarningBox>
-          ) : (
-            <DataGrid
-              className="!h-[400px]"
-              columns={[
-                {
-                  field: "Code",
-                  headerName: "SID Number",
-                  sortable: false,
-                  minWidth: 120,
-                },
-                {
-                  field: "Description",
-                  headerName: "Description",
-                  sortable: false,
-                  flex: 1,
-                },
-              ]}
-              rows={ctnData!.FleetMasterResponse}
-              disableColumnMenu
-              disableRowSelectionOnClick
-              onCellClick={(data: GridCellParams) => {
-                setFieldValue("MFRSourceSID", data?.row?.Code);
-                toggleSelectSid();
-              }}
-              getRowId={(row) => row.Code}
-              getRowClassName={(params) =>
-                params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd"
-              }
-              hideFooter
-              loading={loading}
-            />
-          )}
-          <ButtonGroup
-            className="justify-end mt-4"
-            primaryLabel="Select"
-            secondaryLabel="Cancel"
-            primaryOnClick={() => handleGetSidData("19")}
-            secondaryOnClick={toggleSelectSid}
+            primaryOnClick={() => handleGetData("19")}
+            secondaryOnClick={toggleSelect}
           />
         </Modal>
       )}

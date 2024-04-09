@@ -39,4 +39,30 @@ const CommonRadio = ({
   );
 };
 
+export interface ISimpleRadioProps extends Omit<ICommonRadioProps, "options"> {}
+
+export const SimpleRadio = ({ error, helperText, name, onChange, ...props }: ISimpleRadioProps) => {
+  return (
+    <FormControl>
+      <RadioGroup
+        aria-labelledby={`${name}-radio-buttons-group-label`}
+        name={`${name}-radio-buttons-group`}
+        onChange={(e) => onChange(e.target.value)}
+        row
+        {...props}
+      >
+        {[true, false].map((option, index) => (
+          <FormControlLabel
+            key={index}
+            value={option}
+            control={<Radio />}
+            label={option ? "Yes" : "No"}
+          />
+        ))}
+      </RadioGroup>
+      {error && <FormHelperText>{helperText}</FormHelperText>}
+    </FormControl>
+  );
+};
+
 export default CommonRadio;

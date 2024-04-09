@@ -33,8 +33,8 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
     useFormikContext<ISaveSfrValues>();
 
   useEffect(() => {
-    setFieldValue("DamageProximity", 0);
-  }, [values.DefectLocation]);
+    setFieldValue("LocationDetails.DamageProximity", 0);
+  }, [values?.LocationDetails?.DefectLocationId]);
 
   return (
     <>
@@ -50,15 +50,17 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
               <ListItem>
                 {editable ? (
                   <SingleSelect
-                    name="Zone"
-                    value={values.Zone || ""}
+                    name="LocationDetails.ZoneId"
+                    value={values?.LocationDetails?.ZoneId || ""}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={!!touched.Zone && !!errors.Zone}
-                    helperText={!!touched.Zone && errors.Zone}
+                    error={!!touched?.LocationDetails?.ZoneId && !!errors?.LocationDetails?.ZoneId}
+                    helperText={
+                      !!touched?.LocationDetails?.ZoneId && errors?.LocationDetails?.ZoneId
+                    }
                     options={ZoneOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                     className={"sdr-status-edit"}
-                    id="Zone"
+                    id="LocationDetails.ZoneId"
                   />
                 ) : (
                   ""
@@ -70,12 +72,18 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
               <ListItem>
                 {editable ? (
                   <TextField
-                    name="LocationDetails"
-                    value={values.LocationDetails || ""}
+                    name="LocationDetails.CoordinateLocationDetails"
+                    value={values?.LocationDetails?.CoordinateLocationDetails || ""}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={!!touched.LocationDetails && !!errors.LocationDetails}
-                    helperText={!!touched.LocationDetails && errors.LocationDetails}
+                    error={
+                      !!touched?.LocationDetails?.CoordinateLocationDetails &&
+                      !!errors?.LocationDetails?.CoordinateLocationDetails
+                    }
+                    helperText={
+                      !!touched?.LocationDetails?.CoordinateLocationDetails &&
+                      errors?.LocationDetails?.CoordinateLocationDetails
+                    }
                     multiline
                     maxRows={4}
                     className={"sdr-status-edit textareaAutosize"}
@@ -95,12 +103,18 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
               <ListItem>
                 {editable ? (
                   <SingleSelect
-                    name="DefectLocation"
-                    value={values.DefectLocation || ""}
+                    name="LocationDetails.DefectLocationId"
+                    value={values?.LocationDetails?.DefectLocationId || ""}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={!!touched.DefectLocation && !!errors.DefectLocation}
-                    helperText={!!touched.DefectLocation && errors.DefectLocation}
+                    error={
+                      !!touched?.LocationDetails?.DefectLocationId &&
+                      !!errors?.LocationDetails?.DefectLocationId
+                    }
+                    helperText={
+                      !!touched?.LocationDetails?.DefectLocationId &&
+                      errors?.LocationDetails?.DefectLocationId
+                    }
                     options={
                       masterData?.DefectLocations &&
                       [...masterData.DefectLocations].sort(
@@ -108,7 +122,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       )
                     }
                     className={"sdr-status-edit"}
-                    id="DefectLocation"
+                    id="LocationDetails.DefectLocationId"
                   />
                 ) : (
                   ""
@@ -117,29 +131,29 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
             </>
 
             {/* Side */}
-            {(values.DefectLocation === 1 ||
-              values.DefectLocation === 2 ||
-              values.DefectLocation === 6 ||
-              values.DefectLocation === 7 ||
-              values.DefectLocation === 9 ||
-              values.DefectLocation === 12 ||
-              values.DefectLocation === 13 ||
-              values.DefectLocation === 17 ||
-              values.DefectLocation === 19) && (
+            {(values?.LocationDetails?.DefectLocationId === 1 ||
+              values?.LocationDetails?.DefectLocationId === 2 ||
+              values?.LocationDetails?.DefectLocationId === 6 ||
+              values?.LocationDetails?.DefectLocationId === 7 ||
+              values?.LocationDetails?.DefectLocationId === 9 ||
+              values?.LocationDetails?.DefectLocationId === 12 ||
+              values?.LocationDetails?.DefectLocationId === 13 ||
+              values?.LocationDetails?.DefectLocationId === 17 ||
+              values?.LocationDetails?.DefectLocationId === 19) && (
               <>
                 <ListItem>Side</ListItem>
                 <ListItem>
                   {editable ? (
                     <SingleSelect
-                      name="AileronSide"
-                      value={values.AileronSide || ""}
+                      name="LocationDetails.Side"
+                      value={values?.LocationDetails?.Side || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={!!touched.AileronSide && !!errors.AileronSide}
-                      helperText={!!touched.AileronSide && errors.AileronSide}
+                      error={!!touched?.LocationDetails?.Side && !!errors?.LocationDetails?.Side}
+                      helperText={!!touched?.LocationDetails?.Side && errors?.LocationDetails?.Side}
                       options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                       className={"sdr-status-edit"}
-                      id="AileronSide"
+                      id="LocationDetails.Side"
                     />
                   ) : (
                     ""
@@ -149,33 +163,37 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
             )}
 
             {/* Surface */}
-            {(values.DefectLocation === 1 ||
-              values.DefectLocation === 2 ||
-              values.DefectLocation === 6 ||
-              values.DefectLocation === 7 ||
-              values.DefectLocation === 9 ||
-              values.DefectLocation === 11 ||
-              values.DefectLocation === 21 ||
-              values.DefectLocation === 14 ||
-              values.DefectLocation === 15 ||
-              values.DefectLocation === 16 ||
-              values.DefectLocation === 17 ||
-              values.DefectLocation === 18 ||
-              values.DefectLocation === 19) && (
+            {(values?.LocationDetails?.DefectLocationId === 1 ||
+              values?.LocationDetails?.DefectLocationId === 2 ||
+              values?.LocationDetails?.DefectLocationId === 6 ||
+              values?.LocationDetails?.DefectLocationId === 7 ||
+              values?.LocationDetails?.DefectLocationId === 9 ||
+              values?.LocationDetails?.DefectLocationId === 11 ||
+              values?.LocationDetails?.DefectLocationId === 21 ||
+              values?.LocationDetails?.DefectLocationId === 14 ||
+              values?.LocationDetails?.DefectLocationId === 15 ||
+              values?.LocationDetails?.DefectLocationId === 16 ||
+              values?.LocationDetails?.DefectLocationId === 17 ||
+              values?.LocationDetails?.DefectLocationId === 18 ||
+              values?.LocationDetails?.DefectLocationId === 19) && (
               <>
                 <ListItem>Surface</ListItem>
                 <ListItem>
                   {editable ? (
                     <SingleSelect
-                      name="AileronSurface"
-                      value={values.AileronSurface || ""}
+                      name="LocationDetails.Surface"
+                      value={values?.LocationDetails?.Surface || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={!!touched.AileronSurface && !!errors.AileronSurface}
-                      helperText={!!touched.AileronSurface && errors.AileronSurface}
+                      error={
+                        !!touched?.LocationDetails?.Surface && !!errors?.LocationDetails?.Surface
+                      }
+                      helperText={
+                        !!touched?.LocationDetails?.Surface && errors?.LocationDetails?.Surface
+                      }
                       options={SurfaceOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                       className={"sdr-status-edit"}
-                      id="AileronSurface"
+                      id="LocationDetails.Surface"
                     />
                   ) : (
                     ""
@@ -185,31 +203,29 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
             )}
 
             {/* STA */}
-            {(values.DefectLocation === 4 ||
-              values.DefectLocation === 5 ||
-              values.DefectLocation === 6 ||
-              values.DefectLocation === 8 ||
-              values.DefectLocation === 9 ||
-              values.DefectLocation === 21 ||
-              values.DefectLocation === 18 ||
-              values.DefectLocation === 19) && (
+            {(values?.LocationDetails?.DefectLocationId === 4 ||
+              values?.LocationDetails?.DefectLocationId === 5 ||
+              values?.LocationDetails?.DefectLocationId === 6 ||
+              values?.LocationDetails?.DefectLocationId === 8 ||
+              values?.LocationDetails?.DefectLocationId === 9 ||
+              values?.LocationDetails?.DefectLocationId === 21 ||
+              values?.LocationDetails?.DefectLocationId === 18 ||
+              values?.LocationDetails?.DefectLocationId === 19) && (
               <>
                 <>
                   <ListItem>From STA</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="SfrAdditionalDetails?.FuselageFromSta"
-                        value={values?.SfrAdditionalDetails?.FuselageFromSta || ""}
+                        name="LocationDetails.FromSta"
+                        value={values?.LocationDetails?.FromSta || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
-                          !!touched?.SfrAdditionalDetails?.FuselageFromSta &&
-                          !!errors?.SfrAdditionalDetails?.FuselageFromSta
+                          !!touched?.LocationDetails?.FromSta && !!errors?.LocationDetails?.FromSta
                         }
                         helperText={
-                          !!touched?.SfrAdditionalDetails?.FuselageFromSta &&
-                          errors?.SfrAdditionalDetails?.FuselageFromSta
+                          !!touched?.LocationDetails?.FromSta && errors?.LocationDetails?.FromSta
                         }
                         multiline
                         maxRows={4}
@@ -226,17 +242,15 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="SfrAdditionalDetails.FuselageToSta"
-                        value={values?.SfrAdditionalDetails?.FuselageToSta || ""}
+                        name="LocationDetails.ToSta"
+                        value={values?.LocationDetails?.ToSta || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
-                          !!touched?.SfrAdditionalDetails?.FuselageToSta &&
-                          !!errors?.SfrAdditionalDetails?.FuselageToSta
+                          !!touched?.LocationDetails?.ToSta && !!errors?.LocationDetails?.ToSta
                         }
                         helperText={
-                          !!touched?.SfrAdditionalDetails?.FuselageToSta &&
-                          errors?.SfrAdditionalDetails?.FuselageToSta
+                          !!touched?.LocationDetails?.ToSta && errors?.LocationDetails?.ToSta
                         }
                         multiline
                         maxRows={4}
@@ -252,19 +266,26 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
             )}
 
             {/* BL */}
-            {(values.DefectLocation === 4 || values.DefectLocation === 5) && (
+            {(values?.LocationDetails?.DefectLocationId === 4 ||
+              values?.LocationDetails?.DefectLocationId === 5) && (
               <>
                 <>
                   <ListItem>From BL</ListItem>
                   <ListItem>
                     {editable ? (
                       <SingleSelect
-                        name="FromBL"
-                        value={values.FromBL || ""}
+                        name="LocationDetails.FromBLLength"
+                        value={values?.LocationDetails?.FromBLLength || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={!!touched.FromBL && !!errors.FromBL}
-                        helperText={!!touched.FromBL && errors.FromBL}
+                        error={
+                          !!touched?.LocationDetails?.FromBLLength &&
+                          !!errors?.LocationDetails?.FromBLLength
+                        }
+                        helperText={
+                          !!touched?.LocationDetails?.FromBLLength &&
+                          errors?.LocationDetails?.FromBLLength
+                        }
                         options={
                           masterData?.DiscrepancyParts &&
                           [...masterData.DiscrepancyParts].sort(
@@ -272,7 +293,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                           )
                         }
                         className={"sdr-status-edit"}
-                        id="FromBL"
+                        id="LocationDetails.FromBLLength"
                       />
                     ) : (
                       ""
@@ -281,12 +302,16 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="FuselageFromSta"
-                        value={values.FromBLText || ""}
+                        name="LocationDetails.FromBL"
+                        value={values.LocationDetails?.FromBL || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={!!touched.FromBLText && !!errors.FromBLText}
-                        helperText={!!touched.FromBLText && errors.FromBLText}
+                        error={
+                          !!touched.LocationDetails?.FromBL && !!errors.LocationDetails?.FromBL
+                        }
+                        helperText={
+                          !!touched.LocationDetails?.FromBL && errors.LocationDetails?.FromBL
+                        }
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
@@ -302,12 +327,18 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   <ListItem>
                     {editable ? (
                       <SingleSelect
-                        name="ToBL"
-                        value={values.ToBL || ""}
+                        name="LocationDetails.ToBLLength"
+                        value={values?.LocationDetails?.ToBLLength || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={!!touched.ToBL && !!errors.ToBL}
-                        helperText={!!touched.ToBL && errors.ToBL}
+                        error={
+                          !!touched?.LocationDetails?.ToBLLength &&
+                          !!errors?.LocationDetails?.ToBLLength
+                        }
+                        helperText={
+                          !!touched?.LocationDetails?.ToBLLength &&
+                          errors?.LocationDetails?.ToBLLength
+                        }
                         options={
                           masterData?.DiscrepancyParts &&
                           [...masterData.DiscrepancyParts].sort(
@@ -315,7 +346,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                           )
                         }
                         className={"sdr-status-edit"}
-                        id="ToBL"
+                        id="LocationDetails.ToBLLength"
                       />
                     ) : (
                       ""
@@ -324,12 +355,14 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="FuselageToSta"
-                        value={values.ToBLText || ""}
+                        name="LocationDetails.ToBL"
+                        value={values?.LocationDetails?.ToBL || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={!!touched.ToBLText && !!errors.ToBLText}
-                        helperText={!!touched.ToBLText && errors.ToBLText}
+                        error={!!touched?.LocationDetails?.ToBL && !!errors?.LocationDetails?.ToBL}
+                        helperText={
+                          !!touched?.LocationDetails?.ToBL && errors?.LocationDetails?.ToBL
+                        }
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
@@ -344,24 +377,29 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
             )}
 
             {/* Type */}
-            {(values.DefectLocation === 9 ||
-              values.DefectLocation === 21 ||
-              values.DefectLocation === 18 ||
-              values.DefectLocation === 19) && (
+            {(values?.LocationDetails?.DefectLocationId === 9 ||
+              values?.LocationDetails?.DefectLocationId === 21 ||
+              values?.LocationDetails?.DefectLocationId === 18 ||
+              values?.LocationDetails?.DefectLocationId === 19) && (
               <>
                 <ListItem>Type</ListItem>
                 <ListItem>
                   {editable ? (
                     <SingleSelect
-                      name="Type"
-                      value={values.Type || ""}
+                      name="LocationDetails.StaTypeId"
+                      value={values?.LocationDetails?.StaTypeId || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={!!touched.Type && !!errors.Type}
-                      helperText={!!touched.Type && errors.Type}
+                      error={
+                        !!touched?.LocationDetails?.StaTypeId &&
+                        !!errors?.LocationDetails?.StaTypeId
+                      }
+                      helperText={
+                        !!touched?.LocationDetails?.StaTypeId && errors?.LocationDetails?.StaTypeId
+                      }
                       options={ZoneOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                       className={"sdr-status-edit"}
-                      id="Type"
+                      id="LocationDetails.StaTypeId"
                     />
                   ) : (
                     ""
@@ -371,23 +409,30 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
             )}
 
             {/* DamageProximity Rudder */}
-            {(values.DefectLocation === 6 || values.DefectLocation === 21) && (
+            {(values?.LocationDetails?.DefectLocationId === 6 ||
+              values?.LocationDetails?.DefectLocationId === 21) && (
               <>
                 <ListItem>Damage in Proximity of or at</ListItem>
                 <ListItem>
                   {editable ? (
                     <SingleSelect
-                      name="DamageProximity"
-                      value={values.DamageProximity || ""}
+                      name="LocationDetails.DamageProximityId"
+                      value={values?.LocationDetails?.DamageProximityId || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={!!touched.DamageProximity && !!errors.DamageProximity}
-                      helperText={!!touched.DamageProximity && errors.DamageProximity}
+                      error={
+                        !!touched?.LocationDetails?.DamageProximityId &&
+                        !!errors?.LocationDetails?.DamageProximityId
+                      }
+                      helperText={
+                        !!touched?.LocationDetails?.DamageProximityId &&
+                        errors?.LocationDetails?.DamageProximityId
+                      }
                       options={RudderDamageProximityOptions.sort(
                         (a, b) => a.DisplayOrder - b.DisplayOrder
                       )}
                       className={"sdr-status-edit"}
-                      id="DamageProximity"
+                      id="LocationDetails.DamageProximityId"
                     />
                   ) : (
                     ""
@@ -397,23 +442,30 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
             )}
 
             {/* DamageProximity Stab */}
-            {(values.DefectLocation === 9 || values.DefectLocation === 18) && (
+            {(values?.LocationDetails?.DefectLocationId === 9 ||
+              values?.LocationDetails?.DefectLocationId === 18) && (
               <>
                 <ListItem>Damage in Proximity of or at</ListItem>
                 <ListItem>
                   {editable ? (
                     <SingleSelect
-                      name="DamageProximity"
-                      value={values.DamageProximity || ""}
+                      name="LocationDetails.DamageProximityId"
+                      value={values?.LocationDetails?.DamageProximityId || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={!!touched.DamageProximity && !!errors.DamageProximity}
-                      helperText={!!touched.DamageProximity && errors.DamageProximity}
+                      error={
+                        !!touched?.LocationDetails?.DamageProximityId &&
+                        !!errors?.LocationDetails?.DamageProximityId
+                      }
+                      helperText={
+                        !!touched?.LocationDetails?.DamageProximityId &&
+                        errors?.LocationDetails?.DamageProximityId
+                      }
                       options={StabDamageProximityOptions.sort(
                         (a, b) => a.DisplayOrder - b.DisplayOrder
                       )}
                       className={"sdr-status-edit"}
-                      id="DamageProximity"
+                      id="LocationDetails.DamageProximityId"
                     />
                   ) : (
                     ""
@@ -423,23 +475,29 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
             )}
 
             {/* DamageProximity Wing */}
-            {values.DefectLocation === 19 && (
+            {values?.LocationDetails?.DefectLocationId === 19 && (
               <>
                 <ListItem>Damage in Proximity of or at</ListItem>
                 <ListItem>
                   {editable ? (
                     <SingleSelect
-                      name="DamageProximity"
-                      value={values.DamageProximity || ""}
+                      name="LocationDetails.DamageProximityId"
+                      value={values?.LocationDetails?.DamageProximityId || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={!!touched.DamageProximity && !!errors.DamageProximity}
-                      helperText={!!touched.DamageProximity && errors.DamageProximity}
+                      error={
+                        !!touched?.LocationDetails?.DamageProximityId &&
+                        !!errors?.LocationDetails?.DamageProximityId
+                      }
+                      helperText={
+                        !!touched?.LocationDetails?.DamageProximityId &&
+                        errors?.LocationDetails?.DamageProximityId
+                      }
                       options={WingDamageProximityOptions.sort(
                         (a, b) => a.DisplayOrder - b.DisplayOrder
                       )}
                       className={"sdr-status-edit"}
-                      id="DamageProximity"
+                      id="LocationDetails.DamageProximityId"
                     />
                   ) : (
                     ""
@@ -449,28 +507,26 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
             )}
 
             {/* STR */}
-            {values.DefectLocation === 8 && (
+            {values?.LocationDetails?.DefectLocationId === 8 && (
               <>
                 <>
                   <ListItem>From STR/Long</ListItem>
                   <ListItem>
                     {editable ? (
                       <SingleSelect
-                        name="SfrAdditionalDetails.StringerFrom"
-                        value={values?.SfrAdditionalDetails?.StringerFrom || ""}
+                        name="LocationDetails.FromStr"
+                        value={values?.LocationDetails?.FromStr || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
-                          !!touched?.SfrAdditionalDetails?.StringerFrom &&
-                          !!errors?.SfrAdditionalDetails?.StringerFrom
+                          !!touched?.LocationDetails?.FromStr && !!errors?.LocationDetails?.FromStr
                         }
                         helperText={
-                          !!touched?.SfrAdditionalDetails?.StringerFrom &&
-                          errors?.SfrAdditionalDetails?.StringerFrom
+                          !!touched?.LocationDetails?.FromStr && errors?.LocationDetails?.FromStr
                         }
                         options={ZoneOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                         className={"sdr-status-edit"}
-                        id="SfrAdditionalDetails.StringerFrom"
+                        id="LocationDetails.FromStr"
                       />
                     ) : (
                       ""
@@ -479,22 +535,21 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   <ListItem>
                     {editable ? (
                       <SingleSelect
-                        name="SfrAdditionalDetails.StringerFromSide
+                        name="LocationDetails.FromSide
 "
-                        value={values?.SfrAdditionalDetails?.StringerFromSide || ""}
+                        value={values?.LocationDetails?.FromSide || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
-                          !!touched?.SfrAdditionalDetails?.StringerFromSide &&
-                          !!errors?.SfrAdditionalDetails?.StringerFromSide
+                          !!touched?.LocationDetails?.FromSide &&
+                          !!errors?.LocationDetails?.FromSide
                         }
                         helperText={
-                          !!touched?.SfrAdditionalDetails?.StringerFromSide &&
-                          errors?.SfrAdditionalDetails?.StringerFromSide
+                          !!touched?.LocationDetails?.FromSide && errors?.LocationDetails?.FromSide
                         }
                         options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                         className={"sdr-status-edit"}
-                        id="SfrAdditionalDetails.StringerFromSide
+                        id="LocationDetails.FromSide
 "
                       />
                     ) : (
@@ -507,21 +562,19 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   <ListItem>
                     {editable ? (
                       <SingleSelect
-                        name="SfrAdditionalDetails.StringerTo"
-                        value={values?.SfrAdditionalDetails?.StringerTo || ""}
+                        name="LocationDetails.ToStr"
+                        value={values?.LocationDetails?.ToStr || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
-                          !!touched?.SfrAdditionalDetails?.StringerTo &&
-                          !!errors?.SfrAdditionalDetails?.StringerTo
+                          !!touched?.LocationDetails?.ToStr && !!errors?.LocationDetails?.ToStr
                         }
                         helperText={
-                          !!touched?.SfrAdditionalDetails?.StringerTo &&
-                          errors?.SfrAdditionalDetails?.StringerTo
+                          !!touched?.LocationDetails?.ToStr && errors?.LocationDetails?.ToStr
                         }
                         options={ZoneOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                         className={"sdr-status-edit"}
-                        id="SfrAdditionalDetails.StringerTo"
+                        id="LocationDetails.ToStr"
                       />
                     ) : (
                       ""
@@ -530,21 +583,19 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   <ListItem>
                     {editable ? (
                       <SingleSelect
-                        name="SfrAdditionalDetails.StringerToSide"
-                        value={values?.SfrAdditionalDetails?.StringerToSide || ""}
+                        name="LocationDetails.ToSide"
+                        value={values?.LocationDetails?.ToSide || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
-                          !!touched?.SfrAdditionalDetails?.StringerToSide &&
-                          !!errors?.SfrAdditionalDetails?.StringerToSide
+                          !!touched?.LocationDetails?.ToSide && !!errors?.LocationDetails?.ToSide
                         }
                         helperText={
-                          !!touched?.SfrAdditionalDetails?.StringerToSide &&
-                          errors?.SfrAdditionalDetails?.StringerToSide
+                          !!touched?.LocationDetails?.ToSide && errors?.LocationDetails?.ToSide
                         }
                         options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                         className={"sdr-status-edit"}
-                        id="SfrAdditionalDetails.StringerToSide
+                        id="LocationDetails.ToSide
 "
                       />
                     ) : (
@@ -556,22 +607,28 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
             )}
 
             {/* Elevator, Fuselage */}
-            {values.DefectLocation === 8 && (
+            {values?.LocationDetails?.DefectLocationId === 8 && (
               <>
                 <>
                   <ListItem>Elevator Tab</ListItem>
                   <ListItem>
                     {editable ? (
                       <SingleSelect
-                        name="ElevatorTab"
-                        value={values.ElevatorTab || ""}
+                        name="LocationDetails.ElevatorTab"
+                        value={values?.LocationDetails?.ElevatorTab || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={!!touched.ElevatorTab && !!errors.ElevatorTab}
-                        helperText={!!touched.ElevatorTab && errors.ElevatorTab}
+                        error={
+                          !!touched?.LocationDetails?.ElevatorTab &&
+                          !!errors?.LocationDetails?.ElevatorTab
+                        }
+                        helperText={
+                          !!touched?.LocationDetails?.ElevatorTab &&
+                          errors?.LocationDetails?.ElevatorTab
+                        }
                         options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                         className={"sdr-status-edit"}
-                        id="ElevatorTab"
+                        id="LocationDetails.ElevatorTab"
                       />
                     ) : (
                       ""
@@ -583,15 +640,20 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   <ListItem>
                     {editable ? (
                       <SingleSelect
-                        name="Fuselage"
-                        value={values.Fuselage || ""}
+                        name="LocationDetails.Fuselage"
+                        value={values?.LocationDetails?.Fuselage || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={!!touched.Fuselage && !!errors.Fuselage}
-                        helperText={!!touched.Fuselage && errors.Fuselage}
+                        error={
+                          !!touched?.LocationDetails?.Fuselage &&
+                          !!errors?.LocationDetails?.Fuselage
+                        }
+                        helperText={
+                          !!touched?.LocationDetails?.Fuselage && errors?.LocationDetails?.Fuselage
+                        }
                         options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                         className={"sdr-status-edit"}
-                        id="Fuselage"
+                        id="LocationDetails.Fuselage"
                       />
                     ) : (
                       ""
@@ -602,21 +664,27 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
             )}
 
             {/* LE Flap */}
-            {values.DefectLocation === 11 && (
+            {values?.LocationDetails?.DefectLocationId === 11 && (
               <>
                 <ListItem>LE Flap #</ListItem>
                 <ListItem>
                   {editable ? (
                     <SingleSelect
-                      name="LEFlap"
-                      value={values.LEFlap || ""}
+                      name="LocationDetails.LocationType"
+                      value={values?.LocationDetails?.LocationType || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={!!touched.LEFlap && !!errors.LEFlap}
-                      helperText={!!touched.LEFlap && errors.LEFlap}
+                      error={
+                        !!touched?.LocationDetails?.LocationType &&
+                        !!errors?.LocationDetails?.LocationType
+                      }
+                      helperText={
+                        !!touched?.LocationDetails?.LocationType &&
+                        errors?.LocationDetails?.LocationType
+                      }
                       options={ZoneOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                       className={"sdr-status-edit"}
-                      id="LEFlap"
+                      id="LocationDetails.LocationType"
                     />
                   ) : (
                     ""
@@ -626,21 +694,27 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
             )}
 
             {/* TE Flap */}
-            {values.DefectLocation === 17 && (
+            {values?.LocationDetails?.DefectLocationId === 17 && (
               <>
                 <ListItem>TE Flap #</ListItem>
                 <ListItem>
                   {editable ? (
                     <SingleSelect
-                      name="TEFlap"
-                      value={values.TEFlap || ""}
+                      name="LocationDetails.LocationType"
+                      value={values?.LocationDetails?.LocationType || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={!!touched.TEFlap && !!errors.TEFlap}
-                      helperText={!!touched.TEFlap && errors.TEFlap}
+                      error={
+                        !!touched?.LocationDetails?.LocationType &&
+                        !!errors?.LocationDetails?.LocationType
+                      }
+                      helperText={
+                        !!touched?.LocationDetails?.LocationType &&
+                        errors?.LocationDetails?.LocationType
+                      }
                       options={ZoneOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                       className={"sdr-status-edit"}
-                      id="TEFlap"
+                      id="LocationDetails.LocationType"
                     />
                   ) : (
                     ""
@@ -650,21 +724,27 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
             )}
 
             {/* Slat */}
-            {values.DefectLocation === 15 && (
+            {values?.LocationDetails?.DefectLocationId === 15 && (
               <>
                 <ListItem>Slat #</ListItem>
                 <ListItem>
                   {editable ? (
                     <SingleSelect
-                      name="Slat"
-                      value={values.Slat || ""}
+                      name="LocationDetails.LocationType"
+                      value={values?.LocationDetails?.LocationType || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={!!touched.Slat && !!errors.Slat}
-                      helperText={!!touched.Slat && errors.Slat}
+                      error={
+                        !!touched?.LocationDetails?.LocationType &&
+                        !!errors?.LocationDetails?.LocationType
+                      }
+                      helperText={
+                        !!touched?.LocationDetails?.LocationType &&
+                        errors?.LocationDetails?.LocationType
+                      }
                       options={ZoneOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                       className={"sdr-status-edit"}
-                      id="Slat"
+                      id="LocationDetails.LocationType"
                     />
                   ) : (
                     ""
@@ -674,21 +754,27 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
             )}
 
             {/* Spoiler */}
-            {values.DefectLocation === 16 && (
+            {values?.LocationDetails?.DefectLocationId === 16 && (
               <>
                 <ListItem>Spoiler #</ListItem>
                 <ListItem>
                   {editable ? (
                     <SingleSelect
-                      name="Spoiler"
-                      value={values.Spoiler || ""}
+                      name="LocationDetails.LocationType"
+                      value={values?.LocationDetails?.LocationType || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={!!touched.Spoiler && !!errors.Spoiler}
-                      helperText={!!touched.Spoiler && errors.Spoiler}
+                      error={
+                        !!touched?.LocationDetails?.LocationType &&
+                        !!errors?.LocationDetails?.LocationType
+                      }
+                      helperText={
+                        !!touched?.LocationDetails?.LocationType &&
+                        errors?.LocationDetails?.LocationType
+                      }
                       options={ZoneOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                       className={"sdr-status-edit"}
-                      id="Spoiler"
+                      id="LocationDetails.LocationType"
                     />
                   ) : (
                     ""
@@ -698,21 +784,26 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
             )}
 
             {/* Specifics */}
-            {values.DefectLocation === 17 && (
+            {values?.LocationDetails?.DefectLocationId === 17 && (
               <>
                 <ListItem>Specifics #</ListItem>
                 <ListItem>
                   {editable ? (
                     <SingleSelect
-                      name="Specifics"
-                      value={values.Specifics || ""}
+                      name="LocationDetails.Specifics"
+                      value={values?.LocationDetails?.Specifics || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={!!touched.Specifics && !!errors.Specifics}
-                      helperText={!!touched.Specifics && errors.Specifics}
+                      error={
+                        !!touched?.LocationDetails?.Specifics &&
+                        !!errors?.LocationDetails?.Specifics
+                      }
+                      helperText={
+                        !!touched?.LocationDetails?.Specifics && errors?.LocationDetails?.Specifics
+                      }
                       options={SpecificsOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                       className={"sdr-status-edit"}
-                      id="Specifics"
+                      id="LocationDetails.Specifics"
                     />
                   ) : (
                     ""
@@ -722,21 +813,23 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
             )}
 
             {/* Other */}
-            {values.DefectLocation === 17 && (
+            {values?.LocationDetails?.DefectLocationId === 17 && (
               <>
                 <ListItem>Other</ListItem>
                 <ListItem>
                   {editable ? (
                     <SingleSelect
-                      name="TEFlapOther"
-                      value={values.TEFlapOther || ""}
+                      name="LocationDetails.Other"
+                      value={values?.LocationDetails?.Other || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={!!touched.TEFlapOther && !!errors.TEFlapOther}
-                      helperText={!!touched.TEFlapOther && errors.TEFlapOther}
+                      error={!!touched?.LocationDetails?.Other && !!errors?.LocationDetails?.Other}
+                      helperText={
+                        !!touched?.LocationDetails?.Other && errors?.LocationDetails?.Other
+                      }
                       options={OtherOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                       className={"sdr-status-edit"}
-                      id="TEFlapOther"
+                      id="LocationDetails.Other"
                     />
                   ) : (
                     ""
@@ -746,18 +839,24 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
             )}
 
             {/* Location Details */}
-            {values.DefectLocation === 17 && (
+            {values?.LocationDetails?.DefectLocationId === 17 && (
               <>
                 <ListItem>Additional Location Details</ListItem>
                 <ListItem>
                   {editable ? (
                     <TextField
-                      name="LocationDetails"
-                      value={values.LocationDetails || ""}
+                      name="LocationDetails.AdditionalLocationDetails"
+                      value={values?.LocationDetails?.AdditionalLocationDetails || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={!!touched.LocationDetails && !!errors.LocationDetails}
-                      helperText={!!touched.LocationDetails && errors.LocationDetails}
+                      error={
+                        !!touched?.LocationDetails?.AdditionalLocationDetails &&
+                        !!errors?.LocationDetails?.AdditionalLocationDetails
+                      }
+                      helperText={
+                        !!touched?.LocationDetails?.AdditionalLocationDetails &&
+                        errors?.LocationDetails?.AdditionalLocationDetails
+                      }
                       multiline
                       maxRows={4}
                       className={"sdr-status-edit textareaAutosize"}
@@ -771,18 +870,24 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
             )}
 
             {/* Specify Location Details */}
-            {values.DefectLocation === 20 && (
+            {values?.LocationDetails?.DefectLocationId === 20 && (
               <>
                 <ListItem>Specify Defect Location</ListItem>
                 <ListItem>
                   {editable ? (
                     <TextField
-                      name="SpecifyDefectLocation"
-                      value={values.SpecifyDefectLocation || ""}
+                      name="LocationDetails.SpecificsLocation"
+                      value={values?.LocationDetails?.SpecificsLocation || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={!!touched.SpecifyDefectLocation && !!errors.SpecifyDefectLocation}
-                      helperText={!!touched.SpecifyDefectLocation && errors.SpecifyDefectLocation}
+                      error={
+                        !!touched?.LocationDetails?.SpecificsLocation &&
+                        !!errors?.LocationDetails?.SpecificsLocation
+                      }
+                      helperText={
+                        !!touched?.LocationDetails?.SpecificsLocation &&
+                        errors?.LocationDetails?.SpecificsLocation
+                      }
                       multiline
                       maxRows={4}
                       className={"sdr-status-edit textareaAutosize"}
@@ -796,20 +901,26 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
             )}
 
             {/* STR Text */}
-            {values.DefectLocation === 19 &&
-              (values.DamageProximity === 4 || values.DamageProximity === 5) && (
+            {values?.LocationDetails?.DefectLocationId === 19 &&
+              (values?.LocationDetails?.DamageProximityId === 4 ||
+                values?.LocationDetails?.DamageProximityId === 5) && (
                 <>
                   <>
                     <ListItem>From STR</ListItem>
                     <ListItem>
                       {editable ? (
                         <TextField
-                          name="FromSTR"
-                          value={values?.FromSTR || ""}
+                          name="LocationDetails.FromStr"
+                          value={values?.LocationDetails?.FromStr || ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={!!touched?.FromSTR && !!errors?.FromSTR}
-                          helperText={!!touched?.FromSTR && errors?.FromSTR}
+                          error={
+                            !!touched?.LocationDetails?.FromStr &&
+                            !!errors?.LocationDetails?.FromStr
+                          }
+                          helperText={
+                            !!touched?.LocationDetails?.FromStr && errors?.LocationDetails?.FromStr
+                          }
                           multiline
                           maxRows={4}
                           className={"sdr-status-edit textareaAutosize"}
@@ -825,12 +936,16 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     <ListItem>
                       {editable ? (
                         <TextField
-                          name="ToSTR"
-                          value={values?.ToSTR || ""}
+                          name="LocationDetails.ToStr"
+                          value={values?.LocationDetails?.ToStr || ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={!!touched?.ToSTR && !!errors?.ToSTR}
-                          helperText={!!touched?.ToSTR && errors?.ToSTR}
+                          error={
+                            !!touched?.LocationDetails?.ToStr && !!errors?.LocationDetails?.ToStr
+                          }
+                          helperText={
+                            !!touched?.LocationDetails?.ToStr && errors?.LocationDetails?.ToStr
+                          }
                           multiline
                           maxRows={4}
                           className={"sdr-status-edit textareaAutosize"}

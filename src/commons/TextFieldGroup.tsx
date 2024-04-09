@@ -11,16 +11,22 @@ export interface ITextFieldGroupProps extends Partial<ICommonTextFieldProps> {
   values: ISaveSfrValues;
 }
 
-const TextFieldGroup = ({ count, name, values, ...props }: ITextFieldGroupProps) => {
+const TextFieldGroup = ({ count, name, values, onChange, ...props }: ITextFieldGroupProps) => {
   return (
     <FlexRow className="mb-[5px]">
-      {Array.from({ length: count }, (_, i) => i + 1).map((a, i) => (
+      {Array.from({ length: count }, (_, i) => i).map((i) => (
         <Fragment key={i}>
           <TextField
             className=""
-            name={name + a}
+            name={name}
             placeholder="xx"
-            value={(values as any)[name + a] || ""}
+            value={(values as any)[name]?.split("-")?.[i] || ""}
+            onChange={(e) => {
+              const found = (values as any)[name];
+              const arr = found.split("-");
+              arr[i] = e.target.value;
+              onChange(arr.join("-"));
+            }}
             {...props}
           />
           {i + 1 !== count && <>&nbsp;-&nbsp;</>}

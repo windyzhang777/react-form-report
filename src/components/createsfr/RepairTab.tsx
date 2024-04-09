@@ -3,7 +3,7 @@ import { useFormikContext } from "formik";
 import { ChangeEventHandler, FocusEventHandler } from "react";
 import { FlexColumn } from "src/commons/Box";
 import ListItem from "src/commons/ListItem";
-import Radio from "src/commons/Radio";
+import Radio, { SimpleRadio } from "src/commons/Radio";
 import { MultipleSelect } from "src/commons/Select";
 import TabPanel from "src/commons/TabPanel";
 import TextField from "src/commons/TextField";
@@ -30,15 +30,16 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
           <ListItem>{`Was this repair "deferred"?`}</ListItem>
           <ListItem className="!absolute !px-0 left-0 top-[20px]">
             {editable ? (
-              <Radio
-                name="RepairDeferred"
-                value={values.RepairDeferred || ""}
+              <SimpleRadio
+                name="RepairDetails.IsDeferred"
+                value={values?.RepairDetails?.IsDeferred || ""}
                 onChange={(values) => {
-                  setFieldValue("RepairDeferred", values);
+                  setFieldValue("RepairDetails.IsDeferred", values);
                 }}
-                error={!!touched.RepairDeferred && !!errors.RepairDeferred}
-                helperText={!!touched.RepairDeferred && errors.RepairDeferred}
-                options={["Yes", "No"]}
+                error={!!touched?.RepairDetails?.IsDeferred && !!errors?.RepairDetails?.IsDeferred}
+                helperText={
+                  !!touched?.RepairDetails?.IsDeferred && errors?.RepairDetails?.IsDeferred
+                }
                 className={"sdr-status-edit gap-5"}
               />
             ) : (
@@ -46,18 +47,18 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
             )}
           </ListItem>
         </div>
-        {values.RepairDeferred === "Yes" && (
+        {values.RepairDetails?.IsDeferred && (
           <>
             <ListItem>DIP #</ListItem>
             <ListItem>
               {editable ? (
                 <TextField
-                  name="DIP"
-                  value={values.DIP || ""}
+                  name="RepairDetails.DipCode"
+                  value={values?.RepairDetails?.DipCode || ""}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  error={!!touched.DIP && !!errors.DIP}
-                  helperText={!!touched.DIP && errors.DIP}
+                  error={!!touched?.RepairDetails?.DipCode && !!errors?.RepairDetails?.DipCode}
+                  helperText={!!touched?.RepairDetails?.DipCode && errors?.RepairDetails?.DipCode}
                   className={"sdr-status-edit !w-[50%]"}
                 />
               ) : (
@@ -76,15 +77,20 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
                 <ListItem className="whitespace-nowrap">{`Was this repair a "Major Repair"?`}</ListItem>
                 <ListItem className="!absolute !px-0 left-0 top-[20px]">
                   {editable ? (
-                    <Radio
-                      name="MajorRepair"
-                      value={values.MajorRepair || ""}
+                    <SimpleRadio
+                      name="RepairDetails.IsMajorRepair"
+                      value={values?.RepairDetails?.IsMajorRepair || ""}
                       onChange={(values) => {
-                        setFieldValue("MajorRepair", values);
+                        setFieldValue("RepairDetails.IsMajorRepair", values);
                       }}
-                      error={!!touched.MajorRepair && !!errors.MajorRepair}
-                      helperText={!!touched.MajorRepair && errors.MajorRepair}
-                      options={["Yes", "No"]}
+                      error={
+                        !!touched?.RepairDetails?.IsMajorRepair &&
+                        !!errors?.RepairDetails?.IsMajorRepair
+                      }
+                      helperText={
+                        !!touched?.RepairDetails?.IsMajorRepair &&
+                        errors?.RepairDetails?.IsMajorRepair
+                      }
                       className={"sdr-status-edit gap-5"}
                     />
                   ) : (
@@ -97,13 +103,19 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
                 <ListItem className="!absolute !px-0 left-0 top-[20px]">
                   {editable ? (
                     <Radio
-                      name="DamagedStructure"
-                      value={values.DamagedStructure || ""}
+                      name="RepairDetails.DamageStructureStatus"
+                      value={values?.RepairDetails?.DamageStructureStatus || ""}
                       onChange={(values) => {
-                        setFieldValue("DamagedStructure", values);
+                        setFieldValue("RepairDetails.DamageStructureStatus", values);
                       }}
-                      error={!!touched.DamagedStructure && !!errors.DamagedStructure}
-                      helperText={!!touched.DamagedStructure && errors.DamagedStructure}
+                      error={
+                        !!touched?.RepairDetails?.DamageStructureStatus &&
+                        !!errors?.RepairDetails?.DamageStructureStatus
+                      }
+                      helperText={
+                        !!touched?.RepairDetails?.DamageStructureStatus &&
+                        errors?.RepairDetails?.DamageStructureStatus
+                      }
                       options={["Repaired", "Replaced"]}
                       className={"sdr-status-edit gap-5"}
                     />
@@ -118,17 +130,20 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
                 </ListItem>
                 <ListItem className="!absolute !px-0 left-0 top-[20px]">
                   {editable ? (
-                    <Radio
-                      name="PreviousRepairsOrRework"
-                      value={values.PreviousRepairsOrRework || ""}
+                    <SimpleRadio
+                      name="RepairDetails.IsRepairOrRework"
+                      value={values?.RepairDetails?.IsRepairOrRework || ""}
                       onChange={(values) => {
-                        setFieldValue("PreviousRepairsOrRework", values);
+                        setFieldValue("RepairDetails.IsRepairOrRework", values);
                       }}
-                      error={!!touched.PreviousRepairsOrRework && !!errors.PreviousRepairsOrRework}
-                      helperText={
-                        !!touched.PreviousRepairsOrRework && errors.PreviousRepairsOrRework
+                      error={
+                        !!touched?.RepairDetails?.IsRepairOrRework &&
+                        !!errors?.RepairDetails?.IsRepairOrRework
                       }
-                      options={["Yes", "No"]}
+                      helperText={
+                        !!touched?.RepairDetails?.IsRepairOrRework &&
+                        errors?.RepairDetails?.IsRepairOrRework
+                      }
                       className={"sdr-status-edit gap-5"}
                     />
                   ) : (
@@ -142,15 +157,20 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
                 <ListItem className="whitespace-nowrap">SDR Reportable?</ListItem>
                 <ListItem className="!absolute !px-0 left-0 top-[20px]">
                   {editable ? (
-                    <Radio
-                      name="SDRReportable"
-                      value={values.SDRReportable || ""}
+                    <SimpleRadio
+                      name="RepairDetails.IsSdrReportable"
+                      value={values?.RepairDetails?.IsSdrReportable || ""}
                       onChange={(values) => {
-                        setFieldValue("SDRReportable", values);
+                        setFieldValue("RepairDetails.IsSdrReportable", values);
                       }}
-                      error={!!touched.SDRReportable && !!errors.SDRReportable}
-                      helperText={!!touched.SDRReportable && errors.SDRReportable}
-                      options={["Yes", "No"]}
+                      error={
+                        !!touched?.RepairDetails?.IsSdrReportable &&
+                        !!errors?.RepairDetails?.IsSdrReportable
+                      }
+                      helperText={
+                        !!touched?.RepairDetails?.IsSdrReportable &&
+                        errors?.RepairDetails?.IsSdrReportable
+                      }
                       className={"sdr-status-edit gap-5"}
                     />
                   ) : (
@@ -162,15 +182,20 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
                 <ListItem className="whitespace-nowrap">Weight increase over 5 lbs?</ListItem>
                 <ListItem className="!absolute !px-0 left-0 top-[20px]">
                   {editable ? (
-                    <Radio
-                      name="WeightIncreaseOver5Lbs"
-                      value={values.WeightIncreaseOver5Lbs || ""}
+                    <SimpleRadio
+                      name="RepairDetails.IsOverWeight"
+                      value={values?.RepairDetails?.IsOverWeight || ""}
                       onChange={(values) => {
-                        setFieldValue("WeightIncreaseOver5Lbs", values);
+                        setFieldValue("RepairDetails.IsOverWeight", values);
                       }}
-                      error={!!touched.WeightIncreaseOver5Lbs && !!errors.WeightIncreaseOver5Lbs}
-                      helperText={!!touched.WeightIncreaseOver5Lbs && errors.WeightIncreaseOver5Lbs}
-                      options={["Yes", "No"]}
+                      error={
+                        !!touched?.RepairDetails?.IsOverWeight &&
+                        !!errors?.RepairDetails?.IsOverWeight
+                      }
+                      helperText={
+                        !!touched?.RepairDetails?.IsOverWeight &&
+                        errors?.RepairDetails?.IsOverWeight
+                      }
                       className={"sdr-status-edit gap-5"}
                     />
                   ) : (
@@ -208,7 +233,7 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
               )}
             </ListItem>
           </div>
-          {values.DocumentType.sort().map((dt) => {
+          {values?.DocumentType?.sort().map((dt) => {
             const name = DocumentTypeOptions.find((option) => option.Id === dt)?.Description;
 
             switch (dt) {
@@ -234,7 +259,7 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
                         {editable ? (
                           <TextFieldGroup
                             count={2}
-                            name="Repair ECRA"
+                            name="RepairDetails.RepairECRA"
                             values={values}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -249,12 +274,12 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
                       <ListItem>
                         {editable ? (
                           <TextField
-                            name="RepairREV"
-                            value={values?.RepairREV || ""}
+                            name="RepairDetails.Rev"
+                            value={values?.RepairDetails?.Rev || ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            error={!!touched?.RepairREV && !!errors?.RepairREV}
-                            helperText={!!touched?.RepairREV && errors?.RepairREV}
+                            error={!!touched?.RepairDetails?.Rev && !!errors?.RepairDetails?.Rev}
+                            helperText={!!touched?.RepairDetails?.Rev && errors?.RepairDetails?.Rev}
                             multiline
                             maxRows={4}
                             className={"sdr-status-edit textareaAutosize"}
@@ -274,12 +299,16 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
                     <ListItem>
                       {editable ? (
                         <TextField
-                          name="RepairOther"
-                          value={values?.RepairOther || ""}
+                          name="RepairDetails.Comments"
+                          value={values?.RepairDetails?.Comments || ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={!!touched?.RepairOther && !!errors?.RepairOther}
-                          helperText={!!touched?.RepairOther && errors?.RepairOther}
+                          error={
+                            !!touched?.RepairDetails?.Comments && !!errors?.RepairDetails?.Comments
+                          }
+                          helperText={
+                            !!touched?.RepairDetails?.Comments && errors?.RepairDetails?.Comments
+                          }
                           multiline
                           maxRows={4}
                           className={"sdr-status-edit textareaAutosize"}
@@ -304,15 +333,17 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
           <ListItem>
             {editable ? (
               <TextField
-                name="MaterialUtilizedForRepairs"
-                value={values?.MaterialUtilizedForRepairs || ""}
+                name="RepairDetails.MaterialsUtilized"
+                value={values?.RepairDetails?.MaterialsUtilized || ""}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={
-                  !!touched?.MaterialUtilizedForRepairs && !!errors?.MaterialUtilizedForRepairs
+                  !!touched?.RepairDetails?.MaterialsUtilized &&
+                  !!errors?.RepairDetails?.MaterialsUtilized
                 }
                 helperText={
-                  !!touched?.MaterialUtilizedForRepairs && errors?.MaterialUtilizedForRepairs
+                  !!touched?.RepairDetails?.MaterialsUtilized &&
+                  errors?.RepairDetails?.MaterialsUtilized
                 }
                 multiline
                 maxRows={4}
@@ -328,12 +359,18 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
             {editable ? (
               <TextField
                 type="number"
-                name="ManHoursToCompeterRepairs"
-                value={values.ManHoursToCompeterRepairs || ""}
+                name="RepairDetails.ManHoursRequired"
+                value={values?.RepairDetails?.ManHoursRequired || ""}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                error={!!touched.ManHoursToCompeterRepairs && !!errors.ManHoursToCompeterRepairs}
-                helperText={!!touched.ManHoursToCompeterRepairs && errors.ManHoursToCompeterRepairs}
+                error={
+                  !!touched?.RepairDetails?.ManHoursRequired &&
+                  !!errors?.RepairDetails?.ManHoursRequired
+                }
+                helperText={
+                  !!touched?.RepairDetails?.ManHoursRequired &&
+                  errors?.RepairDetails?.ManHoursRequired
+                }
                 className={"sdr-status-edit"}
               />
             ) : (

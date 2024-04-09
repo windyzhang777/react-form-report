@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import { useFormikContext } from "formik";
 import ListItem from "src/commons/ListItem";
-import Radio from "src/commons/Radio";
+import { SimpleRadio } from "src/commons/Radio";
 import { SingleSelect } from "src/commons/Select";
 import TabPanel from "src/commons/TabPanel";
 import TextField from "src/commons/TextField";
@@ -31,15 +31,20 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
           <ListItem>Exceed Manufacturer/FAA Limits</ListItem>
           <ListItem className="!absolute !px-0 left-0 top-[20px]">
             {editable ? (
-              <Radio
-                name="ExceedLimits"
-                value={values.ExceedLimits || ""}
+              <SimpleRadio
+                name="DiscrepancyDetails.IsManufacturingLimitExceeded"
+                value={values?.DiscrepancyDetails?.IsManufacturingLimitExceeded || ""}
                 onChange={(values) => {
-                  setFieldValue("ExceedLimits", values);
+                  setFieldValue("DiscrepancyDetails.IsManufacturingLimitExceeded", values);
                 }}
-                error={!!touched.ExceedLimits && !!errors.ExceedLimits}
-                helperText={!!touched.ExceedLimits && errors.ExceedLimits}
-                options={["Yes", "No"]}
+                error={
+                  !!touched?.DiscrepancyDetails?.IsManufacturingLimitExceeded &&
+                  !!errors?.DiscrepancyDetails?.IsManufacturingLimitExceeded
+                }
+                helperText={
+                  !!touched?.DiscrepancyDetails?.IsManufacturingLimitExceeded &&
+                  errors?.DiscrepancyDetails?.IsManufacturingLimitExceeded
+                }
                 className={"sdr-status-edit gap-5"}
               />
             ) : (
@@ -55,12 +60,18 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
               <ListItem>
                 {editable ? (
                   <SingleSelect
-                    name="DiscrepancyType"
-                    value={values.DiscrepancyType || ""}
+                    name="DiscrepancyDetails.DiscrepancyTypeId"
+                    value={values?.DiscrepancyDetails?.DiscrepancyTypeId || ""}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={!!touched.DiscrepancyType && !!errors.DiscrepancyType}
-                    helperText={!!touched.DiscrepancyType && errors.DiscrepancyType}
+                    error={
+                      !!touched?.DiscrepancyDetails?.DiscrepancyTypeId &&
+                      !!errors?.DiscrepancyDetails?.DiscrepancyTypeId
+                    }
+                    helperText={
+                      !!touched?.DiscrepancyDetails?.DiscrepancyTypeId &&
+                      errors?.DiscrepancyDetails?.DiscrepancyTypeId
+                    }
                     options={
                       masterData?.DiscrepancyTypes &&
                       [...masterData.DiscrepancyTypes].sort(
@@ -68,7 +79,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                       )
                     }
                     className={"sdr-status-edit"}
-                    id="DiscrepancyType"
+                    id="DiscrepancyDetails.DiscrepancyTypeId"
                   />
                 ) : (
                   ""
@@ -77,24 +88,25 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
             </div>
 
             {/* Corrosion */}
-            {(values.DiscrepancyType === 4 || values.DiscrepancyType === 6) && (
+            {(values?.DiscrepancyDetails?.DiscrepancyTypeId === 4 ||
+              values?.DiscrepancyDetails?.DiscrepancyTypeId === 6) && (
               <>
                 <div>
                   <ListItem>Corrosion Level</ListItem>
                   <ListItem>
                     {editable ? (
                       <SingleSelect
-                        name="SfrAdditionalDetails.CorrisionLevel"
-                        value={values.SfrAdditionalDetails?.CorrisionLevel || ""}
+                        name="DiscrepancyDetails.CorrosionLevelId"
+                        value={values?.DiscrepancyDetails?.CorrosionLevelId || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
-                          !!touched.SfrAdditionalDetails?.CorrisionLevel &&
-                          !!errors.SfrAdditionalDetails?.CorrisionLevel
+                          !!touched?.DiscrepancyDetails?.CorrosionLevelId &&
+                          !!errors?.DiscrepancyDetails?.CorrosionLevelId
                         }
                         helperText={
-                          !!touched.SfrAdditionalDetails?.CorrisionLevel &&
-                          errors.SfrAdditionalDetails?.CorrisionLevel
+                          !!touched?.DiscrepancyDetails?.CorrosionLevelId &&
+                          errors?.DiscrepancyDetails?.CorrosionLevelId
                         }
                         options={
                           masterData?.CorrosionLevels &&
@@ -103,7 +115,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                           )
                         }
                         className={"sdr-status-edit"}
-                        id="SfrAdditionalDetails.CorrisionLevel"
+                        id="DiscrepancyDetails.CorrosionLevelId"
                       />
                     ) : (
                       ""
@@ -115,12 +127,18 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                   <ListItem>
                     {editable ? (
                       <SingleSelect
-                        name="CorrosionExtent"
-                        value={values.CorrosionExtent || ""}
+                        name="DiscrepancyDetails.CorrosionExtentId"
+                        value={values?.DiscrepancyDetails?.CorrosionExtentId || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={!!touched.CorrosionExtent && !!errors.CorrosionExtent}
-                        helperText={!!touched.CorrosionExtent && errors.CorrosionExtent}
+                        error={
+                          !!touched?.DiscrepancyDetails?.CorrosionExtentId &&
+                          !!errors?.DiscrepancyDetails?.CorrosionExtentId
+                        }
+                        helperText={
+                          !!touched?.DiscrepancyDetails?.CorrosionExtentId &&
+                          errors?.DiscrepancyDetails?.CorrosionExtentId
+                        }
                         options={
                           masterData?.CorrosionExtent &&
                           [...masterData.CorrosionExtent].sort(
@@ -128,7 +146,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                           )
                         }
                         className={"sdr-status-edit"}
-                        id="CorrosionExtent"
+                        id="DiscrepancyDetails.CorrosionExtentId"
                       />
                     ) : (
                       ""
@@ -140,12 +158,18 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                   <ListItem>
                     {editable ? (
                       <SingleSelect
-                        name="CorrosionCause"
-                        value={values.CorrosionCause || ""}
+                        name="DiscrepancyDetails.CorrosionCauseId"
+                        value={values?.DiscrepancyDetails?.CorrosionCauseId || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={!!touched.CorrosionCause && !!errors.CorrosionCause}
-                        helperText={!!touched.CorrosionCause && errors.CorrosionCause}
+                        error={
+                          !!touched?.DiscrepancyDetails?.CorrosionCauseId &&
+                          !!errors?.DiscrepancyDetails?.CorrosionCauseId
+                        }
+                        helperText={
+                          !!touched?.DiscrepancyDetails?.CorrosionCauseId &&
+                          errors?.DiscrepancyDetails?.CorrosionCauseId
+                        }
                         options={
                           masterData?.CorrosionCauses &&
                           [...masterData.CorrosionLevels].sort(
@@ -153,7 +177,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                           )
                         }
                         className={"sdr-status-edit"}
-                        id="CorrosionCause"
+                        id="DiscrepancyDetails.CorrosionCauseId"
                       />
                     ) : (
                       ""
@@ -164,24 +188,25 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
             )}
 
             {/* Crack */}
-            {(values.DiscrepancyType === 5 || values.DiscrepancyType === 6) && (
+            {(values?.DiscrepancyDetails?.DiscrepancyTypeId === 5 ||
+              values?.DiscrepancyDetails?.DiscrepancyTypeId === 6) && (
               <>
                 <div>
                   <ListItem>Crack Level</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="SfrAdditionalDetails.CrackLength"
-                        value={values?.SfrAdditionalDetails?.CrackLength || ""}
+                        name="DiscrepancyDetails.CrackLength"
+                        value={values?.DiscrepancyDetails?.CrackLength || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
-                          !!touched?.SfrAdditionalDetails?.CrackLength &&
-                          !!errors?.SfrAdditionalDetails?.CrackLength
+                          !!touched?.DiscrepancyDetails?.CrackLength &&
+                          !!errors?.DiscrepancyDetails?.CrackLength
                         }
                         helperText={
-                          !!touched?.SfrAdditionalDetails?.CrackLength &&
-                          errors?.SfrAdditionalDetails?.CrackLength
+                          !!touched?.DiscrepancyDetails?.CrackLength &&
+                          errors?.DiscrepancyDetails?.CrackLength
                         }
                         className={"sdr-status-edit"}
                       />
@@ -194,15 +219,23 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                   <ListItem>Multiple Cracks in Same Location</ListItem>
                   <ListItem className="!absolute !px-0 left-0 top-[20px]">
                     {editable ? (
-                      <Radio
-                        name="MultipleCracks"
-                        value={values.MultipleCracks || ""}
+                      <SimpleRadio
+                        name="DiscrepancyDetails.AreMultipleCracksInTheSameLocation"
+                        value={values?.DiscrepancyDetails?.AreMultipleCracksInTheSameLocation || ""}
                         onChange={(values) => {
-                          setFieldValue("MultipleCracks", values);
+                          setFieldValue(
+                            "DiscrepancyDetails.AreMultipleCracksInTheSameLocation",
+                            values
+                          );
                         }}
-                        error={!!touched.MultipleCracks && !!errors.MultipleCracks}
-                        helperText={!!touched.MultipleCracks && errors.MultipleCracks}
-                        options={["Yes", "No"]}
+                        error={
+                          !!touched?.DiscrepancyDetails?.AreMultipleCracksInTheSameLocation &&
+                          !!errors?.DiscrepancyDetails?.AreMultipleCracksInTheSameLocation
+                        }
+                        helperText={
+                          !!touched?.DiscrepancyDetails?.AreMultipleCracksInTheSameLocation &&
+                          errors?.DiscrepancyDetails?.AreMultipleCracksInTheSameLocation
+                        }
                         className={"sdr-status-edit gap-5"}
                       />
                     ) : (
@@ -210,24 +243,24 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                     )}
                   </ListItem>
                 </div>
-                {values.MultipleCracks === "Yes" && (
+                {values?.DiscrepancyDetails?.AreMultipleCracksInTheSameLocation && (
                   <div className="!mt-[40px]">
                     <ListItem>Number of Cracks</ListItem>
                     <ListItem>
                       {editable ? (
                         <TextField
                           type="number"
-                          name="SfrAdditionalDetails.NumberOfCracks"
-                          value={values?.SfrAdditionalDetails?.NumberOfCracks || ""}
+                          name="DiscrepancyDetails.NumberOfCracks"
+                          value={values?.DiscrepancyDetails?.NumberOfCracks || ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
                           error={
-                            !!touched?.SfrAdditionalDetails?.NumberOfCracks &&
-                            !!errors?.SfrAdditionalDetails?.NumberOfCracks
+                            !!touched?.DiscrepancyDetails?.NumberOfCracks &&
+                            !!errors?.DiscrepancyDetails?.NumberOfCracks
                           }
                           helperText={
-                            !!touched?.SfrAdditionalDetails?.NumberOfCracks &&
-                            errors?.SfrAdditionalDetails?.NumberOfCracks
+                            !!touched?.DiscrepancyDetails?.NumberOfCracks &&
+                            errors?.DiscrepancyDetails?.NumberOfCracks
                           }
                           className={"sdr-status-edit"}
                         />
@@ -241,7 +274,8 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
             )}
 
             {/* Delaminated/Disbonded */}
-            {(values.DiscrepancyType === 7 || values.DiscrepancyType === 8) && (
+            {(values?.DiscrepancyDetails?.DiscrepancyTypeId === 7 ||
+              values?.DiscrepancyDetails?.DiscrepancyTypeId === 8) && (
               <>
                 <div>
                   <ListItem>Damage Level</ListItem>
@@ -249,12 +283,18 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                     {editable ? (
                       <TextField
                         type="number"
-                        name="DamageLength"
-                        value={values?.DamageLength || ""}
+                        name="DiscrepancyDetails.CrackLength"
+                        value={values?.DiscrepancyDetails?.CrackLength || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={!!touched?.DamageLength && !!errors?.DamageLength}
-                        helperText={!!touched?.DamageLength && errors?.DamageLength}
+                        error={
+                          !!touched?.DiscrepancyDetails?.CrackLength &&
+                          !!errors?.DiscrepancyDetails?.CrackLength
+                        }
+                        helperText={
+                          !!touched?.DiscrepancyDetails?.CrackLength &&
+                          errors?.DiscrepancyDetails?.CrackLength
+                        }
                         className={"sdr-status-edit"}
                       />
                     ) : (
@@ -268,12 +308,18 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                     {editable ? (
                       <TextField
                         type="number"
-                        name="DamageWidth"
-                        value={values?.DamageWidth || ""}
+                        name="DiscrepancyDetails.CrackWidth"
+                        value={values?.DiscrepancyDetails?.CrackWidth || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={!!touched?.DamageWidth && !!errors?.DamageWidth}
-                        helperText={!!touched?.DamageWidth && errors?.DamageWidth}
+                        error={
+                          !!touched?.DiscrepancyDetails?.CrackWidth &&
+                          !!errors?.DiscrepancyDetails?.CrackWidth
+                        }
+                        helperText={
+                          !!touched?.DiscrepancyDetails?.CrackWidth &&
+                          errors?.DiscrepancyDetails?.CrackWidth
+                        }
                         className={"sdr-status-edit"}
                       />
                     ) : (
@@ -285,19 +331,25 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
             )}
 
             {/* Dented/Deformed */}
-            {values.DiscrepancyType === 8 && (
+            {values?.DiscrepancyDetails?.DiscrepancyTypeId === 8 && (
               <div>
                 <ListItem>Damage Depth</ListItem>
                 <ListItem>
                   {editable ? (
                     <TextField
                       type="number"
-                      name="DamageDepth"
-                      value={values?.DamageDepth || ""}
+                      name="DiscrepancyDetails.CrackDepth"
+                      value={values?.DiscrepancyDetails?.CrackDepth || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={!!touched?.DamageDepth && !!errors?.DamageDepth}
-                      helperText={!!touched?.DamageDepth && errors?.DamageDepth}
+                      error={
+                        !!touched?.DiscrepancyDetails?.CrackDepth &&
+                        !!errors?.DiscrepancyDetails?.CrackDepth
+                      }
+                      helperText={
+                        !!touched?.DiscrepancyDetails?.CrackDepth &&
+                        errors?.DiscrepancyDetails?.CrackDepth
+                      }
                       className={"sdr-status-edit"}
                     />
                   ) : (
@@ -308,23 +360,23 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
             )}
 
             {/* Other Structural Defect */}
-            {values.DiscrepancyType === 13 && (
+            {values?.DiscrepancyDetails?.DiscrepancyTypeId === 10 && (
               <div>
-                <ListItem>Damage Depth</ListItem>
+                <ListItem>Specify</ListItem>
                 <ListItem>
                   {editable ? (
                     <TextField
-                      name="OtherStructuralDefectSpecify"
-                      value={values.OtherStructuralDefectSpecify || ""}
+                      name="DiscrepancyDetails.DiscrepancyTypeComments"
+                      value={values?.DiscrepancyDetails?.DiscrepancyTypeComments || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={
-                        !!touched.OtherStructuralDefectSpecify &&
-                        !!errors.OtherStructuralDefectSpecify
+                        !!touched?.DiscrepancyDetails?.DiscrepancyTypeComments &&
+                        !!errors?.DiscrepancyDetails?.DiscrepancyTypeComments
                       }
                       helperText={
-                        !!touched.OtherStructuralDefectSpecify &&
-                        errors.OtherStructuralDefectSpecify
+                        !!touched?.DiscrepancyDetails?.DiscrepancyTypeComments &&
+                        errors?.DiscrepancyDetails?.DiscrepancyTypeComments
                       }
                       multiline
                       maxRows={4}
@@ -345,12 +397,18 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
               <ListItem>
                 {editable ? (
                   <SingleSelect
-                    name="DiscrepancyPartInfo"
-                    value={values.DiscrepancyPartInfo || ""}
+                    name="DiscrepancyPartInformationCode"
+                    value={values.DiscrepancyPartInformationCode || ""}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={!!touched.DiscrepancyPartInfo && !!errors.DiscrepancyPartInfo}
-                    helperText={!!touched.DiscrepancyPartInfo && errors.DiscrepancyPartInfo}
+                    error={
+                      !!touched.DiscrepancyPartInformationCode &&
+                      !!errors.DiscrepancyPartInformationCode
+                    }
+                    helperText={
+                      !!touched.DiscrepancyPartInformationCode &&
+                      errors.DiscrepancyPartInformationCode
+                    }
                     options={
                       masterData?.DiscrepancyParts &&
                       [...masterData.DiscrepancyParts].sort(
@@ -358,7 +416,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                       )
                     }
                     className={"sdr-status-edit"}
-                    id="DiscrepancyPartInfo"
+                    id="DiscrepancyDetails.DiscrepancyPartInfo"
                   />
                 ) : (
                   ""
@@ -367,18 +425,24 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
             </div>
 
             {/* Other */}
-            {values.DiscrepancyPartInfo === 28 && (
+            {values.DiscrepancyPartInformationCode === 28 && (
               <div>
                 <ListItem>Specify</ListItem>
                 <ListItem>
                   {editable ? (
                     <TextField
-                      name="OtherSpecify"
-                      value={values.OtherSpecify || ""}
+                      name="DiscrepancyDetails.DiscrepancyTypeComments"
+                      value={values?.DiscrepancyDetails?.DiscrepancyTypeComments || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={!!touched.OtherSpecify && !!errors.OtherSpecify}
-                      helperText={!!touched.OtherSpecify && errors.OtherSpecify}
+                      error={
+                        !!touched?.DiscrepancyDetails?.DiscrepancyTypeComments &&
+                        !!errors?.DiscrepancyDetails?.DiscrepancyTypeComments
+                      }
+                      helperText={
+                        !!touched?.DiscrepancyDetails?.DiscrepancyTypeComments &&
+                        errors?.DiscrepancyDetails?.DiscrepancyTypeComments
+                      }
                       multiline
                       maxRows={4}
                       className={"sdr-status-edit textareaAutosize"}
@@ -391,7 +455,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
               </div>
             )}
 
-            {!!values.DiscrepancyPartInfo && (
+            {!!values.DiscrepancyPartInformationCode && (
               <>
                 <div>
                   <ListItem>ATA Chapter</ListItem>
@@ -399,11 +463,11 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                     {editable ? (
                       <TextField
                         name="ATAChapter"
-                        value={values?.ATAChapter || ""}
+                        value={values.ATAChapter || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={!!touched?.ATAChapter && !!errors?.ATAChapter}
-                        helperText={!!touched?.ATAChapter && errors?.ATAChapter}
+                        error={!!touched.ATAChapter && !!errors.ATAChapter}
+                        helperText={!!touched.ATAChapter && errors.ATAChapter}
                         className={"sdr-status-edit"}
                       />
                     ) : (
@@ -417,11 +481,11 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                     {editable ? (
                       <TextField
                         name="ATASubChapter"
-                        value={values?.ATASubChapter || ""}
+                        value={values.ATASubChapter || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={!!touched?.ATASubChapter && !!errors?.ATASubChapter}
-                        helperText={!!touched?.ATASubChapter && errors?.ATASubChapter}
+                        error={!!touched.ATASubChapter && !!errors.ATASubChapter}
+                        helperText={!!touched.ATASubChapter && errors?.ATASubChapter}
                         className={"sdr-status-edit"}
                       />
                     ) : (
@@ -434,18 +498,12 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="SfrAdditionalDetails.PartNumber"
-                        value={values?.SfrAdditionalDetails?.PartNumber || ""}
+                        name="PartNumber"
+                        value={values.PartNumber || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={
-                          !!touched?.SfrAdditionalDetails?.PartNumber &&
-                          !!errors?.SfrAdditionalDetails?.PartNumber
-                        }
-                        helperText={
-                          !!touched?.SfrAdditionalDetails?.PartNumber &&
-                          errors?.SfrAdditionalDetails?.PartNumber
-                        }
+                        error={!!touched.PartNumber && !!errors.PartNumber}
+                        helperText={!!touched.PartNumber && errors.PartNumber}
                         className={"sdr-status-edit"}
                       />
                     ) : (
@@ -459,11 +517,11 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                     {editable ? (
                       <TextField
                         name="Structure"
-                        value={values?.Structure || ""}
+                        value={values.Structure || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={!!touched?.Structure && !!errors?.Structure}
-                        helperText={!!touched?.Structure && errors?.Structure}
+                        error={!!touched.Structure && !!errors.Structure}
+                        helperText={!!touched.Structure && errors.Structure}
                         className={"sdr-status-edit"}
                       />
                     ) : (
@@ -476,12 +534,18 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="DiscrepancyComments"
-                        value={values.DiscrepancyComments || ""}
+                        name="DiscrepancyDetails.DiscrepancyPartComments"
+                        value={values?.DiscrepancyDetails?.DiscrepancyPartComments || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={!!touched.DiscrepancyComments && !!errors.DiscrepancyComments}
-                        helperText={!!touched.DiscrepancyComments && errors.DiscrepancyComments}
+                        error={
+                          !!touched?.DiscrepancyDetails?.DiscrepancyPartComments &&
+                          !!errors?.DiscrepancyDetails?.DiscrepancyPartComments
+                        }
+                        helperText={
+                          !!touched?.DiscrepancyDetails?.DiscrepancyPartComments &&
+                          errors?.DiscrepancyDetails?.DiscrepancyPartComments
+                        }
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}

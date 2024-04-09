@@ -7,7 +7,7 @@ const defaultConfig = {
   URL_LOGPAGE_SEARCH: "/Home/LogPageSearch",
   URL_GET_SFR_MASTER_DATA: "/api/Elb/GetSfrMasterData",
   // URL_ADD_SDR: "/api/Elb/UpdateLogPageWithOilandMaterialLabor",
-  URL_CREATE_SDR: "/api/Elb/CreateSdr",
+  URL_CREATE_SFR: "/api/Elb/CreateSFR",
   URL_VIEW_LOGPAGE: "/api/Elb/ViewLogPage",
   URL_EXTRACT_SDR_RECORDS: "/api/Elb/ExtractSdrRecords",
   URL_UPDATE_SNAPSHOT_SDR_EXTRACTION_STATUS: "/api/Elb/UpdateSnapshotSdrExtractionStatus",

@@ -142,11 +142,11 @@ const HomeScreen = () => {
   const handleCreateSFR = (values: ISaveSfrValues) => {
     setIsLoading(true);
     axiosInstance
-      .post(`${config.apiBaseAddress}${config.URL_CREATE_SDR}`, values)
+      .post(`${config.apiBaseAddress}${config.URL_CREATE_SFR}`, values)
       .then((res) => {
         if (res?.data?.Result?.IsSuccess) {
           setOpenSnackbar(1);
-          setSnackbarMessage("Save SDR successful");
+          setSnackbarMessage("Save SFR successful");
           setCreateSdrFlag("");
           setViewSdrFlag(false);
           setSelectedSdr(null);
@@ -155,12 +155,12 @@ const HomeScreen = () => {
           }, 500);
         } else {
           setOpenSnackbar(-1);
-          setSnackbarMessage("Fail to Save SDR");
+          setSnackbarMessage("Fail to Save SFR");
         }
       })
       .catch(() => {
         setOpenSnackbar(-1);
-        setSnackbarMessage("Fail to Save SDR");
+        setSnackbarMessage("Fail to Save SFR");
       })
       .finally(() => {
         setIsLoading(false);
