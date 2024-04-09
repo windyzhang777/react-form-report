@@ -3,13 +3,22 @@ import { ReactNode } from "react";
 
 export interface ICommonModalProps {
   children: ReactNode;
+  className?: string;
   name: string;
   onClose: () => void;
   open: boolean;
   sx?: SxProps;
 }
 
-const CommonModal = ({ children, name, onClose, open, sx, ...props }: ICommonModalProps) => {
+const CommonModal = ({
+  children,
+  className,
+  name,
+  onClose,
+  open,
+  sx,
+  ...props
+}: ICommonModalProps) => {
   return (
     <Modal
       disableEscapeKeyDown
@@ -35,6 +44,7 @@ const CommonModal = ({ children, name, onClose, open, sx, ...props }: ICommonMod
           boxShadow: 24,
           ...sx,
         }}
+        className={className}
       >
         {children}
       </Box>

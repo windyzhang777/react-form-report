@@ -46,4 +46,12 @@ const CommonTextField = ({ placeholder, type, ...props }: ICommonTextFieldProps)
   );
 };
 
+export interface IClickableTextFieldProps extends Partial<ICommonTextFieldProps> {
+  onClick: () => void;
+}
+
+export const ClickableTextField = ({ className, ...props }: IClickableTextFieldProps) => {
+  return <TextField className={`cursor-pointer ${className}`} size={"small"} {...props} />;
+};
+
 export default CommonTextField;

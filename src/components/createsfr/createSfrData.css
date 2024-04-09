@@ -1,0 +1,73 @@
+.view-details-text {
+  color: #6244bb;
+  cursor: pointer;
+}
+
+.view-details-dropdown {
+  line-height: 18px;
+  font-size: 16px;
+  padding-left: 20px;
+
+  .view-details-left {
+    font-weight: 400;
+  }
+
+  .view-details-right {
+    font-weight: 600;
+  }
+}
+
+.create-sfr {
+  box-shadow: -4px 0px 4px 0px rgba(51, 51, 51, 0.12);
+  margin-top: 0px !important;
+  margin-bottom: 1px;
+  padding: 30px 0 0 !important;
+
+  .sdr-status-grid {
+    margin-bottom: 20px;
+    width: unset !important;
+    height: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: #666666;
+    font-weight: 400;
+
+    .sdr-status-title {
+      background: #e6e6e6;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      padding-left: 20px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .sdr-status-section-title {
+      padding-left: 20px;
+      padding-right: 20px;
+      font-weight: 600;
+    }
+
+    .sdr-status-description {
+      padding-left: 20px;
+      padding-right: 20px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .sdr-status-edit {
+      margin-bottom: 15px;
+      width: 100%;
+      height: auto;
+      max-height: 30px;
+
+      .MuiInputLabel-root {
+        padding-right: 20px;
+      }
+    }
+
+    .textareaAutosize {
+      max-height: unset !important;
+      margin-bottom: 5px !important;
+    }
+  }
+}

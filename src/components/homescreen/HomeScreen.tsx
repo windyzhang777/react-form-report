@@ -8,6 +8,7 @@ import TabPanel, { a11yProps } from "src/commons/TabPanel";
 import {
   IEditSdrValues,
   ISaveSdrValues,
+  ISaveSfrValues,
   SdrEsfrRecordDetailsStateType,
   SelectedStatus,
   SelectedTab,
@@ -16,6 +17,7 @@ import {
 import { allEsfrRecordsColumns } from "src/components/commondatagrid/allEsfrRecordsColumns";
 import CommonDataGrid from "src/components/commondatagrid/commondatagrid";
 import CreateSdrData from "src/components/createsdr/CreateSdrData";
+import CreateSfrData from "src/components/createsfr/CreateSfrData";
 import ViewSdrData from "src/components/viewsdr/ViewSdrData";
 import ViewSnapshotData from "src/components/viewsdr/ViewSnapshotData";
 import { saveTextAsFile } from "src/helpers";
@@ -131,6 +133,34 @@ const HomeScreen = () => {
       .catch(() => {
         setOpenSnackbar(-1);
         setSnackbarMessage(`Fail to ${actionType} SDR`);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const handleCreateSFR = (values: ISaveSfrValues) => {
+    setIsLoading(true);
+    axiosInstance
+      .post(`${config.apiBaseAddress}${config.URL_CREATE_SDR}`, values)
+      .then((res) => {
+        if (res?.data?.Result?.IsSuccess) {
+          setOpenSnackbar(1);
+          setSnackbarMessage("Save SDR successful");
+          setCreateSdrFlag("");
+          setViewSdrFlag(false);
+          setSelectedSdr(null);
+          setTimeout(() => {
+            resetSdrs();
+          }, 500);
+        } else {
+          setOpenSnackbar(-1);
+          setSnackbarMessage("Fail to Save SDR");
+        }
+      })
+      .catch(() => {
+        setOpenSnackbar(-1);
+        setSnackbarMessage("Fail to Save SDR");
       })
       .finally(() => {
         setIsLoading(false);
@@ -288,7 +318,17 @@ const HomeScreen = () => {
               setCreateSdrFlag={setCreateSdrFlag}
               setLogpageNumberValue={setLogpageNumberValue}
             />
-          ) : viewSdrFlag && selectedSdr?.LogpageNumber ? (
+          ) : createSdrFlag === Type.SFR ? (
+            <CreateSfrData
+              createSdrFlag={createSdrFlag}
+              handleCreateSFR={handleCreateSFR}
+              handleFetchLogpageData={handleFetchLogpageData}
+              logpageNumberValue={logpageNumberValue}
+              setCreateSdrFlag={setCreateSdrFlag}
+              setLogpageNumberValue={setLogpageNumberValue}
+            />
+          ) : null}
+          {viewSdrFlag && selectedSdr?.LogpageNumber ? (
             tabIndex === SelectedTab.Approved ? (
               <ViewSnapshotData
                 editable={editable}

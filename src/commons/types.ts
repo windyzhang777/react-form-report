@@ -1,6 +1,9 @@
+import { CreateSfrReq } from "src/types/CreateSfrReq";
 import { ExtractSDRRecordsResResult } from "src/types/ExtractSdrRecordsRes";
 import { GetAllEsfrRecordsResResult, Status } from "src/types/GetAllEsfrRecordsRes";
 import { AircraftDetails, GetApprovedSDRResResult } from "src/types/GetApprovedSdrRes";
+import { GetCpcpReportReq } from "src/types/GetCpcpReportReq";
+import { GetCtnResResult } from "src/types/GetCtnRes";
 import { GetEsfrReportReq } from "src/types/GetEsfrReportReq";
 import { GetEsfrReportResResult } from "src/types/GetEsfrReportRes";
 import { Employee, GetProfileResResult } from "src/types/GetProfilerRes";
@@ -22,6 +25,13 @@ export enum SelectedTab {
   Approved = 2,
 }
 
+export enum SelectedSfrTab {
+  Origin = 0,
+  Discrepancy = 1,
+  Location = 2,
+  Repair = 3,
+}
+
 export enum SelectedStatus {
   Draft = 1,
   Open = 2,
@@ -29,7 +39,101 @@ export enum SelectedStatus {
   Approved = 4,
 }
 
+export enum RadioType {
+  Yes = "Yes",
+  No = "No",
+}
+
+export interface ISaveSfrValues extends Omit<CreateSfrReq, "Type"> {
+  Type: number;
+  ScheduledInspection: string;
+  DetectionMethod: number;
+  Comments: string;
+  Specify: string;
+  OtherComments: string;
+  CALDocument: number;
+  MFRSource: number;
+  Spec: string;
+  WorkCard1: string;
+  WorkCard2: string;
+  WorkCard3: string;
+  WorkCard4: string;
+  Spec1: string;
+  Spec2: string;
+  Spec3: string;
+  Spec4: string;
+  FCD1: string;
+  FCD2: string;
+  DIP: string;
+  REV: String;
+  OP: String;
+  MFRSourceCTN: String;
+  MFRSourceSSI: String;
+  MFRSourceSID: String;
+  MFRSourceSSID: String;
+  searchDescription: String;
+  ExceedLimits: string;
+  DiscrepancyType: number;
+  DiscrepancyPartInfo: number;
+  CorrosionExtent: number;
+  CorrosionCause: number;
+  MultipleCracks: string;
+  DamageLength: number;
+  DamageWidth: number;
+  DamageDepth: number;
+  OtherStructuralDefectSpecify: string;
+  ATAChapter: string;
+  ATASubChapter: string;
+  Structure: string;
+  DiscrepancyComments: string;
+  OtherSpecify: string;
+  Zone: string;
+  LocationDetails: string;
+  DefectLocation: number;
+  AileronSide: number;
+  AileronSurface: number;
+  FromBL: number;
+  FromBLText: string;
+  ToBL: number;
+  ToBLText: string;
+  DamageProximity: number;
+  ElevatorTab: number;
+  Fuselage: number;
+  LEFlap: number;
+  TEFlap: number;
+  Slat: number;
+  Spoiler: number;
+  TEFlapOther: number;
+  Specifics: number;
+  SpecifyDefectLocation: string;
+  FromSTR: string;
+  ToSTR: string;
+  RepairDeferred: string;
+  MajorRepair: string;
+  SDRReportable: string;
+  DamagedStructure: string;
+  WeightIncreaseOver5Lbs: string;
+  PreviousRepairsOrRework: string;
+  DocumentType: number[];
+  MaterialUtilizedForRepairs: string;
+  ManHoursToCompeterRepairs: number;
+  SRM11: string;
+  SRM12: string;
+  SRM13: string;
+  SRM21: string;
+  SRM22: string;
+  SRM23: string;
+  SRM31: string;
+  SRM32: string;
+  SRM33: string;
+  SRMPage: string;
+  SRMFig: string;
+  RepairREV: string;
+  RepairOther: string;
+}
+
 export interface IReportSearchValues extends GetEsfrReportReq {}
+export interface ICpcpReportSearchValues extends GetCpcpReportReq {}
 
 export interface ISaveSdrValues extends Omit<UpsertSDRSnapshotReq, "SfrAdditionalDetails"> {
   Powerplant: Omit<AircraftDetails, "RegistryNNumber">;
@@ -122,6 +226,8 @@ export enum SdrEsfrRecordDetailsActionType {
   FETCH_SFR_MATER_DATA_FAILURE = "FETCH_SFR_MATER_DATA_FAILURE",
   FETCH_LOGPAGE_DATA_SUCCESS = "FETCH_LOGPAGE_DATA_SUCCESS",
   FETCH_LOGPAGE_DATA_FAILURE = "FETCH_LOGPAGE_DATA_FAILURE",
+  FETCH_CTN_DATA_SUCCESS = "FETCH_CTN_DATA_SUCCESS",
+  FETCH_CTN_DATA_FAILURE = "FETCH_CTN_DATA_FAILURE",
   FETCH_SET_DETAILS_LOADER_OFF = "FETCH_SET_DETAILS_LOADER_OFF",
 }
 
@@ -189,6 +295,12 @@ export interface SfrMasterDataFuncType {
   message?: string;
 }
 
+export interface CtnDataFuncType {
+  type: SdrEsfrRecordDetailsActionType;
+  data?: GetCtnResResult;
+  message?: string;
+}
+
 export interface EsfrReportDispatchFuncType {
   type: EsfrReportActionType;
   data?: GetEsfrReportResResult[];
@@ -221,7 +333,8 @@ export interface SdrEsfrRecordDetailsReducerAction {
     | GetSDREsfrRecordDetailsResResult
     | GetApprovedSDRResResult
     | GetSfrMasterDataResResult
-    | ViewLogpageResResult;
+    | ViewLogpageResResult
+    | GetCtnResResult;
   message: string;
 }
 
@@ -250,6 +363,7 @@ export type SdrEsfrRecordDetailsStateType = {
   snapshotData: GetApprovedSDRResResult | null;
   masterData: GetSfrMasterDataResResult | null;
   logpageData: ViewLogpageResResult | null;
+  ctnData: GetCtnResResult | null;
   error: string;
 };
 
@@ -292,6 +406,9 @@ export interface EnvironmentConfig {
   URL_INSERT_SNAPSHOT_SDR_FILENAME: string;
   URL_UPSERT_SDR_SNAPSHOT: string;
   URL_GET_ESFR_REPORT: string;
+  URL_GET_CPCP_REPORT: string;
+  URL_GET_CTN: string;
+  URL_GET_SID: string;
 }
 
 export type EnvTypes = "localhost" | "development" | "qa" | "stage" | "production";
@@ -318,6 +435,157 @@ export const Sides: OptionDocument[] = [
     Description: "Right",
     DisplayOrder: 2,
     Id: 2,
+  },
+];
+
+export const SurfaceOptions: OptionDocument[] = [
+  {
+    Description: "Upper",
+    DisplayOrder: 1,
+    Id: 1,
+  },
+  {
+    Description: "Lower",
+    DisplayOrder: 2,
+    Id: 2,
+  },
+  {
+    Description: "Other",
+    DisplayOrder: 3,
+    Id: 3,
+  },
+];
+
+export const BLOptions: OptionDocument[] = [
+  {
+    Description: "Left",
+    DisplayOrder: 1,
+    Id: 1,
+  },
+  {
+    Description: "Right",
+    DisplayOrder: 2,
+    Id: 2,
+  },
+  {
+    Description: "BL0",
+    DisplayOrder: 3,
+    Id: 3,
+  },
+];
+
+export const SpecificsOptions: OptionDocument[] = [
+  {
+    Description: "Inboard",
+    DisplayOrder: 1,
+    Id: 1,
+  },
+  {
+    Description: "Outboard",
+    DisplayOrder: 2,
+    Id: 2,
+  },
+];
+
+export const RudderDamageProximityOptions: OptionDocument[] = [
+  {
+    Description: "LE",
+    DisplayOrder: 1,
+    Id: 1,
+  },
+  {
+    Description: "TE",
+    DisplayOrder: 2,
+    Id: 2,
+  },
+  {
+    Description: "Middle",
+    DisplayOrder: 3,
+    Id: 3,
+  },
+];
+
+export const StabDamageProximityOptions: OptionDocument[] = [
+  {
+    Description: "Front Spar",
+    DisplayOrder: 1,
+    Id: 1,
+  },
+  {
+    Description: "LE",
+    DisplayOrder: 2,
+    Id: 2,
+  },
+  {
+    Description: "Rear Spar",
+    DisplayOrder: 3,
+    Id: 3,
+  },
+  {
+    Description: "STR",
+    DisplayOrder: 4,
+    Id: 4,
+  },
+  {
+    Description: "TE",
+    DisplayOrder: 5,
+    Id: 5,
+  },
+];
+
+export const WingDamageProximityOptions: OptionDocument[] = [
+  {
+    Description: "Front Spar Spar",
+    DisplayOrder: 1,
+    Id: 1,
+  },
+  {
+    Description: "LE",
+    DisplayOrder: 2,
+    Id: 2,
+  },
+  {
+    Description: "Rear Spar Spar",
+    DisplayOrder: 3,
+    Id: 3,
+  },
+  {
+    Description: "STR",
+    DisplayOrder: 4,
+    Id: 4,
+  },
+  {
+    Description: "TE",
+    DisplayOrder: 5,
+    Id: 5,
+  },
+  {
+    Description: "Middle",
+    DisplayOrder: 6,
+    Id: 6,
+  },
+];
+
+export const OtherOptions: OptionDocument[] = [
+  {
+    Description: "Main",
+    DisplayOrder: 1,
+    Id: 1,
+  },
+  {
+    Description: "Fwd",
+    DisplayOrder: 2,
+    Id: 2,
+  },
+  {
+    Description: "Mid",
+    DisplayOrder: 3,
+    Id: 3,
+  },
+  {
+    Description: "Aft",
+    DisplayOrder: 4,
+    Id: 4,
   },
 ];
 
@@ -364,5 +632,69 @@ export const ReportType: OptionDocument[] = [
     Description: "SFR",
     DisplayOrder: 2,
     Id: 2,
+  },
+];
+
+export const TypeOptions: OptionDocument[] = [
+  {
+    Description: "Pre-Flight/Walk Around",
+    DisplayOrder: 1,
+    Id: 1,
+  },
+  {
+    Description: "Line MX Discovery",
+    DisplayOrder: 2,
+    Id: 2,
+  },
+  {
+    Description: "Special Inspection",
+    DisplayOrder: 3,
+    Id: 3,
+  },
+  {
+    Description: "Accident investigation",
+    DisplayOrder: 4,
+    Id: 4,
+  },
+  {
+    Description: "Other",
+    DisplayOrder: 5,
+    Id: 5,
+  },
+];
+
+export const DocumentTypeOptions: OptionDocument[] = [
+  {
+    Description: "SRM",
+    DisplayOrder: 1,
+    Id: 1,
+  },
+  {
+    Description: "AMM",
+    DisplayOrder: 2,
+    Id: 2,
+  },
+  {
+    Description: "CMM",
+    DisplayOrder: 3,
+    Id: 3,
+  },
+  {
+    Description: "Repair ECRA",
+    DisplayOrder: 4,
+    Id: 4,
+  },
+  {
+    Description: "Other",
+    DisplayOrder: 5,
+    Id: 5,
+  },
+];
+
+export const ZoneOptions: OptionDocument[] = [
+  {
+    Description: "1",
+    DisplayOrder: 1,
+    Id: 1,
   },
 ];

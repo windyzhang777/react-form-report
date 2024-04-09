@@ -7,9 +7,9 @@ export interface ITabPanelProps {
   value: number;
 }
 
-const CommonTabPanel = ({ children, value, index, ...other }: ITabPanelProps) => (
+const CommonTabPanel = ({ children, className, value, index, ...other }: ITabPanelProps) => (
   <div
-    className={`${value !== index && "hidden"} pt-[30px] h-[90%] grow flex flex-col`}
+    className={`${value !== index && "hidden"} pt-[30px] h-[90%] grow flex flex-col ${className}`}
     role="tabpanel"
     hidden={value !== index}
     id={`simple-tabpanel-${index}`}

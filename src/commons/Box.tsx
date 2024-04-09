@@ -27,7 +27,24 @@ export const FlexColumn = styled(Box)({
 
 export interface IInfoBoxProps {
   children: ReactNode;
+  className?: string;
 }
+
+export const InfoBox = ({ children, ...props }: IInfoBoxProps) => (
+  <FlexRow
+    sx={{
+      width: "fit-content",
+      gap: "8px",
+      height: "40px",
+      padding: "12px",
+      borderRadius: "4px",
+      bgcolor: "#ddd",
+    }}
+    {...props}
+  >
+    <FlexCenter>{children}</FlexCenter>
+  </FlexRow>
+);
 
 export const WarningBox = ({ children }: IInfoBoxProps) => (
   <FlexRow
