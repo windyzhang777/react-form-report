@@ -1,6 +1,5 @@
 import { Grid } from "@mui/material";
 import { useFormikContext } from "formik";
-import { useEffect } from "react";
 import ListItem from "src/commons/ListItem";
 import { SingleSelect } from "src/commons/Select";
 import TabPanel from "src/commons/TabPanel";
@@ -19,6 +18,7 @@ import {
   ZoneOptions,
 } from "src/commons/types";
 import { useAppSelector } from "src/redux/hooks";
+import { useFormCreateSfrData } from "./useFormCreateSfrData";
 
 type LocationTabProps = {
   editable: any;
@@ -29,12 +29,8 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
   const { masterData }: SdrEsfrRecordDetailsStateType = useAppSelector(
     (state) => state.sdrEsfrRecordDetails
   );
-  const { errors, handleBlur, handleChange, touched, values, setFieldValue } =
-    useFormikContext<ISaveSfrValues>();
-
-  useEffect(() => {
-    setFieldValue("LocationDetails.DamageProximity", 0);
-  }, [values?.LocationDetails?.DefectLocationId]);
+  const { errors, handleBlur, handleChange, touched } = useFormikContext<ISaveSfrValues>();
+  const { values } = useFormCreateSfrData();
 
   return (
     <>

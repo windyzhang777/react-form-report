@@ -29,16 +29,16 @@ const CommonTextField = ({ placeholder, type, ...props }: ICommonTextFieldProps)
   let placeholderText = "Enter text here";
   switch (type) {
     case "number":
-      placeholderText = placeholder || "Enter number here";
+      placeholderText = "Enter number here";
       break;
     case "text":
     default:
-      placeholderText = placeholder || "Enter text here";
+      placeholderText = "Enter text here";
       break;
   }
   return (
     <TextField
-      placeholder={placeholderText}
+      placeholder={placeholder || placeholderText}
       size={"small"}
       type={type ? type : "text"}
       {...props}

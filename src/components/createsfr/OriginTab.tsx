@@ -18,7 +18,7 @@ import {
   SelectedSfrTab,
   TypeOptions,
 } from "src/commons/types";
-import { UseUpdateCodes } from "src/components/createsfr/useUpdateCodes";
+import { useFormCreateSfrData } from "src/components/createsfr/useFormCreateSfrData";
 import { getCtnData, getSidData } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 
@@ -34,7 +34,7 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
   );
   const { errors, handleBlur, handleChange, setFieldValue, touched } =
     useFormikContext<ISaveSfrValues>();
-  const values = UseUpdateCodes();
+  const { values } = useFormCreateSfrData();
   const [openSelectCtn, setOpenSelect] = useState<boolean>(false);
   const selectedMFRSource = useMemo(
     () =>
@@ -226,6 +226,8 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                           errors?.OriginDetails?.CalDocIdentifier
                         }
                         className={"sdr-status-edit"}
+                        inputProps={{ maxLength: 7 }}
+                        placeholder="xxxxxxx"
                       />
                     ) : (
                       ""
@@ -248,6 +250,8 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                         error={!!touched?.OriginDetails?.Rev && !!errors?.OriginDetails?.Rev}
                         helperText={!!touched?.OriginDetails?.Rev && errors?.OriginDetails?.Rev}
                         className={"sdr-status-edit"}
+                        inputProps={{ maxLength: 1 }}
+                        placeholder="x"
                       />
                     ) : (
                       ""
@@ -270,6 +274,8 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                         error={!!touched?.OriginDetails?.Op && !!errors?.OriginDetails?.Op}
                         helperText={!!touched?.OriginDetails?.Op && errors?.OriginDetails?.Op}
                         className={"sdr-status-edit"}
+                        inputProps={{ maxLength: 1 }}
+                        placeholder="x"
                       />
                     ) : (
                       ""

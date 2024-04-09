@@ -8,7 +8,6 @@ import TabPanel, { a11yProps } from "src/commons/TabPanel";
 import {
   IEditSdrValues,
   ISaveSdrValues,
-  ISaveSfrValues,
   SdrEsfrRecordDetailsStateType,
   SelectedStatus,
   SelectedTab,
@@ -36,6 +35,7 @@ import {
   viewLogPageDetails,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
+import { CreateSfrReq } from "src/types/CreateSfrReq";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
 import axiosInstance from "src/utils/axiosInstance";
 import config from "src/utils/env.config";
@@ -139,7 +139,7 @@ const HomeScreen = () => {
       });
   };
 
-  const handleCreateSFR = (values: ISaveSfrValues) => {
+  const handleCreateSFR = (values: CreateSfrReq) => {
     setIsLoading(true);
     axiosInstance
       .post(`${config.apiBaseAddress}${config.URL_CREATE_SFR}`, values)
@@ -235,7 +235,7 @@ const HomeScreen = () => {
   }, [selectedSdr]);
 
   useEffect(() => {
-    if (detailsData && logpageData) {
+    if ((detailsData || snapshotData) && logpageData) {
       dispatch(setDetailsLoaderOff());
     }
   }, [detailsData, logpageData]);

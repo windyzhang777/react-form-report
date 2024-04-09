@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { ISaveSfrValues } from "src/commons/types";
 import { formatCodes, joinCodes } from "src/helpers";
 
-export const UseUpdateCodes = () => {
+export const useFormCreateSfrData = () => {
   const { setFieldValue, values } = useFormikContext<ISaveSfrValues>();
 
   // Origin Tab
@@ -25,6 +25,13 @@ export const UseUpdateCodes = () => {
   ]);
 
   // Repair Tab
+  useEffect(() => {
+    setFieldValue(
+      "RepairDetails.RepairECRA",
+      formatCodes([values.RepairECRA1, values.RepairECRA2])
+    );
+  }, [values.RepairECRA1, values.RepairECRA2]);
+
   useEffect(() => {
     setFieldValue("SRM1", formatCodes([values.SRM11, values.SRM12, values.SRM13]));
   }, [values.DocumentType, values.SRM11, values.SRM12, values.SRM13]);
@@ -99,5 +106,5 @@ export const UseUpdateCodes = () => {
     values.CMMFig,
   ]);
 
-  return values;
+  return { values };
 };

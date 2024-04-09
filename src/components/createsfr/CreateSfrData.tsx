@@ -1,22 +1,25 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import { Formik } from "formik";
+import moment from "moment";
 import { Dispatch, SetStateAction, SyntheticEvent, useEffect, useMemo, useState } from "react";
 import { FlexColumn } from "src/commons/Box";
 import ButtonGroup from "src/commons/ButtonGroup";
 import { a11yProps } from "src/commons/TabPanel";
-import { ISaveSfrValues, SdrEsfrRecordDetailsStateType } from "src/commons/types";
+import { ISaveSfrValues, SdrEsfrRecordDetailsStateType, SelectedStatus } from "src/commons/types";
 import { DiscrepancyTab } from "src/components/createsfr/DiscrepancyTab";
 import { LocationTab } from "src/components/createsfr/LocationTab";
 import { OriginTab } from "src/components/createsfr/OriginTab";
 import { RepairTab } from "src/components/createsfr/RepairTab";
+import { DATETIME_REQUEST, transformCreateSfrValues } from "src/helpers";
 import { resetLogpageDataSuccess } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
+import { CreateSfrReq } from "src/types/CreateSfrReq";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
 import "./createSfrData.css";
 
 export interface ICreateSfrDataProps {
   createSdrFlag: string;
-  handleCreateSFR: (values: ISaveSfrValues) => void;
+  handleCreateSFR: (values: CreateSfrReq) => void;
   handleFetchLogpageData: (a: string) => void;
   logpageNumberValue: string;
   setCreateSdrFlag: Dispatch<SetStateAction<string>>;
@@ -33,22 +36,23 @@ const CreateSfrData = ({
 }: ICreateSfrDataProps) => {
   const editable = true;
   const dispatch = useAppDispatch();
+  const [tabIndex, setTabIndex] = useState<number>(0);
   const { profileData } = useAppSelector((state) => state.profile);
   const { detailsData }: SdrEsfrRecordDetailsStateType = useAppSelector(
     (state) => state.sdrEsfrRecordDetails
   );
-  const [tabIndex, setTabIndex] = useState<number>(0);
+
   const initialValues: ISaveSfrValues = useMemo(
     () => ({
-      Type: 0,
-      StatusId: 0,
+      Type: "0",
+      StatusId: SelectedStatus.Approved,
       LogPageNumber: "",
       Station: "",
-      CreatedDate: "2024-04-09T06:39:01.627Z",
-      LogPageCreatedDate: "2024-04-09T06:39:01.627Z",
+      CreatedDate: moment().format(DATETIME_REQUEST),
+      LogPageCreatedDate: moment().format(DATETIME_REQUEST),
       LogPageCreatedBy: "",
-      ModifiedDate: "2024-04-09T06:39:01.627Z",
-      CreatedBy: "",
+      ModifiedDate: "",
+      CreatedBy: profileData?.EmployeeId || "",
       ModifiedBy: "",
       AirCraftNumber: "",
       OriginDetails: {
@@ -140,12 +144,12 @@ const CreateSfrData = ({
       },
       SfrActivity: {
         Comments: "",
-        CreatedDate: "2024-04-09T06:39:01.628Z",
-        EmployeeId: "",
-        EmployeeName: "",
+        CreatedDate: moment().format(DATETIME_REQUEST),
+        EmployeeId: profileData?.EmployeeId || "",
+        EmployeeName: profileData?.FirstName + " " + profileData?.LastName || "",
       },
       SdrDetails: {
-        LogPageCreationDate: "2024-04-09T06:39:01.628Z",
+        LogPageCreationDate: "",
         Station: "",
         LogPageNumber: "",
         AircraftNumber: "",
@@ -154,8 +158,8 @@ const CreateSfrData = ({
         StageId: 0,
         StatusId: 0,
         HowDiscoveredId: 0,
-        EmployeeId: "",
-        EmployeeName: "",
+        EmployeeId: profileData?.EmployeeId || "",
+        EmployeeName: profileData?.FirstName + " " + profileData?.LastName || "",
         PartDetails: {
           PartTrackingNumber: "",
           PartManufacturerSerialNumber: "",
@@ -168,13 +172,13 @@ const CreateSfrData = ({
         CreatedbyLastName: "",
         ModifiedbyFirstName: "",
         ModifiedbyLastName: "",
-        CreatedDate: "2024-04-09T06:39:01.628Z",
+        CreatedDate: "",
         CorrectiveAction: "",
         OperatorControlNumber: "",
-        IsExtracted: true,
+        IsExtracted: false,
       },
-      CreatedbyFirstName: "",
-      CreatedbyLastName: "",
+      CreatedbyFirstName: profileData?.FirstName || "",
+      CreatedbyLastName: profileData?.LastName || "",
       ModifiedbyFirstName: "",
       ModifiedbyLastName: "",
       FleetCode: "",
@@ -189,7 +193,7 @@ const CreateSfrData = ({
       DocumentType: [],
       SpecIdentifier1: "",
       SpecIdentifier2: "",
-      SpecIdentifier3: "",
+      SpecIdentifier3: "1",
       SpecIdentifier4: "",
       CalDocIdentifier1: "",
       CalDocIdentifier2: "",
@@ -237,6 +241,8 @@ const CreateSfrData = ({
       CMM33: "",
       CMMPage: "",
       CMMFig: "",
+      RepairECRA1: "",
+      RepairECRA2: "",
     }),
     [detailsData, profileData]
   );
@@ -269,14 +275,9 @@ const CreateSfrData = ({
         initialValues={initialValues}
         enableReinitialize
         onSubmit={(values, { resetForm }) => {
-          handleCreateSFR(values);
-          resetForm();
+          handleCreateSFR(transformCreateSfrValues(values));
+          // resetForm();
         }}
-        // validationSchema={object().shape({
-        //   ...ValidationSchema,
-        //   LogPageNumber: ValidationSchema.LogPageNumber.required(),
-        //   AircraftNumber: string(),
-        // })}
       >
         {({
           errors,

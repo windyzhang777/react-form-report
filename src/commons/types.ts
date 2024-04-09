@@ -44,8 +44,7 @@ export enum RadioType {
   No = "No",
 }
 
-export interface ISaveSfrValues extends Omit<CreateSfrReq, "Type"> {
-  Type: number;
+export interface ISaveSfrValues extends CreateSfrReq {
   searchDescription: String;
   ATAChapter: string;
   ATASubChapter: string;
@@ -103,6 +102,8 @@ export interface ISaveSfrValues extends Omit<CreateSfrReq, "Type"> {
   CMM33: string;
   CMMPage: string;
   CMMFig: string;
+  RepairECRA1: string;
+  RepairECRA2: string;
 }
 
 export interface IReportSearchValues extends GetEsfrReportReq {}

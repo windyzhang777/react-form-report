@@ -132,7 +132,7 @@ export const sdrEsfrRecordDetailsReducer = (
       };
     }
     case SdrEsfrRecordDetailsActionType.FETCH_LOGPAGE_DATA_SUCCESS: {
-      return { ...state, logpageData: action.data, error: "" };
+      return { ...state, loading: false, logpageData: action.data, error: "" };
     }
     case SdrEsfrRecordDetailsActionType.FETCH_LOGPAGE_DATA_FAILURE: {
       return {

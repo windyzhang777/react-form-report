@@ -9,7 +9,7 @@ import TabPanel from "src/commons/TabPanel";
 import TextField from "src/commons/TextField";
 import TextFieldGroup from "src/commons/TextFieldGroup";
 import { DocumentTypeOptions, ISaveSfrValues, SelectedSfrTab } from "src/commons/types";
-import { UseUpdateCodes } from "src/components/createsfr/useUpdateCodes";
+import { useFormCreateSfrData } from "src/components/createsfr/useFormCreateSfrData";
 
 type RepairTabProps = {
   editable: any;
@@ -19,7 +19,7 @@ type RepairTabProps = {
 export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
   const { errors, handleBlur, handleChange, setFieldValue, touched } =
     useFormikContext<ISaveSfrValues>();
-  const values = UseUpdateCodes();
+  const { values } = useFormCreateSfrData();
 
   return (
     <>
@@ -62,6 +62,8 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
                   error={!!touched?.RepairDetails?.DipCode && !!errors?.RepairDetails?.DipCode}
                   helperText={!!touched?.RepairDetails?.DipCode && errors?.RepairDetails?.DipCode}
                   className={"sdr-status-edit !w-[50%]"}
+                  inputProps={{ maxLength: 7 }}
+                  placeholder="xxxxxxx"
                 />
               ) : (
                 ""
@@ -262,7 +264,7 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
                           <TextFieldGroup
                             count={2}
                             maxAllowed={[4, 5]}
-                            name="RepairDetails.RepairECRA"
+                            name="RepairECRA"
                             values={values}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -283,10 +285,9 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
                             onBlur={handleBlur}
                             error={!!touched?.RepairDetails?.Rev && !!errors?.RepairDetails?.Rev}
                             helperText={!!touched?.RepairDetails?.Rev && errors?.RepairDetails?.Rev}
-                            multiline
-                            maxRows={4}
-                            className={"sdr-status-edit textareaAutosize"}
-                            inputProps={{ style: { resize: "both" } }}
+                            className={"sdr-status-edit"}
+                            inputProps={{ maxLength: 1 }}
+                            placeholder="x"
                           />
                         ) : (
                           ""
@@ -375,6 +376,7 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
                   errors?.RepairDetails?.ManHoursRequired
                 }
                 className={"sdr-status-edit"}
+                inputProps={{ maxLength: 4, max: 9999 }}
               />
             ) : (
               ""
@@ -456,9 +458,9 @@ const DocumentGrid = ({ editable, handleBlur, handleChange, name, values }: IDoc
             value={(values as any)?.[`${name}Page`] || ""}
             onChange={handleChange}
             onBlur={handleBlur}
-            placeholder="xxx"
             className={"sdr-status-edit"}
             inputProps={{ maxLength: 3 }}
+            placeholder="xxx"
           />
         ) : (
           ""
@@ -474,9 +476,9 @@ const DocumentGrid = ({ editable, handleBlur, handleChange, name, values }: IDoc
             value={(values as any)?.[`${name}Fig`] || ""}
             onChange={handleChange}
             onBlur={handleBlur}
-            placeholder="xxx"
             className={"sdr-status-edit"}
             inputProps={{ maxLength: 3 }}
+            placeholder="xxx"
           />
         ) : (
           ""
