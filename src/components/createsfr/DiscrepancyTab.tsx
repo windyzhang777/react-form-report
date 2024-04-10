@@ -9,8 +9,8 @@ import { ISaveSfrValues, SdrEsfrRecordDetailsStateType, SelectedSfrTab } from "s
 import { useAppSelector } from "src/redux/hooks";
 
 type DiscrepancyTabProps = {
-  editable: any;
-  tabIndex: any;
+  editable: boolean;
+  tabIndex: number;
 };
 
 export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
