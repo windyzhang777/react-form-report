@@ -21,12 +21,12 @@ import { useAppSelector } from "src/redux/hooks";
 import { useFormCreateSfrData } from "./useFormCreateSfrData";
 
 type LocationTabProps = {
-  editable: any;
-  tabIndex: any;
+  editable: boolean;
+  tabIndex: number;
 };
 
 export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
-  const { masterData }: SdrEsfrRecordDetailsStateType = useAppSelector(
+  const { masterData, logpageData }: SdrEsfrRecordDetailsStateType = useAppSelector(
     (state) => state.sdrEsfrRecordDetails
   );
   const { errors, handleBlur, handleChange, touched } = useFormikContext<ISaveSfrValues>();
@@ -54,7 +54,12 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     helperText={
                       !!touched?.LocationDetails?.ZoneId && errors?.LocationDetails?.ZoneId
                     }
-                    options={ZoneOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
+                    options={
+                      logpageData?.MasterData?.Zones &&
+                      [...logpageData.MasterData.Zones].sort(
+                        (a, b) => a.DisplayOrder - b.DisplayOrder
+                      )
+                    }
                     className={"sdr-status-edit"}
                     id="LocationDetails.ZoneId"
                   />
@@ -393,7 +398,12 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       helperText={
                         !!touched?.LocationDetails?.StaTypeId && errors?.LocationDetails?.StaTypeId
                       }
-                      options={ZoneOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
+                      options={
+                        logpageData?.MasterData?.StaTypes &&
+                        [...logpageData.MasterData.StaTypes].sort(
+                          (a, b) => a.DisplayOrder - b.DisplayOrder
+                        )
+                      }
                       className={"sdr-status-edit"}
                       id="LocationDetails.StaTypeId"
                     />
@@ -509,7 +519,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   <ListItem>From STR/Long</ListItem>
                   <ListItem>
                     {editable ? (
-                      <SingleSelect
+                      <TextField
                         name="LocationDetails.FromStr"
                         value={values?.LocationDetails?.FromStr || ""}
                         onChange={handleChange}
@@ -520,9 +530,10 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         helperText={
                           !!touched?.LocationDetails?.FromStr && errors?.LocationDetails?.FromStr
                         }
-                        options={ZoneOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                        className={"sdr-status-edit"}
-                        id="LocationDetails.FromStr"
+                        multiline
+                        maxRows={4}
+                        className={"sdr-status-edit textareaAutosize"}
+                        inputProps={{ style: { resize: "both" } }}
                       />
                     ) : (
                       ""
@@ -531,8 +542,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   <ListItem>
                     {editable ? (
                       <SingleSelect
-                        name="LocationDetails.FromSide
-"
+                        name="LocationDetails.FromSide"
                         value={values?.LocationDetails?.FromSide || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -545,8 +555,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         }
                         options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                         className={"sdr-status-edit"}
-                        id="LocationDetails.FromSide
-"
+                        id="LocationDetails.FromSide"
                       />
                     ) : (
                       ""
@@ -557,7 +566,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   <ListItem>To STR/Long</ListItem>
                   <ListItem>
                     {editable ? (
-                      <SingleSelect
+                      <TextField
                         name="LocationDetails.ToStr"
                         value={values?.LocationDetails?.ToStr || ""}
                         onChange={handleChange}
@@ -568,9 +577,10 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         helperText={
                           !!touched?.LocationDetails?.ToStr && errors?.LocationDetails?.ToStr
                         }
-                        options={ZoneOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                        className={"sdr-status-edit"}
-                        id="LocationDetails.ToStr"
+                        multiline
+                        maxRows={4}
+                        className={"sdr-status-edit textareaAutosize"}
+                        inputProps={{ style: { resize: "both" } }}
                       />
                     ) : (
                       ""
@@ -591,8 +601,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         }
                         options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                         className={"sdr-status-edit"}
-                        id="LocationDetails.ToSide
-"
+                        id="LocationDetails.ToSide"
                       />
                     ) : (
                       ""
@@ -602,7 +611,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
               </>
             )}
 
-            {/* Elevator, Fuselage */}
+            {/* Fuselage */}
             {values?.LocationDetails?.DefectLocationId === 8 && (
               <>
                 <>
@@ -695,7 +704,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                 <ListItem>TE Flap #</ListItem>
                 <ListItem>
                   {editable ? (
-                    <SingleSelect
+                    <TextField
                       name="LocationDetails.LocationType"
                       value={values?.LocationDetails?.LocationType || ""}
                       onChange={handleChange}
@@ -708,9 +717,10 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         !!touched?.LocationDetails?.LocationType &&
                         errors?.LocationDetails?.LocationType
                       }
-                      options={ZoneOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                      className={"sdr-status-edit"}
-                      id="LocationDetails.LocationType"
+                      multiline
+                      maxRows={4}
+                      className={"sdr-status-edit textareaAutosize"}
+                      inputProps={{ style: { resize: "both" } }}
                     />
                   ) : (
                     ""

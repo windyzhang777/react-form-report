@@ -12,8 +12,8 @@ import { DocumentTypeOptions, ISaveSfrValues, SelectedSfrTab } from "src/commons
 import { useFormCreateSfrData } from "src/components/createsfr/useFormCreateSfrData";
 
 type RepairTabProps = {
-  editable: any;
-  tabIndex: any;
+  editable: boolean;
+  tabIndex: number;
 };
 
 export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {

@@ -27,8 +27,8 @@ import {
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 
 type OriginTabProps = {
-  editable: any;
-  tabIndex: any;
+  editable: boolean;
+  tabIndex: number;
 };
 
 export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
