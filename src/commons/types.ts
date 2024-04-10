@@ -115,7 +115,9 @@ export interface ICpcpReportSearchValues extends GetCpcpReportReq {
   fleetList: string[];
 }
 
-export interface IDiscrepancyPartsReportSearchValues extends GetDiscrepancyPartsReportReq {}
+export interface IDiscrepancyPartsReportSearchValues extends GetDiscrepancyPartsReportReq {
+  fleetList: string[];
+}
 
 export interface ISaveSdrValues extends Omit<UpsertSDRSnapshotReq, "SfrAdditionalDetails"> {
   Powerplant: Omit<AircraftDetails, "RegistryNNumber">;

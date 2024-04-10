@@ -1,11 +1,11 @@
 import { Dispatch } from "react";
 import {
-    IDiscrepancyPartsReportSearchValues,
-    PartsReportActionType,
-    PartsReportDispatchFuncType,
-    PartsReportReducerAction,
-    PartsReportStateType,
+  PartsReportActionType,
+  PartsReportDispatchFuncType,
+  PartsReportReducerAction,
+  PartsReportStateType,
 } from "src/commons/types";
+import { GetDiscrepancyPartsReportReq } from "src/types/GetDiscrepancyPartsReportReq";
 import { GetPartsReportResResult } from "src/types/GetDiscrepancyPartsReportRes";
 import axiosInstance from "src/utils/axiosInstance";
 import config from "src/utils/env.config";
@@ -60,7 +60,7 @@ const partsReportReducer = (
   }
 };
 
-export const getPartsReport = (values: IDiscrepancyPartsReportSearchValues) => {
+export const getPartsReport = (values: GetDiscrepancyPartsReportReq) => {
   return function (dispatch: Dispatch<PartsReportDispatchFuncType>) {
     dispatch(initFetch());
     axiosInstance

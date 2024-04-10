@@ -4,7 +4,12 @@ import { useEffect, useState } from "react";
 import { WarningBox } from "src/commons/Box";
 import CommonLoader from "src/commons/CommonLoader";
 import RouterLink from "src/commons/Link";
-import { IDiscrepancyPartsReportSearchValues, PartsReportStateType, SdrEsfrRecordDetailsStateType } from "src/commons/types";
+import Snackbar from "src/commons/Snackbar";
+import { PartsReportStateType, SdrEsfrRecordDetailsStateType } from "src/commons/types";
+import CommonDataGrid from "src/components/commondatagrid/commondatagrid";
+import { partsReportSearchColumns } from "src/components/commondatagrid/partsReportSearchColumns";
+import DiscrepancyPartsReportSearch from "src/components/reports/discrepancypartsreport/DiscrepancyPartReportSearch";
+import { getPartsReport, resetPartsReportSuccess } from "src/redux/ducks/getPartsReport";
 import {
   getSdrEsfrRecordDetails,
   getSfrMasterData,
@@ -12,11 +17,7 @@ import {
   viewLogPageDetails,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
-import DiscrepancyPartsReportSearch from "src/components/reports/discrepancypartsreport/DiscrepancyPartReportSearch";
-import CommonDataGrid from "src/components/commondatagrid/commondatagrid";
-import Snackbar from "src/commons/Snackbar";
-import { getPartsReport, resetPartsReportSuccess } from "src/redux/ducks/getPartsReport";
-import { partsReportSearchColumns } from "src/components/commondatagrid/partsReportSearchColumns";
+import { GetDiscrepancyPartsReportReq } from "src/types/GetDiscrepancyPartsReportReq";
 import { GetPartsReportResResult } from "src/types/GetDiscrepancyPartsReportRes";
 
 export interface ISearchScreenProps {}
@@ -33,15 +34,15 @@ const DiscrepancyPartsReportSearchScreen = () => {
   const {
     loading: loadingPartsReport,
     partsReport,
-    error: partsReportError
+    error: partsReportError,
   }: PartsReportStateType = useAppSelector((state) => state.partsReport);
-  
+
   const [openSnackbar, setOpenSnackbar] = useState<number>(0);
   const [snackbarMessage, setSnackbarMessage] = useState<string>("");
   const [viewSdrFlag, setViewSdrFlag] = useState<boolean>(false);
   const [selectedSdr, setSelectedSdr] = useState<GetPartsReportResResult | null>(null);
 
-  const handleSearchReport = (values: IDiscrepancyPartsReportSearchValues | null) => {
+  const handleSearchReport = (values: GetDiscrepancyPartsReportReq | null) => {
     if (values) {
       dispatch(getPartsReport(values));
     } else {
@@ -99,7 +100,10 @@ const DiscrepancyPartsReportSearchScreen = () => {
           </Box>
           {/* SEARCH */}
           <Box className="elevate-paper" m={2} p={2} flex={1}>
-            <DiscrepancyPartsReportSearch handleSearchReport={handleSearchReport} viewSdrFlag={viewSdrFlag} />
+            <DiscrepancyPartsReportSearch
+              handleSearchReport={handleSearchReport}
+              viewSdrFlag={viewSdrFlag}
+            />
             <Divider className="!mt-6 !mb-10" />
             {partsReport ? (
               partsReport.length > 0 ? (
