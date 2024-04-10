@@ -60,6 +60,7 @@ export const transformCreateSfrValues = (values: ISaveSfrValues) => {
 };
 
 export const formatCodes = (arr: string[]) => {
+  if (!arr) return "";
   let res = "";
   for (const a of arr) {
     if (!a) {
@@ -72,6 +73,7 @@ export const formatCodes = (arr: string[]) => {
 };
 
 export const joinCodes = (arr: string[]) => {
+  if (!arr) return "";
   let res = "";
   for (const a of arr) {
     if (!a) {

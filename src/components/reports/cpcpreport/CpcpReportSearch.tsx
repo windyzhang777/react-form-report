@@ -1,24 +1,27 @@
 import { Box, Grid } from "@mui/material";
 import { Formik } from "formik";
 import moment from "moment";
-import { useEffect, useState } from "react";
 import ButtonGroup from "src/commons/ButtonGroup";
 import ListItem from "src/commons/ListItem";
-import { SingleSelect } from "src/commons/Select";
+import { SimpleMultipleSelect, SingleSelect } from "src/commons/Select";
 import TextField from "src/commons/TextField";
 import { ICpcpReportSearchValues, SdrEsfrRecordDetailsStateType } from "src/commons/types";
-import { DATE_HTML_DISPLAY } from "src/helpers";
+import { DATE_HTML_DISPLAY, joinCodes } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
-import { OptionDocument } from "src/types/GetSfrMasterDataRes";
+import { GetCpcpReportReq } from "src/types/GetCpcpReportReq";
 import ValidationSchema from "src/validationSchema";
 import { object } from "yup";
 
 export interface ICpcpReportSearchProps {
-  handleSearchReport: (a: ICpcpReportSearchValues | null) => void;
+  handleSearchReport: (a: GetCpcpReportReq | null) => void;
   viewSdrFlag: boolean;
 }
 
 const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearchProps) => {
+  const { masterData }: SdrEsfrRecordDetailsStateType = useAppSelector(
+    (state) => state.sdrEsfrRecordDetails
+  );
+
   const initialValues: ICpcpReportSearchValues = {
     pageIndex: 0,
     pageSize: 10,
@@ -27,39 +30,9 @@ const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearch
     acNumber: "",
     station: "",
     corrosionLevel: "",
-    fleet: ""
+    fleet: "",
+    fleetList: [],
   };
-
-  const { masterData }: SdrEsfrRecordDetailsStateType = useAppSelector(
-    (state) => state.sdrEsfrRecordDetails
-  );
-
-  const [corrosionLevels, setCorrosionLevels] = useState<OptionDocument[]>([]);
-  const [fleetCodes, setFleetCodes] = useState<OptionDocument[]>([]);
-
-  useEffect(() => {
-    let cLevels = masterData?.CorrosionLevels?.sort(
-      (a, b) => a.DisplayOrder - b.DisplayOrder
-    );
-    if (cLevels?.findIndex((item) => item.Description === "All") === -1) {
-      cLevels?.unshift({
-        Description: "All",
-        DisplayOrder: 0,
-        Id: 0,
-      });
-    }
-    setCorrosionLevels(cLevels || []);
-
-    let fleets = masterData?.Fleet
-      if (fleets?.findIndex((item) => item.Description === "All") === -1) {
-        fleets?.unshift({
-          Description: "All",
-          DisplayOrder: 0,
-          Id: 0,
-        });
-      }
-      setFleetCodes(fleets || []);
-  }, [masterData]);
 
   return (
     <>
@@ -76,7 +49,9 @@ const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearch
       <Formik
         initialValues={initialValues}
         onSubmit={(values, { setSubmitting }) => {
-          handleSearchReport(values);
+          let { fleetList, fleet, ...rest } = values;
+          (rest as any)["fleet"] = joinCodes(fleetList);
+          handleSearchReport(rest as GetCpcpReportReq);
           setTimeout(() => {
             setSubmitting(false);
           }, 500);
@@ -96,7 +71,7 @@ const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearch
         }) => (
           <form onSubmit={handleSubmit}>
             <Grid className={"search-sdr [&>.MuiGrid-item]:grow"} container>
-            <Grid
+              <Grid
                 item
                 lg={viewSdrFlag ? 8 : 4}
                 md={viewSdrFlag ? 12 : 6}
@@ -176,13 +151,19 @@ const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearch
                 <ListItem className="mt-3">Corrosion Level</ListItem>
                 <ListItem>
                   <SingleSelect
+                    defaultValue="All"
                     name="corrosionLevel"
                     value={values.corrosionLevel}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.corrosionLevel && !!errors.corrosionLevel}
                     helperText={!!touched.corrosionLevel && errors.corrosionLevel}
-                    options={corrosionLevels}
+                    options={
+                      masterData?.CorrosionLevels &&
+                      [...masterData.CorrosionLevels]?.sort(
+                        (a, b) => a.DisplayOrder - b.DisplayOrder
+                      )
+                    }
                     id="CorrosionLevel"
                     className="w-full"
                   />
@@ -191,16 +172,21 @@ const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearch
               <Grid item lg={viewSdrFlag ? 6 : 2} md={viewSdrFlag ? 6 : 3} sm={6}>
                 <ListItem className="mt-3">Fleet</ListItem>
                 <ListItem>
-                  <SingleSelect
-                    name="fleet"
-                    value={values.fleet || ""}
-                    onChange={handleChange}
+                  <SimpleMultipleSelect
+                    name="fleetList"
+                    value={values.fleetList || []}
+                    onChange={(values) => {
+                      setFieldValue("fleetList", values);
+                    }}
                     onBlur={handleBlur}
-                    error={!!touched.fleet && !!errors.fleet}
-                    helperText={!!touched.fleet && errors.fleet}
-                    options={fleetCodes}
+                    error={!!touched.fleetList && !!errors.fleetList}
+                    helperText={!!touched.fleetList && errors.fleetList}
+                    options={
+                      masterData?.Fleet &&
+                      [...masterData.Fleet].sort((a, b) => a.DisplayOrder - b.DisplayOrder)
+                    }
+                    className={"sdr-status-edit"}
                     id="Fleet"
-                    className="w-full"
                   />
                 </ListItem>
               </Grid>

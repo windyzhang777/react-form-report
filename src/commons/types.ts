@@ -3,10 +3,10 @@ import { ExtractSDRRecordsResResult } from "src/types/ExtractSdrRecordsRes";
 import { GetAllEsfrRecordsResResult, Status } from "src/types/GetAllEsfrRecordsRes";
 import { AircraftDetails, GetApprovedSDRResResult } from "src/types/GetApprovedSdrRes";
 import { GetCpcpReportReq } from "src/types/GetCpcpReportReq";
-import { GetCpcpReportResResult } from 'src/types/GetCpcpReportRes';
+import { GetCpcpReportResResult } from "src/types/GetCpcpReportRes";
+import { GetCtnResResult } from "src/types/GetCtnRes";
 import { GetDiscrepancyPartsReportReq } from "src/types/GetDiscrepancyPartsReportReq";
 import { GetPartsReportResResult } from "src/types/GetDiscrepancyPartsReportRes";
-import { GetCtnResResult } from "src/types/GetCtnRes";
 import { GetEsfrReportReq } from "src/types/GetEsfrReportReq";
 import { GetEsfrReportResResult } from "src/types/GetEsfrReportRes";
 import { Employee, GetProfileResResult } from "src/types/GetProfilerRes";
@@ -111,7 +111,9 @@ export interface ISaveSfrValues extends CreateSfrReq {
 
 export interface IReportSearchValues extends GetEsfrReportReq {}
 
-export interface ICpcpReportSearchValues extends GetCpcpReportReq {}
+export interface ICpcpReportSearchValues extends GetCpcpReportReq {
+  fleetList: string[];
+}
 
 export interface IDiscrepancyPartsReportSearchValues extends GetDiscrepancyPartsReportReq {}
 
@@ -228,15 +230,15 @@ export enum EsfrReportActionType {
 }
 
 export enum CpcpReportActionType {
-    FETCH_CPCP_REPORT = "FETCH_CPCP_REPORT",
-    FETCH_CPCP_REPORT_SUCCESS = "FETCH_CPCP_REPORT_SUCCESS",
-    FETCH_CPCP_REPORT_FAILURE = "FETCH_CPCP_REPORT_FAILURE",
+  FETCH_CPCP_REPORT = "FETCH_CPCP_REPORT",
+  FETCH_CPCP_REPORT_SUCCESS = "FETCH_CPCP_REPORT_SUCCESS",
+  FETCH_CPCP_REPORT_FAILURE = "FETCH_CPCP_REPORT_FAILURE",
 }
 
 export enum PartsReportActionType {
-    FETCH_PARTS_REPORT = "FETCH_PARTS_REPORT",
-    FETCH_PARTS_REPORT_SUCCESS = "FETCH_PARTS_REPORT_SUCCESS",
-    FETCH_PARTS_REPORT_FAILURE = "FETCH_PARTS_REPORT_FAILURE",
+  FETCH_PARTS_REPORT = "FETCH_PARTS_REPORT",
+  FETCH_PARTS_REPORT_SUCCESS = "FETCH_PARTS_REPORT_SUCCESS",
+  FETCH_PARTS_REPORT_FAILURE = "FETCH_PARTS_REPORT_FAILURE",
 }
 export interface ProfileDispatchFuncType {
   type: ProfileActionType;
@@ -299,15 +301,15 @@ export interface EsfrReportDispatchFuncType {
 }
 
 export interface CpcpReportDispatchFuncType {
-    type: CpcpReportActionType;
-    data?: GetCpcpReportResResult[];
-    message?: string;
+  type: CpcpReportActionType;
+  data?: GetCpcpReportResResult[];
+  message?: string;
 }
 
 export interface PartsReportDispatchFuncType {
-    type: PartsReportActionType;
-    data?: GetPartsReportResResult[];
-    message?: string;
+  type: PartsReportActionType;
+  data?: GetPartsReportResResult[];
+  message?: string;
 }
 
 export type TransformedSdrDataType = GetAllEsfrRecordsResResult & { SdrStatus: string };
@@ -348,15 +350,15 @@ export interface EsfrReportReducerAction {
 }
 
 export interface CpcpReportReducerAction {
-    type: CpcpReportActionType;
-    data: GetCpcpReportResResult[];
-    message: string;
+  type: CpcpReportActionType;
+  data: GetCpcpReportResResult[];
+  message: string;
 }
 
 export interface PartsReportReducerAction {
-    type: PartsReportActionType;
-    data: GetPartsReportResResult[];
-    message: string;
+  type: PartsReportActionType;
+  data: GetPartsReportResResult[];
+  message: string;
 }
 
 export type ProfileStateType = {
@@ -395,15 +397,15 @@ export type EsfrReportStateType = {
 };
 
 export type CpcpReportStateType = {
-    loading: boolean;
-    cpcpReport: GetCpcpReportResResult[] | null;
-    error: string;
+  loading: boolean;
+  cpcpReport: GetCpcpReportResResult[] | null;
+  error: string;
 };
 
 export type PartsReportStateType = {
-  loading: boolean,
-  partsReport: GetPartsReportResResult[] | null,
-  error: string
+  loading: boolean;
+  partsReport: GetPartsReportResResult[] | null;
+  error: string;
 };
 
 export interface EnvironmentConfig {

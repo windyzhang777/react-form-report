@@ -4,7 +4,12 @@ import { useEffect, useState } from "react";
 import { WarningBox } from "src/commons/Box";
 import CommonLoader from "src/commons/CommonLoader";
 import RouterLink from "src/commons/Link";
-import { ICpcpReportSearchValues, SdrEsfrRecordDetailsStateType } from "src/commons/types";
+import Snackbar from "src/commons/Snackbar";
+import { SdrEsfrRecordDetailsStateType } from "src/commons/types";
+import CommonDataGrid from "src/components/commondatagrid/commondatagrid";
+import { cpcpReportSearchColumns } from "src/components/commondatagrid/cpcpReportSearchColumns";
+import CpcpReportSearch from "src/components/reports/cpcpreport/CpcpReportSearch";
+import { getCpcpReport, resetCpcpReportSuccess } from "src/redux/ducks/getCpcpReport";
 import {
   getSdrEsfrRecordDetails,
   getSfrMasterData,
@@ -12,12 +17,8 @@ import {
   viewLogPageDetails,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
-import CpcpReportSearch from "src/components/reports/cpcpreport/CpcpReportSearch";
-import { getCpcpReport, resetCpcpReportSuccess } from "src/redux/ducks/getCpcpReport";
-import { cpcpReportSearchColumns } from "src/components/commondatagrid/cpcpReportSearchColumns";
-import CommonDataGrid from "src/components/commondatagrid/commondatagrid";
+import { GetCpcpReportReq } from "src/types/GetCpcpReportReq";
 import { GetCpcpReportResResult } from "src/types/GetCpcpReportRes";
-import Snackbar from "src/commons/Snackbar";
 
 export interface ISearchScreenProps {}
 
@@ -33,15 +34,15 @@ const CpcpReportSearchScreen = () => {
   const {
     loading: loadingCpcpReport,
     cpcpReport,
-    error: cpcpReportError
+    error: cpcpReportError,
   } = useAppSelector((state) => state.cpcpReport);
-  
+
   const [openSnackbar, setOpenSnackbar] = useState<number>(0);
   const [snackbarMessage, setSnackbarMessage] = useState<string>("");
   const [viewSdrFlag, setViewSdrFlag] = useState<boolean>(false);
   const [selectedSdr, setSelectedSdr] = useState<GetCpcpReportResResult | null>(null);
 
-  const handleSearchReport = (values: ICpcpReportSearchValues | null) => {
+  const handleSearchReport = (values: GetCpcpReportReq | null) => {
     if (values) {
       dispatch(getCpcpReport(values));
     } else {

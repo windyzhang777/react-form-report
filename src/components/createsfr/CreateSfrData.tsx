@@ -264,8 +264,6 @@ const CreateSfrData = ({
     };
   }, []);
 
-  useEffect(() => {}, []);
-
   return (
     <FlexColumn className={"create-sfr h-full relative"}>
       <Box className={"subpage-title bottom-divider"} sx={{ pt: "1px", mx: "20px", mb: 2 }}>

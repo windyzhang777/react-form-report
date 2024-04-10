@@ -1,11 +1,11 @@
 import { Dispatch } from "react";
 import {
-    CpcpReportActionType,
-    CpcpReportDispatchFuncType,
-    CpcpReportReducerAction,
-    CpcpReportStateType,
-    ICpcpReportSearchValues
+  CpcpReportActionType,
+  CpcpReportDispatchFuncType,
+  CpcpReportReducerAction,
+  CpcpReportStateType,
 } from "src/commons/types";
+import { GetCpcpReportReq } from "src/types/GetCpcpReportReq";
 import { GetCpcpReportResResult } from "src/types/GetCpcpReportRes";
 import axiosInstance from "src/utils/axiosInstance";
 import config from "src/utils/env.config";
@@ -60,7 +60,7 @@ const cpcpReportReducer = (
   }
 };
 
-export const getCpcpReport = (values: ICpcpReportSearchValues) => {
+export const getCpcpReport = (values: GetCpcpReportReq) => {
   return function (dispatch: Dispatch<CpcpReportDispatchFuncType>) {
     dispatch(initFetch());
     axiosInstance

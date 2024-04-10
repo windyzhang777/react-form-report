@@ -77,7 +77,7 @@ export const SimpleSingleSelect = ({
           marginTop: "-8px",
         }}
       >
-        Select One
+        All
       </InputLabel>
       <Select displayEmpty id={id && id + "-simple-single-select"} value={value} {...props}>
         {!options ? (
@@ -96,6 +96,7 @@ export const SimpleSingleSelect = ({
 );
 
 export interface ISingleSelectProps extends ICommonSelectProps {
+  defaultValue?: string;
   onChange: (event: SelectChangeEvent<number | string>) => void;
   options: OptionDocument[] | undefined;
   value: string | number;
@@ -103,9 +104,10 @@ export interface ISingleSelectProps extends ICommonSelectProps {
 
 export const SingleSelect = ({
   className,
+  defaultValue,
+  helperText,
   id,
   options,
-  helperText,
   value,
   ...props
 }: ISingleSelectProps) => (
@@ -120,7 +122,7 @@ export const SingleSelect = ({
             marginTop: "-8px",
           }}
         >
-          Select One
+          {defaultValue ? defaultValue : "Select One"}
         </InputLabel>
       )}
       <Select
@@ -141,6 +143,70 @@ export const SingleSelect = ({
                 control={<Radio className="!py-1 !pr-1" checked={option.Id === value} />}
                 label={option.Description}
               />
+            </MenuItem>
+          ))
+        )}
+      </Select>
+      {props.error && <FormHelperText error={props.error}>{helperText}</FormHelperText>}
+    </FormControl>
+  </Box>
+);
+
+export interface ISimpleMultipleSelectProps extends ICommonSelectProps {
+  maxAllowed?: number;
+  onChange: (value: string | string[]) => void;
+  options: OptionDocument[] | undefined;
+  value: string[];
+}
+
+export const SimpleMultipleSelect = ({
+  className,
+  helperText,
+  id,
+  onChange,
+  options,
+  maxAllowed = options?.length || 0,
+  value,
+  ...props
+}: ISimpleMultipleSelectProps) => (
+  <Box className={className} sx={{ minWidth: 120 }}>
+    <FormControl sx={{ width: "100%" }}>
+      {maxAllowed && (
+        <InputLabel
+          variant="outlined"
+          shrink={false}
+          sx={{
+            color: value.length > 0 ? "transparent !important" : "rgba(0, 0, 0, 0.6) !important",
+            marginTop: "-8px",
+          }}
+        >
+          Select up to {maxAllowed} options
+        </InputLabel>
+      )}
+      <Select
+        displayEmpty
+        id={id && id + "-multiple-select"}
+        input={<OutlinedInput />}
+        MenuProps={MenuProps}
+        multiple
+        onChange={(e) => {
+          if (value.length < maxAllowed) {
+            onChange(e.target.value);
+          } else {
+            onChange(e.target.value.slice(0, maxAllowed));
+          }
+        }}
+        renderValue={(selected) => selected.join(", ")}
+        value={value}
+        {...props}
+      >
+        {!options ? (
+          <Box>No options available</Box>
+        ) : (
+          options.map((option) => (
+            <MenuItem className="!pl-0 !pr-5" key={option.Description} value={option.Description}>
+              <Checkbox className="!py-1 !pr-1" checked={value.indexOf(option.Description) > -1} />
+              <ListItemText primary={option.Description} />
             </MenuItem>
           ))
         )}
