@@ -93,7 +93,7 @@ export interface OriginDetails {
   Rev: string;
   Op: string;
   DetectionMethodComments: string;
-  UnscheduledInspectionTypeId: number;
+  UnscheduledInspectionTypeId: string | number;
   UnscheduledInspectionTypeComments: string;
 }
 

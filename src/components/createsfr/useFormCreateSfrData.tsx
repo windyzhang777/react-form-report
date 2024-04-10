@@ -28,6 +28,14 @@ export const useFormCreateSfrData = () => {
     setFieldValue("OriginDetails.MfrSourceIdentifier", "");
   }, [values?.OriginDetails?.MfrSourceId]);
 
+  useEffect(() => {
+    setFieldValue("OriginDetails.CalDocIdentifier", "");
+    setFieldValue("CalDocIdentifier1", "");
+    setFieldValue("CalDocIdentifier2", "");
+    setFieldValue("CalDocIdentifier3", "");
+    setFieldValue("CalDocIdentifier4", "");
+  }, [values?.OriginDetails?.CalDocId]);
+
   // Repair Tab
   useEffect(() => {
     setFieldValue(

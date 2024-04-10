@@ -1,7 +1,7 @@
-import { Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import { GridCellParams } from "@mui/x-data-grid";
 import { useFormikContext } from "formik";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { InfoBox, WarningBox } from "src/commons/Box";
 import ButtonGroup from "src/commons/ButtonGroup";
 import { ScrollableDataGrid as DataGrid } from "src/commons/DataGrid";
@@ -19,6 +19,7 @@ import {
   TypeOptions,
 } from "src/commons/types";
 import { useFormCreateSfrData } from "src/components/createsfr/useFormCreateSfrData";
+import { handleFocus, handleScroll } from "src/helpers";
 import {
   getCtnData,
   getSidData,
@@ -29,10 +30,12 @@ import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 type OriginTabProps = {
   editable: boolean;
   tabIndex: number;
+  handleFetchLogpageData: (a: string) => void;
 };
 
-export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
+export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: OriginTabProps) => {
   const dispatch = useAppDispatch();
+  const logPageNumberRef = useRef<HTMLInputElement>(null);
   const { masterData, ctnData }: SdrEsfrRecordDetailsStateType = useAppSelector(
     (state) => state.sdrEsfrRecordDetails
   );
@@ -66,6 +69,11 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
     }
   };
 
+  useEffect(() => {
+    handleScroll(logPageNumberRef);
+    handleFocus(logPageNumberRef);
+  }, [logPageNumberRef]);
+
   return (
     <>
       <TabPanel
@@ -73,31 +81,64 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
         index={SelectedSfrTab.Origin}
         className="sdr-status-grid overflow-y-auto"
       >
-        <div className="relative !mb-[50px]">
-          <ListItem>Scheduled Inspection</ListItem>
-          <ListItem className="!absolute !px-0 left-0 top-[20px]">
-            {editable ? (
-              <SimpleRadio
-                name="OriginDetails.IsScheduledInspection"
-                value={values?.OriginDetails?.IsScheduledInspection}
-                onChange={(value) => {
-                  setFieldValue("OriginDetails.IsScheduledInspection", value === "true");
-                }}
-                error={
-                  !!touched?.OriginDetails?.IsScheduledInspection &&
-                  !!errors?.OriginDetails?.IsScheduledInspection
-                }
-                helperText={
-                  !!touched?.OriginDetails?.IsScheduledInspection &&
-                  errors?.OriginDetails?.IsScheduledInspection
-                }
-                className={"sdr-status-edit gap-5"}
-              />
-            ) : (
-              ""
-            )}
-          </ListItem>
-        </div>
+        <Grid container>
+          <Grid item xs={6} className="relative !mb-[50px]">
+            <ListItem>Scheduled Inspection</ListItem>
+            <ListItem className="!absolute !px-0 left-0 top-[20px]">
+              {editable ? (
+                <SimpleRadio
+                  name="OriginDetails.IsScheduledInspection"
+                  value={values?.OriginDetails?.IsScheduledInspection}
+                  onChange={(value) => {
+                    setFieldValue("OriginDetails.IsScheduledInspection", value === "true");
+                  }}
+                  error={
+                    !!touched?.OriginDetails?.IsScheduledInspection &&
+                    !!errors?.OriginDetails?.IsScheduledInspection
+                  }
+                  helperText={
+                    !!touched?.OriginDetails?.IsScheduledInspection &&
+                    errors?.OriginDetails?.IsScheduledInspection
+                  }
+                  className={"sdr-status-edit gap-5"}
+                />
+              ) : (
+                ""
+              )}
+            </ListItem>
+          </Grid>
+          <Grid item xs={6} className="flex !flex-col justify-end">
+            <ListItem>
+              {editable ? (
+                <TextField
+                  name="LogPageNumber"
+                  value={values.LogPageNumber || ""}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={!!touched.LogPageNumber && !!errors.LogPageNumber}
+                  helperText={!!touched.LogPageNumber && errors.LogPageNumber}
+                  className={"sdr-status-edit"}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleFetchLogpageData(values.LogPageNumber);
+                    }
+                  }}
+                  inputProps={{ ref: logPageNumberRef }}
+                  placeholder="Enter a Logpage Number"
+                />
+              ) : (
+                ""
+              )}
+            </ListItem>
+            <Button
+              disabled={!values.LogPageNumber}
+              onClick={() => handleFetchLogpageData(values.LogPageNumber)}
+              sx={{ paddingLeft: "20px", paddingRight: "20px", marginRight: "16px" }}
+            >
+              Fetch
+            </Button>
+          </Grid>
+        </Grid>
         {values?.OriginDetails?.IsScheduledInspection && (
           <Grid container>
             <Grid item xs={6} className="flex !flex-col gap-6">
@@ -219,18 +260,12 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="OriginDetails.CalDocIdentifier"
-                        value={values?.OriginDetails?.CalDocIdentifier || ""}
+                        name="LogPageNumber"
+                        value={values.LogPageNumber || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={
-                          !!touched?.OriginDetails?.CalDocIdentifier &&
-                          !!errors?.OriginDetails?.CalDocIdentifier
-                        }
-                        helperText={
-                          !!touched?.OriginDetails?.CalDocIdentifier &&
-                          errors?.OriginDetails?.CalDocIdentifier
-                        }
+                        error={!!touched.LogPageNumber && !!errors.LogPageNumber}
+                        helperText={!!touched.LogPageNumber && errors.LogPageNumber}
                         className={"sdr-status-edit"}
                         inputProps={{ maxLength: 7 }}
                         placeholder="xxxxxxx"

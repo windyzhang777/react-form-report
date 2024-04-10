@@ -41,13 +41,12 @@ const CreateSfrData = ({
   const { logpageData }: SdrEsfrRecordDetailsStateType = useAppSelector(
     (state) => state.sdrEsfrRecordDetails
   );
-  const LOGPAGE_NUMBER = "7034713"; // TODO: static for now until UX ready
 
   const initialValues: ISaveSfrValues = useMemo(
     () => ({
       Type: "0",
       StatusId: SelectedStatus.Approved,
-      LogPageNumber: LOGPAGE_NUMBER || "",
+      LogPageNumber: logpageNumberValue || "",
       Station: logpageData?.FleetInfo?.Station || "",
       CreatedDate: moment().format(DATETIME_REQUEST),
       LogPageCreatedDate: moment().format(DATETIME_REQUEST),
@@ -257,7 +256,6 @@ const CreateSfrData = ({
   };
 
   useEffect(() => {
-    handleFetchLogpageData(LOGPAGE_NUMBER);
     return () => {
       setLogpageNumberValue("");
       dispatch(resetLogpageDataSuccess());
@@ -303,7 +301,11 @@ const CreateSfrData = ({
                 </Tabs>
 
                 {/* Origin */}
-                <OriginTab editable={editable} tabIndex={tabIndex} />
+                <OriginTab
+                  editable={editable}
+                  tabIndex={tabIndex}
+                  handleFetchLogpageData={handleFetchLogpageData}
+                />
 
                 {/* Discrepancy */}
                 <DiscrepancyTab editable={editable} tabIndex={tabIndex} />
