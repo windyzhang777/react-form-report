@@ -26,10 +26,10 @@ export interface CreateSfrReq {
 
 export interface DiscrepancyDetails {
   IsManufacturingLimitExceeded: boolean;
-  DiscrepancyTypeId: number;
-  CorrosionLevelId: number;
-  CorrosionCauseId: number;
-  CorrosionExtentId: number;
+  DiscrepancyTypeId: string | number;
+  CorrosionLevelId: string | number;
+  CorrosionCauseId: string | number;
+  CorrosionExtentId: string | number;
   CorrosionCauseComments: string;
   AreMultipleCracksInTheSameLocation: boolean;
   NumberOfCracks: number;
@@ -47,7 +47,7 @@ export interface DiscrepancyPartDetail {
   PartNumber: string;
   Structure: string;
   PartDetails: string;
-  DiscrepancyPartInformationCode: number;
+  DiscrepancyPartInformationCode: string | number;
 }
 
 export interface LocationDetails {

@@ -400,18 +400,25 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
               <ListItem>
                 {editable ? (
                   <SingleSelect
-                    name="DiscrepancyPartInformationCode"
-                    value={values.DiscrepancyPartInformationCode || ""}
+                    name="DiscrepancyDetails.DiscrepancyPartDetails[0].DiscrepancyPartInformationCode"
+                    value={
+                      values?.DiscrepancyDetails?.DiscrepancyPartDetails?.[0]
+                        ?.DiscrepancyPartInformationCode || ""
+                    }
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={
-                      !!touched.DiscrepancyPartInformationCode &&
-                      !!errors.DiscrepancyPartInformationCode
-                    }
-                    helperText={
-                      !!touched.DiscrepancyPartInformationCode &&
-                      errors.DiscrepancyPartInformationCode
-                    }
+                    // error={
+                    //   !!touched?.DiscrepancyDetails?.DiscrepancyPartDetails?.[0]
+                    //     ?.DiscrepancyPartInformationCode &&
+                    //   !!errors?.DiscrepancyDetails?.DiscrepancyPartDetails?.[0]
+                    //     ?.DiscrepancyPartInformationCode
+                    // }
+                    // helperText={
+                    //   !!touched?.DiscrepancyDetails?.DiscrepancyPartDetails?.[0]
+                    //     ?.DiscrepancyPartInformationCode &&
+                    //   errors?.DiscrepancyDetails?.DiscrepancyPartDetails?.[0]
+                    //     ?.DiscrepancyPartInformationCode
+                    // }
                     options={
                       masterData?.DiscrepancyParts &&
                       [...masterData.DiscrepancyParts].sort(
@@ -428,7 +435,8 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
             </div>
 
             {/* Other */}
-            {values.DiscrepancyPartInformationCode === 28 && (
+            {values?.DiscrepancyDetails?.DiscrepancyPartDetails?.[0]
+              ?.DiscrepancyPartInformationCode === 28 && (
               <div>
                 <ListItem>Specify</ListItem>
                 <ListItem>
