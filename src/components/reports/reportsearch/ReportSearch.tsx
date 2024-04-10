@@ -124,7 +124,9 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                         } else {
                           setFieldValue(
                             "dateFrom",
-                            moment(e.target.value).format(DATE_HTML_DISPLAY)
+                            moment(e.target.value).isValid()
+                              ? moment(e.target.value).format(DATE_HTML_DISPLAY)
+                              : ""
                           );
                         }
                       }}
@@ -152,7 +154,12 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                             moment(values.dateFrom).format(DATE_HTML_DISPLAY)
                           );
                         } else {
-                          setFieldValue("dateTo", moment(e.target.value).format(DATE_HTML_DISPLAY));
+                          setFieldValue(
+                            "dateTo",
+                            moment(e.target.value).isValid()
+                              ? moment(e.target.value).format(DATE_HTML_DISPLAY)
+                              : ""
+                          );
                         }
                       }}
                       onBlur={handleBlur}

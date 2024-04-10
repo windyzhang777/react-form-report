@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
 import { Box, Grid } from "@mui/material";
 import { Formik } from "formik";
 import moment from "moment";
+import { useEffect, useState } from "react";
 import ButtonGroup from "src/commons/ButtonGroup";
 import ListItem from "src/commons/ListItem";
 import { SingleSelect } from "src/commons/Select";
@@ -9,9 +9,9 @@ import TextField from "src/commons/TextField";
 import { ICpcpReportSearchValues, SdrEsfrRecordDetailsStateType } from "src/commons/types";
 import { DATE_HTML_DISPLAY } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
+import { OptionDocument } from "src/types/GetSfrMasterDataRes";
 import ValidationSchema from "src/validationSchema";
 import { object } from "yup";
-import { OptionDocument } from "src/types/GetSfrMasterDataRes";
 
 export interface ICpcpReportSearchProps {
   handleSearchReport: (a: ICpcpReportSearchValues | null) => void;
@@ -108,7 +108,9 @@ const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearch
                   <ListItem className="!flex items-center !pr-0">
                     <TextField
                       type="date"
-                      inputProps={{ max: moment(values?.dateTo).format(DATE_HTML_DISPLAY) }}
+                      inputProps={{
+                        max: moment(values?.dateTo).format(DATE_HTML_DISPLAY),
+                      }}
                       name="dateFrom"
                       value={moment(values.dateFrom).format(DATE_HTML_DISPLAY) || ""}
                       onChange={(e) => {
@@ -120,7 +122,9 @@ const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearch
                         } else {
                           setFieldValue(
                             "dateFrom",
-                            moment(e.target.value).format(DATE_HTML_DISPLAY)
+                            moment(e.target.value).isValid()
+                              ? moment(e.target.value).format(DATE_HTML_DISPLAY)
+                              : ""
                           );
                         }
                       }}
@@ -138,7 +142,9 @@ const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearch
                   <ListItem className="!flex items-center">
                     <TextField
                       type="date"
-                      inputProps={{ min: moment(values?.dateFrom).format(DATE_HTML_DISPLAY) }}
+                      inputProps={{
+                        min: moment(values?.dateFrom).format(DATE_HTML_DISPLAY),
+                      }}
                       name="dateTo"
                       value={moment(values.dateTo).format(DATE_HTML_DISPLAY) || ""}
                       onChange={(e) => {
@@ -148,7 +154,12 @@ const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearch
                             moment(values.dateFrom).format(DATE_HTML_DISPLAY)
                           );
                         } else {
-                          setFieldValue("dateTo", moment(e.target.value).format(DATE_HTML_DISPLAY));
+                          setFieldValue(
+                            "dateTo",
+                            moment(e.target.value).isValid()
+                              ? moment(e.target.value).format(DATE_HTML_DISPLAY)
+                              : ""
+                          );
                         }
                       }}
                       onBlur={handleBlur}

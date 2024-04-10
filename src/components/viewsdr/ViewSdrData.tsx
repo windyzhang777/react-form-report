@@ -319,7 +319,9 @@ const ViewSdrData = ({
                             onChange={(e) => {
                               setFieldValue(
                                 "LogPageCreationDate",
-                                moment(e.target.value).format(DATE_HTML_DISPLAY)
+                                moment(e.target.value).isValid()
+                                  ? moment(e.target.value).format(DATE_HTML_DISPLAY)
+                                  : ""
                               );
                             }}
                             onBlur={handleBlur}

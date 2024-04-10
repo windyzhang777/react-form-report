@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
 import { Box, Grid } from "@mui/material";
 import { Formik } from "formik";
 import moment from "moment";
+import { useEffect, useState } from "react";
 import ButtonGroup from "src/commons/ButtonGroup";
 import ListItem from "src/commons/ListItem";
 import { SingleSelect } from "src/commons/Select";
@@ -218,9 +218,7 @@ const DiscrepancyPartsReportSearch = ({ handleSearchReport, viewSdrFlag }: IDisc
                         max: moment(values?.dateTo).format(DATE_HTML_DISPLAY),
                       }}
                       name="dateFrom"
-                      value={
-                        moment(values.dateFrom).format(DATE_HTML_DISPLAY) || ""
-                      }
+                      value={moment(values.dateFrom).format(DATE_HTML_DISPLAY) || ""}
                       onChange={(e) => {
                         if (moment(values.dateFrom).isAfter(values.dateTo)) {
                           setFieldValue(
@@ -230,7 +228,9 @@ const DiscrepancyPartsReportSearch = ({ handleSearchReport, viewSdrFlag }: IDisc
                         } else {
                           setFieldValue(
                             "dateFrom",
-                            moment(e.target.value).format(DATE_HTML_DISPLAY)
+                            moment(e.target.value).isValid()
+                              ? moment(e.target.value).format(DATE_HTML_DISPLAY)
+                              : ""
                           );
                         }
                       }}
@@ -238,9 +238,7 @@ const DiscrepancyPartsReportSearch = ({ handleSearchReport, viewSdrFlag }: IDisc
                       error={!!touched.dateFrom && !!errors.dateFrom}
                       helperText={!!touched.dateFrom && errors.dateFrom}
                       className={`w-full [&>.MuiInputBase-root]:rounded-r-none ${
-                        values.dateFrom
-                          ? "unset"
-                          : "[&>.MuiInputBase-root]:text-black/40"
+                        values.dateFrom ? "unset" : "[&>.MuiInputBase-root]:text-black/40"
                       }`}
                     />
                   </ListItem>
@@ -254,9 +252,7 @@ const DiscrepancyPartsReportSearch = ({ handleSearchReport, viewSdrFlag }: IDisc
                         min: moment(values?.dateFrom).format(DATE_HTML_DISPLAY),
                       }}
                       name="dateTo"
-                      value={
-                        moment(values.dateTo).format(DATE_HTML_DISPLAY) || ""
-                      }
+                      value={moment(values.dateTo).format(DATE_HTML_DISPLAY) || ""}
                       onChange={(e) => {
                         if (moment(values.dateTo).isBefore(values.dateFrom)) {
                           setFieldValue(
@@ -266,7 +262,9 @@ const DiscrepancyPartsReportSearch = ({ handleSearchReport, viewSdrFlag }: IDisc
                         } else {
                           setFieldValue(
                             "dateTo",
-                            moment(e.target.value).format(DATE_HTML_DISPLAY)
+                            moment(e.target.value).isValid()
+                              ? moment(e.target.value).format(DATE_HTML_DISPLAY)
+                              : ""
                           );
                         }
                       }}
@@ -274,9 +272,7 @@ const DiscrepancyPartsReportSearch = ({ handleSearchReport, viewSdrFlag }: IDisc
                       error={!!touched?.dateTo && !!errors?.dateTo}
                       helperText={!!touched?.dateTo && errors?.dateTo}
                       className={`w-full [&>.MuiInputBase-root]:rounded-l-none ${
-                        values.dateTo
-                          ? "unset"
-                          : "[&>.MuiInputBase-root]:text-black/40"
+                        values.dateTo ? "unset" : "[&>.MuiInputBase-root]:text-black/40"
                       }`}
                     />
                   </ListItem>
