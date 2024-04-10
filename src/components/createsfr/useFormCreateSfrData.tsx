@@ -24,6 +24,10 @@ export const useFormCreateSfrData = () => {
     values.SpecIdentifier4,
   ]);
 
+  useEffect(() => {
+    setFieldValue("OriginDetails.MfrSourceIdentifier", "");
+  }, [values?.OriginDetails?.MfrSourceId]);
+
   // Repair Tab
   useEffect(() => {
     setFieldValue(

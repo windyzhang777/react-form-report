@@ -19,7 +19,11 @@ import {
   TypeOptions,
 } from "src/commons/types";
 import { useFormCreateSfrData } from "src/components/createsfr/useFormCreateSfrData";
-import { getCtnData, getSidData } from "src/redux/ducks/getSdrEsfrRecordDetails";
+import {
+  getCtnData,
+  getSidData,
+  resetCtnDataSuccess,
+} from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 
 type OriginTabProps = {
@@ -29,7 +33,7 @@ type OriginTabProps = {
 
 export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
   const dispatch = useAppDispatch();
-  const { loading, masterData, ctnData }: SdrEsfrRecordDetailsStateType = useAppSelector(
+  const { masterData, ctnData }: SdrEsfrRecordDetailsStateType = useAppSelector(
     (state) => state.sdrEsfrRecordDetails
   );
   const { errors, handleBlur, handleChange, setFieldValue, touched } =
@@ -38,22 +42,24 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
   const [openSelectCtn, setOpenSelect] = useState<boolean>(false);
   const selectedMFRSource = useMemo(
     () =>
-      masterData?.MfrSources?.find((m) => m.Id === values?.OriginDetails?.MfrSourceId)?.Description,
+      masterData?.MfrSources?.find((m) => m.Id === values?.OriginDetails?.MfrSourceId)
+        ?.Description || "CTN",
     [values?.OriginDetails?.MfrSourceId]
   );
 
   const toggleSelect = () => {
+    dispatch(resetCtnDataSuccess());
     setOpenSelect(!openSelectCtn);
   };
 
-  const handleGetData = (fleetCode: string) => {
+  const handleGetData = () => {
     switch (values?.OriginDetails?.MfrSourceId) {
       case 1:
-        dispatch(getCtnData(fleetCode));
+        dispatch(getCtnData(values.FleetCode));
         break;
       case 2:
       case 3:
-        dispatch(getSidData(fleetCode));
+        dispatch(getSidData(values.FleetCode));
         break;
       default:
         break;
@@ -365,10 +371,10 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                   <ListItem>SSI</ListItem>
                   <ListItem>
                     {editable ? (
-                      <ClickableTextField
+                      <TextField
                         name="OriginDetails.MfrSourceIdentifier"
                         value={values?.OriginDetails?.MfrSourceIdentifier || ""}
-                        onClick={toggleSelect}
+                        onChange={handleChange}
                         onBlur={handleBlur}
                         error={
                           !!touched?.OriginDetails?.MfrSourceIdentifier &&
@@ -379,6 +385,8 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                           errors?.OriginDetails?.MfrSourceIdentifier
                         }
                         className={"sdr-status-edit"}
+                        inputProps={{ maxLength: 9 }}
+                        placeholder="xxxxxxxxx"
                       />
                     ) : (
                       ""
@@ -747,14 +755,13 @@ export const OriginTab = ({ editable, tabIndex }: OriginTabProps) => {
                 params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd"
               }
               hideFooter
-              loading={loading}
             />
           )}
           <ButtonGroup
             className="justify-end mt-4"
             primaryLabel="Select"
             secondaryLabel="Cancel"
-            primaryOnClick={() => handleGetData("19")}
+            primaryOnClick={handleGetData}
             secondaryOnClick={toggleSelect}
           />
         </Modal>

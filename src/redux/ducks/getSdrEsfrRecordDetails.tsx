@@ -75,6 +75,10 @@ const fetchCtnDataSuccess = (data: GetCtnResResult) => {
   return { type: SdrEsfrRecordDetailsActionType.FETCH_CTN_DATA_SUCCESS, data };
 };
 
+export const resetCtnDataSuccess = () => {
+  return { type: SdrEsfrRecordDetailsActionType.FETCH_CTN_DATA_SUCCESS, data: null };
+};
+
 const fetchCtnDataFailure = (message: string) => {
   return { type: SdrEsfrRecordDetailsActionType.FETCH_CTN_DATA_FAILURE, message };
 };
@@ -150,7 +154,7 @@ export const sdrEsfrRecordDetailsReducer = (
         ...state,
         loading: false,
         ctnData: null,
-        error: `Fail to get Data (${action.message})`,
+        error: `No data found for the current fleet`,
       };
     }
     case SdrEsfrRecordDetailsActionType.FETCH_SET_DETAILS_LOADER_OFF: {

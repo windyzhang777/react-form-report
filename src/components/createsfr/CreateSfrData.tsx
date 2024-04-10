@@ -38,23 +38,24 @@ const CreateSfrData = ({
   const dispatch = useAppDispatch();
   const [tabIndex, setTabIndex] = useState<number>(0);
   const { profileData } = useAppSelector((state) => state.profile);
-  const { detailsData }: SdrEsfrRecordDetailsStateType = useAppSelector(
+  const { logpageData }: SdrEsfrRecordDetailsStateType = useAppSelector(
     (state) => state.sdrEsfrRecordDetails
   );
+  const LOGPAGE_NUMBER = "7034713"; // TODO: static for now until UX ready
 
   const initialValues: ISaveSfrValues = useMemo(
     () => ({
       Type: "0",
       StatusId: SelectedStatus.Approved,
-      LogPageNumber: "",
-      Station: "",
+      LogPageNumber: LOGPAGE_NUMBER || "",
+      Station: logpageData?.FleetInfo?.Station || "",
       CreatedDate: moment().format(DATETIME_REQUEST),
       LogPageCreatedDate: moment().format(DATETIME_REQUEST),
       LogPageCreatedBy: "",
       ModifiedDate: "",
       CreatedBy: profileData?.EmployeeId || "",
       ModifiedBy: "",
-      AirCraftNumber: "",
+      AirCraftNumber: logpageData?.FleetInfo?.TailNumber || "",
       OriginDetails: {
         IsScheduledInspection: true,
         CalDocId: 0,
@@ -173,7 +174,7 @@ const CreateSfrData = ({
         ModifiedbyFirstName: "",
         ModifiedbyLastName: "",
         CreatedDate: "",
-        CorrectiveAction: "",
+        CorrectiveAction: logpageData?.FleetInfo?.CorrectiveActions || "",
         OperatorControlNumber: "",
         IsExtracted: false,
       },
@@ -181,8 +182,8 @@ const CreateSfrData = ({
       CreatedbyLastName: profileData?.LastName || "",
       ModifiedbyFirstName: "",
       ModifiedbyLastName: "",
-      FleetCode: "",
-      AtaCode: "",
+      FleetCode: logpageData?.FleetInfo?.FleetCode || "",
+      AtaCode: logpageData?.FleetInfo?.ATACode || "",
 
       searchDescription: "",
       ATAChapter: "",
@@ -244,13 +245,11 @@ const CreateSfrData = ({
       RepairECRA1: "",
       RepairECRA2: "",
     }),
-    [detailsData, profileData]
+    [logpageData, profileData]
   );
 
   const handleTabChange = (event: SyntheticEvent, tab: number) => {
     setTabIndex(tab);
-    // setViewSdrFlag(false);
-    // setSelectedSdr(null);
   };
 
   const onClickCancle = () => {
@@ -258,6 +257,7 @@ const CreateSfrData = ({
   };
 
   useEffect(() => {
+    handleFetchLogpageData(LOGPAGE_NUMBER);
     return () => {
       setLogpageNumberValue("");
       dispatch(resetLogpageDataSuccess());
