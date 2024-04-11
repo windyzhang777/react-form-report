@@ -230,14 +230,14 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
           </Grid>
         </div>
 
-        {/* Sdr Information */}
+        {/* SDR Information */}
         {values?.RepairDetails?.IsSdrReportable && values?.RepairDetails?.IsMajorRepair && (
           <div className="px-[20px] pb-[20px] mt-6 border border-[#e6e6e6] border-t-0">
             <Box className={"sdr-status-title !mx-[-20px]"}>SDR Information</Box>
             <Grid container>
               <Grid item xs={6} className="flex !flex-col gap-4">
                 <div>
-                  <ListItem required={editable && sdrRequired}>Nature of Condition</ListItem>
+                  <ListItem required={sdrRequired}>Nature of Condition</ListItem>
                   <ListItem>
                     {editable ? (
                       <MultipleSelect
@@ -271,7 +271,7 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                   </ListItem>
                 </div>
                 <div>
-                  <ListItem required={editable && sdrRequired}>Precautionary Procedure</ListItem>
+                  <ListItem required={sdrRequired}>Precautionary Procedure</ListItem>
                   <ListItem>
                     {editable ? (
                       <MultipleSelect
@@ -307,7 +307,7 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
               </Grid>
               <Grid item xs={6} className="flex !flex-col gap-4">
                 <div>
-                  <ListItem required={editable && sdrRequired}>Stage of Operation</ListItem>
+                  <ListItem required={sdrRequired}>Stage of Operation</ListItem>
                   <ListItem>
                     {editable ? (
                       <SingleSelect
@@ -330,7 +330,7 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                   </ListItem>
                 </div>
                 <div>
-                  <ListItem required={editable && sdrRequired}>How Discovered</ListItem>
+                  <ListItem required={sdrRequired}>How Discovered</ListItem>
                   <ListItem>
                     {editable ? (
                       <SingleSelect

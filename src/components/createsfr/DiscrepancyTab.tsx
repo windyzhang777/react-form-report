@@ -59,7 +59,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
           <Grid item xs={6} className="flex !flex-col gap-4">
             {/* Discrepancy Type */}
             <div>
-              <ListItem required={editable}>Discrepancy Type</ListItem>
+              <ListItem required>Discrepancy Type</ListItem>
               <ListItem>
                 {editable ? (
                   <SingleSelect
