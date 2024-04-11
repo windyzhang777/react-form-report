@@ -41,14 +41,10 @@ const ReportSearchScreen = () => {
   const [snackbarMessage, setSnackbarMessage] = useState<string>("");
   const [viewSdrFlag, setViewSdrFlag] = useState<boolean>(false);
   const [selectedSdr, setSelectedSdr] = useState<GetEsfrReportResResult | null>(null);
-  const [reportStatus, setReportStatus] = useState<number>(0);
 
-  const handleSearchReport = (values: IReportSearchValues | null) => {
+  const handleSearchReport = (values: IReportSearchValues) => {
     if (values) {
-      setReportStatus(values.reportStatus);
       dispatch(getEsfrReport(values));
-    } else {
-      dispatch(resetEsfrReportSuccess());
     }
   };
 
@@ -60,6 +56,9 @@ const ReportSearchScreen = () => {
     if (!masterData) {
       dispatch(getSfrMasterData());
     }
+    return () => {
+      dispatch(resetEsfrReportSuccess());
+    };
   }, []);
 
   useEffect(() => {
@@ -120,7 +119,7 @@ const ReportSearchScreen = () => {
             {esfrReport ? (
               esfrReport.length > 0 ? (
                 <CommonDataGrid
-                  columns={eSfrReportSearchColumns(reportStatus)}
+                  columns={eSfrReportSearchColumns()}
                   handleExtractSdrRecords={() => {}}
                   isReport={true}
                   sdrData={esfrReport}

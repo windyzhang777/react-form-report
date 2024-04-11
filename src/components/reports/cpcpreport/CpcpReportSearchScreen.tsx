@@ -42,11 +42,9 @@ const CpcpReportSearchScreen = () => {
   const [viewSdrFlag, setViewSdrFlag] = useState<boolean>(false);
   const [selectedSdr, setSelectedSdr] = useState<GetCpcpReportResResult | null>(null);
 
-  const handleSearchReport = (values: GetCpcpReportReq | null) => {
+  const handleSearchReport = (values: GetCpcpReportReq) => {
     if (values) {
       dispatch(getCpcpReport(values));
-    } else {
-      dispatch(resetCpcpReportSuccess());
     }
   };
 
@@ -56,6 +54,9 @@ const CpcpReportSearchScreen = () => {
     if (!masterData) {
       dispatch(getSfrMasterData());
     }
+    return () => {
+      dispatch(resetCpcpReportSuccess());
+    };
   }, []);
 
   useEffect(() => {
@@ -105,7 +106,7 @@ const CpcpReportSearchScreen = () => {
             {cpcpReport ? (
               cpcpReport.length > 0 ? (
                 <CommonDataGrid
-                  columns={cpcpReportSearchColumns(1)}
+                  columns={cpcpReportSearchColumns()}
                   handleExtractSdrRecords={() => {}}
                   isReport={true}
                   sdrData={cpcpReport}

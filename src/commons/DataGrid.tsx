@@ -19,7 +19,21 @@ const StyledDataGrid = styled(DataGrid)(() => ({
     cursor: "pointer",
   },
   "& .MuiDataGrid-virtualScroller::-webkit-scrollbar": {
-    display: "none",
+    // display: "none",
+  },
+  // width
+  "& ::-webkit-scrollbar": {
+    height: "10px",
+  },
+  // Handle
+  "& ::-webkit-scrollbar-thumb": {
+    background: "#6244bb",
+    borderRadius: "12px",
+    cursor: "pointer",
+  },
+  // Handle on hover
+  "& ::-webkit-scrollbar-thumb:hover": {
+    background: "#30118a",
   },
 }));
 

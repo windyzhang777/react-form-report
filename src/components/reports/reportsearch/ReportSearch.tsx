@@ -11,7 +11,7 @@ import ValidationSchema from "src/validationSchema";
 import { object } from "yup";
 
 export interface IReportSearchProps {
-  handleSearchReport: (a: IReportSearchValues | null) => void;
+  handleSearchReport: (a: IReportSearchValues) => void;
   viewSdrFlag: boolean;
 }
 

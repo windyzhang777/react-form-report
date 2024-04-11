@@ -5,9 +5,7 @@ import { DATETIME_DISPLAY } from "src/helpers";
 import { GetEsfrReportResResult } from "src/types/GetEsfrReportRes";
 import config from "src/utils/env.config";
 
-export const eSfrReportSearchColumns = (
-  reportStatus: number
-): GridColDef<GetEsfrReportResResult>[] => {
+export const eSfrReportSearchColumns = (): GridColDef<GetEsfrReportResResult>[] => {
   const openLogPage = (logpageNumber: string) => {
     let width = window.innerWidth;
     let url = `${config.webTechApiBaseUrl}${
@@ -31,19 +29,19 @@ export const eSfrReportSearchColumns = (
       field: "ReportType",
       headerName: "Report Type",
       sortable: false,
-      minWidth: 120,
+      minWidth: 100,
     },
     {
       field: "OperatorControlNumber",
       headerName: "Audit Number",
       sortable: false,
-      minWidth: 120,
+      minWidth: 200,
     },
     {
       field: "LogpageNumber",
       headerName: "Log Page Time",
-      sortable: true,
-      minWidth: 150,
+      sortable: false,
+      minWidth: 100,
       renderCell: ({ row }) => (
         <Link
           onClick={() => openLogPage(row?.LogpageNumber)}
@@ -58,7 +56,7 @@ export const eSfrReportSearchColumns = (
       field: "ReportedById",
       headerName: "Reported By Status",
       sortable: false,
-      minWidth: 250,
+      minWidth: 300,
       renderCell: ({ row }) =>
         `${row?.ReportedByFirstName || ""} ${row?.ReportedByLastName || ""}${
           row?.ReportedById ? ` (${row.ReportedById})` : ""
@@ -68,7 +66,7 @@ export const eSfrReportSearchColumns = (
       field: "ApprovedById",
       headerName: "Approved By",
       sortable: false,
-      minWidth: 250,
+      minWidth: 300,
       renderCell: ({ row }) =>
         `${row?.ApprovedByFirstName || ""} ${row?.ApprovedByLastName || ""}${
           row?.ApprovedById ? ` (${row.ApprovedById})` : ""
@@ -79,7 +77,7 @@ export const eSfrReportSearchColumns = (
       headerName: "Date Reported",
       minWidth: 180,
       type: "dateTime",
-      sortable: true,
+      sortable: false,
       sortingOrder: ["desc", "asc"],
       valueFormatter: ({ value }) => new Date(value),
       renderCell: ({ row }) => moment(row?.DateReported).format(DATETIME_DISPLAY),
@@ -88,7 +86,7 @@ export const eSfrReportSearchColumns = (
       field: "Status",
       headerName: "Report Status",
       sortable: false,
-      minWidth: 220
-    }
+      minWidth: 220,
+    },
   ];
 };

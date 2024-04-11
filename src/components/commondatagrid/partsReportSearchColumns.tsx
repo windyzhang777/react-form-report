@@ -5,9 +5,7 @@ import { DATETIME_DISPLAY } from "src/helpers";
 import { GetPartsReportResResult } from "src/types/GetDiscrepancyPartsReportRes";
 import config from "src/utils/env.config";
 
-export const partsReportSearchColumns = (
-  reportStatus: number
-): GridColDef<GetPartsReportResResult>[] => {
+export const partsReportSearchColumns = (): GridColDef<GetPartsReportResResult>[] => {
   const openLogPage = (logpageNumber: string) => {
     let width = window.innerWidth;
     let url = `${config.webTechApiBaseUrl}${
@@ -28,23 +26,23 @@ export const partsReportSearchColumns = (
 
   return [
     {
-        field: "Fleet",
-        headerName: "Fleet",
-        sortable: false,
-        minWidth: 120,
+      field: "Fleet",
+      headerName: "Fleet",
+      sortable: false,
+      minWidth: 100,
     },
     {
       field: "AircraftNumber",
-      headerName: "A/c Number",
+      headerName: "A/C Number",
       sortable: false,
-      minWidth: 120,
+      minWidth: 100,
     },
     {
       field: "DateCreated",
       headerName: "Date Created",
       minWidth: 180,
       type: "dateTime",
-      sortable: true,
+      sortable: false,
       sortingOrder: ["desc", "asc"],
       valueFormatter: ({ value }) => new Date(value),
       renderCell: ({ row }) => moment(row?.DateCreated).format(DATETIME_DISPLAY),
@@ -58,8 +56,8 @@ export const partsReportSearchColumns = (
     {
       field: "LogpageNumber",
       headerName: "Log Page Time",
-      sortable: true,
-      minWidth: 150,
+      sortable: false,
+      minWidth: 100,
       renderCell: ({ row }) => (
         <Link
           onClick={() => openLogPage(row?.LogpageNumber)}
@@ -73,13 +71,13 @@ export const partsReportSearchColumns = (
       field: "Station",
       headerName: "Station",
       sortable: false,
-      minWidth: 120,
+      minWidth: 100,
     },
     {
       field: "AtaCode",
       headerName: "ATA Code",
       sortable: false,
-      minWidth: 120,
+      minWidth: 100,
     },
     {
       field: "defectDescription",
@@ -109,7 +107,7 @@ export const partsReportSearchColumns = (
       field: "MajorRepair",
       headerName: "Major Repair",
       sortable: false,
-      minWidth: 120,
+      minWidth: 100,
     },
     {
       field: "Pse",
@@ -127,7 +125,7 @@ export const partsReportSearchColumns = (
       field: "RepairDocNumber",
       headerName: "Repair Doc#",
       sortable: false,
-      minWidth: 120
-    }
+      minWidth: 400,
+    },
   ];
 };
