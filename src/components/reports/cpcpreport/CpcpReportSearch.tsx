@@ -13,7 +13,7 @@ import ValidationSchema from "src/validationSchema";
 import { object } from "yup";
 
 export interface ICpcpReportSearchProps {
-  handleSearchReport: (a: GetCpcpReportReq | null) => void;
+  handleSearchReport: (a: GetCpcpReportReq) => void;
   viewSdrFlag: boolean;
 }
 

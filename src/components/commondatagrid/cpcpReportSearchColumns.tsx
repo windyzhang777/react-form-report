@@ -5,9 +5,7 @@ import { DATETIME_DISPLAY } from "src/helpers";
 import { GetCpcpReportResResult } from "src/types/GetCpcpReportRes";
 import config from "src/utils/env.config";
 
-export const cpcpReportSearchColumns = (
-  reportStatus: number
-): GridColDef<GetCpcpReportResResult>[] => {
+export const cpcpReportSearchColumns = (): GridColDef<GetCpcpReportResResult>[] => {
   const openLogPage = (logpageNumber: string) => {
     let width = window.innerWidth;
     let url = `${config.webTechApiBaseUrl}${
@@ -36,8 +34,8 @@ export const cpcpReportSearchColumns = (
     {
       field: "LogpageNumber",
       headerName: "Log Page Time",
-      sortable: true,
-      minWidth: 150,
+      sortable: false,
+      minWidth: 100,
       renderCell: ({ row }) => (
         <Link
           onClick={() => openLogPage(row?.LogpageNumber)}
@@ -52,16 +50,16 @@ export const cpcpReportSearchColumns = (
       headerName: "Date Created",
       minWidth: 180,
       type: "dateTime",
-      sortable: true,
+      sortable: false,
       sortingOrder: ["desc", "asc"],
       valueFormatter: ({ value }) => new Date(value),
       renderCell: ({ row }) => moment(row?.DateCreated).format(DATETIME_DISPLAY),
     },
     {
       field: "AircraftNumber",
-      headerName: "A/c Number",
+      headerName: "A/C Number",
       sortable: false,
-      minWidth: 120,
+      minWidth: 100,
     },
     {
       field: "Fleet",
@@ -91,7 +89,7 @@ export const cpcpReportSearchColumns = (
       field: "MajorRepair",
       headerName: "Major Repair",
       sortable: false,
-      minWidth: 120,
+      minWidth: 100,
     },
     {
       field: "CorrosionLevel",
@@ -103,7 +101,7 @@ export const cpcpReportSearchColumns = (
       field: "RepairDocNumber",
       headerName: "Repair Doc#",
       sortable: false,
-      minWidth: 120
-    }
+      minWidth: 400,
+    },
   ];
 };

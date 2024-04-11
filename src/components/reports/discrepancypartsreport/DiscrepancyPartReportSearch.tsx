@@ -16,7 +16,7 @@ import ValidationSchema from "src/validationSchema";
 import { object } from "yup";
 
 export interface IDiscrepancyPartsReportSearchProps {
-  handleSearchReport: (a: GetDiscrepancyPartsReportReq | null) => void;
+  handleSearchReport: (a: GetDiscrepancyPartsReportReq) => void;
   viewSdrFlag: boolean;
 }
 

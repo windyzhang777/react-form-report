@@ -42,11 +42,9 @@ const DiscrepancyPartsReportSearchScreen = () => {
   const [viewSdrFlag, setViewSdrFlag] = useState<boolean>(false);
   const [selectedSdr, setSelectedSdr] = useState<GetPartsReportResResult | null>(null);
 
-  const handleSearchReport = (values: GetDiscrepancyPartsReportReq | null) => {
+  const handleSearchReport = (values: GetDiscrepancyPartsReportReq) => {
     if (values) {
       dispatch(getPartsReport(values));
-    } else {
-      dispatch(resetPartsReportSuccess());
     }
   };
 
@@ -56,6 +54,9 @@ const DiscrepancyPartsReportSearchScreen = () => {
     if (!masterData) {
       dispatch(getSfrMasterData());
     }
+    return () => {
+      dispatch(resetPartsReportSuccess());
+    };
   }, []);
 
   useEffect(() => {
@@ -108,7 +109,7 @@ const DiscrepancyPartsReportSearchScreen = () => {
             {partsReport ? (
               partsReport.length > 0 ? (
                 <CommonDataGrid
-                  columns={partsReportSearchColumns(1)}
+                  columns={partsReportSearchColumns()}
                   handleExtractSdrRecords={() => {}}
                   isReport={true}
                   sdrData={partsReport}
