@@ -135,6 +135,7 @@ const CreateSdrData = ({
           ...ValidationSchema,
           LogPageNumber: ValidationSchema.LogPageNumber.required(),
           AircraftNumber: string(),
+          SfrAdditionalDetails: object().nullable(),
         })}
       >
         {({
@@ -875,6 +876,7 @@ const CreateSdrData = ({
 
             <ButtonGroup
               className="bottom-button justify-end"
+              errorMessage={Object.keys(errors).join(", ")}
               primaryDisabled={isSubmitting}
               primaryLabel={`Submit ${createSdrFlag === Type.SDR ? Type.SDR : Type.SFR}`}
               primaryOnClick={handleSubmit}
