@@ -2,7 +2,7 @@ import { Button, Grid, Typography } from "@mui/material";
 import { GridCellParams } from "@mui/x-data-grid";
 import { useFormikContext } from "formik";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { InfoBox, WarningBox } from "src/commons/Box";
+import { FlexRow, InfoBox, WarningBox } from "src/commons/Box";
 import ButtonGroup from "src/commons/ButtonGroup";
 import { ScrollableDataGrid as DataGrid } from "src/commons/DataGrid";
 import ListItem from "src/commons/ListItem";
@@ -81,8 +81,8 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
         index={SelectedSfrTab.Origin}
         className="sdr-status-grid overflow-y-auto"
       >
-        <Grid container>
-          <Grid item xs={6} className="relative !mb-[50px]">
+        <Grid container className="!mb-[30px]">
+          <Grid item xs={6} className="relative">
             <ListItem>Scheduled Inspection</ListItem>
             <ListItem className="!absolute !px-0 left-0 top-[20px]">
               {editable ? (
@@ -108,6 +108,16 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
             </ListItem>
           </Grid>
           <Grid item xs={6} className="flex !flex-col justify-end">
+            <FlexRow>
+              <ListItem required>Log Page Number</ListItem>
+              <Button
+                disabled={!values.LogPageNumber}
+                onClick={() => handleFetchLogpageData(values.LogPageNumber)}
+                sx={{ marginRight: "16px", minWidth: "4rem !important" }}
+              >
+                Fetch
+              </Button>
+            </FlexRow>
             <ListItem>
               {editable ? (
                 <TextField
@@ -130,13 +140,6 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                 ""
               )}
             </ListItem>
-            <Button
-              disabled={!values.LogPageNumber}
-              onClick={() => handleFetchLogpageData(values.LogPageNumber)}
-              sx={{ paddingLeft: "20px", paddingRight: "20px", marginRight: "16px" }}
-            >
-              Fetch
-            </Button>
           </Grid>
         </Grid>
         {values?.OriginDetails?.IsScheduledInspection && (
