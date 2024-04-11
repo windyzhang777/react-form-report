@@ -1,25 +1,44 @@
 import { Box, Grid } from "@mui/material";
 import { useFormikContext } from "formik";
-import { ChangeEventHandler, FocusEventHandler } from "react";
+import { ChangeEventHandler, Dispatch, FocusEventHandler, SetStateAction, useEffect } from "react";
 import { FlexColumn } from "src/commons/Box";
 import ListItem from "src/commons/ListItem";
 import Radio, { SimpleRadio } from "src/commons/Radio";
-import { MultipleSelect } from "src/commons/Select";
+import { MultipleSelect, SingleSelect } from "src/commons/Select";
 import TabPanel from "src/commons/TabPanel";
 import TextField from "src/commons/TextField";
 import TextFieldGroup from "src/commons/TextFieldGroup";
-import { DocumentTypeOptions, ISaveSfrValues, SelectedSfrTab } from "src/commons/types";
+import {
+  DocumentTypeOptions,
+  ISaveSfrValues,
+  SdrEsfrRecordDetailsStateType,
+  SelectedSfrTab,
+} from "src/commons/types";
 import { useFormCreateSfrData } from "src/components/createsfr/useFormCreateSfrData";
+import { useAppSelector } from "src/redux/hooks";
 
 type RepairTabProps = {
   editable: boolean;
   tabIndex: number;
+  sdrRequired: boolean;
+  setSdrRequired: Dispatch<SetStateAction<boolean>>;
 };
 
-export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
+export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: RepairTabProps) => {
   const { errors, handleBlur, handleChange, setFieldValue, touched } =
     useFormikContext<ISaveSfrValues>();
   const { values } = useFormCreateSfrData();
+  const { masterData }: SdrEsfrRecordDetailsStateType = useAppSelector(
+    (state) => state.sdrEsfrRecordDetails
+  );
+
+  useEffect(() => {
+    if (values?.RepairDetails?.IsSdrReportable && values?.RepairDetails?.IsMajorRepair) {
+      setSdrRequired(true);
+    } else {
+      setSdrRequired(false);
+    }
+  }, [values?.RepairDetails?.IsSdrReportable, values?.RepairDetails?.IsMajorRepair]);
 
   return (
     <>
@@ -211,6 +230,141 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
           </Grid>
         </div>
 
+        {/* Repair Information */}
+        {values?.RepairDetails?.IsSdrReportable && values?.RepairDetails?.IsMajorRepair && (
+          <div className="px-[20px] pb-[20px] mt-6 border border-[#e6e6e6] border-t-0">
+            <Box className={"sdr-status-title !mx-[-20px]"}>Repair Information</Box>
+            <Grid container>
+              <Grid item xs={6} className="flex !flex-col gap-4">
+                <div>
+                  <ListItem required={editable && sdrRequired}>Nature of Condition</ListItem>
+                  <ListItem>
+                    {editable ? (
+                      <MultipleSelect
+                        name="SdrDetails.NatureOfReportIds"
+                        value={values?.SdrDetails?.NatureOfReportIds || []}
+                        onChange={(values) => {
+                          setFieldValue("SdrDetails.NatureOfReportIds", values);
+                        }}
+                        onBlur={handleBlur}
+                        error={
+                          !!touched?.SdrDetails?.NatureOfReportIds &&
+                          !!errors?.SdrDetails?.NatureOfReportIds
+                        }
+                        helperText={
+                          !!touched?.SdrDetails?.NatureOfReportIds &&
+                          errors?.SdrDetails?.NatureOfReportIds
+                        }
+                        options={
+                          masterData?.NatureofReports &&
+                          [...masterData.NatureofReports].sort(
+                            (a, b) => a.DisplayOrder - b.DisplayOrder
+                          )
+                        }
+                        className={"sdr-status-edit"}
+                        id="SdrDetails.NatureOfReportIds"
+                        maxAllowed={3}
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </ListItem>
+                </div>
+                <div>
+                  <ListItem required={editable && sdrRequired}>Precautionary Procedure</ListItem>
+                  <ListItem>
+                    {editable ? (
+                      <MultipleSelect
+                        name="SdrDetails.PrecautionaryProcedureIds"
+                        value={values?.SdrDetails?.PrecautionaryProcedureIds || []}
+                        onChange={(values) => {
+                          setFieldValue("SdrDetails.PrecautionaryProcedureIds", values);
+                        }}
+                        onBlur={handleBlur}
+                        error={
+                          !!touched?.SdrDetails?.PrecautionaryProcedureIds &&
+                          !!errors?.SdrDetails?.PrecautionaryProcedureIds
+                        }
+                        helperText={
+                          !!touched?.SdrDetails?.PrecautionaryProcedureIds &&
+                          errors?.SdrDetails?.PrecautionaryProcedureIds
+                        }
+                        options={
+                          masterData?.PrecautionaryProcedures &&
+                          [...masterData.PrecautionaryProcedures].sort(
+                            (a, b) => a.DisplayOrder - b.DisplayOrder
+                          )
+                        }
+                        className={"sdr-status-edit"}
+                        id="SdrDetails.PrecautionaryProcedureIds"
+                        maxAllowed={3}
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </ListItem>
+                </div>
+              </Grid>
+              <Grid item xs={6} className="flex !flex-col gap-4">
+                <div>
+                  <ListItem required={editable && sdrRequired}>Stage of Operation</ListItem>
+                  <ListItem>
+                    {editable ? (
+                      <SingleSelect
+                        name="SdrDetails.StageId"
+                        value={values?.SdrDetails?.StageId || ""}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        error={!!touched?.SdrDetails?.StageId && !!errors?.SdrDetails?.StageId}
+                        helperText={!!touched?.SdrDetails?.StageId && errors?.SdrDetails?.StageId}
+                        options={
+                          masterData?.Stage &&
+                          [...masterData.Stage].sort((a, b) => a.DisplayOrder - b.DisplayOrder)
+                        }
+                        className={"sdr-status-edit"}
+                        id="SdrDetails.StageId"
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </ListItem>
+                </div>
+                <div>
+                  <ListItem required={editable && sdrRequired}>How Discovered</ListItem>
+                  <ListItem>
+                    {editable ? (
+                      <SingleSelect
+                        name="SdrDetails.HowDiscoveredId"
+                        value={values?.SdrDetails?.HowDiscoveredId || ""}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        error={
+                          !!touched?.SdrDetails?.HowDiscoveredId &&
+                          !!errors?.SdrDetails?.HowDiscoveredId
+                        }
+                        helperText={
+                          !!touched?.SdrDetails?.HowDiscoveredId &&
+                          errors?.SdrDetails?.HowDiscoveredId
+                        }
+                        options={
+                          masterData?.HowDiscovered &&
+                          [...masterData.HowDiscovered].sort(
+                            (a, b) => a.DisplayOrder - b.DisplayOrder
+                          )
+                        }
+                        className={"sdr-status-edit"}
+                        id="SdrDetails.HowDiscoveredId"
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </ListItem>
+                </div>
+              </Grid>
+            </Grid>
+          </div>
+        )}
+
         {/* Repair Document Information */}
         <FlexColumn className="gap-4 px-[20px] pb-[20px] mt-6 border border-[#e6e6e6] border-t-0">
           <Box className={"sdr-status-title !mx-[-20px] !mb-0"}>Repair Document Information</Box>
@@ -333,55 +487,61 @@ export const RepairTab = ({ editable, tabIndex }: RepairTabProps) => {
         {/* Warranty Document Information */}
         <div className="px-[20px] pb-[20px] mt-6 border border-[#e6e6e6] border-t-0">
           <Box className={"sdr-status-title !mx-[-20px]"}>Warranty Document Information</Box>
-          <ListItem>Material utilized for the repairs</ListItem>
-          <ListItem>
-            {editable ? (
-              <TextField
-                name="RepairDetails.MaterialsUtilized"
-                value={values?.RepairDetails?.MaterialsUtilized || ""}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={
-                  !!touched?.RepairDetails?.MaterialsUtilized &&
-                  !!errors?.RepairDetails?.MaterialsUtilized
-                }
-                helperText={
-                  !!touched?.RepairDetails?.MaterialsUtilized &&
-                  errors?.RepairDetails?.MaterialsUtilized
-                }
-                multiline
-                maxRows={4}
-                className={"sdr-status-edit textareaAutosize"}
-                inputProps={{ style: { resize: "both" } }}
-              />
-            ) : (
-              ""
-            )}
-          </ListItem>
-          <ListItem>Man-hours to compete the repairs in hours</ListItem>
-          <ListItem>
-            {editable ? (
-              <TextField
-                type="number"
-                name="RepairDetails.ManHoursRequired"
-                value={values?.RepairDetails?.ManHoursRequired || ""}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={
-                  !!touched?.RepairDetails?.ManHoursRequired &&
-                  !!errors?.RepairDetails?.ManHoursRequired
-                }
-                helperText={
-                  !!touched?.RepairDetails?.ManHoursRequired &&
-                  errors?.RepairDetails?.ManHoursRequired
-                }
-                className={"sdr-status-edit"}
-                inputProps={{ maxLength: 4, max: 9999 }}
-              />
-            ) : (
-              ""
-            )}
-          </ListItem>
+          <FlexColumn className="gap-4">
+            <div>
+              <ListItem>Material utilized for the repairs</ListItem>
+              <ListItem>
+                {editable ? (
+                  <TextField
+                    name="RepairDetails.MaterialsUtilized"
+                    value={values?.RepairDetails?.MaterialsUtilized || ""}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={
+                      !!touched?.RepairDetails?.MaterialsUtilized &&
+                      !!errors?.RepairDetails?.MaterialsUtilized
+                    }
+                    helperText={
+                      !!touched?.RepairDetails?.MaterialsUtilized &&
+                      errors?.RepairDetails?.MaterialsUtilized
+                    }
+                    multiline
+                    maxRows={4}
+                    className={"sdr-status-edit textareaAutosize"}
+                    inputProps={{ style: { resize: "both" } }}
+                  />
+                ) : (
+                  ""
+                )}
+              </ListItem>
+            </div>
+            <div>
+              <ListItem>Man-hours to compete the repairs in hours</ListItem>
+              <ListItem>
+                {editable ? (
+                  <TextField
+                    type="number"
+                    name="RepairDetails.ManHoursRequired"
+                    value={values?.RepairDetails?.ManHoursRequired || ""}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={
+                      !!touched?.RepairDetails?.ManHoursRequired &&
+                      !!errors?.RepairDetails?.ManHoursRequired
+                    }
+                    helperText={
+                      !!touched?.RepairDetails?.ManHoursRequired &&
+                      errors?.RepairDetails?.ManHoursRequired
+                    }
+                    className={"sdr-status-edit"}
+                    inputProps={{ maxLength: 4, max: 9999 }}
+                  />
+                ) : (
+                  ""
+                )}
+              </ListItem>
+            </div>
+          </FlexColumn>
         </div>
       </TabPanel>
     </>

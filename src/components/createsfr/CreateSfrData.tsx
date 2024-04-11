@@ -15,11 +15,13 @@ import { resetLogpageDataSuccess } from "src/redux/ducks/getSdrEsfrRecordDetails
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { CreateSfrReq } from "src/types/CreateSfrReq";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
+import ValidationSchema from "src/validationSchema";
+import { array, number, object } from "yup";
 import "./createSfrData.css";
 
 export interface ICreateSfrDataProps {
   createSdrFlag: string;
-  handleCreateSFR: (values: CreateSfrReq) => void;
+  handleCreateSFR: (a: CreateSfrReq, b: boolean) => void;
   handleFetchLogpageData: (a: string) => void;
   logpageNumberValue: string;
   setCreateSdrFlag: Dispatch<SetStateAction<string>>;
@@ -36,11 +38,12 @@ const CreateSfrData = ({
 }: ICreateSfrDataProps) => {
   const editable = true;
   const dispatch = useAppDispatch();
-  const [tabIndex, setTabIndex] = useState<number>(0);
   const { profileData } = useAppSelector((state) => state.profile);
   const { logpageData }: SdrEsfrRecordDetailsStateType = useAppSelector(
     (state) => state.sdrEsfrRecordDetails
   );
+  const [tabIndex, setTabIndex] = useState<number>(0);
+  const [sdrRequired, setSdrRequired] = useState<boolean>(false);
 
   const initialValues: ISaveSfrValues = useMemo(
     () => ({
@@ -49,7 +52,7 @@ const CreateSfrData = ({
       LogPageNumber: logpageNumberValue || "",
       Station: logpageData?.FleetInfo?.Station || "",
       CreatedDate: moment().format(DATETIME_REQUEST),
-      LogPageCreatedDate: moment().format(DATETIME_REQUEST),
+      LogPageCreatedDate: logpageData?.FleetInfo?.Date || "",
       LogPageCreatedBy: "",
       ModifiedDate: "",
       CreatedBy: profileData?.EmployeeId || "",
@@ -149,14 +152,14 @@ const CreateSfrData = ({
         EmployeeName: profileData?.FirstName + " " + profileData?.LastName || "",
       },
       SdrDetails: {
-        LogPageCreationDate: "",
-        Station: "",
-        LogPageNumber: "",
-        AircraftNumber: "",
-        PrecautionaryProcedureIds: [0],
-        NatureOfReportIds: [0],
+        LogPageCreationDate: logpageData?.FleetInfo?.Date || "",
+        Station: logpageData?.FleetInfo?.Station || "",
+        LogPageNumber: logpageNumberValue || "",
+        AircraftNumber: logpageData?.FleetInfo?.TailNumber || "",
+        PrecautionaryProcedureIds: [],
+        NatureOfReportIds: [],
         StageId: 0,
-        StatusId: 0,
+        StatusId: SelectedStatus.Approved,
         HowDiscoveredId: 0,
         EmployeeId: profileData?.EmployeeId || "",
         EmployeeName: profileData?.FirstName + " " + profileData?.LastName || "",
@@ -168,8 +171,8 @@ const CreateSfrData = ({
           PartCondition: "",
           PartDescription: "",
         },
-        CreatedbyFirstName: "",
-        CreatedbyLastName: "",
+        CreatedbyFirstName: profileData?.FirstName || "",
+        CreatedbyLastName: profileData?.LastName || "",
         ModifiedbyFirstName: "",
         ModifiedbyLastName: "",
         CreatedDate: "",
@@ -271,20 +274,22 @@ const CreateSfrData = ({
         initialValues={initialValues}
         enableReinitialize
         onSubmit={(values, { resetForm }) => {
-          handleCreateSFR(transformCreateSfrValues(values));
+          handleCreateSFR(transformCreateSfrValues(values), sdrRequired);
           // resetForm();
         }}
+        validationSchema={object().shape({
+          LogPageNumber: ValidationSchema.LogPageNumber.required(),
+          SdrDetails: object().shape({
+            PrecautionaryProcedureIds: sdrRequired
+              ? ValidationSchema.PrecautionaryProcedureIds
+              : array(),
+            NatureOfReportIds: sdrRequired ? ValidationSchema.NatureOfReportIds : array(),
+            StageId: sdrRequired ? ValidationSchema.StageId : number(),
+            HowDiscoveredId: sdrRequired ? ValidationSchema.HowDiscoveredId : number(),
+          }),
+        })}
       >
-        {({
-          errors,
-          handleBlur,
-          handleChange,
-          handleSubmit,
-          isSubmitting,
-          setFieldValue,
-          touched,
-          values,
-        }) => (
+        {({ handleSubmit, isSubmitting }) => (
           <form onSubmit={handleSubmit} className="overflow-hidden mb-[4rem] grow">
             <div id="create-sdr-details" className="h-full overflow-y-auto">
               <FlexColumn className="h-full w-full flex !flex-col">
@@ -314,7 +319,12 @@ const CreateSfrData = ({
                 <LocationTab editable={editable} tabIndex={tabIndex} />
 
                 {/* Repair */}
-                <RepairTab editable={editable} tabIndex={tabIndex} />
+                <RepairTab
+                  editable={editable}
+                  tabIndex={tabIndex}
+                  sdrRequired={sdrRequired}
+                  setSdrRequired={setSdrRequired}
+                />
               </FlexColumn>
             </div>
 

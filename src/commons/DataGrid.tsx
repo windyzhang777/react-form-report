@@ -7,16 +7,14 @@ import { theme } from "src/theme";
 const StyledDataGrid = styled(DataGrid)(() => ({
   "& .MuiDataGrid-columnHeaders": {
     backgroundColor: theme.palette.primary.main,
+    minHeight: "4rem !important",
   },
   "& .MuiDataGrid-columnHeaderTitle": {
     color: theme.palette.primary.contrastText,
+    lineHeight: 1.2,
+    overflowWrap: "break-word",
+    whiteSpace: "break-spaces",
   },
-  // TODO: wrap table header
-  // "& .MuiDataGrid-columnHeaderTitle": {
-  //   lineHeight: 1,
-  //   overflowWrap: "break-word",
-  //   whiteSpace: "break-spaces",
-  // },
   "& .MuiDataGrid-row": {
     cursor: "pointer",
   },

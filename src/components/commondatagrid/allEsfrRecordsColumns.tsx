@@ -28,8 +28,8 @@ export const allEsfrRecordsColumns = (): GridColDef<TransformedSdrDataType>[] =>
     {
       field: "LogpageNumber",
       headerName: "Log Page Number",
-      sortable: true,
-      minWidth: 150,
+      sortable: false,
+      minWidth: 100,
       renderCell: ({ row }) => (
         <Link
           onClick={() => openLogPage(row?.LogpageNumber)}
@@ -38,6 +38,18 @@ export const allEsfrRecordsColumns = (): GridColDef<TransformedSdrDataType>[] =>
           {row?.LogpageNumber}
         </Link>
       ),
+    },
+    {
+      field: "AircraftNumber",
+      headerName: "Aircraft Number",
+      minWidth: 100,
+      sortable: false,
+    },
+    {
+      field: "Station",
+      headerName: "Station",
+      minWidth: 60,
+      sortable: false,
     },
     {
       field: "ReportedBy",
@@ -54,7 +66,7 @@ export const allEsfrRecordsColumns = (): GridColDef<TransformedSdrDataType>[] =>
       headerName: "Date & Time",
       minWidth: 180,
       type: "dateTime",
-      sortable: true,
+      sortable: false,
       sortingOrder: ["desc", "asc"],
       valueFormatter: ({ value }) => new Date(value),
       renderCell: ({ row }) => (
@@ -66,7 +78,7 @@ export const allEsfrRecordsColumns = (): GridColDef<TransformedSdrDataType>[] =>
     {
       field: "LogpageStatus",
       headerName: "Log Page Status",
-      minWidth: 150,
+      minWidth: 100,
       sortable: false,
     },
     {

@@ -6,6 +6,7 @@ import Modal from "src/commons/Modal";
 import Snackbar from "src/commons/Snackbar";
 import TabPanel, { a11yProps } from "src/commons/TabPanel";
 import {
+  ICreateSfrReqNoSdr,
   IEditSdrValues,
   ISaveSdrValues,
   SdrEsfrRecordDetailsStateType,
@@ -139,10 +140,15 @@ const HomeScreen = () => {
       });
   };
 
-  const handleCreateSFR = (values: CreateSfrReq) => {
+  const handleCreateSFR = (values: CreateSfrReq, sdrRequired: boolean) => {
+    let { SdrDetails, ...rest } = values;
+    let updated: CreateSfrReq | ICreateSfrReqNoSdr = { ...values };
+    if (!sdrRequired) {
+      updated = rest;
+    }
     setIsLoading(true);
     axiosInstance
-      .post(`${config.apiBaseAddress}${config.URL_CREATE_SFR}`, values)
+      .post(`${config.apiBaseAddress}${config.URL_CREATE_SFR}`, updated)
       .then((res) => {
         if (res?.data?.Result?.IsSuccess) {
           setOpenSnackbar(1);
