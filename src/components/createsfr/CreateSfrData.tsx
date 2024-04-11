@@ -289,7 +289,7 @@ const CreateSfrData = ({
           }),
         })}
       >
-        {({ handleSubmit, isSubmitting }) => (
+        {({ errors, handleSubmit, isSubmitting }) => (
           <form onSubmit={handleSubmit} className="overflow-hidden mb-[4rem] grow">
             <div id="create-sdr-details" className="h-full overflow-y-auto">
               <FlexColumn className="h-full w-full flex !flex-col">
@@ -330,6 +330,7 @@ const CreateSfrData = ({
 
             <ButtonGroup
               className="bottom-button justify-end"
+              errorMessage={Object.keys(errors).join(", ")}
               primaryDisabled={isSubmitting}
               primaryLabel={`Submit ${createSdrFlag === Type.SDR ? Type.SDR : Type.SFR}`}
               primaryOnClick={handleSubmit}
