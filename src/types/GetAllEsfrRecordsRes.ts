@@ -9,6 +9,7 @@ export interface GetAllEsfrRecordsRes {
 }
 
 export interface GetAllEsfrRecordsResResult {
+  AircraftNumber: string;
   CreatebyLastName: null | string;
   CreatedBy: string;
   CreatedbyFirstName: null | string;
@@ -18,6 +19,7 @@ export interface GetAllEsfrRecordsResResult {
   LogpageNumber: string;
   LogpageStatus: LogpageStatus | null;
   OperatorControlNumber: string | null;
+  Station: string;
   Status: Status;
   StatusId: SelectedStatus;
   Type: Type;
@@ -28,6 +30,8 @@ export enum LogpageStatus {
   "Cleared" = "Cleared",
   "OPEND" = "OPEN-D",
   "OPENO" = "OPEN-O",
+  "OpenTa" = "OPEN-TA",
+  "OpenTp" = "OPEN-TP",
   "Voided" = "Voided",
 }
 
