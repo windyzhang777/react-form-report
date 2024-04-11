@@ -230,10 +230,10 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
           </Grid>
         </div>
 
-        {/* Repair Information */}
+        {/* Sdr Information */}
         {values?.RepairDetails?.IsSdrReportable && values?.RepairDetails?.IsMajorRepair && (
           <div className="px-[20px] pb-[20px] mt-6 border border-[#e6e6e6] border-t-0">
-            <Box className={"sdr-status-title !mx-[-20px]"}>Repair Information</Box>
+            <Box className={"sdr-status-title !mx-[-20px]"}>SDR Information</Box>
             <Grid container>
               <Grid item xs={6} className="flex !flex-col gap-4">
                 <div>
