@@ -541,7 +541,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
 
               {/* Detection Method */}
               <div>
-                <ListItem>Detection Method</ListItem>
+                <ListItem required>Detection Method</ListItem>
                 <ListItem>
                   {editable ? (
                     <SingleSelect

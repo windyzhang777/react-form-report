@@ -287,6 +287,16 @@ const CreateSfrData = ({
             StageId: sdrRequired ? ValidationSchema.StageId : number(),
             HowDiscoveredId: sdrRequired ? ValidationSchema.HowDiscoveredId : number(),
           }),
+          OriginDetails: object().shape({
+            DetectionMethodId: number().required("Required field"),
+          }),
+          DiscrepancyDetails: object().shape({
+            DiscrepancyTypeId: number().required("Required field"),
+          }),
+          LocationDetails: object().shape({
+            DefectLocationId: number().required("Required field"),
+            ZoneId: number().required("Required field"),
+          }),
         })}
       >
         {({ errors, handleSubmit, isSubmitting }) => (

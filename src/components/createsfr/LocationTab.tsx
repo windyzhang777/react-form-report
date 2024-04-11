@@ -42,7 +42,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
         <Grid container>
           <Grid item xs={6} className="flex !flex-col gap-2">
             <>
-              <ListItem>Zone</ListItem>
+              <ListItem required>Zone</ListItem>
               <ListItem>
                 {editable ? (
                   <SingleSelect
@@ -100,7 +100,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
           <Grid item xs={6} className="flex !flex-col gap-2">
             {/* Defect Location */}
             <>
-              <ListItem>Select Defect Location</ListItem>
+              <ListItem required>Select Defect Location</ListItem>
               <ListItem>
                 {editable ? (
                   <SingleSelect
