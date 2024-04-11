@@ -135,6 +135,7 @@ const CreateSdrData = ({
           ...ValidationSchema,
           LogPageNumber: ValidationSchema.LogPageNumber.required(),
           AircraftNumber: string(),
+          SfrAdditionalDetails: object().nullable(),
         })}
       >
         {({
