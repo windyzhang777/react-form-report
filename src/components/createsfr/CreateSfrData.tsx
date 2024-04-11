@@ -127,7 +127,7 @@ const CreateSfrData = ({
         CorrosionCauseId: "",
         CorrosionExtentId: "",
         CorrosionCauseComments: "",
-        AreMultipleCracksInTheSameLocation: true,
+        AreMultipleCracksInTheSameLocation: false,
         NumberOfCracks: 0,
         CrackLength: 0,
         CrackWidth: 0,
