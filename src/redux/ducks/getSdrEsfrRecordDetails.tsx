@@ -94,6 +94,7 @@ export const sdrEsfrRecordDetailsReducer = (
       return {
         ...state,
         loading: true,
+        ctnData: null,
         error: "",
       };
     }
@@ -166,6 +167,7 @@ export const sdrEsfrRecordDetailsReducer = (
 export const getSdrEsfrRecordDetails = (logpageNumber: string) => {
   return function (dispatch: Dispatch<any>) {
     dispatch(initFetch());
+    dispatch(resetLogpageDataSuccess());
     axiosInstance
       .get(
         `${config.apiBaseAddress}${config.URL_GET_SDR_ESFR_RECORD_DETAILS}?logpageNumber=${logpageNumber}`
@@ -196,6 +198,7 @@ export const viewLogPageDetails = (logpageNumber: string) => {
 export const getApprovedSdr = (logpageNumber: string, OperatorControlNumber: string) => {
   return function (dispatch: Dispatch<any>) {
     dispatch(initFetch());
+    dispatch(resetLogpageDataSuccess());
     axiosInstance
       .get(
         `${config.apiBaseAddress}${config.URL_GET_APPROVED_SDR}?OperatorControlNumber=${OperatorControlNumber}`

@@ -244,11 +244,6 @@ const HomeScreen = () => {
   }, [selectedSdr]);
 
   useEffect(() => {
-    setSelectedSdr(null);
-    setViewSdrFlag(false);
-  }, [tabIndex]);
-
-  useEffect(() => {
     resetSdrs();
     if (!masterData) {
       dispatch(getSfrMasterData());
