@@ -54,7 +54,7 @@ const ViewSdrData = ({
       Type: selectedSdr?.Type,
       SfrAdditionalDetails: {
         SnapshotId: "",
-        AtaCode: detailsData?.FleetInfo?.ATACode || "",
+        AtaCode: logpageData?.FleetInfo?.ATACode || "",
         SubmitterDesignator: "",
         SubmitterType: "",
         OperatorDesignator: "CALA",
@@ -259,12 +259,14 @@ const ViewSdrData = ({
         <Formik
           initialValues={initialValues}
           enableReinitialize
-          onSubmit={(values, { resetForm }) => {
+          onSubmit={(values, { setSubmitting }) => {
             handleUpsertSdrSnapshot(
               values,
               followUpFlag ? SelectedStatus.ApprovedWithFollowUp : SelectedStatus.Approved
             );
-            resetForm();
+            setTimeout(() => {
+              setSubmitting(false);
+            }, 500);
           }}
         >
           {({

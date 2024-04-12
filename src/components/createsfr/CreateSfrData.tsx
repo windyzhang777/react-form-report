@@ -54,7 +54,7 @@ const CreateSfrData = ({
       CreatedDate: moment().format(DATETIME_REQUEST),
       LogPageCreatedDate: logpageData?.FleetInfo?.Date || "",
       LogPageCreatedBy: "",
-      ModifiedDate: "",
+      ModifiedDate: moment().format(DATETIME_REQUEST),
       CreatedBy: profileData?.EmployeeId || "",
       ModifiedBy: "",
       AirCraftNumber: logpageData?.FleetInfo?.TailNumber || "",
@@ -175,7 +175,7 @@ const CreateSfrData = ({
         CreatedbyLastName: profileData?.LastName || "",
         ModifiedbyFirstName: "",
         ModifiedbyLastName: "",
-        CreatedDate: "",
+        CreatedDate: moment().format(DATETIME_REQUEST),
         CorrectiveAction: logpageData?.FleetInfo?.CorrectiveActions || "",
         OperatorControlNumber: "",
         IsExtracted: false,
@@ -273,9 +273,11 @@ const CreateSfrData = ({
       <Formik
         initialValues={initialValues}
         enableReinitialize
-        onSubmit={(values, { resetForm }) => {
+        onSubmit={(values, { setSubmitting }) => {
           handleCreateSFR(transformCreateSfrValues(values), sdrRequired);
-          // resetForm();
+          setTimeout(() => {
+            setSubmitting(false);
+          }, 500);
         }}
         validationSchema={object().shape({
           LogPageNumber: ValidationSchema.LogPageNumber.required("Required field"),

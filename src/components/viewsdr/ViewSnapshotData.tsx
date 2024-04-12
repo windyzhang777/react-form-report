@@ -253,9 +253,11 @@ const ViewSnapshotData = ({
         <Formik
           initialValues={initialValues}
           enableReinitialize
-          onSubmit={(values, { resetForm }) => {
+          onSubmit={(values, { setSubmitting }) => {
             handleUpsertSdrSnapshot(values);
-            // resetForm();
+            setTimeout(() => {
+              setSubmitting(false);
+            }, 500);
           }}
           validationSchema={object().shape({
             ...ValidationSchema,

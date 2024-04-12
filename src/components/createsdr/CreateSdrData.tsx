@@ -162,9 +162,12 @@ const CreateSdrData = ({
       <Formik
         initialValues={initialValues}
         enableReinitialize
-        onSubmit={(values, { resetForm }) => {
+        onSubmit={(values, { resetForm, setSubmitting }) => {
           handleUpsertSdrSnapshot(values);
           // resetForm();
+          setTimeout(() => {
+            setSubmitting(false);
+          }, 500);
         }}
         validationSchema={object().shape({
           ...ValidationSchema,
