@@ -1,6 +1,6 @@
 export interface UpsertSDRSnapshotReq {
   SdrId: number;
-  SnapshotId: string;
+  SnapshotId: string | number;
   Type: string;
   SfrAdditionalDetails: SfrAdditionalDetails;
   AircraftDetails: AircraftDetails;

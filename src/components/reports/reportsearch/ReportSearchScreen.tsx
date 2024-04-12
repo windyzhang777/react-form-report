@@ -15,7 +15,6 @@ import {
   getSdrEsfrRecordDetails,
   getSfrMasterData,
   setDetailsLoaderOff,
-  viewLogPageDetails,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
@@ -74,7 +73,6 @@ const ReportSearchScreen = () => {
 
   useEffect(() => {
     if (selectedSdr) {
-      dispatch(viewLogPageDetails(selectedSdr.LogpageNumber));
       dispatch(getSdrEsfrRecordDetails(selectedSdr.LogpageNumber));
     }
   }, [selectedSdr]);

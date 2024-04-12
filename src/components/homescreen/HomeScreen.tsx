@@ -20,7 +20,7 @@ import CreateSdrData from "src/components/createsdr/CreateSdrData";
 import CreateSfrData from "src/components/createsfr/CreateSfrData";
 import ViewSdrData from "src/components/viewsdr/ViewSdrData";
 import ViewSnapshotData from "src/components/viewsdr/ViewSnapshotData";
-import { saveTextAsFile } from "src/helpers";
+import { filterSdrData, saveTextAsFile } from "src/helpers";
 import { getAllSdrs } from "src/redux/ducks/getAllSdrs";
 import {
   InsertSnapshotSdrFilename,
@@ -32,12 +32,11 @@ import {
   getApprovedSdr,
   getSdrEsfrRecordDetails,
   getSfrMasterData,
-  setDetailsLoaderOff,
   viewLogPageDetails,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { CreateSfrReq } from "src/types/CreateSfrReq";
-import { Type } from "src/types/GetAllEsfrRecordsRes";
+import { LogpageStatus, Type } from "src/types/GetAllEsfrRecordsRes";
 import axiosInstance from "src/utils/axiosInstance";
 import config from "src/utils/env.config";
 import "./homescreen.css";
@@ -54,7 +53,6 @@ const HomeScreen = () => {
     detailsData,
     snapshotData,
     masterData,
-    logpageData,
     error,
   }: SdrEsfrRecordDetailsStateType = useAppSelector((state) => state.sdrEsfrRecordDetails);
   const { fileData } = useAppSelector((state) => state.flatFile);
@@ -69,6 +67,11 @@ const HomeScreen = () => {
   const [logpageNumberValue, setLogpageNumberValue] = useState<string>("");
   const [editable, setEditable] = useState<boolean>(false);
   const [openConfirmSaved, setOpenConfirmSaved] = useState<boolean>(false);
+  const [filters, setFilters] = useState<LogpageStatus[]>([
+    LogpageStatus.Carry,
+    LogpageStatus.Cleared,
+    LogpageStatus.OpenD,
+  ]);
   const isSdr = useMemo(() => selectedSdr?.Type === Type.SDR, [selectedSdr]);
   const sdrData = useMemo(() => {
     switch (tabIndex) {
@@ -78,9 +81,9 @@ const HomeScreen = () => {
         return approvedSdrData;
       case SelectedTab.Open:
       default:
-        return newSdrData;
+        return newSdrData && filters.length > 0 ? filterSdrData(newSdrData, filters) : newSdrData;
     }
-  }, [approvedSdrData, flaggedSdrData, newSdrData, tabIndex]);
+  }, [approvedSdrData, flaggedSdrData, newSdrData, tabIndex, filters]);
 
   const resetSdrs = () => {
     setViewSdrFlag(false);
@@ -95,6 +98,7 @@ const HomeScreen = () => {
 
   const handleTabChange = (event: SyntheticEvent, tab: number) => {
     setTabIndex(tab);
+    setFilters([]);
     setViewSdrFlag(false);
     setSelectedSdr(null);
   };
@@ -231,9 +235,8 @@ const HomeScreen = () => {
   useEffect(() => {
     setEditable(false);
     if (selectedSdr) {
-      handleFetchLogpageData(selectedSdr.LogpageNumber);
       if (selectedSdr.StatusId === SelectedStatus.Approved && selectedSdr.OperatorControlNumber) {
-        dispatch(getApprovedSdr(selectedSdr.OperatorControlNumber));
+        dispatch(getApprovedSdr(selectedSdr.LogpageNumber, selectedSdr.OperatorControlNumber));
       } else {
         dispatch(getSdrEsfrRecordDetails(selectedSdr.LogpageNumber));
       }
@@ -241,20 +244,12 @@ const HomeScreen = () => {
   }, [selectedSdr]);
 
   useEffect(() => {
-    if ((detailsData || snapshotData) && logpageData) {
-      dispatch(setDetailsLoaderOff());
-    }
-  }, [detailsData, logpageData]);
-
-  useEffect(() => {
     setSelectedSdr(null);
     setViewSdrFlag(false);
   }, [tabIndex]);
 
   useEffect(() => {
-    if (!newSdrData && !approvedSdrData && !flaggedSdrData) {
-      resetSdrs();
-    }
+    resetSdrs();
     if (!masterData) {
       dispatch(getSfrMasterData());
     }
@@ -300,7 +295,7 @@ const HomeScreen = () => {
           <TabPanel value={tabIndex} index={tabIndex}>
             {sdrData && (
               <CommonDataGrid
-                columns={allEsfrRecordsColumns()}
+                columns={allEsfrRecordsColumns(filters, setFilters, tabIndex === SelectedTab.Open)}
                 createSdrFlag={createSdrFlag}
                 handleExtractSdrRecords={handleExtractSdrRecords}
                 sdrData={sdrData}

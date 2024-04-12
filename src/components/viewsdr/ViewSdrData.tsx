@@ -40,7 +40,7 @@ const ViewSdrData = ({
   tabIndex,
 }: IViewSdrDataProps) => {
   const { profileData, auth } = useAppSelector((state) => state.profile);
-  const { detailsData, masterData }: SdrEsfrRecordDetailsStateType = useAppSelector(
+  const { detailsData, logpageData, masterData }: SdrEsfrRecordDetailsStateType = useAppSelector(
     (state) => state.sdrEsfrRecordDetails
   );
   const [followUpFlag, setFollowUpFlag] = useState<boolean>(
@@ -104,9 +104,9 @@ const ViewSdrData = ({
       LogPageCreationDate:
         (isSdr ? detailsData?.SdrDetails?.CreatedDate : detailsData?.CreatedDate) ||
         moment().format(DATETIME_REQUEST),
-      Station: detailsData?.Station || "",
+      Station: logpageData?.FleetInfo?.Station || "",
       LogPageNumber: detailsData?.LogPageNumber || selectedSdr?.LogpageNumber || "",
-      AircraftNumber: detailsData?.AirCraftNumber || "",
+      AircraftNumber: logpageData?.FleetInfo?.TailNumber || "",
       PrecautionaryProcedureIds: detailsData?.SdrDetails?.PrecautionaryProcedureIds || [],
       NatureOfReportIds: detailsData?.SdrDetails?.NatureOfReportIds || [],
       StageId: detailsData?.SdrDetails?.StageId || 0,

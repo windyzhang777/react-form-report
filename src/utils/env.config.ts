@@ -65,10 +65,10 @@ const config: EnvironmentConfig = {
     REACT_APP_APPLICATION_KEY: "188fba97-4473-48b6-8126-c0359e0b71a9",
     REACT_APP_URL_AMT_BASE: "https://techops-oqa.ual.com/TisPortal",
     REACT_APP_AWS_URL: "https://dwz-635169.auth.us-east-2.amazoncognito.com",
-    REACT_APP_AWS_CLIENT_ID: "1prn71gc5oe1kf3dc1cs3kg958",
+    REACT_APP_AWS_CLIENT_ID: "57bimq4fo6akrk9nr4te7bdehu",
     REACT_APP_REDIRECT_URI: "https://mx.qa.dwz.aws.ual.com/esfr",
     REACT_APP_LOGOUT_URL:
-      "https://dwz-635169.auth.us-east-2.amazoncognito.com/logout?client_id=1prn71gc5oe1kf3dc1cs3kg958&logout_uri=https://signon-oqa.ual.com/oam/server/logout?end_url=https://signon-oqa.ual.com/oamsso/global/logout.html",
+      "https://dwz-635169.auth.us-east-2.amazoncognito.com/logout?client_id=57bimq4fo6akrk9nr4te7bdehu&logout_uri=https://signon-oqa.ual.com/oam/server/logout?end_url=https://signon-oqa.ual.com/oamsso/global/logout.html",
   },
   stage: {
     ...defaultConfig,

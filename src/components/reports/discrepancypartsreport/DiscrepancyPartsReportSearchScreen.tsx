@@ -10,12 +10,7 @@ import CommonDataGrid from "src/components/commondatagrid/commondatagrid";
 import { partsReportSearchColumns } from "src/components/commondatagrid/partsReportSearchColumns";
 import DiscrepancyPartsReportSearch from "src/components/reports/discrepancypartsreport/DiscrepancyPartReportSearch";
 import { getPartsReport, resetPartsReportSuccess } from "src/redux/ducks/getPartsReport";
-import {
-  getSdrEsfrRecordDetails,
-  getSfrMasterData,
-  setDetailsLoaderOff,
-  viewLogPageDetails,
-} from "src/redux/ducks/getSdrEsfrRecordDetails";
+import { getSdrEsfrRecordDetails, getSfrMasterData } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { GetDiscrepancyPartsReportReq } from "src/types/GetDiscrepancyPartsReportReq";
 import { GetPartsReportResResult } from "src/types/GetDiscrepancyPartsReportRes";
@@ -24,12 +19,9 @@ export interface ISearchScreenProps {}
 
 const DiscrepancyPartsReportSearchScreen = () => {
   const dispatch = useAppDispatch();
-  const {
-    loading: loadingDetailsData,
-    detailsData,
-    masterData,
-    logpageData,
-  }: SdrEsfrRecordDetailsStateType = useAppSelector((state) => state.sdrEsfrRecordDetails);
+  const { loading: loadingDetailsData, masterData }: SdrEsfrRecordDetailsStateType = useAppSelector(
+    (state) => state.sdrEsfrRecordDetails
+  );
 
   const {
     loading: loadingPartsReport,
@@ -68,16 +60,9 @@ const DiscrepancyPartsReportSearchScreen = () => {
 
   useEffect(() => {
     if (selectedSdr) {
-      dispatch(viewLogPageDetails(selectedSdr.LogpageNumber));
       dispatch(getSdrEsfrRecordDetails(selectedSdr.LogpageNumber));
     }
   }, [selectedSdr]);
-
-  useEffect(() => {
-    if (detailsData && logpageData) {
-      dispatch(setDetailsLoaderOff());
-    }
-  }, [detailsData, logpageData]);
 
   useEffect(() => {
     if (!viewSdrFlag) {

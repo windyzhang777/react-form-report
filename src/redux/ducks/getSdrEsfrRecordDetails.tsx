@@ -1,9 +1,7 @@
 import { Dispatch } from "redux";
 import {
-  ApprovedSdrFuncType,
   CtnDataFuncType,
   SdrEsfrRecordDetailsActionType,
-  SdrEsfrRecordDetailsFuncType,
   SdrEsfrRecordDetailsReducerAction,
   SdrEsfrRecordDetailsStateType,
   SfrMasterDataFuncType,
@@ -51,12 +49,12 @@ const fetchApprovedSdrFailure = (message: string) => {
   return { type: SdrEsfrRecordDetailsActionType.FETCH_APPROVED_SDR_FAILURE, message };
 };
 
-const fetchSfrMaterDataSuccess = (data: GetSfrMasterDataResResult) => {
-  return { type: SdrEsfrRecordDetailsActionType.FETCH_SFR_MATER_DATA_SUCCESS, data };
+const fetchSfrMasterDataSuccess = (data: GetSfrMasterDataResResult) => {
+  return { type: SdrEsfrRecordDetailsActionType.FETCH_SFR_MASTER_DATA_SUCCESS, data };
 };
 
-const fetchSfrMaterDataFailure = (message: string) => {
-  return { type: SdrEsfrRecordDetailsActionType.FETCH_SFR_MATER_DATA_FAILURE, message };
+const fetchSfrMasterDataFailure = (message: string) => {
+  return { type: SdrEsfrRecordDetailsActionType.FETCH_SFR_MASTER_DATA_FAILURE, message };
 };
 
 const fetchLogpageDataSuccess = (data: ViewLogpageResResult) => {
@@ -96,9 +94,6 @@ export const sdrEsfrRecordDetailsReducer = (
       return {
         ...state,
         loading: true,
-        detailsData: null,
-        snapshot: null,
-        logpageData: null,
         error: "",
       };
     }
@@ -124,17 +119,6 @@ export const sdrEsfrRecordDetailsReducer = (
         error: `Fail to get Snapshot Detail (${action.message})`,
       };
     }
-    case SdrEsfrRecordDetailsActionType.FETCH_SFR_MATER_DATA_SUCCESS: {
-      return { ...state, loading: false, masterData: action.data, error: "" };
-    }
-    case SdrEsfrRecordDetailsActionType.FETCH_SFR_MATER_DATA_FAILURE: {
-      return {
-        ...state,
-        loading: false,
-        masterData: null,
-        error: `Fail to get Mater Data (${action.message})`,
-      };
-    }
     case SdrEsfrRecordDetailsActionType.FETCH_LOGPAGE_DATA_SUCCESS: {
       return { ...state, loading: false, logpageData: action.data, error: "" };
     }
@@ -144,6 +128,17 @@ export const sdrEsfrRecordDetailsReducer = (
         loading: false,
         logpageData: null,
         error: `Fail to get Logpage Data (${action.message})`,
+      };
+    }
+    case SdrEsfrRecordDetailsActionType.FETCH_SFR_MASTER_DATA_SUCCESS: {
+      return { ...state, loading: false, masterData: action.data, error: "" };
+    }
+    case SdrEsfrRecordDetailsActionType.FETCH_SFR_MASTER_DATA_FAILURE: {
+      return {
+        ...state,
+        loading: false,
+        masterData: null,
+        error: `Fail to get Master Data (${action.message})`,
       };
     }
     case SdrEsfrRecordDetailsActionType.FETCH_CTN_DATA_SUCCESS: {
@@ -169,7 +164,7 @@ export const sdrEsfrRecordDetailsReducer = (
 };
 
 export const getSdrEsfrRecordDetails = (logpageNumber: string) => {
-  return function (dispatch: Dispatch<SdrEsfrRecordDetailsFuncType>) {
+  return function (dispatch: Dispatch<any>) {
     dispatch(initFetch());
     axiosInstance
       .get(
@@ -179,7 +174,9 @@ export const getSdrEsfrRecordDetails = (logpageNumber: string) => {
         const esfrRecordDetail = res?.data?.Result;
         dispatch(fetchSuccess(esfrRecordDetail));
       })
-      .catch((error) => dispatch(fetchFailure(error.message)));
+      .then(() => dispatch(viewLogPageDetails(logpageNumber)))
+      .catch((error) => dispatch(fetchFailure(error.message)))
+      .finally(() => dispatch(setDetailsLoaderOff()));
   };
 };
 
@@ -196,8 +193,8 @@ export const viewLogPageDetails = (logpageNumber: string) => {
   };
 };
 
-export const getApprovedSdr = (OperatorControlNumber: string) => {
-  return function (dispatch: Dispatch<ApprovedSdrFuncType>) {
+export const getApprovedSdr = (logpageNumber: string, OperatorControlNumber: string) => {
+  return function (dispatch: Dispatch<any>) {
     dispatch(initFetch());
     axiosInstance
       .get(
@@ -207,7 +204,9 @@ export const getApprovedSdr = (OperatorControlNumber: string) => {
         const esfrRecordDetail = res?.data?.Result;
         dispatch(fetchApprovedSdrSuccess(esfrRecordDetail));
       })
-      .catch((error) => dispatch(fetchApprovedSdrFailure(error.message)));
+      .then(() => dispatch(viewLogPageDetails(logpageNumber)))
+      .catch((error) => dispatch(fetchApprovedSdrFailure(error.message)))
+      .finally(() => dispatch(setDetailsLoaderOff()));
   };
 };
 
@@ -218,12 +217,12 @@ export const getSfrMasterData = () => {
       .post(`${config.apiBaseAddress}${config.URL_GET_SFR_MASTER_DATA}`)
       .then((res) => {
         const masterData = res?.data?.Result;
-        dispatch(fetchSfrMaterDataSuccess(masterData));
+        dispatch(fetchSfrMasterDataSuccess(masterData));
       })
       .catch((error) => {
-        dispatch(fetchSfrMaterDataFailure(error.message));
+        dispatch(fetchSfrMasterDataFailure(error.message));
         const masterData = require("src/types/GetSfrMasterDataRes.json");
-        dispatch(fetchSfrMaterDataSuccess(masterData.Result));
+        dispatch(fetchSfrMasterDataSuccess(masterData.Result));
       });
   };
 };

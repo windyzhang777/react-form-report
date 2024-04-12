@@ -12,9 +12,10 @@ export interface ICommonMenuProps {
   endIcon?: ReactNode | string;
   id?: string;
   shouldCloseMenu?: boolean;
+  width?: string;
 }
 
-export const ArrowMenu = ({ button, children, id }: ICommonMenuProps) => {
+export const ArrowMenu = ({ button, children, id, width }: ICommonMenuProps) => {
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const open: boolean = Boolean(anchorEl);
 
@@ -29,10 +30,10 @@ export const ArrowMenu = ({ button, children, id }: ICommonMenuProps) => {
   return (
     <>
       <div
-        aria-controls={open ? (id ? id + "-menu" : "common-menu") : undefined}
+        aria-controls={open ? (id ? id + "-menu" : "arrow-menu") : undefined}
         aria-expanded={open ? "true" : undefined}
         aria-haspopup="true"
-        id="common-menu-button"
+        id={id ? id + "arrow-menu-button" : "arrow-menu-button"}
         onClick={openMenu}
       >
         {button}
@@ -40,9 +41,9 @@ export const ArrowMenu = ({ button, children, id }: ICommonMenuProps) => {
       <Menu
         anchorEl={anchorEl}
         anchorOrigin={{ horizontal: 66, vertical: "bottom" }}
-        className={id ? id + "-menu" : "common-menu"}
-        id={id ? id + "-menu" : "common-menu"}
-        MenuListProps={{ "aria-labelledby": "common-menu-button" }}
+        className={id ? id + "-menu" : "arrow-menu"}
+        id={id ? id + "-menu" : "arrow-menu"}
+        MenuListProps={{ "aria-labelledby": "arrow-menu-button" }}
         onClose={closeMenu}
         open={open}
         transformOrigin={{ horizontal: "center", vertical: "top" }}
@@ -50,7 +51,7 @@ export const ArrowMenu = ({ button, children, id }: ICommonMenuProps) => {
           paper: {
             elevation: 0,
             sx: {
-              width: "360px",
+              width: width || "360px",
               overflow: "visible",
               filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
               mt: 1.5,

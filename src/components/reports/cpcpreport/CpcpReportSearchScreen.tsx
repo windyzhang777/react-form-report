@@ -14,7 +14,6 @@ import {
   getSdrEsfrRecordDetails,
   getSfrMasterData,
   setDetailsLoaderOff,
-  viewLogPageDetails,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { GetCpcpReportReq } from "src/types/GetCpcpReportReq";
@@ -68,7 +67,6 @@ const CpcpReportSearchScreen = () => {
 
   useEffect(() => {
     if (selectedSdr) {
-      dispatch(viewLogPageDetails(selectedSdr.LogpageNumber));
       dispatch(getSdrEsfrRecordDetails(selectedSdr.LogpageNumber));
     }
   }, [selectedSdr]);
