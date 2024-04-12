@@ -40,8 +40,8 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
         className="sdr-status-grid overflow-y-auto"
       >
         <Grid container>
-          <Grid item xs={6} className="flex !flex-col gap-2">
-            <>
+          <Grid item xs={6} className="flex !flex-col gap-4">
+            <div>
               <ListItem required>Zone</ListItem>
               <ListItem>
                 {editable ? (
@@ -67,8 +67,8 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   ""
                 )}
               </ListItem>
-            </>
-            <>
+            </div>
+            <div>
               <ListItem>Location Details</ListItem>
               <ListItem>
                 {editable ? (
@@ -94,12 +94,12 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   ""
                 )}
               </ListItem>
-            </>
+            </div>
           </Grid>
 
-          <Grid item xs={6} className="flex !flex-col gap-2">
+          <Grid item xs={6} className="flex !flex-col gap-4">
             {/* Defect Location */}
-            <>
+            <div>
               <ListItem required>Select Defect Location</ListItem>
               <ListItem>
                 {editable ? (
@@ -129,7 +129,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   ""
                 )}
               </ListItem>
-            </>
+            </div>
 
             {/* Side */}
             {(values?.LocationDetails?.DefectLocationId === 1 ||
@@ -141,7 +141,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
               values?.LocationDetails?.DefectLocationId === 13 ||
               values?.LocationDetails?.DefectLocationId === 17 ||
               values?.LocationDetails?.DefectLocationId === 19) && (
-              <>
+              <div>
                 <ListItem>Side</ListItem>
                 <ListItem>
                   {editable ? (
@@ -160,7 +160,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     ""
                   )}
                 </ListItem>
-              </>
+              </div>
             )}
 
             {/* Surface */}
@@ -177,7 +177,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
               values?.LocationDetails?.DefectLocationId === 17 ||
               values?.LocationDetails?.DefectLocationId === 18 ||
               values?.LocationDetails?.DefectLocationId === 19) && (
-              <>
+              <div>
                 <ListItem>Surface</ListItem>
                 <ListItem>
                   {editable ? (
@@ -200,7 +200,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     ""
                   )}
                 </ListItem>
-              </>
+              </div>
             )}
 
             {/* STA */}
@@ -212,7 +212,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
               values?.LocationDetails?.DefectLocationId === 21 ||
               values?.LocationDetails?.DefectLocationId === 18 ||
               values?.LocationDetails?.DefectLocationId === 19) && (
-              <>
+              <div>
                 <>
                   <ListItem>From STA</ListItem>
                   <ListItem>
@@ -263,13 +263,13 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     )}
                   </ListItem>
                 </>
-              </>
+              </div>
             )}
 
             {/* BL */}
             {(values?.LocationDetails?.DefectLocationId === 4 ||
               values?.LocationDetails?.DefectLocationId === 5) && (
-              <>
+              <div>
                 <>
                   <ListItem>From BL</ListItem>
                   <ListItem>
@@ -374,7 +374,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     )}
                   </ListItem>
                 </>
-              </>
+              </div>
             )}
 
             {/* Type */}
@@ -514,7 +514,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
 
             {/* STR */}
             {values?.LocationDetails?.DefectLocationId === 8 && (
-              <>
+              <div>
                 <>
                   <ListItem>From STR/Long</ListItem>
                   <ListItem>
@@ -608,12 +608,12 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     )}
                   </ListItem>
                 </>
-              </>
+              </div>
             )}
 
             {/* Fuselage */}
             {values?.LocationDetails?.DefectLocationId === 8 && (
-              <>
+              <div>
                 <>
                   <ListItem>Elevator Tab</ListItem>
                   <ListItem>
@@ -665,7 +665,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     )}
                   </ListItem>
                 </>
-              </>
+              </div>
             )}
 
             {/* LE Flap */}

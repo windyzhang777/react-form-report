@@ -99,7 +99,7 @@ const ViewSnapshotData = ({
         TotalCycles: snapshotData?.AircraftDetails?.TotalCycles || "",
       },
       LogPageCreationDate: snapshotData?.LogPageCreationDate || moment().format(DATETIME_REQUEST),
-      Station: logpageData?.FleetInfo?.Station || `${profileData?.Station}`,
+      Station: logpageData?.FleetInfo?.Station || "",
       LogPageNumber: snapshotData?.LogPageNumber || selectedSdr?.LogpageNumber || "",
       AircraftNumber: logpageData?.FleetInfo?.TailNumber || "",
       PrecautionaryProcedureIds: snapshotData?.PrecautionaryProcedureIds || [],
@@ -255,7 +255,7 @@ const ViewSnapshotData = ({
           enableReinitialize
           onSubmit={(values, { resetForm }) => {
             handleUpsertSdrSnapshot(values);
-            resetForm();
+            // resetForm();
           }}
           validationSchema={object().shape({
             ...ValidationSchema,

@@ -261,7 +261,7 @@ const ViewReportData = ({
               values,
               followUpFlag ? SelectedStatus.ApprovedWithFollowUp : SelectedStatus.Approved
             );
-            resetForm();
+            // resetForm();
           }}
         >
           {({

@@ -52,7 +52,42 @@ const CreateSdrData = ({
       SdrId: 0,
       SnapshotId: "",
       Type: "",
-      SfrAdditionalDetails: null,
+      SfrAdditionalDetails: {
+        SnapshotId: "",
+        AtaCode: logpageData?.FleetInfo?.ATACode || "",
+        SubmitterDesignator: "",
+        SubmitterType: "",
+        OperatorDesignator: "CALA",
+        OperatorType: "",
+        FAAReceivingRegionCode: "GL",
+        ReceivingDistrictOffice: "33",
+        PartName: "",
+        PartManufacturerName: "",
+        PartNumber: "",
+        ComponentName: "",
+        ComponentManufacturerName: "",
+        PartModelNumber: "",
+        FuselageFromSta: "",
+        FuselageToSta: "",
+        CorrisionLevel: "",
+        CrackLength: "",
+        NumberOfCracks: 0,
+        WaterlineFrom: "",
+        WaterlineTo: "",
+        StringerFrom: "",
+        StringerFromSide: "",
+        StringerTo: "",
+        StringerToSide: "",
+        ButtlineFrom: "",
+        ButtlineFromSide: "",
+        ButtlineTo: "",
+        ButtlineToSide: "",
+        WingStationFrom: "",
+        WingStationFromSide: "",
+        WingStationTo: "",
+        WingStationToSide: "",
+        StructuralOther: "",
+      },
       OperatorControlNumber: "",
       CreatedDate: moment().format(DATETIME_REQUEST),
       IsExtracted: false,
@@ -129,7 +164,7 @@ const CreateSdrData = ({
         enableReinitialize
         onSubmit={(values, { resetForm }) => {
           handleUpsertSdrSnapshot(values);
-          resetForm();
+          // resetForm();
         }}
         validationSchema={object().shape({
           ...ValidationSchema,
@@ -150,728 +185,728 @@ const CreateSdrData = ({
         }) => (
           <form onSubmit={handleSubmit} className="overflow-hidden mb-[4rem]">
             <div id="create-sdr-details" className="h-full overflow-y-auto">
-            {/* Major Equipment Identity */}
-            <Box
-              className={"sdr-status-grid"}
-              sx={{
-                borderLeft: 1,
-                borderRight: 1,
-                borderBottom: 1,
-                borderColor: "#E6E6E6",
-              }}
-            >
-              <Box className={"sdr-status-title"}>Major Equipment Identity</Box>
-              <Grid className={"sdr-status-item"} container spacing={3}>
-                <Grid item xs={4}>
-                  <ListItem required>Log Page Number</ListItem>
+              {/* Major Equipment Identity */}
+              <Box
+                className={"sdr-status-grid"}
+                sx={{
+                  borderLeft: 1,
+                  borderRight: 1,
+                  borderBottom: 1,
+                  borderColor: "#E6E6E6",
+                }}
+              >
+                <Box className={"sdr-status-title"}>Major Equipment Identity</Box>
+                <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem required>Log Page Number</ListItem>
+                  </Grid>
                 </Grid>
-              </Grid>
-              <Grid className={"sdr-status-description flex items-center"} container spacing={3}>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="LogPageNumber"
-                        value={values.LogPageNumber || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={!!touched.LogPageNumber && !!errors.LogPageNumber}
-                        helperText={!!touched.LogPageNumber && errors.LogPageNumber}
-                        className={"sdr-status-edit"}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            handleFetchLogpageData(values.LogPageNumber);
+                <Grid className={"sdr-status-description flex items-center"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="LogPageNumber"
+                          value={values.LogPageNumber || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={!!touched.LogPageNumber && !!errors.LogPageNumber}
+                          helperText={!!touched.LogPageNumber && errors.LogPageNumber}
+                          className={"sdr-status-edit"}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              handleFetchLogpageData(values.LogPageNumber);
+                            }
+                          }}
+                          inputProps={{ ref: logPageNumberRef }}
+                          placeholder="Enter a Logpage Number"
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <Button
+                      disabled={!values.LogPageNumber}
+                      onClick={() => handleFetchLogpageData(values.LogPageNumber)}
+                      sx={{ paddingLeft: "20px", paddingRight: "20px" }}
+                    >
+                      Fetch Logpage Data
+                    </Button>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-section-title"} container spacing={3}>
+                  <Grid item xs={12}>
+                    <ListItem>Aircraft</ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>Manufacturer</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>Model/Series</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>Serial Number</ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-description"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="AircraftDetails.Manufacturer"
+                          disabled={true}
+                          value={values.AircraftDetails?.Manufacturer || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="AircraftDetails.Model"
+                          disabled={true}
+                          value={values.AircraftDetails?.Model || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="AircraftDetails.SerialNumber"
+                          disabled={true}
+                          value={values.AircraftDetails?.SerialNumber || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>Total Time</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>Total Cycles</ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-description"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="AircraftDetails.TotalTime"
+                          disabled={true}
+                          value={values.AircraftDetails?.TotalTime || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="AircraftDetails.TotalCycles"
+                          disabled={true}
+                          value={values.AircraftDetails?.TotalCycles || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-section-title"} container spacing={3}>
+                  <Grid item xs={12}>
+                    <ListItem>Powerplant</ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>Manufacturer</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>Model/Series</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>Serial Number</ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-description"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="Powerplant.Manufacturer"
+                          disabled={true}
+                          value={values.Powerplant?.Manufacturer || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="Powerplant.Model"
+                          disabled={true}
+                          value={values.Powerplant?.Model || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="Powerplant.SerialNumber"
+                          disabled={true}
+                          value={values.Powerplant?.SerialNumber || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>Total Time</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>Total Cycles</ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-description"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="Powerplant.TotalTime"
+                          disabled={true}
+                          value={values.Powerplant?.TotalTime || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="Powerplant.TotalCycles"
+                          disabled={true}
+                          value={values.Powerplant?.TotalCycles || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
+                </Grid>
+              </Box>
+
+              {/* Problem Description */}
+              <Box
+                className={"sdr-status-grid"}
+                sx={{
+                  borderLeft: 1,
+                  borderRight: 1,
+                  borderBottom: 1,
+                  borderColor: "#E6E6E6",
+                }}
+              >
+                <Box className={"sdr-status-title"}>Problem Description</Box>
+                <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>Date</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>Station</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>A/C Number</ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-description"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          type="date"
+                          name="LogPageCreationDate"
+                          value={moment(values.LogPageCreationDate).format(DATE_HTML_DISPLAY)}
+                          onChange={(e) => {
+                            setFieldValue(
+                              "LogPageCreationDate",
+                              moment(e.target.value).isValid()
+                                ? moment(e.target.value).format(DATE_HTML_DISPLAY)
+                                : ""
+                            );
+                          }}
+                          onBlur={handleBlur}
+                          error={!!touched.LogPageCreationDate && !!errors.LogPageCreationDate}
+                          helperText={!!touched.LogPageCreationDate && errors.LogPageCreationDate}
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="Station"
+                          value={values.Station || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={!!touched.Station && !!errors.Station}
+                          helperText={!!touched.Station && errors.Station}
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="AircraftNumber"
+                          value={values.AircraftNumber || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={!!touched.AircraftNumber && !!errors.AircraftNumber}
+                          helperText={!!touched.AircraftNumber && errors.AircraftNumber}
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>N-Number</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>ATA Code</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>Flight Number</ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-description"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="AircraftDetails.RegistryNNumber"
+                          value={values?.AircraftDetails?.RegistryNNumber || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched?.AircraftDetails?.RegistryNNumber &&
+                            !!errors?.AircraftDetails?.RegistryNNumber
                           }
-                        }}
-                        inputProps={{ ref: logPageNumberRef }}
-                        placeholder="Enter a Logpage Number"
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
+                          helperText={
+                            !!touched?.AircraftDetails?.RegistryNNumber &&
+                            errors?.AircraftDetails?.RegistryNNumber
+                          }
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="AtaCode"
+                          value={values.AtaCode || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={!!touched.AtaCode && !!errors.AtaCode}
+                          helperText={!!touched.AtaCode && errors.AtaCode}
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="FlightNumber"
+                          value={values.FlightNumber || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={!!touched.FlightNumber && !!errors.FlightNumber}
+                          helperText={!!touched.FlightNumber && errors.FlightNumber}
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
                 </Grid>
-                <Grid item xs={8}>
-                  <Button
-                    disabled={!values.LogPageNumber}
-                    onClick={() => handleFetchLogpageData(values.LogPageNumber)}
-                    sx={{ paddingLeft: "20px", paddingRight: "20px" }}
-                  >
-                    Fetch Logpage Data
-                  </Button>
+                <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem required>Precautionary Procedures</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem required>Nature of Report</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem required>Stage at which discovered</ListItem>
+                  </Grid>
                 </Grid>
-              </Grid>
-              <Grid className={"sdr-status-section-title"} container spacing={3}>
-                <Grid item xs={12}>
-                  <ListItem>Aircraft</ListItem>
+                <Grid className={"sdr-status-description"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <MultipleSelect
+                          name="PrecautionaryProcedureIds"
+                          value={values.PrecautionaryProcedureIds || []}
+                          onChange={(values) => {
+                            setFieldValue("PrecautionaryProcedureIds", values);
+                          }}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.PrecautionaryProcedureIds &&
+                            !!errors.PrecautionaryProcedureIds
+                          }
+                          helperText={
+                            !!touched.PrecautionaryProcedureIds && errors.PrecautionaryProcedureIds
+                          }
+                          options={
+                            masterData?.PrecautionaryProcedures &&
+                            [...masterData.PrecautionaryProcedures].sort(
+                              (a, b) => a.DisplayOrder - b.DisplayOrder
+                            )
+                          }
+                          className={"sdr-status-edit"}
+                          id="PrecautionaryProcedures"
+                          maxAllowed={4}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <MultipleSelect
+                          name="NatureOfReportIds"
+                          value={values.NatureOfReportIds || []}
+                          onChange={(values) => {
+                            setFieldValue("NatureOfReportIds", values);
+                          }}
+                          onBlur={handleBlur}
+                          error={!!touched.NatureOfReportIds && !!errors.NatureOfReportIds}
+                          helperText={!!touched.NatureOfReportIds && errors.NatureOfReportIds}
+                          options={
+                            masterData?.NatureofReports &&
+                            [...masterData.NatureofReports].sort(
+                              (a, b) => a.DisplayOrder - b.DisplayOrder
+                            )
+                          }
+                          className={"sdr-status-edit"}
+                          id="NatureofReports"
+                          maxAllowed={3}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <SingleSelect
+                          name="StageId"
+                          value={values.StageId || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={!!touched.StageId && !!errors.StageId}
+                          helperText={!!touched.StageId && errors.StageId}
+                          options={
+                            masterData?.Stage &&
+                            [...masterData.Stage].sort((a, b) => a.DisplayOrder - b.DisplayOrder)
+                          }
+                          className={"sdr-status-edit"}
+                          id="StageId"
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
                 </Grid>
-              </Grid>
-              <Grid className={"sdr-status-item"} container spacing={3}>
-                <Grid item xs={4}>
-                  <ListItem>Manufacturer</ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>Model/Series</ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>Serial Number</ListItem>
-                </Grid>
-              </Grid>
-              <Grid className={"sdr-status-description"} container spacing={3}>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="AircraftDetails.Manufacturer"
-                        disabled={true}
-                        value={values.AircraftDetails?.Manufacturer || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className={"sdr-status-edit"}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="AircraftDetails.Model"
-                        disabled={true}
-                        value={values.AircraftDetails?.Model || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className={"sdr-status-edit"}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="AircraftDetails.SerialNumber"
-                        disabled={true}
-                        value={values.AircraftDetails?.SerialNumber || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className={"sdr-status-edit"}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-              </Grid>
-              <Grid className={"sdr-status-item"} container spacing={3}>
-                <Grid item xs={4}>
-                  <ListItem>Total Time</ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>Total Cycles</ListItem>
-                </Grid>
-              </Grid>
-              <Grid className={"sdr-status-description"} container spacing={3}>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="AircraftDetails.TotalTime"
-                        disabled={true}
-                        value={values.AircraftDetails?.TotalTime || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className={"sdr-status-edit"}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="AircraftDetails.TotalCycles"
-                        disabled={true}
-                        value={values.AircraftDetails?.TotalCycles || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className={"sdr-status-edit"}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-              </Grid>
-              <Grid className={"sdr-status-section-title"} container spacing={3}>
-                <Grid item xs={12}>
-                  <ListItem>Powerplant</ListItem>
-                </Grid>
-              </Grid>
-              <Grid className={"sdr-status-item"} container spacing={3}>
-                <Grid item xs={4}>
-                  <ListItem>Manufacturer</ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>Model/Series</ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>Serial Number</ListItem>
-                </Grid>
-              </Grid>
-              <Grid className={"sdr-status-description"} container spacing={3}>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="Powerplant.Manufacturer"
-                        disabled={true}
-                        value={values.Powerplant?.Manufacturer || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className={"sdr-status-edit"}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="Powerplant.Model"
-                        disabled={true}
-                        value={values.Powerplant?.Model || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className={"sdr-status-edit"}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="Powerplant.SerialNumber"
-                        disabled={true}
-                        value={values.Powerplant?.SerialNumber || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className={"sdr-status-edit"}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-              </Grid>
-              <Grid className={"sdr-status-item"} container spacing={3}>
-                <Grid item xs={4}>
-                  <ListItem>Total Time</ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>Total Cycles</ListItem>
-                </Grid>
-              </Grid>
-              <Grid className={"sdr-status-description"} container spacing={3}>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="Powerplant.TotalTime"
-                        disabled={true}
-                        value={values.Powerplant?.TotalTime || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className={"sdr-status-edit"}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="Powerplant.TotalCycles"
-                        disabled={true}
-                        value={values.Powerplant?.TotalCycles || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className={"sdr-status-edit"}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-              </Grid>
-            </Box>
 
-            {/* Problem Description */}
-            <Box
-              className={"sdr-status-grid"}
-              sx={{
-                borderLeft: 1,
-                borderRight: 1,
-                borderBottom: 1,
-                borderColor: "#E6E6E6",
-              }}
-            >
-              <Box className={"sdr-status-title"}>Problem Description</Box>
-              <Grid className={"sdr-status-item"} container spacing={3}>
-                <Grid item xs={4}>
-                  <ListItem>Date</ListItem>
+                <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem required>How Discovered</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>Discrepancy/Corrective Action</ListItem>
+                  </Grid>
                 </Grid>
-                <Grid item xs={4}>
-                  <ListItem>Station</ListItem>
+                <Grid className={"sdr-status-description"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <SingleSelect
+                          name="HowDiscoveredId"
+                          value={values.HowDiscoveredId || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={!!touched.HowDiscoveredId && !!errors.HowDiscoveredId}
+                          helperText={!!touched.HowDiscoveredId && errors.HowDiscoveredId}
+                          options={
+                            masterData?.HowDiscovered &&
+                            [...masterData.HowDiscovered].sort(
+                              (a, b) => a.DisplayOrder - b.DisplayOrder
+                            )
+                          }
+                          className={"sdr-status-edit"}
+                          id="HowDiscovered"
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="CorrectiveAction"
+                          value={values.CorrectiveAction || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={!!touched.CorrectiveAction && !!errors.CorrectiveAction}
+                          helperText={!!touched.CorrectiveAction && errors.CorrectiveAction}
+                          multiline
+                          maxRows={4}
+                          className={"sdr-status-edit textareaAutosize"}
+                          inputProps={{ style: { resize: "both" } }}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
                 </Grid>
-                <Grid item xs={4}>
-                  <ListItem>A/C Number</ListItem>
-                </Grid>
-              </Grid>
-              <Grid className={"sdr-status-description"} container spacing={3}>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        type="date"
-                        name="LogPageCreationDate"
-                        value={moment(values.LogPageCreationDate).format(DATE_HTML_DISPLAY)}
-                        onChange={(e) => {
-                          setFieldValue(
-                            "LogPageCreationDate",
-                            moment(e.target.value).isValid()
-                              ? moment(e.target.value).format(DATE_HTML_DISPLAY)
-                              : ""
-                          );
-                        }}
-                        onBlur={handleBlur}
-                        error={!!touched.LogPageCreationDate && !!errors.LogPageCreationDate}
-                        helperText={!!touched.LogPageCreationDate && errors.LogPageCreationDate}
-                        className={"sdr-status-edit"}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="Station"
-                        value={values.Station || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={!!touched.Station && !!errors.Station}
-                        helperText={!!touched.Station && errors.Station}
-                        className={"sdr-status-edit"}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="AircraftNumber"
-                        value={values.AircraftNumber || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={!!touched.AircraftNumber && !!errors.AircraftNumber}
-                        helperText={!!touched.AircraftNumber && errors.AircraftNumber}
-                        className={"sdr-status-edit"}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-              </Grid>
-              <Grid className={"sdr-status-item"} container spacing={3}>
-                <Grid item xs={4}>
-                  <ListItem>N-Number</ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>ATA Code</ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>Flight Number</ListItem>
-                </Grid>
-              </Grid>
-              <Grid className={"sdr-status-description"} container spacing={3}>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="AircraftDetails.RegistryNNumber"
-                        value={values?.AircraftDetails?.RegistryNNumber || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={
-                          !!touched?.AircraftDetails?.RegistryNNumber &&
-                          !!errors?.AircraftDetails?.RegistryNNumber
-                        }
-                        helperText={
-                          !!touched?.AircraftDetails?.RegistryNNumber &&
-                          errors?.AircraftDetails?.RegistryNNumber
-                        }
-                        className={"sdr-status-edit"}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="AtaCode"
-                        value={values.AtaCode || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={!!touched.AtaCode && !!errors.AtaCode}
-                        helperText={!!touched.AtaCode && errors.AtaCode}
-                        className={"sdr-status-edit"}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="FlightNumber"
-                        value={values.FlightNumber || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={!!touched.FlightNumber && !!errors.FlightNumber}
-                        helperText={!!touched.FlightNumber && errors.FlightNumber}
-                        className={"sdr-status-edit"}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-              </Grid>
-              <Grid className={"sdr-status-item"} container spacing={3}>
-                <Grid item xs={4}>
-                  <ListItem required>Precautionary Procedures</ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem required>Nature of Report</ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem required>Stage at which discovered</ListItem>
-                </Grid>
-              </Grid>
-              <Grid className={"sdr-status-description"} container spacing={3}>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <MultipleSelect
-                        name="PrecautionaryProcedureIds"
-                        value={values.PrecautionaryProcedureIds || []}
-                        onChange={(values) => {
-                          setFieldValue("PrecautionaryProcedureIds", values);
-                        }}
-                        onBlur={handleBlur}
-                        error={
-                          !!touched.PrecautionaryProcedureIds &&
-                          !!errors.PrecautionaryProcedureIds
-                        }
-                        helperText={
-                          !!touched.PrecautionaryProcedureIds && errors.PrecautionaryProcedureIds
-                        }
-                        options={
-                          masterData?.PrecautionaryProcedures &&
-                          [...masterData.PrecautionaryProcedures].sort(
-                            (a, b) => a.DisplayOrder - b.DisplayOrder
-                          )
-                        }
-                        className={"sdr-status-edit"}
-                        id="PrecautionaryProcedures"
-                        maxAllowed={4}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <MultipleSelect
-                        name="NatureOfReportIds"
-                        value={values.NatureOfReportIds || []}
-                        onChange={(values) => {
-                          setFieldValue("NatureOfReportIds", values);
-                        }}
-                        onBlur={handleBlur}
-                        error={!!touched.NatureOfReportIds && !!errors.NatureOfReportIds}
-                        helperText={!!touched.NatureOfReportIds && errors.NatureOfReportIds}
-                        options={
-                          masterData?.NatureofReports &&
-                          [...masterData.NatureofReports].sort(
-                            (a, b) => a.DisplayOrder - b.DisplayOrder
-                          )
-                        }
-                        className={"sdr-status-edit"}
-                        id="NatureofReports"
-                        maxAllowed={3}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <SingleSelect
-                        name="StageId"
-                        value={values.StageId || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={!!touched.StageId && !!errors.StageId}
-                        helperText={!!touched.StageId && errors.StageId}
-                        options={
-                          masterData?.Stage &&
-                          [...masterData.Stage].sort((a, b) => a.DisplayOrder - b.DisplayOrder)
-                        }
-                        className={"sdr-status-edit"}
-                        id="StageId"
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-              </Grid>
+              </Box>
 
-              <Grid className={"sdr-status-item"} container spacing={3}>
-                <Grid item xs={4}>
-                  <ListItem required>How Discovered</ListItem>
+              {/* Specific Part Causing Problem */}
+              <Box
+                className={"sdr-status-grid"}
+                sx={{
+                  borderLeft: 1,
+                  borderRight: 1,
+                  borderBottom: 1,
+                  borderColor: "#E6E6E6",
+                }}
+              >
+                <Box className={"sdr-status-title"}>Specific Part Causing Problem</Box>
+                <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>MFG Part Number</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>MFG Serial Number</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>Keyword Description</ListItem>
+                  </Grid>
                 </Grid>
-                <Grid item xs={4}>
-                  <ListItem>Discrepancy/Corrective Action</ListItem>
+                <Grid className={"sdr-status-description"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="PartDetails.PartSerialNumber"
+                          value={values.PartDetails?.PartSerialNumber || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.PartDetails?.PartSerialNumber &&
+                            !!errors.PartDetails?.PartSerialNumber
+                          }
+                          helperText={
+                            !!touched.PartDetails?.PartSerialNumber &&
+                            errors.PartDetails?.PartSerialNumber
+                          }
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="PartDetails.PartManufacturerSerialNumber"
+                          value={values.PartDetails?.PartManufacturerSerialNumber || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.PartDetails?.PartManufacturerSerialNumber &&
+                            !!errors.PartDetails?.PartManufacturerSerialNumber
+                          }
+                          helperText={
+                            !!touched.PartDetails?.PartManufacturerSerialNumber &&
+                            errors.PartDetails?.PartManufacturerSerialNumber
+                          }
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="PartDetails.PartDescription"
+                          value={values.PartDetails?.PartDescription || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.PartDetails?.PartDescription &&
+                            !!errors.PartDetails?.PartDescription
+                          }
+                          helperText={
+                            !!touched.PartDetails?.PartDescription &&
+                            errors.PartDetails?.PartDescription
+                          }
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
                 </Grid>
-              </Grid>
-              <Grid className={"sdr-status-description"} container spacing={3}>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <SingleSelect
-                        name="HowDiscoveredId"
-                        value={values.HowDiscoveredId || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={!!touched.HowDiscoveredId && !!errors.HowDiscoveredId}
-                        helperText={!!touched.HowDiscoveredId && errors.HowDiscoveredId}
-                        options={
-                          masterData?.HowDiscovered &&
-                          [...masterData.HowDiscovered].sort(
-                            (a, b) => a.DisplayOrder - b.DisplayOrder
-                          )
-                        }
-                        className={"sdr-status-edit"}
-                        id="HowDiscovered"
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
+                <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>Part Condition</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>Part Location</ListItem>
+                  </Grid>
                 </Grid>
-                <Grid item xs={8}>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="CorrectiveAction"
-                        value={values.CorrectiveAction || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={!!touched.CorrectiveAction && !!errors.CorrectiveAction}
-                        helperText={!!touched.CorrectiveAction && errors.CorrectiveAction}
-                        multiline
-                        maxRows={4}
-                        className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ style: { resize: "both" } }}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
+                <Grid className={"sdr-status-description"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="PartDetails.PartCondition"
+                          value={values.PartDetails?.PartCondition || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.PartDetails?.PartCondition &&
+                            !!errors.PartDetails?.PartCondition
+                          }
+                          helperText={
+                            !!touched.PartDetails?.PartCondition &&
+                            errors.PartDetails?.PartCondition
+                          }
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="PartDetails.PartLocation"
+                          value={values.PartDetails?.PartLocation || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.PartDetails?.PartLocation &&
+                            !!errors.PartDetails?.PartLocation
+                          }
+                          helperText={
+                            !!touched.PartDetails?.PartLocation && errors.PartDetails?.PartLocation
+                          }
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </Box>
-
-            {/* Specific Part Causing Problem */}
-            <Box
-              className={"sdr-status-grid"}
-              sx={{
-                borderLeft: 1,
-                borderRight: 1,
-                borderBottom: 1,
-                borderColor: "#E6E6E6",
-              }}
-            >
-              <Box className={"sdr-status-title"}>Specific Part Causing Problem</Box>
-              <Grid className={"sdr-status-item"} container spacing={3}>
-                <Grid item xs={4}>
-                  <ListItem>MFG Part Number</ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>MFG Serial Number</ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>Keyword Description</ListItem>
-                </Grid>
-              </Grid>
-              <Grid className={"sdr-status-description"} container spacing={3}>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="PartDetails.PartSerialNumber"
-                        value={values.PartDetails?.PartSerialNumber || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={
-                          !!touched.PartDetails?.PartSerialNumber &&
-                          !!errors.PartDetails?.PartSerialNumber
-                        }
-                        helperText={
-                          !!touched.PartDetails?.PartSerialNumber &&
-                          errors.PartDetails?.PartSerialNumber
-                        }
-                        className={"sdr-status-edit"}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="PartDetails.PartManufacturerSerialNumber"
-                        value={values.PartDetails?.PartManufacturerSerialNumber || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={
-                          !!touched.PartDetails?.PartManufacturerSerialNumber &&
-                          !!errors.PartDetails?.PartManufacturerSerialNumber
-                        }
-                        helperText={
-                          !!touched.PartDetails?.PartManufacturerSerialNumber &&
-                          errors.PartDetails?.PartManufacturerSerialNumber
-                        }
-                        className={"sdr-status-edit"}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="PartDetails.PartDescription"
-                        value={values.PartDetails?.PartDescription || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={
-                          !!touched.PartDetails?.PartDescription &&
-                          !!errors.PartDetails?.PartDescription
-                        }
-                        helperText={
-                          !!touched.PartDetails?.PartDescription &&
-                          errors.PartDetails?.PartDescription
-                        }
-                        className={"sdr-status-edit"}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-              </Grid>
-              <Grid className={"sdr-status-item"} container spacing={3}>
-                <Grid item xs={4}>
-                  <ListItem>Part Condition</ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>Part Location</ListItem>
-                </Grid>
-              </Grid>
-              <Grid className={"sdr-status-description"} container spacing={3}>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="PartDetails.PartCondition"
-                        value={values.PartDetails?.PartCondition || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={
-                          !!touched.PartDetails?.PartCondition &&
-                          !!errors.PartDetails?.PartCondition
-                        }
-                        helperText={
-                          !!touched.PartDetails?.PartCondition &&
-                          errors.PartDetails?.PartCondition
-                        }
-                        className={"sdr-status-edit"}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-                <Grid item xs={4}>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="PartDetails.PartLocation"
-                        value={values.PartDetails?.PartLocation || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={
-                          !!touched.PartDetails?.PartLocation &&
-                          !!errors.PartDetails?.PartLocation
-                        }
-                        helperText={
-                          !!touched.PartDetails?.PartLocation && errors.PartDetails?.PartLocation
-                        }
-                        className={"sdr-status-edit"}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </Grid>
-              </Grid>
-            </Box>
+              </Box>
             </div>
 
             <ButtonGroup

@@ -278,7 +278,7 @@ const CreateSfrData = ({
           // resetForm();
         }}
         validationSchema={object().shape({
-          LogPageNumber: ValidationSchema.LogPageNumber.required(),
+          LogPageNumber: ValidationSchema.LogPageNumber.required("Required field"),
           SdrDetails: object().shape({
             PrecautionaryProcedureIds: sdrRequired
               ? ValidationSchema.PrecautionaryProcedureIds
@@ -288,14 +288,14 @@ const CreateSfrData = ({
             HowDiscoveredId: sdrRequired ? ValidationSchema.HowDiscoveredId : number(),
           }),
           OriginDetails: object().shape({
-            DetectionMethodId: number().required("Required field"),
+            DetectionMethodId: number().positive("Required field"),
           }),
           DiscrepancyDetails: object().shape({
-            DiscrepancyTypeId: number().required("Required field"),
+            DiscrepancyTypeId: number().positive("Required field"),
           }),
           LocationDetails: object().shape({
-            DefectLocationId: number().required("Required field"),
-            ZoneId: number().required("Required field"),
+            DefectLocationId: number().positive("Required field"),
+            ZoneId: number().positive("Required field"),
           }),
         })}
       >
