@@ -382,7 +382,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
               values?.LocationDetails?.DefectLocationId === 21 ||
               values?.LocationDetails?.DefectLocationId === 18 ||
               values?.LocationDetails?.DefectLocationId === 19) && (
-              <>
+              <div>
                 <ListItem>Type</ListItem>
                 <ListItem>
                   {editable ? (
@@ -411,13 +411,13 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     ""
                   )}
                 </ListItem>
-              </>
+              </div>
             )}
 
             {/* DamageProximity Rudder */}
             {(values?.LocationDetails?.DefectLocationId === 6 ||
               values?.LocationDetails?.DefectLocationId === 21) && (
-              <>
+              <div>
                 <ListItem>Damage in Proximity of or at</ListItem>
                 <ListItem>
                   {editable ? (
@@ -444,13 +444,13 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     ""
                   )}
                 </ListItem>
-              </>
+              </div>
             )}
 
             {/* DamageProximity Stab */}
             {(values?.LocationDetails?.DefectLocationId === 9 ||
               values?.LocationDetails?.DefectLocationId === 18) && (
-              <>
+              <div>
                 <ListItem>Damage in Proximity of or at</ListItem>
                 <ListItem>
                   {editable ? (
@@ -477,12 +477,12 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     ""
                   )}
                 </ListItem>
-              </>
+              </div>
             )}
 
             {/* DamageProximity Wing */}
             {values?.LocationDetails?.DefectLocationId === 19 && (
-              <>
+              <div>
                 <ListItem>Damage in Proximity of or at</ListItem>
                 <ListItem>
                   {editable ? (
@@ -509,7 +509,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     ""
                   )}
                 </ListItem>
-              </>
+              </div>
             )}
 
             {/* STR */}
@@ -670,7 +670,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
 
             {/* LE Flap */}
             {values?.LocationDetails?.DefectLocationId === 11 && (
-              <>
+              <div>
                 <ListItem>LE Flap #</ListItem>
                 <ListItem>
                   {editable ? (
@@ -695,12 +695,12 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     ""
                   )}
                 </ListItem>
-              </>
+              </div>
             )}
 
             {/* TE Flap */}
             {values?.LocationDetails?.DefectLocationId === 17 && (
-              <>
+              <div>
                 <ListItem>TE Flap #</ListItem>
                 <ListItem>
                   {editable ? (
@@ -726,12 +726,12 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     ""
                   )}
                 </ListItem>
-              </>
+              </div>
             )}
 
             {/* Slat */}
             {values?.LocationDetails?.DefectLocationId === 15 && (
-              <>
+              <div>
                 <ListItem>Slat #</ListItem>
                 <ListItem>
                   {editable ? (
@@ -756,12 +756,12 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     ""
                   )}
                 </ListItem>
-              </>
+              </div>
             )}
 
             {/* Spoiler */}
             {values?.LocationDetails?.DefectLocationId === 16 && (
-              <>
+              <div>
                 <ListItem>Spoiler #</ListItem>
                 <ListItem>
                   {editable ? (
@@ -786,12 +786,12 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     ""
                   )}
                 </ListItem>
-              </>
+              </div>
             )}
 
             {/* Specifics */}
             {values?.LocationDetails?.DefectLocationId === 17 && (
-              <>
+              <div>
                 <ListItem>Specifics #</ListItem>
                 <ListItem>
                   {editable ? (
@@ -815,12 +815,12 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     ""
                   )}
                 </ListItem>
-              </>
+              </div>
             )}
 
             {/* Other */}
             {values?.LocationDetails?.DefectLocationId === 17 && (
-              <>
+              <div>
                 <ListItem>Other</ListItem>
                 <ListItem>
                   {editable ? (
@@ -841,12 +841,12 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     ""
                   )}
                 </ListItem>
-              </>
+              </div>
             )}
 
             {/* Location Details */}
             {values?.LocationDetails?.DefectLocationId === 17 && (
-              <>
+              <div>
                 <ListItem>Additional Location Details</ListItem>
                 <ListItem>
                   {editable ? (
@@ -872,12 +872,12 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     ""
                   )}
                 </ListItem>
-              </>
+              </div>
             )}
 
             {/* Specify Location Details */}
             {values?.LocationDetails?.DefectLocationId === 20 && (
-              <>
+              <div>
                 <ListItem>Specify Defect Location</ListItem>
                 <ListItem>
                   {editable ? (
@@ -903,7 +903,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     ""
                   )}
                 </ListItem>
-              </>
+              </div>
             )}
 
             {/* STR Text */}
