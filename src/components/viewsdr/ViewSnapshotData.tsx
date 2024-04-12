@@ -149,7 +149,7 @@ const ViewSnapshotData = ({
         CoordinateLocationDetails: "",
       },
     }),
-    [snapshotData, isSdr, profileData, selectedSdr]
+    [snapshotData, logpageData, isSdr, profileData, selectedSdr]
   );
 
   const onClickEdit = () => {
