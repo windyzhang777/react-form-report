@@ -4,7 +4,7 @@ import moment from "moment";
 import { Dispatch, SetStateAction, SyntheticEvent, useEffect, useMemo, useState } from "react";
 import { FlexColumn } from "src/commons/Box";
 import ButtonGroup from "src/commons/ButtonGroup";
-import { a11yProps } from "src/commons/TabPanel";
+import { TabLabel, a11yProps } from "src/commons/TabPanel";
 import { ISaveSfrValues, SdrEsfrRecordDetailsStateType, SelectedStatus } from "src/commons/types";
 import { DiscrepancyTab } from "src/components/createsfr/DiscrepancyTab";
 import { LocationTab } from "src/components/createsfr/LocationTab";
@@ -299,7 +299,7 @@ const CreateSfrData = ({
           }),
         })}
       >
-        {({ errors, handleSubmit, isSubmitting }) => (
+        {({ errors, handleSubmit, isSubmitting, touched }) => (
           <form onSubmit={handleSubmit} className="overflow-hidden mb-[4rem] grow">
             <div id="create-sdr-details" className="h-full overflow-y-auto">
               <FlexColumn className="h-full w-full flex !flex-col">
@@ -309,10 +309,49 @@ const CreateSfrData = ({
                   onChange={handleTabChange}
                   aria-label="createSfrTabs"
                 >
-                  <Tab {...a11yProps("sfr", 0)} label="Origin" id="SfrOriginTab" />
-                  <Tab {...a11yProps("sfr", 1)} label="Discrepancy" id="SfrDiscrepancyTab" />
-                  <Tab {...a11yProps("sfr", 2)} label="Location" id="SfrLocationTab" />
-                  <Tab {...a11yProps("sfr", 3)} label="Repair" id="SfrRepairTab" />
+                  <Tab
+                    {...a11yProps("sfr", 0)}
+                    label={
+                      <TabLabel
+                        label="Origin"
+                        hasError={!!touched["OriginDetails"] && !!errors["OriginDetails"]}
+                      />
+                    }
+                    id="SfrOriginTab"
+                  />
+                  <Tab
+                    {...a11yProps("sfr", 1)}
+                    label={
+                      <TabLabel
+                        label="Discrepancy"
+                        hasError={!!touched["DiscrepancyDetails"] && !!errors["DiscrepancyDetails"]}
+                      />
+                    }
+                    id="SfrDiscrepancyTab"
+                  />
+                  <Tab
+                    {...a11yProps("sfr", 2)}
+                    label={
+                      <TabLabel
+                        label="Location"
+                        hasError={!!touched["LocationDetails"] && !!errors["LocationDetails"]}
+                      />
+                    }
+                    id="SfrLocationTab"
+                  />
+                  <Tab
+                    {...a11yProps("sfr", 3)}
+                    label={
+                      <TabLabel
+                        label="Repair"
+                        hasError={
+                          (!!touched["RepairDetails"] && !!errors["RepairDetails"]) ||
+                          !!errors["SdrDetails"]
+                        }
+                      />
+                    }
+                    id="SfrRepairTab"
+                  />
                 </Tabs>
 
                 {/* Origin */}
@@ -340,7 +379,6 @@ const CreateSfrData = ({
 
             <ButtonGroup
               className="bottom-button justify-end"
-              errorMessage={Object.keys(errors).join(", ")}
               primaryDisabled={isSubmitting}
               primaryLabel={`Submit ${createSdrFlag === Type.SDR ? Type.SDR : Type.SFR}`}
               primaryOnClick={handleSubmit}

@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { FlexRow } from "src/commons/Box";
 
 export interface ITabPanelProps {
   children?: ReactNode;
@@ -35,5 +36,17 @@ export const a11yProps = (name: string, index: number) => {
     },
   };
 };
+
+export interface ITabLabelProps {
+  label: string;
+  hasError?: boolean;
+}
+
+export const TabLabel = ({ label, hasError = false }: ITabLabelProps) => (
+  <FlexRow className="gap-1">
+    {label}
+    {hasError && <p className="required">*</p>}
+  </FlexRow>
+);
 
 export default CommonTabPanel;

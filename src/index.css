@@ -82,3 +82,7 @@ input::-webkit-calendar-picker-indicator {
 ::-webkit-scrollbar-thumb:vertical:hover {
   background: #30118a;
 }
+
+.required {
+  color: #d50032;
+}
