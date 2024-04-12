@@ -288,14 +288,14 @@ const CreateSfrData = ({
             HowDiscoveredId: sdrRequired ? ValidationSchema.HowDiscoveredId : number(),
           }),
           OriginDetails: object().shape({
-            DetectionMethodId: number().positive("Required field"),
+            DetectionMethodId: number().min(1, "Required field").required("Required field"),
           }),
           DiscrepancyDetails: object().shape({
-            DiscrepancyTypeId: number().positive("Required field"),
+            DiscrepancyTypeId: number().min(1, "Required field").required("Required field"),
           }),
           LocationDetails: object().shape({
-            DefectLocationId: number().positive("Required field"),
-            ZoneId: number().positive("Required field"),
+            DefectLocationId: number().min(1, "Required field").required("Required field"),
+            ZoneId: number().min(1, "Required field").required("Required field"),
           }),
         })}
       >
