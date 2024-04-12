@@ -28,6 +28,7 @@ export interface GetAllEsfrRecordsResResult {
 export enum LogpageStatus {
   "Carry" = "CARRY",
   "Cleared" = "Cleared",
+  "Defer" = "Defer",
   "OpenD" = "OPEN-D",
   "OpenO" = "OPEN-O",
   "OpenTa" = "OPEN-TA",

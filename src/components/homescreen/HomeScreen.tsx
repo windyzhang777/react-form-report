@@ -70,7 +70,7 @@ const HomeScreen = () => {
   const [filters, setFilters] = useState<LogpageStatus[]>([
     LogpageStatus.Carry,
     LogpageStatus.Cleared,
-    LogpageStatus.OpenD,
+    LogpageStatus.Defer,
   ]);
   const isSdr = useMemo(() => selectedSdr?.Type === Type.SDR, [selectedSdr]);
   const sdrData = useMemo(() => {
