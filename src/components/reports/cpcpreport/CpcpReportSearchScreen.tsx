@@ -5,10 +5,11 @@ import { WarningBox } from "src/commons/Box";
 import CommonLoader from "src/commons/CommonLoader";
 import RouterLink from "src/commons/Link";
 import Snackbar from "src/commons/Snackbar";
-import { SdrEsfrRecordDetailsStateType } from "src/commons/types";
+import { IViewSearchSdrResult, SdrEsfrRecordDetailsStateType } from "src/commons/types";
 import CommonDataGrid from "src/components/commondatagrid/commondatagrid";
 import { cpcpReportSearchColumns } from "src/components/commondatagrid/cpcpReportSearchColumns";
 import CpcpReportSearch from "src/components/reports/cpcpreport/CpcpReportSearch";
+import ViewReportData from "src/components/viewsdr/ViewReportData";
 import { getCpcpReport, resetCpcpReportSuccess } from "src/redux/ducks/getCpcpReport";
 import {
   getSdrEsfrRecordDetails,
@@ -16,8 +17,8 @@ import {
   setDetailsLoaderOff,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
+import { Type } from "src/types/GetAllEsfrRecordsRes";
 import { GetCpcpReportReq } from "src/types/GetCpcpReportReq";
-import { GetCpcpReportResResult } from "src/types/GetCpcpReportRes";
 
 export interface ISearchScreenProps {}
 
@@ -39,7 +40,7 @@ const CpcpReportSearchScreen = () => {
   const [openSnackbar, setOpenSnackbar] = useState<number>(0);
   const [snackbarMessage, setSnackbarMessage] = useState<string>("");
   const [viewSdrFlag, setViewSdrFlag] = useState<boolean>(false);
-  const [selectedSdr, setSelectedSdr] = useState<GetCpcpReportResResult | null>(null);
+  const [selectedSdr, setSelectedSdr] = useState<IViewSearchSdrResult | null>(null);
 
   const handleSearchReport = (values: GetCpcpReportReq) => {
     if (values) {
@@ -122,6 +123,18 @@ const CpcpReportSearchScreen = () => {
             )}
           </Box>
         </Grid>
+        {viewSdrFlag && selectedSdr && (
+          <Grid item md={6} xs={12}>
+            <ViewReportData
+              editable={false}
+              handleUpsertSdrSnapshot={() => {}}
+              isSdr={selectedSdr.ReportType === Type.SDR}
+              selectedSdr={selectedSdr}
+              setViewSdrFlag={setViewSdrFlag}
+              tabIndex={3}
+            />
+          </Grid>
+        )}
       </Grid>
       {!!openSnackbar && (
         <Snackbar

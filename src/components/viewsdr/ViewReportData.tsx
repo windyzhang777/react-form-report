@@ -11,6 +11,7 @@ import { MultipleSelect, SingleSelect } from "src/commons/Select";
 import TextField from "src/commons/TextField";
 import {
   IEditSdrValues,
+  IViewSearchSdrResult,
   SdrEsfrRecordDetailsStateType,
   SelectedStatus,
   SelectedTab,
@@ -19,14 +20,13 @@ import {
 } from "src/commons/types";
 import { DATETIME_REQUEST, DATE_HTML_DISPLAY, toFixed } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
-import { GetEsfrReportResResult } from "src/types/GetEsfrReportRes";
 import "./viewSdrData.css";
 
 export interface IViewReportDataProps {
   editable: boolean;
   handleUpsertSdrSnapshot: (a: IEditSdrValues, b: SelectedStatus) => void;
   isSdr: boolean;
-  selectedSdr: GetEsfrReportResResult;
+  selectedSdr: IViewSearchSdrResult;
   setViewSdrFlag: Dispatch<SetStateAction<boolean>>;
   tabIndex: number;
 }
@@ -51,7 +51,7 @@ const ViewReportData = ({
     () => ({
       SdrId: detailsData?.SdrDetails?.sdrNumber ? +detailsData.SdrDetails.sdrNumber : 0,
       SnapshotId: "",
-      Type: selectedSdr?.ReportType,
+      Type: selectedSdr?.ReportType || "",
       SfrAdditionalDetails: {
         SnapshotId: "",
         AtaCode: detailsData?.FleetInfo?.ATACode || "",

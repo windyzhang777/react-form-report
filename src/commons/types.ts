@@ -121,6 +121,11 @@ export interface IDiscrepancyPartsReportSearchValues extends GetDiscrepancyParts
   fleetList: string[];
 }
 
+export interface IViewSearchSdrResult
+  extends GetEsfrReportResResult,
+    GetCpcpReportResResult,
+    GetPartsReportResResult {}
+
 export interface ISaveSdrValues extends Omit<UpsertSDRSnapshotReq, "SfrAdditionalDetails"> {
   Powerplant: Omit<AircraftDetails, "RegistryNNumber">;
   AtaCode: string;
