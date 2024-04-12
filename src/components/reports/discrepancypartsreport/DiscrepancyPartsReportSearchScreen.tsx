@@ -5,15 +5,20 @@ import { WarningBox } from "src/commons/Box";
 import CommonLoader from "src/commons/CommonLoader";
 import RouterLink from "src/commons/Link";
 import Snackbar from "src/commons/Snackbar";
-import { PartsReportStateType, SdrEsfrRecordDetailsStateType } from "src/commons/types";
+import {
+  IViewSearchSdrResult,
+  PartsReportStateType,
+  SdrEsfrRecordDetailsStateType,
+} from "src/commons/types";
 import CommonDataGrid from "src/components/commondatagrid/commondatagrid";
 import { partsReportSearchColumns } from "src/components/commondatagrid/partsReportSearchColumns";
 import DiscrepancyPartsReportSearch from "src/components/reports/discrepancypartsreport/DiscrepancyPartReportSearch";
+import ViewReportData from "src/components/viewsdr/ViewReportData";
 import { getPartsReport, resetPartsReportSuccess } from "src/redux/ducks/getPartsReport";
 import { getSdrEsfrRecordDetails, getSfrMasterData } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
+import { Type } from "src/types/GetAllEsfrRecordsRes";
 import { GetDiscrepancyPartsReportReq } from "src/types/GetDiscrepancyPartsReportReq";
-import { GetPartsReportResResult } from "src/types/GetDiscrepancyPartsReportRes";
 
 export interface ISearchScreenProps {}
 
@@ -32,7 +37,7 @@ const DiscrepancyPartsReportSearchScreen = () => {
   const [openSnackbar, setOpenSnackbar] = useState<number>(0);
   const [snackbarMessage, setSnackbarMessage] = useState<string>("");
   const [viewSdrFlag, setViewSdrFlag] = useState<boolean>(false);
-  const [selectedSdr, setSelectedSdr] = useState<GetPartsReportResResult | null>(null);
+  const [selectedSdr, setSelectedSdr] = useState<IViewSearchSdrResult | null>(null);
 
   const handleSearchReport = (values: GetDiscrepancyPartsReportReq) => {
     if (values) {
@@ -112,6 +117,18 @@ const DiscrepancyPartsReportSearchScreen = () => {
             )}
           </Box>
         </Grid>
+        {viewSdrFlag && selectedSdr && (
+          <Grid item md={6} xs={12}>
+            <ViewReportData
+              editable={false}
+              handleUpsertSdrSnapshot={() => {}}
+              isSdr={selectedSdr.ReportType === Type.SDR}
+              selectedSdr={selectedSdr}
+              setViewSdrFlag={setViewSdrFlag}
+              tabIndex={3}
+            />
+          </Grid>
+        )}
       </Grid>
       {!!openSnackbar && (
         <Snackbar

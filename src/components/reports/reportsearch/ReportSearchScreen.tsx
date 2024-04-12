@@ -5,7 +5,11 @@ import { WarningBox } from "src/commons/Box";
 import CommonLoader from "src/commons/CommonLoader";
 import RouterLink from "src/commons/Link";
 import Snackbar from "src/commons/Snackbar";
-import { IReportSearchValues, SdrEsfrRecordDetailsStateType } from "src/commons/types";
+import {
+  IReportSearchValues,
+  IViewSearchSdrResult,
+  SdrEsfrRecordDetailsStateType,
+} from "src/commons/types";
 import CommonDataGrid from "src/components/commondatagrid/commondatagrid";
 import { eSfrReportSearchColumns } from "src/components/commondatagrid/esfrReportSearchColumns";
 import ReportSearch from "src/components/reports/reportsearch/ReportSearch";
@@ -18,7 +22,6 @@ import {
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
-import { GetEsfrReportResResult } from "src/types/GetEsfrReportRes";
 
 export interface ISearchScreenProps {}
 
@@ -39,7 +42,7 @@ const ReportSearchScreen = () => {
   const [openSnackbar, setOpenSnackbar] = useState<number>(0);
   const [snackbarMessage, setSnackbarMessage] = useState<string>("");
   const [viewSdrFlag, setViewSdrFlag] = useState<boolean>(false);
-  const [selectedSdr, setSelectedSdr] = useState<GetEsfrReportResResult | null>(null);
+  const [selectedSdr, setSelectedSdr] = useState<IViewSearchSdrResult | null>(null);
 
   const handleSearchReport = (values: IReportSearchValues) => {
     if (values) {

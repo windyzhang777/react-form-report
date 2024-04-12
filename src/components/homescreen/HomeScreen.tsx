@@ -98,7 +98,16 @@ const HomeScreen = () => {
 
   const handleTabChange = (event: SyntheticEvent, tab: number) => {
     setTabIndex(tab);
-    setFilters([]);
+    if (tab === SelectedTab.Open) {
+      const stored = window.localStorage.getItem("sdr_filter");
+      setFilters(
+        stored
+          ? JSON.parse(stored)
+          : [LogpageStatus.Carry, LogpageStatus.Cleared, LogpageStatus.Defer]
+      );
+    } else {
+      setFilters([]);
+    }
     setViewSdrFlag(false);
     setSelectedSdr(null);
   };

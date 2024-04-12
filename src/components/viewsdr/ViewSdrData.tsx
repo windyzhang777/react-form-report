@@ -155,7 +155,7 @@ const ViewSdrData = ({
         CoordinateLocationDetails: detailsData?.LocationDetails?.CoordinateLocationDetails || "",
       },
     }),
-    [detailsData, followUpFlag, isSdr, profileData, selectedSdr]
+    [detailsData, followUpFlag, isSdr, logpageData, profileData, selectedSdr]
   );
 
   useEffect(() => {

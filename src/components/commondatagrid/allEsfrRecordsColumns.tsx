@@ -117,10 +117,17 @@ export const allEsfrRecordsColumns = (
                           checked={filters.includes(status)}
                           onChange={(e) => {
                             if (e.target.checked) {
-                              setFilter((prev) => [...prev, status]);
+                              setFilter((prev) => {
+                                window.localStorage.setItem(
+                                  "sdr_filter",
+                                  JSON.stringify([...prev, status])
+                                );
+                                return [...prev, status];
+                              });
                             } else {
                               setFilter((prev) => {
                                 const updated = [...prev].filter((u) => u !== status);
+                                window.localStorage.setItem("sdr_filter", JSON.stringify(updated));
                                 return updated;
                               });
                             }
