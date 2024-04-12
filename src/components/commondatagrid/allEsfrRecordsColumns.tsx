@@ -1,4 +1,5 @@
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import { Button, Checkbox, FormControlLabel, FormGroup, IconButton, Link } from "@mui/material";
 import { GridColDef, GridColumnHeaderTitle } from "@mui/x-data-grid";
 import moment from "moment";
@@ -98,7 +99,11 @@ export const allEsfrRecordsColumns = (
               width="14rem"
               button={
                 <IconButton aria-label="header-filter" color="info">
-                  <FilterAltIcon fontSize="small" />
+                  {filters.length ? (
+                    <FilterAltIcon fontSize="small" />
+                  ) : (
+                    <FilterAltOutlinedIcon fontSize="small" />
+                  )}
                 </IconButton>
               }
             >

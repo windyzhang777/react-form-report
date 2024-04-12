@@ -58,7 +58,9 @@ export const filterSdrData = (
   sdrData: TransformedSdrDataType[],
   filters: LogpageStatus[]
 ): TransformedSdrDataType[] =>
-  sdrData.filter((sdr) => sdr.LogpageStatus && filters.includes(sdr.LogpageStatus));
+  sdrData
+    ? sdrData.filter((sdr) => sdr.LogpageStatus && filters.includes(sdr.LogpageStatus))
+    : sdrData;
 
 export const transformCreateSfrValues = (values: ISaveSfrValues) => {
   let { searchDescription, ATAChapter, ATASubChapter, PartNumber, Structure, DiscrepancyPartInformationCode, DocumentType, SpecIdentifier1, SpecIdentifier2, SpecIdentifier3, SpecIdentifier4, CalDocIdentifier1, CalDocIdentifier2, CalDocIdentifier3, CalDocIdentifier4, SRM1, SRM11, SRM12, SRM13, SRM2, SRM21, SRM22, SRM23, SRM3, SRM31, SRM32, SRM33, SRMPage, SRMFig, AMM1, AMM11, AMM12, AMM13, AMM2, AMM21, AMM22, AMM23, AMM3, AMM31, AMM32, AMM33, AMMPage, AMMFig, CMM1, CMM11, CMM12, CMM13, CMM2, CMM21, CMM22, CMM23, CMM3, CMM31, CMM32, CMM33, CMMPage, CMMFig, RepairECRA1, RepairECRA2, ...rest} = values;

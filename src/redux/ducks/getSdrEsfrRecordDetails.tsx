@@ -45,6 +45,10 @@ const fetchApprovedSdrSuccess = (data: GetApprovedSDRResResult) => {
   return { type: SdrEsfrRecordDetailsActionType.FETCH_APPROVED_SDR_SUCCESS, data };
 };
 
+export const resetApprovedSdrSuccess = () => {
+  return { type: SdrEsfrRecordDetailsActionType.FETCH_APPROVED_SDR_SUCCESS, data: null };
+};
+
 const fetchApprovedSdrFailure = (message: string) => {
   return { type: SdrEsfrRecordDetailsActionType.FETCH_APPROVED_SDR_FAILURE, message };
 };
@@ -94,6 +98,7 @@ export const sdrEsfrRecordDetailsReducer = (
       return {
         ...state,
         loading: true,
+        ctnData: null,
         error: "",
       };
     }
@@ -165,6 +170,8 @@ export const sdrEsfrRecordDetailsReducer = (
 
 export const getSdrEsfrRecordDetails = (logpageNumber: string) => {
   return function (dispatch: Dispatch<any>) {
+    dispatch(resetEsfrRecordDetailData());
+    dispatch(resetLogpageDataSuccess());
     dispatch(initFetch());
     axiosInstance
       .get(
@@ -187,7 +194,11 @@ export const viewLogPageDetails = (logpageNumber: string) => {
       .get(`${config.apiBaseAddress}${config.URL_VIEW_LOGPAGE}?logpageNumber=${logpageNumber}`)
       .then((res) => {
         const logpageData = res?.data?.Result;
-        dispatch(fetchLogpageDataSuccess(logpageData));
+        if (logpageData.MasterData) {
+          dispatch(fetchLogpageDataSuccess(logpageData));
+        } else {
+          dispatch(fetchLogpageDataFailure("Invalid Logpage Number"));
+        }
       })
       .catch((error) => dispatch(fetchLogpageDataFailure(error.message)));
   };
@@ -195,6 +206,8 @@ export const viewLogPageDetails = (logpageNumber: string) => {
 
 export const getApprovedSdr = (logpageNumber: string, OperatorControlNumber: string) => {
   return function (dispatch: Dispatch<any>) {
+    dispatch(resetApprovedSdrSuccess());
+    dispatch(resetLogpageDataSuccess());
     dispatch(initFetch());
     axiosInstance
       .get(

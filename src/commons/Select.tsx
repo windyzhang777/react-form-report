@@ -13,6 +13,7 @@ import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { FocusEventHandler, HTMLInputTypeAttribute, ReactNode } from "react";
+import { FlexCenter } from "src/commons/Box";
 import { OptionDocument } from "src/types/GetSfrMasterDataRes";
 
 const ITEM_HEIGHT = 88;
@@ -81,7 +82,7 @@ export const SimpleSingleSelect = ({
       </InputLabel>
       <Select displayEmpty id={id && id + "-simple-single-select"} value={value} {...props}>
         {!options ? (
-          <Box>No options available</Box>
+          <FlexCenter>No options available</FlexCenter>
         ) : (
           options.map((option) => (
             <MenuItem key={option} value={option}>
@@ -134,7 +135,7 @@ export const SingleSelect = ({
         value={value}
       >
         {!options ? (
-          <Box>No options available</Box>
+          <FlexCenter>No options available</FlexCenter>
         ) : (
           options.map((option) => (
             <MenuItem key={option.Id} value={option.Id}>
@@ -201,7 +202,7 @@ export const SimpleMultipleSelect = ({
         {...props}
       >
         {!options ? (
-          <Box>No options available</Box>
+          <FlexCenter>No options available</FlexCenter>
         ) : (
           options.map((option) => (
             <MenuItem className="!pl-0 !pr-5" key={option.Description} value={option.Description}>
@@ -267,7 +268,7 @@ export const MultipleSelect = ({
         {...props}
       >
         {!options ? (
-          <Box>No options available</Box>
+          <FlexCenter>No options available</FlexCenter>
         ) : (
           options.map((option) => (
             <MenuItem className="!pl-0 !pr-5" key={option.Id} value={option.Id}>

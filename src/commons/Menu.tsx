@@ -33,7 +33,7 @@ export const ArrowMenu = ({ button, children, id, width }: ICommonMenuProps) => 
         aria-controls={open ? (id ? id + "-menu" : "arrow-menu") : undefined}
         aria-expanded={open ? "true" : undefined}
         aria-haspopup="true"
-        id={id ? id + "arrow-menu-button" : "arrow-menu-button"}
+        id={id ? id + "-arrow-menu-button" : "arrow-menu-button"}
         onClick={openMenu}
       >
         {button}

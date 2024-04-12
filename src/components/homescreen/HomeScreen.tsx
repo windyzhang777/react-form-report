@@ -70,7 +70,7 @@ const HomeScreen = () => {
   const [filters, setFilters] = useState<LogpageStatus[]>([
     LogpageStatus.Carry,
     LogpageStatus.Cleared,
-    LogpageStatus.OpenD,
+    LogpageStatus.Defer,
   ]);
   const isSdr = useMemo(() => selectedSdr?.Type === Type.SDR, [selectedSdr]);
   const sdrData = useMemo(() => {
@@ -244,11 +244,6 @@ const HomeScreen = () => {
   }, [selectedSdr]);
 
   useEffect(() => {
-    setSelectedSdr(null);
-    setViewSdrFlag(false);
-  }, [tabIndex]);
-
-  useEffect(() => {
     resetSdrs();
     if (!masterData) {
       dispatch(getSfrMasterData());
@@ -274,7 +269,13 @@ const HomeScreen = () => {
           >
             <Tab
               {...a11yProps("home", 0)}
-              label={`New SDR/SFRs (${(Array.isArray(newSdrData) && newSdrData.length) || 0})`}
+              label={`New SDR/SFRs (${
+                (newSdrData &&
+                  (filters.length > 0
+                    ? filterSdrData(newSdrData, filters).length
+                    : newSdrData.length)) ||
+                0
+              })`}
               id="NewsdrTab"
             />
             <Tab
