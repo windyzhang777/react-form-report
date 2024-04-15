@@ -14,7 +14,8 @@ import { getCpcpReport, resetCpcpReportSuccess } from "src/redux/ducks/getCpcpRe
 import {
   getSdrEsfrRecordDetails,
   getSfrMasterData,
-  setDetailsLoaderOff,
+  resetEsfrRecordDetailData,
+  resetLogpageDataSuccess,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
@@ -29,6 +30,7 @@ const CpcpReportSearchScreen = () => {
     detailsData,
     masterData,
     logpageData,
+    error: detailsDataError,
   }: SdrEsfrRecordDetailsStateType = useAppSelector((state) => state.sdrEsfrRecordDetails);
 
   const {
@@ -60,23 +62,24 @@ const CpcpReportSearchScreen = () => {
   }, []);
 
   useEffect(() => {
+    if (detailsDataError) {
+      setOpenSnackbar(-1);
+      setSnackbarMessage(detailsDataError);
+    }
     if (cpcpReportError) {
       setOpenSnackbar(-1);
       setSnackbarMessage(cpcpReportError);
     }
-  }, [cpcpReport, cpcpReportError]);
+  }, [cpcpReport, detailsData, logpageData]);
 
   useEffect(() => {
     if (selectedSdr) {
       dispatch(getSdrEsfrRecordDetails(selectedSdr.LogpageNumber));
+    } else {
+      dispatch(resetEsfrRecordDetailData());
+      dispatch(resetLogpageDataSuccess());
     }
   }, [selectedSdr]);
-
-  useEffect(() => {
-    if (detailsData && logpageData) {
-      dispatch(setDetailsLoaderOff());
-    }
-  }, [detailsData, logpageData]);
 
   useEffect(() => {
     if (!viewSdrFlag) {

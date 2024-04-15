@@ -15,7 +15,12 @@ import { partsReportSearchColumns } from "src/components/commondatagrid/partsRep
 import DiscrepancyPartsReportSearch from "src/components/reports/discrepancypartsreport/DiscrepancyPartReportSearch";
 import ViewReportData from "src/components/viewsdr/ViewReportData";
 import { getPartsReport, resetPartsReportSuccess } from "src/redux/ducks/getPartsReport";
-import { getSdrEsfrRecordDetails, getSfrMasterData } from "src/redux/ducks/getSdrEsfrRecordDetails";
+import {
+  getSdrEsfrRecordDetails,
+  getSfrMasterData,
+  resetEsfrRecordDetailData,
+  resetLogpageDataSuccess,
+} from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
 import { GetDiscrepancyPartsReportReq } from "src/types/GetDiscrepancyPartsReportReq";
@@ -24,9 +29,13 @@ export interface ISearchScreenProps {}
 
 const DiscrepancyPartsReportSearchScreen = () => {
   const dispatch = useAppDispatch();
-  const { loading: loadingDetailsData, masterData }: SdrEsfrRecordDetailsStateType = useAppSelector(
-    (state) => state.sdrEsfrRecordDetails
-  );
+  const {
+    loading: loadingDetailsData,
+    detailsData,
+    masterData,
+    logpageData,
+    error: detailsDataError,
+  }: SdrEsfrRecordDetailsStateType = useAppSelector((state) => state.sdrEsfrRecordDetails);
 
   const {
     loading: loadingPartsReport,
@@ -57,15 +66,22 @@ const DiscrepancyPartsReportSearchScreen = () => {
   }, []);
 
   useEffect(() => {
+    if (detailsDataError) {
+      setOpenSnackbar(-1);
+      setSnackbarMessage(detailsDataError);
+    }
     if (partsReportError) {
       setOpenSnackbar(-1);
       setSnackbarMessage(partsReportError);
     }
-  }, [partsReport, partsReportError]);
+  }, [partsReport, detailsData, logpageData]);
 
   useEffect(() => {
     if (selectedSdr) {
       dispatch(getSdrEsfrRecordDetails(selectedSdr.LogpageNumber));
+    } else {
+      dispatch(resetEsfrRecordDetailData());
+      dispatch(resetLogpageDataSuccess());
     }
   }, [selectedSdr]);
 

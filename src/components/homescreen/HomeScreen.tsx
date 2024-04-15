@@ -32,6 +32,8 @@ import {
   getApprovedSdr,
   getSdrEsfrRecordDetails,
   getSfrMasterData,
+  resetEsfrRecordDetailData,
+  resetLogpageDataSuccess,
   viewLogPageDetails,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
@@ -249,6 +251,9 @@ const HomeScreen = () => {
       } else {
         dispatch(getSdrEsfrRecordDetails(selectedSdr.LogpageNumber));
       }
+    } else {
+      dispatch(resetEsfrRecordDetailData());
+      dispatch(resetLogpageDataSuccess());
     }
   }, [selectedSdr]);
 

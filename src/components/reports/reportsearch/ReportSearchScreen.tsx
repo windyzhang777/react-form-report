@@ -18,7 +18,8 @@ import { getEsfrReport, resetEsfrReportSuccess } from "src/redux/ducks/getEsfrRe
 import {
   getSdrEsfrRecordDetails,
   getSfrMasterData,
-  setDetailsLoaderOff,
+  resetEsfrRecordDetailData,
+  resetLogpageDataSuccess,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
@@ -30,8 +31,8 @@ const ReportSearchScreen = () => {
   const {
     loading: loadingDetailsData,
     detailsData,
-    masterData,
     logpageData,
+    masterData,
     error: detailsDataError,
   }: SdrEsfrRecordDetailsStateType = useAppSelector((state) => state.sdrEsfrRecordDetails);
   const {
@@ -72,19 +73,16 @@ const ReportSearchScreen = () => {
       setOpenSnackbar(-1);
       setSnackbarMessage(esfrReportError);
     }
-  }, [esfrReport, esfrReportError, detailsDataError, detailsData]);
+  }, [esfrReport, detailsData, logpageData]);
 
   useEffect(() => {
     if (selectedSdr) {
       dispatch(getSdrEsfrRecordDetails(selectedSdr.LogpageNumber));
+    } else {
+      dispatch(resetEsfrRecordDetailData());
+      dispatch(resetLogpageDataSuccess());
     }
   }, [selectedSdr]);
-
-  useEffect(() => {
-    if (detailsData && logpageData) {
-      dispatch(setDetailsLoaderOff());
-    }
-  }, [detailsData, logpageData]);
 
   useEffect(() => {
     if (!viewSdrFlag) {

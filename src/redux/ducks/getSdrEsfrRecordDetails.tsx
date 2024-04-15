@@ -182,8 +182,7 @@ export const getSdrEsfrRecordDetails = (logpageNumber: string) => {
         dispatch(fetchSuccess(esfrRecordDetail));
       })
       .then(() => dispatch(viewLogPageDetails(logpageNumber)))
-      .catch((error) => dispatch(fetchFailure(error.message)))
-      .finally(() => dispatch(setDetailsLoaderOff()));
+      .catch((error) => dispatch(fetchFailure(error.message)));
   };
 };
 
@@ -218,8 +217,7 @@ export const getApprovedSdr = (logpageNumber: string, OperatorControlNumber: str
         dispatch(fetchApprovedSdrSuccess(esfrRecordDetail));
       })
       .then(() => dispatch(viewLogPageDetails(logpageNumber)))
-      .catch((error) => dispatch(fetchApprovedSdrFailure(error.message)))
-      .finally(() => dispatch(setDetailsLoaderOff()));
+      .catch((error) => dispatch(fetchApprovedSdrFailure(error.message)));
   };
 };
 
