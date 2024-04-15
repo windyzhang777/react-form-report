@@ -278,13 +278,7 @@ const HomeScreen = () => {
           >
             <Tab
               {...a11yProps("home", 0)}
-              label={`New SDR/SFRs (${
-                (newSdrData &&
-                  (filters.length > 0
-                    ? filterSdrData(newSdrData, filters).length
-                    : newSdrData.length)) ||
-                0
-              })`}
+              label={`New SDR/SFRs (${(Array.isArray(newSdrData) && newSdrData.length) || 0})`}
               id="NewsdrTab"
             />
             <Tab
