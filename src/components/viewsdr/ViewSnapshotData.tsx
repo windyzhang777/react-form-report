@@ -70,7 +70,7 @@ const ViewSnapshotData = ({
         FuselageToSta: snapshotData?.SfrDetails?.FuselageToSta || "",
         CorrisionLevel: snapshotData?.SfrDetails?.CorrisionLevel || "",
         CrackLength: snapshotData?.SfrDetails?.CrackLength || "",
-        NumberOfCracks: snapshotData?.SfrDetails?.NumberOfCracks || 0,
+        NumberOfCracks: snapshotData?.SfrDetails?.NumberOfCracks ?? 0,
         WaterlineFrom: snapshotData?.SfrDetails?.WaterlineFrom || "",
         WaterlineTo: snapshotData?.SfrDetails?.WaterlineTo || "",
         StringerFrom: snapshotData?.SfrDetails?.StringerFrom || "",
@@ -87,9 +87,6 @@ const ViewSnapshotData = ({
         WingStationToSide: snapshotData?.SfrDetails?.WingStationToSide || "",
         StructuralOther: snapshotData?.SfrDetails?.StructuralOther || "",
       },
-      CCCorrosionLevel: snapshotData?.SfrDetails?.CorrisionLevel || "",
-      CCCrackLength: snapshotData?.SfrDetails?.CrackLength || "",
-      CCNumberofCracks: 0,
       AircraftDetails: {
         RegistryNNumber: snapshotData?.AircraftDetails?.RegistryNNumber || "",
         Manufacturer: snapshotData?.AircraftDetails?.Manufacturer || "",
@@ -1484,7 +1481,7 @@ const ViewSnapshotData = ({
                           <TextField
                             type="number"
                             name="SfrAdditionalDetails.NumberOfCracks"
-                            value={values?.SfrAdditionalDetails?.NumberOfCracks || ""}
+                            value={values?.SfrAdditionalDetails?.NumberOfCracks ?? ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1498,7 +1495,7 @@ const ViewSnapshotData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values?.SfrAdditionalDetails?.NumberOfCracks || "--"
+                          values?.SfrAdditionalDetails?.NumberOfCracks ?? "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1524,12 +1521,18 @@ const ViewSnapshotData = ({
                       <ListItem>
                         {editable ? (
                           <SingleSelect
-                            name="CCCorrosionLevel"
-                            value={values.CCCorrosionLevel || ""}
+                            name="SfrAdditionalDetails.CorrisionLevel"
+                            value={values?.SfrAdditionalDetails?.CorrisionLevel || ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            error={!!touched.CCCorrosionLevel && !!errors.CCCorrosionLevel}
-                            helperText={!!touched.CCCorrosionLevel && errors.CCCorrosionLevel}
+                            error={
+                              !!touched?.SfrAdditionalDetails?.CorrisionLevel &&
+                              !!errors?.SfrAdditionalDetails?.CorrisionLevel
+                            }
+                            helperText={
+                              !!touched?.SfrAdditionalDetails?.CorrisionLevel &&
+                              errors?.SfrAdditionalDetails?.CorrisionLevel
+                            }
                             options={
                               masterData?.CorrosionLevels &&
                               [...masterData.CorrosionLevels].sort(
@@ -1537,11 +1540,12 @@ const ViewSnapshotData = ({
                               )
                             }
                             className={"sdr-status-edit"}
-                            id="SfrAdditionalDetails.CCCorrosionLevel"
+                            id="SfrAdditionalDetails.CorrisionLevel"
                           />
                         ) : (
                           masterData?.CorrosionLevels.find(
-                            (option) => "" + option.Id === values.CCCorrosionLevel
+                            (option) =>
+                              "" + option.Id === values?.SfrAdditionalDetails?.CorrisionLevel
                           )?.Description || ""
                         )}
                       </ListItem>
@@ -1551,16 +1555,22 @@ const ViewSnapshotData = ({
                         {editable ? (
                           <TextField
                             type="number"
-                            name="CCCrackLength"
-                            value={values.CCCrackLength || ""}
+                            name="SfrAdditionalDetails.CrackLength"
+                            value={values?.SfrAdditionalDetails?.CrackLength || ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            error={!!touched.CCCrackLength && !!errors.CCCrackLength}
-                            helperText={!!touched.CCCrackLength && errors.CCCrackLength}
+                            error={
+                              !!touched?.SfrAdditionalDetails?.CrackLength &&
+                              !!errors?.SfrAdditionalDetails?.CrackLength
+                            }
+                            helperText={
+                              !!touched?.SfrAdditionalDetails?.CrackLength &&
+                              errors?.SfrAdditionalDetails?.CrackLength
+                            }
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values.CCCrackLength || "--"
+                          values?.SfrAdditionalDetails?.CrackLength || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1569,16 +1579,22 @@ const ViewSnapshotData = ({
                         {editable ? (
                           <TextField
                             type="number"
-                            name="CCNumberofCracks"
-                            value={values.CCNumberofCracks || ""}
+                            name="SfrAdditionalDetails.NumberOfCracks"
+                            value={values?.SfrAdditionalDetails?.NumberOfCracks ?? ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            error={!!touched.CCNumberofCracks && !!errors.CCNumberofCracks}
-                            helperText={!!touched.CCNumberofCracks && errors.CCNumberofCracks}
+                            error={
+                              !!touched?.SfrAdditionalDetails?.NumberOfCracks &&
+                              !!errors?.SfrAdditionalDetails?.NumberOfCracks
+                            }
+                            helperText={
+                              !!touched?.SfrAdditionalDetails?.NumberOfCracks &&
+                              errors?.SfrAdditionalDetails?.NumberOfCracks
+                            }
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values.CCNumberofCracks || "--"
+                          values?.SfrAdditionalDetails?.NumberOfCracks ?? "--"
                         )}
                       </ListItem>
                     </Grid>

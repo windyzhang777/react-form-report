@@ -136,9 +136,6 @@ export interface IEditSdrValues extends Omit<UpsertSDRSnapshotReq, "PartDetails"
   LocationDetails: ILocationDetails;
   ComponentDetails: IComponentDetails & AdditionalPartValues;
   PartDetails: PartDetails & AdditionalPartValues;
-  CCCorrosionLevel: string;
-  CCCrackLength: string;
-  CCNumberofCracks: number;
 }
 
 export interface AdditionalPartValues {
@@ -155,32 +152,6 @@ export interface IComponentDetails {
   ComponentPartSerialNumber: string;
   ComponentPartModelNumber: string;
   ComponentLocation: string;
-}
-
-export interface IStructureCausingDifficulty {
-  FuselageFromSta: string;
-  FuselageToSta: string;
-  CorrisionLevel: string;
-  CrackLength: number;
-  NumberofCracks: number;
-  CCCorrisionLevel: string;
-  CCCrackLength: number;
-  CCNumberofCracks: number;
-  WaterlineFrom: string;
-  WaterlineAt: string;
-  StringerFrom: string;
-  StringerFromSide: string;
-  StringerAt: string;
-  StringerAtSide: string;
-  ButtlineFrom: string;
-  ButtlineFromSide: string;
-  ButtlineAt: string;
-  ButtlineAtSide: string;
-  WingStationFrom: string;
-  WingStationFromSide: string;
-  WingStationTo: string;
-  WingStationToSide: string;
-  StructuralOther: string;
 }
 
 export interface ILocationDetails {
@@ -322,6 +293,8 @@ export interface PartsReportDispatchFuncType {
 }
 
 export type TransformedSdrDataType = GetAllEsfrRecordsResResult & { SdrStatus: string };
+
+export interface IViewSdrResult extends IViewSearchSdrResult, TransformedSdrDataType {}
 
 export interface FlatFileDispatchFuncType {
   type: FlatFileActionType;

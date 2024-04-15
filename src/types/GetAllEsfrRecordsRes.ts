@@ -18,7 +18,7 @@ export interface GetAllEsfrRecordsResResult {
   IsOlderThan72Hours: boolean;
   LogpageNumber: string;
   LogpageStatus: LogpageStatus | null;
-  OperatorControlNumber: string | null;
+  OperatorControlNumber: string;
   Station: string;
   Status: Status;
   StatusId: SelectedStatus;

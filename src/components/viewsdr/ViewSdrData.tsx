@@ -11,11 +11,11 @@ import { MultipleSelect, SingleSelect } from "src/commons/Select";
 import TextField from "src/commons/TextField";
 import {
   IEditSdrValues,
+  IViewSdrResult,
   SdrEsfrRecordDetailsStateType,
   SelectedStatus,
   SelectedTab,
   Sides,
-  TransformedSdrDataType,
   UserPermission,
 } from "src/commons/types";
 import { DATETIME_REQUEST, DATE_HTML_DISPLAY, toFixed } from "src/helpers";
@@ -26,7 +26,7 @@ export interface IViewSdrDataProps {
   editable: boolean;
   handleUpsertSdrSnapshot: (a: IEditSdrValues, b: SelectedStatus) => void;
   isSdr: boolean;
-  selectedSdr: TransformedSdrDataType;
+  selectedSdr: IViewSdrResult;
   setViewSdrFlag: Dispatch<SetStateAction<boolean>>;
   tabIndex: number;
 }
@@ -46,12 +46,13 @@ const ViewSdrData = ({
   const [followUpFlag, setFollowUpFlag] = useState<boolean>(
     tabIndex === SelectedTab.FlaggedForFollowUp
   );
+  const isReport: boolean = useMemo(() => tabIndex > SelectedTab.Approved, [tabIndex]);
 
   const initialValues: IEditSdrValues = useMemo(
     () => ({
       SdrId: detailsData?.SdrDetails?.sdrNumber ? +detailsData.SdrDetails.sdrNumber : 0,
       SnapshotId: "",
-      Type: selectedSdr?.Type,
+      Type: selectedSdr?.Type || selectedSdr?.ReportType || "",
       SfrAdditionalDetails: {
         SnapshotId: "",
         AtaCode: logpageData?.FleetInfo?.ATACode || "",
@@ -67,13 +68,15 @@ const ViewSdrData = ({
         ComponentName: "",
         ComponentManufacturerName: "",
         PartModelNumber: "",
-        FuselageFromSta: "",
-        FuselageToSta: "",
-        CorrisionLevel: "",
+        FuselageFromSta: detailsData?.LocationDetails?.FromSta || "",
+        FuselageToSta: detailsData?.LocationDetails?.ToSta || "",
+        CorrisionLevel: detailsData?.DiscrepancyDetails?.CorrosionLevelId
+          ? "" + detailsData.DiscrepancyDetails.CorrosionLevelId
+          : "",
         CrackLength: detailsData?.DiscrepancyDetails?.CrackLength
           ? "" + detailsData.DiscrepancyDetails.CrackLength
           : "",
-        NumberOfCracks: detailsData?.DiscrepancyDetails?.NumberOfCracks || 0,
+        NumberOfCracks: detailsData?.DiscrepancyDetails?.NumberOfCracks ?? 0,
         WaterlineFrom: "",
         WaterlineTo: "",
         StringerFrom: "",
@@ -90,9 +93,6 @@ const ViewSdrData = ({
         WingStationToSide: "",
         StructuralOther: detailsData?.LocationDetails?.Other || "",
       },
-      CCCorrosionLevel: "",
-      CCCrackLength: "",
-      CCNumberofCracks: 0,
       AircraftDetails: {
         RegistryNNumber: "",
         Manufacturer: detailsData?.FleetInfo?.ManufacturedBy || "",
@@ -279,8 +279,14 @@ const ViewSdrData = ({
             touched,
             values,
           }) => (
-            <form onSubmit={handleSubmit} className="overflow-hidden mb-[4rem]">
-              <div id="view-sdr-details" className="h-full overflow-y-auto">
+            <form
+              onSubmit={handleSubmit}
+              className={`overflow-hidden mb-[4rem] ${isReport && "max-h-[150vh]"}`}
+            >
+              <div
+                id={`view-${isReport ? "report" : "sdr"}-details`}
+                className="h-full overflow-y-auto"
+              >
                 {/* Problem Description */}
                 <Grid
                   className={"sdr-status-grid"}
@@ -1412,12 +1418,12 @@ const ViewSdrData = ({
                     </Grid>
                   </Grid>
                   <Grid className={"sdr-status-item"} container spacing={3}>
-                    <Grid item xs={4}>
+                    <Grid item xs={12}>
                       <ListItem>Corrosion Level</ListItem>
                     </Grid>
                   </Grid>
                   <Grid className={"sdr-status-description"} container spacing={3}>
-                    <Grid item xs={4}>
+                    <Grid item xs={12}>
                       <ListItem>
                         {editable ? (
                           <SingleSelect
@@ -1494,7 +1500,7 @@ const ViewSdrData = ({
                           <TextField
                             type="number"
                             name="SfrAdditionalDetails.NumberOfCracks"
-                            value={values?.SfrAdditionalDetails?.NumberOfCracks || ""}
+                            value={values?.SfrAdditionalDetails?.NumberOfCracks ?? ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1508,7 +1514,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values?.SfrAdditionalDetails?.NumberOfCracks || "--"
+                          values?.SfrAdditionalDetails?.NumberOfCracks ?? "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1534,12 +1540,18 @@ const ViewSdrData = ({
                       <ListItem>
                         {editable ? (
                           <SingleSelect
-                            name="CCCorrosionLevel"
-                            value={values.CCCorrosionLevel || ""}
+                            name="SfrAdditionalDetails.CorrisionLevel"
+                            value={values?.SfrAdditionalDetails?.CorrisionLevel || ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            error={!!touched.CCCorrosionLevel && !!errors.CCCorrosionLevel}
-                            helperText={!!touched.CCCorrosionLevel && errors.CCCorrosionLevel}
+                            error={
+                              !!touched?.SfrAdditionalDetails?.CorrisionLevel &&
+                              !!errors?.SfrAdditionalDetails?.CorrisionLevel
+                            }
+                            helperText={
+                              !!touched?.SfrAdditionalDetails?.CorrisionLevel &&
+                              errors?.SfrAdditionalDetails?.CorrisionLevel
+                            }
                             options={
                               masterData?.CorrosionLevels &&
                               [...masterData.CorrosionLevels].sort(
@@ -1547,11 +1559,12 @@ const ViewSdrData = ({
                               )
                             }
                             className={"sdr-status-edit"}
-                            id="SfrAdditionalDetails.CCCorrosionLevel"
+                            id="SfrAdditionalDetails.CorrisionLevel"
                           />
                         ) : (
                           masterData?.CorrosionLevels.find(
-                            (option) => "" + option.Id === values.CCCorrosionLevel
+                            (option) =>
+                              "" + option.Id === values?.SfrAdditionalDetails?.CorrisionLevel
                           )?.Description || "--"
                         )}
                       </ListItem>
@@ -1561,16 +1574,22 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             type="number"
-                            name="CCCrackLength"
-                            value={values.CCCrackLength || ""}
+                            name="SfrAdditionalDetails.CrackLength"
+                            value={values?.SfrAdditionalDetails?.CrackLength || ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            error={!!touched.CCCrackLength && !!errors.CCCrackLength}
-                            helperText={!!touched.CCCrackLength && errors.CCCrackLength}
+                            error={
+                              !!touched?.SfrAdditionalDetails?.CrackLength &&
+                              !!errors?.SfrAdditionalDetails?.CrackLength
+                            }
+                            helperText={
+                              !!touched?.SfrAdditionalDetails?.CrackLength &&
+                              errors?.SfrAdditionalDetails?.CrackLength
+                            }
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values.CCCrackLength || "--"
+                          values?.SfrAdditionalDetails?.CrackLength || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1579,16 +1598,22 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             type="number"
-                            name="CCNumberofCracks"
-                            value={values.CCNumberofCracks || ""}
+                            name="SfrAdditionalDetails.NumberOfCracks"
+                            value={values?.SfrAdditionalDetails?.NumberOfCracks ?? ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            error={!!touched.CCNumberofCracks && !!errors.CCNumberofCracks}
-                            helperText={!!touched.CCNumberofCracks && errors.CCNumberofCracks}
+                            error={
+                              !!touched?.SfrAdditionalDetails?.NumberOfCracks &&
+                              !!errors?.SfrAdditionalDetails?.NumberOfCracks
+                            }
+                            helperText={
+                              !!touched?.SfrAdditionalDetails?.NumberOfCracks &&
+                              errors?.SfrAdditionalDetails?.NumberOfCracks
+                            }
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values.CCNumberofCracks || "--"
+                          values?.SfrAdditionalDetails?.NumberOfCracks ?? "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -2067,19 +2092,19 @@ const ViewSdrData = ({
                   </Grid>
                 </Grid>
 
-                {tabIndex < 2 && (
+                {auth === UserPermission.CRU && tabIndex < SelectedTab.Approved && (
                   <Box
                     my={2}
                     sx={{
                       borderBottom: 1,
-                      borderColor: tabIndex < 2 ? "divider" : "transparent",
+                      borderColor: tabIndex < SelectedTab.Approved ? "divider" : "transparent",
                       fontWeight: "600",
                     }}
                   />
                 )}
 
                 {/* Flag for follow up */}
-                {auth === UserPermission.CRU && tabIndex < 2 && (
+                {auth === UserPermission.CRU && tabIndex < SelectedTab.Approved && (
                   <FlexRow mb={2}>
                     <Checkbox
                       sx={{
@@ -2097,7 +2122,7 @@ const ViewSdrData = ({
                 )}
               </div>
 
-              {auth === UserPermission.CRU && (
+              {auth === UserPermission.CRU && tabIndex === SelectedTab.Approved && (
                 <ButtonGroup
                   className="bottom-button justify-end"
                   primaryDisabled={isSubmitting}
