@@ -330,6 +330,7 @@ const CreateSfrData = ({
                       />
                     }
                     id="SfrDiscrepancyTab"
+                    disabled={!logpageData}
                   />
                   <Tab
                     {...a11yProps("sfr", 2)}
@@ -340,6 +341,7 @@ const CreateSfrData = ({
                       />
                     }
                     id="SfrLocationTab"
+                    disabled={!logpageData}
                   />
                   <Tab
                     {...a11yProps("sfr", 3)}
@@ -353,6 +355,7 @@ const CreateSfrData = ({
                       />
                     }
                     id="SfrRepairTab"
+                    disabled={!logpageData}
                   />
                 </Tabs>
 

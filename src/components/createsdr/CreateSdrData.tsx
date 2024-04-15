@@ -171,7 +171,7 @@ const CreateSdrData = ({
         }}
         validationSchema={object().shape({
           ...ValidationSchema,
-          LogPageNumber: ValidationSchema.LogPageNumber.required(),
+          LogPageNumber: ValidationSchema.LogPageNumber.required("Required field"),
           AircraftNumber: string(),
           SfrAdditionalDetails: object().nullable(),
         })}

@@ -7,18 +7,19 @@ import RouterLink from "src/commons/Link";
 import Snackbar from "src/commons/Snackbar";
 import {
   IReportSearchValues,
-  IViewSearchSdrResult,
+  IViewSdrResult,
   SdrEsfrRecordDetailsStateType,
 } from "src/commons/types";
 import CommonDataGrid from "src/components/commondatagrid/commondatagrid";
 import { eSfrReportSearchColumns } from "src/components/commondatagrid/esfrReportSearchColumns";
 import ReportSearch from "src/components/reports/reportsearch/ReportSearch";
-import ViewReportData from "src/components/viewsdr/ViewReportData";
+import ViewSdrData from "src/components/viewsdr/ViewSdrData";
 import { getEsfrReport, resetEsfrReportSuccess } from "src/redux/ducks/getEsfrReport";
 import {
   getSdrEsfrRecordDetails,
   getSfrMasterData,
-  setDetailsLoaderOff,
+  resetEsfrRecordDetailData,
+  resetLogpageDataSuccess,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
@@ -30,8 +31,8 @@ const ReportSearchScreen = () => {
   const {
     loading: loadingDetailsData,
     detailsData,
-    masterData,
     logpageData,
+    masterData,
     error: detailsDataError,
   }: SdrEsfrRecordDetailsStateType = useAppSelector((state) => state.sdrEsfrRecordDetails);
   const {
@@ -42,7 +43,7 @@ const ReportSearchScreen = () => {
   const [openSnackbar, setOpenSnackbar] = useState<number>(0);
   const [snackbarMessage, setSnackbarMessage] = useState<string>("");
   const [viewSdrFlag, setViewSdrFlag] = useState<boolean>(false);
-  const [selectedSdr, setSelectedSdr] = useState<IViewSearchSdrResult | null>(null);
+  const [selectedSdr, setSelectedSdr] = useState<IViewSdrResult | null>(null);
 
   const handleSearchReport = (values: IReportSearchValues) => {
     if (values) {
@@ -72,19 +73,16 @@ const ReportSearchScreen = () => {
       setOpenSnackbar(-1);
       setSnackbarMessage(esfrReportError);
     }
-  }, [esfrReport, esfrReportError, detailsDataError, detailsData]);
+  }, [esfrReport, detailsData, logpageData]);
 
   useEffect(() => {
     if (selectedSdr) {
       dispatch(getSdrEsfrRecordDetails(selectedSdr.LogpageNumber));
+    } else {
+      dispatch(resetEsfrRecordDetailData());
+      dispatch(resetLogpageDataSuccess());
     }
   }, [selectedSdr]);
-
-  useEffect(() => {
-    if (detailsData && logpageData) {
-      dispatch(setDetailsLoaderOff());
-    }
-  }, [detailsData, logpageData]);
 
   useEffect(() => {
     if (!viewSdrFlag) {
@@ -140,7 +138,7 @@ const ReportSearchScreen = () => {
         </Grid>
         {viewSdrFlag && selectedSdr && (
           <Grid item md={6} xs={12}>
-            <ViewReportData
+            <ViewSdrData
               editable={false}
               handleUpsertSdrSnapshot={() => {}}
               isSdr={selectedSdr.ReportType === Type.SDR}

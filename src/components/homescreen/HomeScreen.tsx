@@ -9,10 +9,10 @@ import {
   ICreateSfrReqNoSdr,
   IEditSdrValues,
   ISaveSdrValues,
+  IViewSdrResult,
   SdrEsfrRecordDetailsStateType,
   SelectedStatus,
   SelectedTab,
-  TransformedSdrDataType,
 } from "src/commons/types";
 import { allEsfrRecordsColumns } from "src/components/commondatagrid/allEsfrRecordsColumns";
 import CommonDataGrid from "src/components/commondatagrid/commondatagrid";
@@ -32,6 +32,8 @@ import {
   getApprovedSdr,
   getSdrEsfrRecordDetails,
   getSfrMasterData,
+  resetEsfrRecordDetailData,
+  resetLogpageDataSuccess,
   viewLogPageDetails,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
@@ -60,7 +62,7 @@ const HomeScreen = () => {
   const [tabIndex, setTabIndex] = useState<number>(0);
   const [viewSdrFlag, setViewSdrFlag] = useState<boolean>(false);
   const [createSdrFlag, setCreateSdrFlag] = useState<string>("");
-  const [selectedSdr, setSelectedSdr] = useState<TransformedSdrDataType | null>(null);
+  const [selectedSdr, setSelectedSdr] = useState<IViewSdrResult | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [openSnackbar, setOpenSnackbar] = useState<number>(0);
   const [snackbarMessage, setSnackbarMessage] = useState<string>("");
@@ -249,6 +251,9 @@ const HomeScreen = () => {
       } else {
         dispatch(getSdrEsfrRecordDetails(selectedSdr.LogpageNumber));
       }
+    } else {
+      dispatch(resetEsfrRecordDetailData());
+      dispatch(resetLogpageDataSuccess());
     }
   }, [selectedSdr]);
 
