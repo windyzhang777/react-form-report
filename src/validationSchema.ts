@@ -1,13 +1,10 @@
 import { array, number, object, string } from "yup";
 
 export const ValidationSchema = {
-  LogPageNumber: string().test("len", "Not valid Logpage Number", (val) =>
-    val ? val.toString().trim().length === 7 : true
-  ),
-  Station: string().matches(/^[a-zA-Z]{3}$/, "Not a valid Station"),
-  AircraftNumber: string().test("len", "Not a valid Aircraft Number", (val) =>
-    val ? val.toString().trim().length === 4 : true
-  ),
+  LogPageNumber: string().matches(/^[0-9]{7}$/, "Not a valid Logpage Number"),
+  Station: string().matches(/^[a-zA-Z]{1,3}$/, "Not a valid Station"),
+  AircraftNumber: string().matches(/^[0-9]{4}$/, "Not a valid Aircraft Number"),
+  AtaCode: string().matches(/^[a-zA-Z0-9]{1,4}$/, "Not a valid ATA Code"),
   PrecautionaryProcedureIds: array().min(1, "Required field").max(4),
   NatureOfReportIds: array().min(1, "Required field").max(3),
   StageId: number().min(1, "Required field"),
@@ -77,12 +74,6 @@ export const ValidationSchema = {
     NumberofCracks: number().test("len", "up to 3 digits", (val) =>
       val ? val.toString().length <= 3 : true
     ),
-    CCCrackLength: number().test("len", "up to 5 digits", (val) =>
-      val ? val.toString().length <= 5 : true
-    ),
-    CCNumberofCracks: number().test("len", "3 digits", (val) =>
-      val ? val.toString().length === 3 : true
-    ),
   }),
   PartDetails: object().shape({
     PartLocation: string().test("len", "Not a valid value", (val) =>
@@ -107,6 +98,9 @@ export const ValidationSchema = {
   SfrAdditionalDetails: object().shape({
     NumberOfCracks: number().min(0).max(255),
   }),
+  Comments: string().max(250, "Up to 250 characters"),
+  Specify: string().max(100, "Up to 100 characters"),
+  PartNumber: string().max(30, "Up to 30 characters"),
 };
 
 export default ValidationSchema;

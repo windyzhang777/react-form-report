@@ -56,7 +56,11 @@ const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearch
             setSubmitting(false);
           }, 500);
         }}
-        validationSchema={object().shape({ ...ValidationSchema })}
+        validationSchema={object().shape({
+          ...ValidationSchema,
+          acNumber: ValidationSchema.AircraftNumber,
+          station: ValidationSchema.Station,
+        })}
       >
         {({
           errors,
@@ -201,6 +205,7 @@ const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearch
                     error={!!touched.acNumber && !!errors.acNumber}
                     helperText={!!touched.acNumber && errors.acNumber}
                     className="w-full"
+                    inputProps={{ maxLength: 4 }}
                   />
                 </ListItem>
               </Grid>
@@ -215,6 +220,7 @@ const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearch
                     error={!!touched.station && !!errors.station}
                     helperText={!!touched.station && errors.station}
                     className="w-full"
+                    inputProps={{ maxLength: 3 }}
                   />
                 </ListItem>
               </Grid>
