@@ -65,7 +65,13 @@ const DiscrepancyPartsReportSearch = ({
             setSubmitting(false);
           }, 500);
         }}
-        validationSchema={object().shape({ ...ValidationSchema })}
+        validationSchema={object().shape({
+          ...ValidationSchema,
+          acNumber: ValidationSchema.AircraftNumber,
+          station: ValidationSchema.Station,
+          partNumber: ValidationSchema.PartNumber,
+          ataCode: ValidationSchema.AtaCode,
+        })}
       >
         {({
           errors,
@@ -155,7 +161,10 @@ const DiscrepancyPartsReportSearch = ({
                     onBlur={handleBlur}
                     error={!!touched.partNumber && !!errors.partNumber}
                     helperText={!!touched.partNumber && errors.partNumber}
-                    className="w-full"
+                    multiline
+                    maxRows={4}
+                    className={"sdr-status-edit textareaAutosize"}
+                    inputProps={{ style: { resize: "both" } }}
                   />
                 </ListItem>
               </Grid>
@@ -246,6 +255,7 @@ const DiscrepancyPartsReportSearch = ({
                     error={!!touched.acNumber && !!errors.acNumber}
                     helperText={!!touched.acNumber && errors.acNumber}
                     className="w-full"
+                    inputProps={{ maxLength: 4 }}
                   />
                 </ListItem>
               </Grid>
@@ -260,6 +270,7 @@ const DiscrepancyPartsReportSearch = ({
                     error={!!touched.station && !!errors.station}
                     helperText={!!touched.station && errors.station}
                     className="w-full"
+                    inputProps={{ maxLength: 3 }}
                   />
                 </ListItem>
               </Grid>
@@ -274,6 +285,7 @@ const DiscrepancyPartsReportSearch = ({
                     error={!!touched.ataCode && !!errors.ataCode}
                     helperText={!!touched.ataCode && errors.ataCode}
                     className="w-full"
+                    inputProps={{ maxLength: 4 }}
                   />
                 </ListItem>
               </Grid>
