@@ -138,7 +138,14 @@ export const allEsfrRecordsColumns = (
                     />
                   ))}
                 </FormGroup>
-                <Button onClick={() => setFilter([])}>Clear All Filters</Button>
+                <Button
+                  onClick={() => {
+                    window.localStorage.setItem("sdr_filter", JSON.stringify([]));
+                    setFilter([]);
+                  }}
+                >
+                  Clear All Filters
+                </Button>
               </FlexColumn>
             </ArrowMenu>
           )}
