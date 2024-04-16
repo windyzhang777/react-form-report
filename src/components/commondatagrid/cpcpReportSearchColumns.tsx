@@ -33,7 +33,7 @@ export const cpcpReportSearchColumns = (): GridColDef<GetCpcpReportResResult>[] 
     },
     {
       field: "LogpageNumber",
-      headerName: "Log Page Time",
+      headerName: "Log Page Number",
       sortable: false,
       minWidth: 100,
       renderCell: ({ row }) => (

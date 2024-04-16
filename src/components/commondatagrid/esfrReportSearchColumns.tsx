@@ -39,7 +39,7 @@ export const eSfrReportSearchColumns = (): GridColDef<GetEsfrReportResResult>[] 
     },
     {
       field: "LogpageNumber",
-      headerName: "Log Page Time",
+      headerName: "Log Page Number",
       sortable: false,
       minWidth: 100,
       renderCell: ({ row }) => (

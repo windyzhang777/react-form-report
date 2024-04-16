@@ -55,7 +55,7 @@ export const partsReportSearchColumns = (): GridColDef<GetPartsReportResResult>[
     },
     {
       field: "LogpageNumber",
-      headerName: "Log Page Time",
+      headerName: "Log Page Number",
       sortable: false,
       minWidth: 100,
       renderCell: ({ row }) => (
