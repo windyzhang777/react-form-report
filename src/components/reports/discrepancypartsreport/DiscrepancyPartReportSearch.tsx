@@ -245,7 +245,7 @@ const DiscrepancyPartsReportSearch = ({
                 </Grid>
               </Grid>
               <Grid item lg={viewSdrFlag ? 6 : 2} md={viewSdrFlag ? 6 : 4} sm={6}>
-                <ListItem className="mt-3">A/c Number</ListItem>
+                <ListItem className="mt-3">A/C Number</ListItem>
                 <ListItem>
                   <TextField
                     name="acNumber"
