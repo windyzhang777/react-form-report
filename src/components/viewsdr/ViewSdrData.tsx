@@ -2122,7 +2122,7 @@ const ViewSdrData = ({
                 )}
               </div>
 
-              {auth === UserPermission.CRU && tabIndex === SelectedTab.Approved && (
+              {auth === UserPermission.CRU && (
                 <ButtonGroup
                   className="bottom-button justify-end"
                   primaryDisabled={isSubmitting}
