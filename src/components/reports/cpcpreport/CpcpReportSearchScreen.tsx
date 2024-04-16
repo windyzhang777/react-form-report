@@ -98,7 +98,7 @@ const CpcpReportSearchScreen = () => {
               <ChevronLeftIcon />
               <Box className="font-semibold">Back to SDR Web</Box>
             </RouterLink>
-            <Box className="page-title">CPCP Report Search</Box>
+            <Box className="page-title">CPCP Report</Box>
             <Box className="flex-1 md:none" />
           </Box>
           {/* SEARCH */}
