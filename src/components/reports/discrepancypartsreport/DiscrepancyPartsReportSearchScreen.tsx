@@ -102,7 +102,7 @@ const DiscrepancyPartsReportSearchScreen = () => {
               <ChevronLeftIcon />
               <Box className="font-semibold">Back to SDR Web</Box>
             </RouterLink>
-            <Box className="page-title">Discrepancy Parts Report</Box>
+            <Box className="page-title">Discrepancy Part Report</Box>
             <Box className="flex-1 md:none" />
           </Box>
           {/* SEARCH */}

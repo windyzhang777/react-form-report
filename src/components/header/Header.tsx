@@ -74,10 +74,10 @@ const Header = ({ resetApp }: IHeaderProps) => {
                 <MenuItem>Report Search</MenuItem>
               </RouterLink>
               <RouterLink to="/esfr/cpcp" onClick={() => setOpenDrawer(false)}>
-                <MenuItem>CPCP Report Search</MenuItem>
+                <MenuItem>CPCP Report</MenuItem>
               </RouterLink>
               <RouterLink to="/esfr/parts" onClick={() => setOpenDrawer(false)}>
-                <MenuItem>Discrepancy Parts Report</MenuItem>
+                <MenuItem>Discrepancy Part Report</MenuItem>
               </RouterLink>
             </List>
           </Box>

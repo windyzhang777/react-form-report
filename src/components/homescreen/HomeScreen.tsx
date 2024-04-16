@@ -69,11 +69,7 @@ const HomeScreen = () => {
   const [logpageNumberValue, setLogpageNumberValue] = useState<string>("");
   const [editable, setEditable] = useState<boolean>(false);
   const [openConfirmSaved, setOpenConfirmSaved] = useState<boolean>(false);
-  const [filters, setFilters] = useState<LogpageStatus[]>([
-    LogpageStatus.Carry,
-    LogpageStatus.Cleared,
-    LogpageStatus.Defer,
-  ]);
+  const [filters, setFilters] = useState<LogpageStatus[]>([]);
   const isSdr = useMemo(() => selectedSdr?.Type === Type.SDR, [selectedSdr]);
   const sdrData = useMemo(() => {
     switch (tabIndex) {
@@ -98,18 +94,18 @@ const HomeScreen = () => {
     }
   };
 
-  const handleTabChange = (event: SyntheticEvent, tab: number) => {
-    setTabIndex(tab);
+  const handleFilterInit = (tab: number = tabIndex) => {
     if (tab === SelectedTab.Open) {
       const stored = window.localStorage.getItem("sdr_filter");
-      setFilters(
-        stored
-          ? JSON.parse(stored)
-          : [LogpageStatus.Carry, LogpageStatus.Cleared, LogpageStatus.Defer]
-      );
+      setFilters(stored ? JSON.parse(stored) : []);
     } else {
       setFilters([]);
     }
+  };
+
+  const handleTabChange = (event: SyntheticEvent, tab: number) => {
+    setTabIndex(tab);
+    handleFilterInit(tab);
     setViewSdrFlag(false);
     setSelectedSdr(null);
   };
@@ -262,6 +258,7 @@ const HomeScreen = () => {
     if (!masterData) {
       dispatch(getSfrMasterData());
     }
+    handleFilterInit();
   }, []);
 
   useEffect(() => {
