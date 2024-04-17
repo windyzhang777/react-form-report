@@ -201,7 +201,7 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                 <ListItem className="mt-3 whitespace-nowrap">Operator Control Number</ListItem>
                 <ListItem>
                   <TextField
-                    name="operatorControlNumber"
+                    name="auditNumber"
                     value={values.auditNumber}
                     onChange={handleChange}
                     onBlur={handleBlur}
