@@ -124,7 +124,7 @@ const ViewSnapshotData = ({
         (isSdr ? snapshotData?.CreatedbyLastName : snapshotData?.CreatedbyLastName) || "",
       ModifiedbyFirstName: `${profileData?.FirstName}`,
       ModifiedbyLastName: `${profileData?.LastName}`,
-      CreatedDate: snapshotData?.LogPageCreationDate || moment().format(DATETIME_REQUEST),
+      CreatedDate: snapshotData?.CreatedDate || "",
       CorrectiveAction: snapshotData?.CorrectiveAction || "",
       OperatorControlNumber: snapshotData?.OperatorControlNumber || "",
       IsExtracted: true,
