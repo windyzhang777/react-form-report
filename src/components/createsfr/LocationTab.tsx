@@ -5,6 +5,7 @@ import { SingleSelect } from "src/commons/Select";
 import TabPanel from "src/commons/TabPanel";
 import TextField from "src/commons/TextField";
 import {
+  BLOptions,
   ISaveSfrValues,
   OtherOptions,
   RudderDamageProximityOptions,
@@ -287,12 +288,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                           !!touched?.LocationDetails?.FromBLLength &&
                           errors?.LocationDetails?.FromBLLength
                         }
-                        options={
-                          masterData?.DiscrepancyParts &&
-                          [...masterData.DiscrepancyParts].sort(
-                            (a, b) => a.DisplayOrder - b.DisplayOrder
-                          )
-                        }
+                        options={BLOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                         className={"sdr-status-edit"}
                         id="LocationDetails.FromBLLength"
                       />
@@ -340,12 +336,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                           !!touched?.LocationDetails?.ToBLLength &&
                           errors?.LocationDetails?.ToBLLength
                         }
-                        options={
-                          masterData?.DiscrepancyParts &&
-                          [...masterData.DiscrepancyParts].sort(
-                            (a, b) => a.DisplayOrder - b.DisplayOrder
-                          )
-                        }
+                        options={BLOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                         className={"sdr-status-edit"}
                         id="LocationDetails.ToBLLength"
                       />
