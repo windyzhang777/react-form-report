@@ -470,42 +470,6 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
               ?.DiscrepancyPartInformationCode && (
               <>
                 <div>
-                  <ListItem>ATA Chapter</ListItem>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="ATAChapter"
-                        value={values.ATAChapter || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={!!touched.ATAChapter && !!errors.ATAChapter}
-                        helperText={!!touched.ATAChapter && errors.ATAChapter}
-                        className={"sdr-status-edit"}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </div>
-                <div>
-                  <ListItem>ATA Sub Chapter</ListItem>
-                  <ListItem>
-                    {editable ? (
-                      <TextField
-                        name="ATASubChapter"
-                        value={values.ATASubChapter || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={!!touched.ATASubChapter && !!errors.ATASubChapter}
-                        helperText={!!touched.ATASubChapter && errors?.ATASubChapter}
-                        className={"sdr-status-edit"}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </div>
-                <div>
                   <ListItem>Part Number</ListItem>
                   <ListItem>
                     {editable ? (
