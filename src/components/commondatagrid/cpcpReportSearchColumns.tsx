@@ -57,7 +57,7 @@ export const cpcpReportSearchColumns = (): GridColDef<GetCpcpReportResResult>[] 
     },
     {
       field: "AircraftNumber",
-      headerName: "AC Number",
+      headerName: "A/C Number",
       sortable: false,
       minWidth: 100,
     },

@@ -51,7 +51,7 @@ export const allEsfrRecordsColumns = (
     },
     {
       field: "AircraftNumber",
-      headerName: "AC Number",
+      headerName: "A/C Number",
       minWidth: 100,
       sortable: false,
     },
