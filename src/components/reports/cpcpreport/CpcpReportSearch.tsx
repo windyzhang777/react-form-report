@@ -199,7 +199,7 @@ const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearch
                 <ListItem>
                   <TextField
                     name="acNumber"
-                    value={values.acNumber || ""}
+                    value={values.acNumber}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.acNumber && !!errors.acNumber}
@@ -214,7 +214,7 @@ const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearch
                 <ListItem>
                   <TextField
                     name="station"
-                    value={values.station || ""}
+                    value={values.station}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.station && !!errors.station}

@@ -113,7 +113,7 @@ const DiscrepancyPartsReportSearch = ({
                   <SingleSelect
                     defaultValue="All"
                     name="discrepancyTypes"
-                    value={values.discrepancyType || ""}
+                    value={values.discrepancyType}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.discrepancyType && !!errors.discrepancyType}
@@ -135,7 +135,7 @@ const DiscrepancyPartsReportSearch = ({
                   <SingleSelect
                     defaultValue="All"
                     name="discrepancyParts"
-                    value={values.discrepancyParts || ""}
+                    value={values.discrepancyParts}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.discrepancyParts && !!errors.discrepancyParts}
@@ -156,7 +156,7 @@ const DiscrepancyPartsReportSearch = ({
                 <ListItem>
                   <TextField
                     name="partNumber"
-                    value={values.partNumber || ""}
+                    value={values.partNumber}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.partNumber && !!errors.partNumber}
@@ -249,7 +249,7 @@ const DiscrepancyPartsReportSearch = ({
                 <ListItem>
                   <TextField
                     name="acNumber"
-                    value={values.acNumber || ""}
+                    value={values.acNumber}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.acNumber && !!errors.acNumber}
@@ -264,7 +264,7 @@ const DiscrepancyPartsReportSearch = ({
                 <ListItem>
                   <TextField
                     name="station"
-                    value={values.station || ""}
+                    value={values.station}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.station && !!errors.station}
@@ -279,7 +279,7 @@ const DiscrepancyPartsReportSearch = ({
                 <ListItem>
                   <TextField
                     name="ataCode"
-                    value={values.ataCode || ""}
+                    value={values.ataCode}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.ataCode && !!errors.ataCode}
