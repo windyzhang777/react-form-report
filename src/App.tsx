@@ -2,18 +2,18 @@ import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { FlexCenter, FlexColumn } from "src/commons/Box";
 import CommonLoader from "src/commons/CommonLoader";
-import { SelectedStatus, UserPermission } from "src/commons/types";
+import { UserPermission } from "src/commons/types";
 import Header from "src/components/header/Header";
 import HomeScreen from "src/components/homescreen/HomeScreen";
+import CpcpReportSearchScreen from "src/components/reports/cpcpreport/CpcpReportSearchScreen";
+import DiscrepancyPartsReportSearchScreen from "src/components/reports/discrepancypartsreport/DiscrepancyPartsReportSearchScreen";
+import ReportSearchScreen from "src/components/reports/reportsearch/ReportSearchScreen";
 import { clearLocalStorage } from "src/helpers";
 import { getAllSdrs } from "src/redux/ducks/getAllSdrs";
 import { getProfile } from "src/redux/ducks/getProfile";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import config from "src/utils/env.config";
 import { useAuth } from "src/utils/oauth2-pkce";
-import ReportSearchScreen from "./components/reports/reportsearch/ReportSearchScreen";
-import CpcpReportSearchScreen from "./components/reports/cpcpreport/CpcpReportSearchScreen";
-import DiscrepancyPartsReportSearchScreen from "./components/reports/discrepancypartsreport/DiscrepancyPartsReportSearchScreen";
 
 const App = () => {
   const {
@@ -30,9 +30,7 @@ const App = () => {
     if (config.REACT_APP_ENVIRONMENT === "localhost") empId = "V130186";
     dispatch(getProfile(sessionStorage.id || empId || "v130186"));
     if (profileData) {
-      dispatch(getAllSdrs(SelectedStatus.Open));
-      dispatch(getAllSdrs(SelectedStatus.ApprovedWithFollowUp));
-      dispatch(getAllSdrs(SelectedStatus.Approved));
+      dispatch(getAllSdrs());
     }
   };
 

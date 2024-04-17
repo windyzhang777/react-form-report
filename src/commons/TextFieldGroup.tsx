@@ -1,7 +1,7 @@
 import { ChangeEventHandler, Fragment } from "react";
 import { FlexRow } from "src/commons/Box";
 import TextField, { ICommonTextFieldProps } from "src/commons/TextField";
-import { ISaveSfrValues } from "./types";
+import { ISaveSfrValues } from "src/commons/types";
 
 export interface ITextFieldGroupProps extends Partial<ICommonTextFieldProps> {
   count: number;

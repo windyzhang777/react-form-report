@@ -198,6 +198,7 @@ const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearch
                 <ListItem className="mt-3">A/C Number</ListItem>
                 <ListItem>
                   <TextField
+                    placeholder="All"
                     name="acNumber"
                     value={values.acNumber}
                     onChange={handleChange}
@@ -213,6 +214,7 @@ const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearch
                 <ListItem className="mt-3">Station</ListItem>
                 <ListItem>
                   <TextField
+                    placeholder="All"
                     name="station"
                     value={values.station}
                     onChange={handleChange}

@@ -466,7 +466,8 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
               </div>
             )}
 
-            {!!values.DiscrepancyPartInformationCode && (
+            {!!values?.DiscrepancyDetails?.DiscrepancyPartDetails?.[0]
+              ?.DiscrepancyPartInformationCode && (
               <>
                 <div>
                   <ListItem>ATA Chapter</ListItem>

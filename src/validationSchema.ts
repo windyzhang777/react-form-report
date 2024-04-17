@@ -96,7 +96,10 @@ export const ValidationSchema = {
   ReportedBy: string().max(30, "Up to 30 characters"),
   Keyword: string().max(30, "Up to 30 characters"),
   SfrAdditionalDetails: object().shape({
-    NumberOfCracks: number().min(0).max(255),
+    NumberOfCracks: number().min(0, "Not a valid value").max(255),
+    CrackLength: number().test("digits", "Not a valid value", (val) =>
+      val ? /^[1-9]\d{0,7}(?:\.\d{1,3})?$/.test(val.toString()) : true
+    ),
   }),
   Comments: string().max(250, "Up to 250 characters"),
   Specify: string().max(100, "Up to 100 characters"),

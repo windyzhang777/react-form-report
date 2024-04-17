@@ -263,12 +263,18 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="LogPageNumber"
-                        value={values.LogPageNumber || ""}
+                        name="OriginDetails.CalDocIdentifier"
+                        value={values?.OriginDetails?.CalDocIdentifier || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={!!touched.LogPageNumber && !!errors.LogPageNumber}
-                        helperText={!!touched.LogPageNumber && errors.LogPageNumber}
+                        error={
+                          !!touched?.OriginDetails?.CalDocIdentifier &&
+                          !!errors?.OriginDetails?.CalDocIdentifier
+                        }
+                        helperText={
+                          !!touched?.OriginDetails?.CalDocIdentifier &&
+                          errors?.OriginDetails?.CalDocIdentifier
+                        }
                         className={"sdr-status-edit"}
                         inputProps={{ maxLength: 7 }}
                         placeholder="xxxxxxx"

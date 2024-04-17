@@ -51,7 +51,7 @@ export const allEsfrRecordsColumns = (
     },
     {
       field: "AircraftNumber",
-      headerName: "Aircraft Number",
+      headerName: "A/C Number",
       minWidth: 100,
       sortable: false,
     },
@@ -90,9 +90,9 @@ export const allEsfrRecordsColumns = (
       headerName: "Log Page Status",
       minWidth: 130,
       sortable: false,
-      renderHeader: ({ colDef }) => (
+      renderHeader: () => (
         <FlexRow>
-          <GridColumnHeaderTitle label={colDef.headerName!} columnWidth={130} />
+          <GridColumnHeaderTitle label="Log Page Status" columnWidth={130} />
           {showFilter && (
             <ArrowMenu
               id="filter-logpage-status"

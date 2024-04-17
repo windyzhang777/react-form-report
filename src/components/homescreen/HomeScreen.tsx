@@ -45,10 +45,8 @@ import "./homescreen.css";
 
 const HomeScreen = () => {
   const { profileData } = useAppSelector((state) => state.profile);
-  const { sdrData: newSdrData } = useAppSelector((state) => state.newSdrs);
-  const { loading: loadingSdrs, sdrData: approvedSdrData } = useAppSelector(
-    (state) => state.approvedSdrs
-  );
+  const { loading: loadingSdrs, sdrData: newSdrData } = useAppSelector((state) => state.newSdrs);
+  const { sdrData: approvedSdrData } = useAppSelector((state) => state.approvedSdrs);
   const { sdrData: flaggedSdrData } = useAppSelector((state) => state.flaggedSdrs);
   const {
     loading: loadingDetailsData,
@@ -86,9 +84,7 @@ const HomeScreen = () => {
   const resetSdrs = () => {
     setViewSdrFlag(false);
     setSelectedSdr(null);
-    dispatch(getAllSdrs(SelectedStatus.Open));
-    dispatch(getAllSdrs(SelectedStatus.ApprovedWithFollowUp));
-    dispatch(getAllSdrs(SelectedStatus.Approved));
+    dispatch(getAllSdrs());
     if (window) {
       window.scrollTo(0, 0);
     }
