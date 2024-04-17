@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Dispatch } from "redux";
 import {
   SdrActionType,
@@ -107,17 +108,33 @@ export const flaggedSdrsReducer = (
   }
 };
 
-export const getAllSdrs = (statusId: SelectedStatus) => {
+export const getAllSdrs = () => {
   return function (dispatch: Dispatch<SdrDispatchFuncType>) {
-    dispatch(initFetch(statusId));
-    axiosInstance
-      .post(`${config.apiBaseAddress}${config.URL_GET_ALL_SDRS}`, {
-        statusId: statusId,
-      })
-      .then((res) => {
-        const sdrsInfo = res?.data?.Result;
-        dispatch(fetchSuccess(sdrsInfo, statusId));
-      })
-      .catch((error) => dispatch(fetchFailure(error.message, statusId)));
+    dispatch(initFetch(SelectedStatus.Open));
+    dispatch(initFetch(SelectedStatus.ApprovedWithFollowUp));
+    dispatch(initFetch(SelectedStatus.Approved));
+    axios
+      .all([
+        axiosInstance.post(`${config.apiBaseAddress}${config.URL_GET_ALL_SDRS}`, {
+          statusId: SelectedStatus.Open,
+        }),
+        axiosInstance.post(`${config.apiBaseAddress}${config.URL_GET_ALL_SDRS}`, {
+          statusId: SelectedStatus.ApprovedWithFollowUp,
+        }),
+        axiosInstance.post(`${config.apiBaseAddress}${config.URL_GET_ALL_SDRS}`, {
+          statusId: SelectedStatus.Approved,
+        }),
+      ])
+      .then(
+        axios.spread((...res) => {
+          const sdrsOpen = res?.[0]?.data?.Result;
+          dispatch(fetchSuccess(sdrsOpen, SelectedStatus.Open));
+          const sdrsApprovedWithFollowUp = res?.[1]?.data?.Result;
+          dispatch(fetchSuccess(sdrsApprovedWithFollowUp, SelectedStatus.ApprovedWithFollowUp));
+          const sdrsApproved = res?.[2]?.data?.Result;
+          dispatch(fetchSuccess(sdrsApproved, SelectedStatus.Approved));
+        })
+      )
+      .catch((error) => dispatch(fetchFailure(error.message, SelectedStatus.Open)));
   };
 };

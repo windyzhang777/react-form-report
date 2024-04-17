@@ -56,7 +56,7 @@ const CommonDataGrid = ({
   viewSdrFlag,
 }: CommonDataGridProps) => {
   const { auth } = useAppSelector((state) => state.profile);
-  const { loading } = useAppSelector((state) => state.approvedSdrs);
+  const { loading } = useAppSelector((state) => state.newSdrs);
   const { masterData }: SdrEsfrRecordDetailsStateType = useAppSelector(
     (state) => state.sdrEsfrRecordDetails
   );
