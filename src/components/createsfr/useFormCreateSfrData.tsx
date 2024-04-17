@@ -36,6 +36,23 @@ export const useFormCreateSfrData = () => {
     setFieldValue("CalDocIdentifier4", "");
   }, [values?.OriginDetails?.CalDocId]);
 
+  useEffect(() => {
+    setFieldValue(
+      "OriginDetails.CalDocIdentifier",
+      formatCodes([
+        values?.CalDocIdentifier1,
+        values?.CalDocIdentifier2,
+        values?.CalDocIdentifier3,
+        values?.CalDocIdentifier4,
+      ])
+    );
+  }, [
+    values?.CalDocIdentifier1,
+    values?.CalDocIdentifier2,
+    values?.CalDocIdentifier3,
+    values?.CalDocIdentifier4,
+  ]);
+
   // Repair Tab
   useEffect(() => {
     setFieldValue(
