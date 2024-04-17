@@ -1,5 +1,5 @@
 {
-	"Timestamp": "2024-04-05T16:19:36Z",
+	"Timestamp": "2024-04-17T15:36:17Z",
 	"ResponseTime": 0,
 	"Errors": [],
 	"ErrorCode": null,
@@ -465,6 +465,223 @@
 				"Id": 13
 			}
 		],
+		"Fleet": [
+			{
+				"Description": "B737-100. FleetCode changed from 10 to -0 to insert new fleet 787-10 with fleetcode 10",
+				"DisplayOrder": 0,
+				"Id": 0
+			},
+			{
+				"Description": "GSE",
+				"DisplayOrder": 0,
+				"Id": 0
+			},
+			{
+				"Description": "DC10-10",
+				"DisplayOrder": 0,
+				"Id": 1
+			},
+			{
+				"Description": "DC10-30",
+				"DisplayOrder": 0,
+				"Id": 2
+			},
+			{
+				"Description": "B737-300",
+				"DisplayOrder": 0,
+				"Id": 3
+			},
+			{
+				"Description": "DC9-30",
+				"DisplayOrder": 0,
+				"Id": 5
+			},
+			{
+				"Description": "B727-200",
+				"DisplayOrder": 0,
+				"Id": 7
+			},
+			{
+				"Description": "MD80",
+				"DisplayOrder": 0,
+				"Id": 8
+			},
+			{
+				"Description": "787-10",
+				"DisplayOrder": 0,
+				"Id": 10
+			},
+			{
+				"Description": "B727-200CMI",
+				"DisplayOrder": 0,
+				"Id": 12
+			},
+			{
+				"Description": "B727-200CAM **DHL Cargo**",
+				"DisplayOrder": 0,
+				"Id": 14
+			},
+			{
+				"Description": "B737-200",
+				"DisplayOrder": 0,
+				"Id": 15
+			},
+			{
+				"Description": "A319-111",
+				"DisplayOrder": 0,
+				"Id": 16
+			},
+			{
+				"Description": "A319-100",
+				"DisplayOrder": 0,
+				"Id": 17
+			},
+			{
+				"Description": "A320-200",
+				"DisplayOrder": 0,
+				"Id": 18
+			},
+			{
+				"Description": "B757-200",
+				"DisplayOrder": 0,
+				"Id": 19
+			},
+			{
+				"Description": "B777-300",
+				"DisplayOrder": 0,
+				"Id": 23
+			},
+			{
+				"Description": "B737-500",
+				"DisplayOrder": 0,
+				"Id": 24
+			},
+			{
+				"Description": "B777-200",
+				"DisplayOrder": 0,
+				"Id": 25
+			},
+			{
+				"Description": "B777-222A",
+				"DisplayOrder": 0,
+				"Id": 26
+			},
+			{
+				"Description": "B777-222B",
+				"DisplayOrder": 0,
+				"Id": 27
+			},
+			{
+				"Description": "B737-3Q8",
+				"DisplayOrder": 0,
+				"Id": 28
+			},
+			{
+				"Description": "Interchageable between 737-500/700/800",
+				"DisplayOrder": 0,
+				"Id": 29
+			},
+			{
+				"Description": "737 MAX 9",
+				"DisplayOrder": 0,
+				"Id": 42
+			},
+			{
+				"Description": "B747",
+				"DisplayOrder": 0,
+				"Id": 47
+			},
+			{
+				"Description": "USED FOR TRAINING",
+				"DisplayOrder": 0,
+				"Id": 48
+			},
+			{
+				"Description": "757-300",
+				"DisplayOrder": 0,
+				"Id": 53
+			},
+			{
+				"Description": "B737-700",
+				"DisplayOrder": 0,
+				"Id": 57
+			},
+			{
+				"Description": "B737-800",
+				"DisplayOrder": 0,
+				"Id": 58
+			},
+			{
+				"Description": "B737-900",
+				"DisplayOrder": 0,
+				"Id": 59
+			},
+			{
+				"Description": "B737-900ER",
+				"DisplayOrder": 0,
+				"Id": 60
+			},
+			{
+				"Description": "737 MAX Interchangeable",
+				"DisplayOrder": 0,
+				"Id": 61
+			},
+			{
+				"Description": "B767-200",
+				"DisplayOrder": 0,
+				"Id": 62
+			},
+			{
+				"Description": "B767-400",
+				"DisplayOrder": 0,
+				"Id": 64
+			},
+			{
+				"Description": "737-700 GBO",
+				"DisplayOrder": 0,
+				"Id": 65
+			},
+			{
+				"Description": "B737-700 COPA",
+				"DisplayOrder": 0,
+				"Id": 67
+			},
+			{
+				"Description": "737 GBO",
+				"DisplayOrder": 0,
+				"Id": 68
+			},
+			{
+				"Description": "B747-400",
+				"DisplayOrder": 0,
+				"Id": 74
+			},
+			{
+				"Description": "B757-200",
+				"DisplayOrder": 0,
+				"Id": 75
+			},
+			{
+				"Description": "B767-300",
+				"DisplayOrder": 0,
+				"Id": 76
+			},
+			{
+				"Description": "B787-8",
+				"DisplayOrder": 0,
+				"Id": 78
+			},
+			{
+				"Description": "B787-9",
+				"DisplayOrder": 0,
+				"Id": 79
+			},
+			{
+				"Description": "Interchangeable between fleets",
+				"DisplayOrder": 0,
+				"Id": 99
+			}
+		],
 		"HowDiscovered": [
 			{
 				"Description": "Unknown",
@@ -701,6 +918,56 @@
 				"Description": "Return to Block",
 				"DisplayOrder": 4,
 				"Id": 4
+			},
+			{
+				"Description": "Engine Shutdown",
+				"DisplayOrder": 5,
+				"Id": 5
+			},
+			{
+				"Description": "Activate Fire Ext",
+				"DisplayOrder": 6,
+				"Id": 6
+			},
+			{
+				"Description": "Manual O2 Mask",
+				"DisplayOrder": 7,
+				"Id": 7
+			},
+			{
+				"Description": "Deactivate Sys/Cir",
+				"DisplayOrder": 8,
+				"Id": 8
+			},
+			{
+				"Description": "Intentional Depress",
+				"DisplayOrder": 9,
+				"Id": 9
+			},
+			{
+				"Description": "Dump Fuel",
+				"DisplayOrder": 10,
+				"Id": 10
+			},
+			{
+				"Description": "None",
+				"DisplayOrder": 11,
+				"Id": 11
+			},
+			{
+				"Description": "Aborted Approach",
+				"DisplayOrder": 12,
+				"Id": 12
+			},
+			{
+				"Description": "Other",
+				"DisplayOrder": 13,
+				"Id": 13
+			},
+			{
+				"Description": "Autorotation",
+				"DisplayOrder": 14,
+				"Id": 14
 			}
 		],
 		"ReportableItems": "<!DOCTYPE html><html><body><table><tr><td style=\"padding-bottom: 1em;\">Mechanical Reliability / Service Difficulty Reports Reportable Occurrences<p style=\"margin-top: 1em;\">The following events are reportable by United Airlines. United shall report the occurrence or detection of each failure, malfunction, or defect concerning:</p><table style=\"border-collapse: collapse; margin-top: 1em;\"> <tbody> <tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(1)</td><td style=\"padding-bottom: 1em;\">Fires during flight and whether the related fire−warning system functioned properly.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(2)</td><td style=\"padding-bottom: 1em;\">Fires during flight not protected by a related fire−warning system. </td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(3)</td><td style=\"padding-bottom: 1em;\">False fire warning during flight.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(4)</td><td style=\"padding-bottom: 1em;\">An engine exhaust system that causes damage during flight to the engine, adjacent structure, equipment, or components.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(5)</td><td style=\"padding-bottom: 1em;\">An aircraft component that causes accumulation or circulation of smoke, vapor, or toxic or noxious fumes in the crew compartment or passenger cabin during flight.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(6)</td><td style=\"padding-bottom: 1em;\">Engine shutdown during flight because of flameout.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(7)</td><td style=\"padding-bottom: 1em;\">Engine shutdown during flight when external damage to the engine or airplane structure occurs.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(8)</td><td style=\"padding-bottom: 1em;\">Engine shutdown during flight due to foreign object ingestion or icing. </td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(9)</td><td style=\"padding-bottom: 1em;\">Engine shutdown during flight of more than one engine.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(10)</td><td style=\"padding-bottom: 1em;\">A propeller feathering system or ability of the system to control overspeed during flight.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(11)</td><td style=\"padding-bottom: 1em;\">A fuel or fuel−dumping system that affects fuel flow or causes hazardous leakage during flight.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(12)</td><td style=\"padding-bottom: 1em;\">An unwanted landing gear extension or retraction, or an unwanted opening or closing of landing gear doors during flight.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(13)</td><td style=\"padding-bottom: 1em;\">Brake system components that result in loss of brake actuating force when the airplane is in motion on the ground.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(14)</td><td style=\"padding-bottom: 1em;\">Aircraft structure that requires major repair.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(15)</td><td style=\"padding-bottom: 1em;\">Cracks, permanent deformation, or corrosion of aircraft structures, if more than the maximum acceptable to the manufacturer or the FAA.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(16)</td><td style=\"padding-bottom: 1em;\">Aircraft components or systems that result in taking emergency actions during flight (except action to shut down an engine); and</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(17)</td><td style=\"padding-bottom: 1em;\">Emergency evacuation systems or components including all exit doors, passenger emergency evacuation lighting systems, or evacuation equipment that are found defective, or that fail to perform the intended functions during an actual emergency or during training, testing, maintenance, demonstrations, or inadvertent deployments.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(18)</td><td style=\"padding-bottom: 1em;\">For the purpose of this section, during flight means the period from the moment the aircraft leaves the surface of the earth on takeoff until it touches down on landing. </td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(19)</td><td style=\"padding-bottom: 1em;\">In addition to the reports required above, United shall report any other failure, malfunction, or defect in an aircraft that occurs or is detected at any time if, in its opinion, that failure, malfunction, or defect has endangered or may endanger the safe operation of an aircraft used by it.</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(20)</td><td style=\"padding-bottom: 1em;\">Any part of the aircraft that would endanger the aircraft or any person by becoming detached in flight or during operations on the ground (IOSA Requirement).</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(21)</td><td style=\"padding-bottom: 1em;\">Un−commanded loss of thrust / power, shutdown or failure of any engine (IOSA Requirement − Related to Items 6 through 9 above).</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(22)</td><td style=\"padding-bottom: 1em;\">Uncontained failure of engine compressor, turbines (IOSA Requirement − Related to items 6 through 9 above) .</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(23)</td><td style=\"padding-bottom: 1em;\">RVSM altitude-keeping errors as defined in GMM Section 05-20-65 Reduced Vertical Separation Minimums (RVSM).</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\">(24)</td><td style=\"padding-bottom: 1em;\">In addition to the reporting requirements listed above, to meet the requirements of the aircraft Type Certificate Data Sheet (TCDS) and Boeing 787 system Airworthiness Limitations, number 13, United shall report any uncontrolled high thrust failure condition that may endanger the safe operation of an aircraft. In many cases, a reportable failure or malfunction will be obvious. The following information is provided to assist the operators in identifying reportable malfunctions related to uncontrollable high thrust. This includes any malfunctions having one or more of the following characteristics:<table style=\"border-collapse: collapse; margin-top: 1em;\"> <tbody> <tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\"> (a)</td><td style=\"padding-bottom: 1em;\"> Auto−acceleration or uncommanded thrust change to higher power</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\"> (b)</td><td style=\"padding-bottom: 1em;\"> Stuck thrust lever above idle power</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\"> (c)</td><td style=\"padding-bottom: 1em;\"> Inability to reduce thrust</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\"> (d)</td><td style=\"padding-bottom: 1em;\">When filing a report of such an event with the FAA, include in the description of the event one or more of the following phrases:<table style=\"border-collapse: collapse; margin-top: 1em;\"> <tbody> <tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: underline; width: 2em;\"> 1</td><td style=\"padding-bottom: 1em;\">Thrust control</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: underline; width: 2em;\"> 2</td><td style=\"padding-bottom: 1em;\"> No response to thrust lever</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: underline; width: 2em;\"> 3</td><td style=\"padding-bottom: 1em;\"> Auto−acceleration</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: underline; width: 2em;\"> 4</td><td style=\"padding-bottom: 1em;\"> Uncontrolled high thrust</td></tr></tbody> </table> </td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\"> (e)</td><td style=\"padding-bottom: 1em;\"> The following information must also be included in the report:<table style=\"border-collapse: collapse; margin-top: 1em;\"> <tbody> <tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: underline; width: 2em;\"> 1</td><td style=\"padding-bottom: 1em;\">Event description</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: underline; width: 2em;\"> 2</td><td style=\"padding-bottom: 1em;\"> Flight Crew action</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: underline; width: 2em;\"> 3</td><td style=\"padding-bottom: 1em;\">Maintenance action</td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: underline; width: 2em;\"> 4</td><td style=\"padding-bottom: 1em;\">List of affected or removed components </td></tr></tbody> </table> </td></tr><tr> <td style=\"padding-bottom: 1em; vertical-align: top; text-decoration: none; width: 2em;\"> (f)</td><td style=\"padding-bottom: 1em;\"> Send a copy of the report to Boeing and to the engine manufacturer</td></tr></tbody> </table> </td></tr></tbody> </table></td></tr></table></body></html>",

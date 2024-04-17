@@ -94,12 +94,12 @@ const ViewSdrData = ({
         StructuralOther: detailsData?.LocationDetails?.Other || "",
       },
       AircraftDetails: {
-        RegistryNNumber: "",
-        Manufacturer: detailsData?.FleetInfo?.ManufacturedBy || "",
-        Model: "",
-        SerialNumber: detailsData?.FleetInfo?.ManufacturerSerialNumber || "",
-        TotalTime: "" + detailsData?.FleetInfo?.TotalAircraftTime || "",
-        TotalCycles: "" + detailsData?.FleetInfo?.TotalAircraftCycles || "",
+        RegistryNNumber: logpageData?.FleetInfo?.LicenseNumber || "",
+        Manufacturer: logpageData?.FleetInfo?.ManufacturedBy || "",
+        Model: logpageData?.FleetInfo?.ManufacturerPartNumber || "",
+        SerialNumber: logpageData?.FleetInfo?.ManufacturerSerialNumber || "",
+        TotalTime: "" + logpageData?.FleetInfo?.TotalAircraftTime || "",
+        TotalCycles: "" + logpageData?.FleetInfo?.TotalAircraftCycles || "",
       },
       LogPageCreationDate:
         (isSdr ? detailsData?.SdrDetails?.CreatedDate : detailsData?.CreatedDate) ||
@@ -185,7 +185,7 @@ const ViewSdrData = ({
         </Grid>
         <Grid container spacing={2} pb={2}>
           <Grid item xs={4}>
-            <ListItem>{detailsData?.SdrDetails?.OperatorControlNumber}</ListItem>
+            <ListItem>{initialValues?.OperatorControlNumber}</ListItem>
           </Grid>
           <Grid item>
             <ArrowMenu
@@ -201,7 +201,7 @@ const ViewSdrData = ({
                   <ListItem>A/C Number</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{detailsData?.FleetInfo?.LicenseNumber}</ListItem>
+                  <ListItem>{initialValues?.AircraftDetails?.RegistryNNumber}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -209,7 +209,7 @@ const ViewSdrData = ({
                   <ListItem>A/C Manufacturer</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{detailsData?.FleetInfo?.ManufacturedBy}</ListItem>
+                  <ListItem>{initialValues?.AircraftDetails?.Manufacturer}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -217,7 +217,7 @@ const ViewSdrData = ({
                   <ListItem>A/C Model</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{detailsData?.FleetInfo?.ManufacturerPartNumber}</ListItem>
+                  <ListItem>{initialValues?.AircraftDetails?.Model}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -225,7 +225,7 @@ const ViewSdrData = ({
                   <ListItem>A/C Serial Number</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{detailsData?.FleetInfo?.ManufacturerSerialNumber}</ListItem>
+                  <ListItem>{initialValues?.AircraftDetails?.SerialNumber}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -233,7 +233,7 @@ const ViewSdrData = ({
                   <ListItem>A/C Total Time</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{toFixed(detailsData?.FleetInfo?.TotalAircraftTime)}</ListItem>
+                  <ListItem>{toFixed(initialValues?.AircraftDetails?.TotalTime)}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -241,7 +241,7 @@ const ViewSdrData = ({
                   <ListItem>A/C Total Cycles</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{toFixed(detailsData?.FleetInfo?.TotalAircraftCycles)}</ListItem>
+                  <ListItem>{toFixed(initialValues?.AircraftDetails?.TotalCycles)}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -249,7 +249,7 @@ const ViewSdrData = ({
                   <ListItem>Flight #</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{detailsData?.FleetInfo?.TailNumber}</ListItem>
+                  <ListItem>{initialValues?.AircraftNumber}</ListItem>
                 </Grid>
               </Grid>
             </ArrowMenu>

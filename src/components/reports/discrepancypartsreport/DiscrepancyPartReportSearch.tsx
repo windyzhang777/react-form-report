@@ -113,7 +113,7 @@ const DiscrepancyPartsReportSearch = ({
                   <SingleSelect
                     defaultValue="All"
                     name="discrepancyTypes"
-                    value={values.discrepancyType || ""}
+                    value={values.discrepancyType}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.discrepancyType && !!errors.discrepancyType}
@@ -135,7 +135,7 @@ const DiscrepancyPartsReportSearch = ({
                   <SingleSelect
                     defaultValue="All"
                     name="discrepancyParts"
-                    value={values.discrepancyParts || ""}
+                    value={values.discrepancyParts}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.discrepancyParts && !!errors.discrepancyParts}
@@ -155,8 +155,9 @@ const DiscrepancyPartsReportSearch = ({
                 <ListItem className="mt-3">Part Number</ListItem>
                 <ListItem>
                   <TextField
+                    placeholder="All"
                     name="partNumber"
-                    value={values.partNumber || ""}
+                    value={values.partNumber}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.partNumber && !!errors.partNumber}
@@ -179,6 +180,7 @@ const DiscrepancyPartsReportSearch = ({
                   <ListItem className="mt-3 !pr-0">From</ListItem>
                   <ListItem className="!flex items-center !pr-0">
                     <TextField
+                      placeholder="All"
                       type="date"
                       inputProps={{
                         max: moment(values?.dateTo).format(DATE_HTML_DISPLAY),
@@ -213,6 +215,7 @@ const DiscrepancyPartsReportSearch = ({
                   <ListItem className="mt-3">To</ListItem>
                   <ListItem className="!flex items-center">
                     <TextField
+                      placeholder="All"
                       type="date"
                       inputProps={{
                         min: moment(values?.dateFrom).format(DATE_HTML_DISPLAY),
@@ -245,11 +248,12 @@ const DiscrepancyPartsReportSearch = ({
                 </Grid>
               </Grid>
               <Grid item lg={viewSdrFlag ? 6 : 2} md={viewSdrFlag ? 6 : 4} sm={6}>
-                <ListItem className="mt-3">A/c Number</ListItem>
+                <ListItem className="mt-3">AC Number</ListItem>
                 <ListItem>
                   <TextField
+                    placeholder="All"
                     name="acNumber"
-                    value={values.acNumber || ""}
+                    value={values.acNumber}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.acNumber && !!errors.acNumber}
@@ -263,8 +267,9 @@ const DiscrepancyPartsReportSearch = ({
                 <ListItem className="mt-3">Station</ListItem>
                 <ListItem>
                   <TextField
+                    placeholder="All"
                     name="station"
-                    value={values.station || ""}
+                    value={values.station}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.station && !!errors.station}
@@ -278,8 +283,9 @@ const DiscrepancyPartsReportSearch = ({
                 <ListItem className="mt-3">ATA Code</ListItem>
                 <ListItem>
                   <TextField
+                    placeholder="All"
                     name="ataCode"
-                    value={values.ataCode || ""}
+                    value={values.ataCode}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.ataCode && !!errors.ataCode}

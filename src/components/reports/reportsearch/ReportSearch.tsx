@@ -8,7 +8,7 @@ import TextField from "src/commons/TextField";
 import { IReportSearchValues, ReportStatus, ReportType } from "src/commons/types";
 import { DATE_HTML_DISPLAY } from "src/helpers";
 import ValidationSchema from "src/validationSchema";
-import { object } from "yup";
+import { object, string } from "yup";
 
 export interface IReportSearchProps {
   handleSearchReport: (a: IReportSearchValues) => void;
@@ -51,7 +51,15 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
             setSubmitting(false);
           }, 500);
         }}
-        validationSchema={object().shape({ ...ValidationSchema })}
+        validationSchema={object().shape({
+          ...ValidationSchema,
+          logPageNumber: string().max(7, "Up to 7 characters"),
+          auditNumber: ValidationSchema.OperatorControlNumber,
+          aircraftNumber: ValidationSchema.AircraftNumber,
+          station: ValidationSchema.Station,
+          reportBy: string().max(30, "Up to 30 characters"),
+          keyword: string().max(30, "Up to 30 characters"),
+        })}
       >
         {({
           errors,
@@ -76,7 +84,9 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                     onBlur={handleBlur}
                     error={!!touched.reportStatus && !!errors.reportStatus}
                     helperText={!!touched.reportStatus && errors.reportStatus}
-                    options={ReportStatus.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
+                    options={ReportStatus.filter((s) => s.Id !== 1).sort(
+                      (a, b) => a.DisplayOrder - b.DisplayOrder
+                    )}
                     id="ReportStatus"
                     className="w-full"
                   />
@@ -87,7 +97,7 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                 <ListItem>
                   <SimpleSingleSelect
                     name="reportType"
-                    value={values.reportType || ""}
+                    value={values.reportType}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.reportType && !!errors.reportType}
@@ -177,12 +187,13 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                 <ListItem>
                   <TextField
                     name="logPageNumber"
-                    value={values.logPageNumber || ""}
+                    value={values.logPageNumber}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.logPageNumber && !!errors.logPageNumber}
                     helperText={!!touched.logPageNumber && errors.logPageNumber}
                     className="w-full"
+                    inputProps={{ maxLength: 7 }}
                   />
                 </ListItem>
               </Grid>
@@ -190,8 +201,8 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                 <ListItem className="mt-3 whitespace-nowrap">Operator Control Number</ListItem>
                 <ListItem>
                   <TextField
-                    name="operatorControlNumber"
-                    value={values.auditNumber || ""}
+                    name="auditNumber"
+                    value={values.auditNumber}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.auditNumber && !!errors.auditNumber}
@@ -205,12 +216,13 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                 <ListItem>
                   <TextField
                     name="aircraftNumber"
-                    value={values.aircraftNumber || ""}
+                    value={values.aircraftNumber}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.aircraftNumber && !!errors.aircraftNumber}
                     helperText={!!touched.aircraftNumber && errors.aircraftNumber}
                     className="w-full"
+                    inputProps={{ maxLength: 4 }}
                   />
                 </ListItem>
               </Grid>
@@ -219,12 +231,13 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                 <ListItem>
                   <TextField
                     name="station"
-                    value={values.station || ""}
+                    value={values.station}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.station && !!errors.station}
                     helperText={!!touched.station && errors.station}
                     className="w-full"
+                    inputProps={{ maxLength: 3 }}
                   />
                 </ListItem>
               </Grid>
@@ -233,12 +246,15 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                 <ListItem>
                   <TextField
                     name="reportBy"
-                    value={values.reportBy || ""}
+                    value={values.reportBy}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.reportBy && !!errors.reportBy}
                     helperText={!!touched.reportBy && errors.reportBy}
-                    className="w-full"
+                    multiline
+                    maxRows={4}
+                    className={"sdr-status-edit textareaAutosize w-full"}
+                    inputProps={{ style: { resize: "both" } }}
                   />
                 </ListItem>
               </Grid>
@@ -247,12 +263,15 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                 <ListItem>
                   <TextField
                     name="keyword"
-                    value={values.keyword || ""}
+                    value={values.keyword}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.keyword && !!errors.keyword}
                     helperText={!!touched.keyword && errors.keyword}
-                    className="w-full"
+                    multiline
+                    maxRows={4}
+                    className={"sdr-status-edit textareaAutosize w-full"}
+                    inputProps={{ style: { resize: "both" } }}
                   />
                 </ListItem>
               </Grid>

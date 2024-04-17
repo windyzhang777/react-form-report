@@ -88,12 +88,12 @@ const ViewSnapshotData = ({
         StructuralOther: snapshotData?.SfrDetails?.StructuralOther || "",
       },
       AircraftDetails: {
-        RegistryNNumber: snapshotData?.AircraftDetails?.RegistryNNumber || "",
-        Manufacturer: snapshotData?.AircraftDetails?.Manufacturer || "",
-        Model: snapshotData?.AircraftDetails?.Model || "",
-        SerialNumber: snapshotData?.AircraftDetails?.SerialNumber || "",
-        TotalTime: snapshotData?.AircraftDetails?.TotalTime || "",
-        TotalCycles: snapshotData?.AircraftDetails?.TotalCycles || "",
+        RegistryNNumber: logpageData?.FleetInfo?.LicenseNumber || "",
+        Manufacturer: logpageData?.FleetInfo?.ManufacturedBy || "",
+        Model: logpageData?.FleetInfo?.ManufacturerPartNumber || "",
+        SerialNumber: logpageData?.FleetInfo?.ManufacturerSerialNumber || "",
+        TotalTime: "" + logpageData?.FleetInfo?.TotalAircraftTime || "",
+        TotalCycles: "" + logpageData?.FleetInfo?.TotalAircraftCycles || "",
       },
       LogPageCreationDate: snapshotData?.LogPageCreationDate || moment().format(DATETIME_REQUEST),
       Station: logpageData?.FleetInfo?.Station || "",
@@ -176,7 +176,7 @@ const ViewSnapshotData = ({
         </Grid>
         <Grid container spacing={2} pb={2}>
           <Grid item xs={4}>
-            <ListItem>{snapshotData?.OperatorControlNumber}</ListItem>
+            <ListItem>{initialValues?.OperatorControlNumber}</ListItem>
           </Grid>
           <Grid item>
             <ArrowMenu
@@ -192,7 +192,7 @@ const ViewSnapshotData = ({
                   <ListItem>A/C Number</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{snapshotData?.AircraftDetails?.RegistryNNumber}</ListItem>
+                  <ListItem>{initialValues?.AircraftDetails?.RegistryNNumber}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -200,7 +200,7 @@ const ViewSnapshotData = ({
                   <ListItem>A/C Manufacturer</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{snapshotData?.AircraftDetails?.Manufacturer}</ListItem>
+                  <ListItem>{initialValues?.AircraftDetails?.Manufacturer}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -208,7 +208,7 @@ const ViewSnapshotData = ({
                   <ListItem>A/C Model</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{snapshotData?.AircraftDetails?.Model}</ListItem>
+                  <ListItem>{initialValues?.AircraftDetails?.Model}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -216,7 +216,7 @@ const ViewSnapshotData = ({
                   <ListItem>A/C Serial Number</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{snapshotData?.AircraftDetails?.SerialNumber}</ListItem>
+                  <ListItem>{initialValues?.AircraftDetails?.SerialNumber}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -224,7 +224,7 @@ const ViewSnapshotData = ({
                   <ListItem>A/C Total Time</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{toFixed(snapshotData?.AircraftDetails?.TotalTime)}</ListItem>
+                  <ListItem>{toFixed(initialValues?.AircraftDetails?.TotalTime)}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -232,7 +232,7 @@ const ViewSnapshotData = ({
                   <ListItem>A/C Total Cycles</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{toFixed(snapshotData?.AircraftDetails?.TotalCycles)}</ListItem>
+                  <ListItem>{toFixed(initialValues?.AircraftDetails?.TotalCycles)}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -240,7 +240,7 @@ const ViewSnapshotData = ({
                   <ListItem>Flight #</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{snapshotData?.AircraftNumber}</ListItem>
+                  <ListItem>{initialValues?.AircraftNumber}</ListItem>
                 </Grid>
               </Grid>
             </ArrowMenu>
