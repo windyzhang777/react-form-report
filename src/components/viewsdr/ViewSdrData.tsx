@@ -333,8 +333,10 @@ const ViewSdrData = ({
                               );
                             }}
                             onBlur={handleBlur}
-                            error={!!touched.LogPageCreationDate && !!errors.LogPageCreationDate}
-                            helperText={!!touched.LogPageCreationDate && errors.LogPageCreationDate}
+                            error={!!touched?.LogPageCreationDate && !!errors?.LogPageCreationDate}
+                            helperText={
+                              !!touched?.LogPageCreationDate && errors?.LogPageCreationDate
+                            }
                             className={"sdr-status-edit"}
                           />
                         ) : (
@@ -347,15 +349,15 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="LogPageNumber"
-                            value={values.LogPageNumber || ""}
+                            value={values?.LogPageNumber}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            error={!!touched.LogPageNumber && !!errors.LogPageNumber}
-                            helperText={!!touched.LogPageNumber && errors.LogPageNumber}
+                            error={!!touched?.LogPageNumber && !!errors?.LogPageNumber}
+                            helperText={!!touched?.LogPageNumber && errors?.LogPageNumber}
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values?.LogPageNumber || selectedSdr?.LogpageNumber
+                          values?.LogPageNumber
                         )}
                       </ListItem>
                     </Grid>
@@ -364,15 +366,15 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="Station"
-                            value={values.Station || ""}
+                            value={values?.Station}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            error={!!touched.Station && !!errors.Station}
-                            helperText={!!touched.Station && errors.Station}
+                            error={!!touched?.Station && !!errors?.Station}
+                            helperText={!!touched?.Station && errors?.Station}
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values?.Station || ""
+                          values?.Station
                         )}
                       </ListItem>
                     </Grid>
@@ -394,7 +396,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="SfrAdditionalDetails.SubmitterDesignator"
-                            value={values?.SfrAdditionalDetails?.SubmitterDesignator || ""}
+                            value={values?.SfrAdditionalDetails?.SubmitterDesignator}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -408,7 +410,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values?.SfrAdditionalDetails?.SubmitterDesignator || ""
+                          values?.SfrAdditionalDetails?.SubmitterDesignator
                         )}
                       </ListItem>
                     </Grid>
@@ -417,7 +419,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="SfrAdditionalDetails.SubmitterType"
-                            value={values?.SfrAdditionalDetails?.SubmitterType || ""}
+                            value={values?.SfrAdditionalDetails?.SubmitterType}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -431,7 +433,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values?.SfrAdditionalDetails?.SubmitterType || ""
+                          values?.SfrAdditionalDetails?.SubmitterType
                         )}
                       </ListItem>
                     </Grid>
@@ -440,7 +442,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="SfrAdditionalDetails.OperatorDesignator"
-                            value={values?.SfrAdditionalDetails?.OperatorDesignator || ""}
+                            value={values?.SfrAdditionalDetails?.OperatorDesignator}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -455,7 +457,7 @@ const ViewSdrData = ({
                             disabled
                           />
                         ) : (
-                          values?.SfrAdditionalDetails?.OperatorDesignator || "CALA"
+                          values?.SfrAdditionalDetails?.OperatorDesignator
                         )}
                       </ListItem>
                     </Grid>
@@ -477,7 +479,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="SfrAdditionalDetails.OperatorType"
-                            value={values?.SfrAdditionalDetails?.OperatorType || ""}
+                            value={values?.SfrAdditionalDetails?.OperatorType}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -491,7 +493,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values?.SfrAdditionalDetails?.OperatorType || ""
+                          values?.SfrAdditionalDetails?.OperatorType
                         )}
                       </ListItem>
                     </Grid>
@@ -500,7 +502,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="SfrAdditionalDetails.AtaCode"
-                            value={values?.SfrAdditionalDetails?.AtaCode || ""}
+                            value={values?.SfrAdditionalDetails?.AtaCode}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -523,13 +525,13 @@ const ViewSdrData = ({
                         {editable ? (
                           <MultipleSelect
                             name="NatureOfReportIds"
-                            value={values.NatureOfReportIds || []}
+                            value={values?.NatureOfReportIds || []}
                             onChange={(values) => {
                               setFieldValue("NatureOfReportIds", values);
                             }}
                             onBlur={handleBlur}
-                            error={!!touched.NatureOfReportIds && !!errors.NatureOfReportIds}
-                            helperText={!!touched.NatureOfReportIds && errors.NatureOfReportIds}
+                            error={!!touched?.NatureOfReportIds && !!errors?.NatureOfReportIds}
+                            helperText={!!touched?.NatureOfReportIds && errors?.NatureOfReportIds}
                             options={
                               masterData?.NatureofReports &&
                               [...masterData.NatureofReports].sort(
@@ -570,7 +572,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <MultipleSelect
                             name="PrecautionaryProcedureIds"
-                            value={values.PrecautionaryProcedureIds || []}
+                            value={values?.PrecautionaryProcedureIds || []}
                             onChange={(values) => {
                               setFieldValue("PrecautionaryProcedureIds", values);
                             }}
@@ -611,11 +613,11 @@ const ViewSdrData = ({
                         {editable ? (
                           <SingleSelect
                             name="StageId"
-                            value={values.StageId || ""}
+                            value={values?.StageId}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            error={!!touched.StageId && !!errors.StageId}
-                            helperText={!!touched.StageId && errors.StageId}
+                            error={!!touched?.StageId && !!errors?.StageId}
+                            helperText={!!touched?.StageId && errors?.StageId}
                             options={
                               masterData?.Stage &&
                               [...masterData.Stage].sort((a, b) => a.DisplayOrder - b.DisplayOrder)
@@ -624,9 +626,8 @@ const ViewSdrData = ({
                             id="StageId"
                           />
                         ) : (
-                          masterData?.Stage.find(
-                            (option) => option.Id === detailsData?.SdrDetails?.StageId
-                          )?.Description || ""
+                          masterData?.Stage.find((option) => option.Id === values?.StageId)
+                            ?.Description || ""
                         )}
                       </ListItem>
                     </Grid>
@@ -635,11 +636,11 @@ const ViewSdrData = ({
                         {editable ? (
                           <SingleSelect
                             name="HowDiscoveredId"
-                            value={values.HowDiscoveredId || ""}
+                            value={values?.HowDiscoveredId}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            error={!!touched.HowDiscoveredId && !!errors.HowDiscoveredId}
-                            helperText={!!touched.HowDiscoveredId && errors.HowDiscoveredId}
+                            error={!!touched?.HowDiscoveredId && !!errors?.HowDiscoveredId}
+                            helperText={!!touched?.HowDiscoveredId && errors?.HowDiscoveredId}
                             options={
                               masterData?.HowDiscovered &&
                               [...masterData.HowDiscovered].sort(
@@ -651,7 +652,7 @@ const ViewSdrData = ({
                           />
                         ) : (
                           masterData?.HowDiscovered.find(
-                            (option) => option.Id === detailsData?.SdrDetails?.HowDiscoveredId
+                            (option) => option.Id === values?.HowDiscoveredId
                           )?.Description || ""
                         )}
                       </ListItem>
@@ -668,11 +669,11 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="CorrectiveAction"
-                            value={values.CorrectiveAction || ""}
+                            value={values?.CorrectiveAction}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            error={!!touched.CorrectiveAction && !!errors.CorrectiveAction}
-                            helperText={!!touched.CorrectiveAction && errors.CorrectiveAction}
+                            error={!!touched?.CorrectiveAction && !!errors?.CorrectiveAction}
+                            helperText={!!touched?.CorrectiveAction && errors?.CorrectiveAction}
                             multiline
                             maxRows={4}
                             className={"sdr-status-edit textareaAutosize"}
@@ -698,7 +699,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="SfrAdditionalDetails.FAAReceivingRegionCode"
-                            value={values?.SfrAdditionalDetails?.FAAReceivingRegionCode || ""}
+                            value={values?.SfrAdditionalDetails?.FAAReceivingRegionCode}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -712,7 +713,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          "GL"
+                          values?.SfrAdditionalDetails?.FAAReceivingRegionCode
                         )}
                       </ListItem>
                     </Grid>
@@ -721,7 +722,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="SfrAdditionalDetails.ReceivingDistrictOffice"
-                            value={values?.SfrAdditionalDetails?.ReceivingDistrictOffice || ""}
+                            value={values?.SfrAdditionalDetails?.ReceivingDistrictOffice}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -735,7 +736,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          "33"
+                          values?.SfrAdditionalDetails?.ReceivingDistrictOffice
                         )}
                       </ListItem>
                     </Grid>
@@ -770,7 +771,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="PartDetails.PartDescription"
-                            value={values.PartDetails?.PartDescription || ""}
+                            value={values?.PartDetails?.PartDescription}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -784,7 +785,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values?.PartDetails?.PartDescription || ""
+                          values?.PartDetails?.PartDescription
                         )}
                       </ListItem>
                     </Grid>
@@ -793,7 +794,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="SfrAdditionalDetails.PartManufacturerName"
-                            value={values?.SfrAdditionalDetails?.PartManufacturerName || ""}
+                            value={values?.SfrAdditionalDetails?.PartManufacturerName}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -807,7 +808,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          ""
+                          values?.SfrAdditionalDetails?.PartManufacturerName
                         )}
                       </ListItem>
                     </Grid>
@@ -816,7 +817,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="PartDetails.PartManufacturerSerialNumber"
-                            value={values.PartDetails?.PartManufacturerSerialNumber || ""}
+                            value={values?.PartDetails?.PartManufacturerSerialNumber}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -852,7 +853,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="PartDetails.PartSerialNumber"
-                            value={values.PartDetails?.PartSerialNumber || ""}
+                            value={values?.PartDetails?.PartSerialNumber}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -875,7 +876,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="PartDetails.PartCondition"
-                            value={values.PartDetails?.PartCondition || ""}
+                            value={values?.PartDetails?.PartCondition}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -898,7 +899,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="PartDetails.PartLocation"
-                            value={values.PartDetails?.PartLocation || ""}
+                            value={values?.PartDetails?.PartLocation}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -934,7 +935,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="PartDetails.PartTotalTime"
-                            value={values.PartDetails?.PartTotalTime || ""}
+                            value={values?.PartDetails?.PartTotalTime}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -948,7 +949,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values.PartDetails?.PartTotalTime || ""
+                          values?.PartDetails?.PartTotalTime
                         )}
                       </ListItem>
                     </Grid>
@@ -957,7 +958,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="PartDetails.PartTotalCycles"
-                            value={values.PartDetails?.PartTotalCycles || ""}
+                            value={values?.PartDetails?.PartTotalCycles}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -971,7 +972,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values.PartDetails?.PartTotalCycles || ""
+                          values?.PartDetails?.PartTotalCycles
                         )}
                       </ListItem>
                     </Grid>
@@ -980,7 +981,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="PartDetails.PartTimeSince"
-                            value={values.PartDetails?.PartTimeSince || ""}
+                            value={values?.PartDetails?.PartTimeSince}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -994,7 +995,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values.PartDetails?.PartTimeSince || ""
+                          values?.PartDetails?.PartTimeSince
                         )}
                       </ListItem>
                     </Grid>
@@ -1010,7 +1011,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="PartDetails.PartTimeSinceCode"
-                            value={values.PartDetails?.PartTimeSinceCode || ""}
+                            value={values?.PartDetails?.PartTimeSinceCode}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1024,7 +1025,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values.PartDetails?.PartTimeSinceCode || ""
+                          values?.PartDetails?.PartTimeSinceCode
                         )}
                       </ListItem>
                     </Grid>
@@ -1065,7 +1066,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="ComponentDetails.ComponentName"
-                            value={values.ComponentDetails?.ComponentName || ""}
+                            value={values?.ComponentDetails?.ComponentName}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1079,7 +1080,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values.ComponentDetails.ComponentName || "--"
+                          values?.ComponentDetails.ComponentName || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1088,7 +1089,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="ComponentDetails.ComponentManufactureName"
-                            value={values.ComponentDetails?.ComponentManufactureName || ""}
+                            value={values?.ComponentDetails?.ComponentManufactureName}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1102,7 +1103,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values.ComponentDetails?.ComponentManufactureName || "--"
+                          values?.ComponentDetails?.ComponentManufactureName || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1111,7 +1112,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="ComponentDetails.ComponentPartNumber"
-                            value={values.ComponentDetails?.ComponentPartNumber || ""}
+                            value={values?.ComponentDetails?.ComponentPartNumber}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1125,7 +1126,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values.ComponentDetails?.ComponentPartNumber || "--"
+                          values?.ComponentDetails?.ComponentPartNumber || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1153,7 +1154,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="ComponentDetails.ComponentPartSerialNumber"
-                            value={values.ComponentDetails?.ComponentPartSerialNumber || ""}
+                            value={values?.ComponentDetails?.ComponentPartSerialNumber}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1167,7 +1168,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values.ComponentDetails?.ComponentPartSerialNumber || "--"
+                          values?.ComponentDetails?.ComponentPartSerialNumber || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1176,7 +1177,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="ComponentDetails.ComponentPartModelNumber"
-                            value={values.ComponentDetails?.ComponentPartModelNumber || ""}
+                            value={values?.ComponentDetails?.ComponentPartModelNumber}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1190,7 +1191,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values.ComponentDetails?.ComponentPartModelNumber || "--"
+                          values?.ComponentDetails?.ComponentPartModelNumber || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1199,7 +1200,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="ComponentDetails.ComponentLocation"
-                            value={values.ComponentDetails?.ComponentLocation || ""}
+                            value={values?.ComponentDetails?.ComponentLocation}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1213,7 +1214,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values.ComponentDetails?.ComponentLocation || "--"
+                          values?.ComponentDetails?.ComponentLocation || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1241,7 +1242,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="ComponentDetails.PartTotalTime"
-                            value={values.ComponentDetails?.PartTotalTime || ""}
+                            value={values?.ComponentDetails?.PartTotalTime}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1255,7 +1256,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values.ComponentDetails?.PartTotalTime || "--"
+                          values?.ComponentDetails?.PartTotalTime || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1264,7 +1265,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="ComponentDetails.PartTotalCycles"
-                            value={values.ComponentDetails?.PartTotalCycles || ""}
+                            value={values?.ComponentDetails?.PartTotalCycles}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1278,7 +1279,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values.ComponentDetails?.PartTotalCycles || "--"
+                          values?.ComponentDetails?.PartTotalCycles || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1287,7 +1288,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="ComponentDetails.PartTimeSince"
-                            value={values.ComponentDetails?.PartTimeSince || ""}
+                            value={values?.ComponentDetails?.PartTimeSince}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1301,7 +1302,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values.ComponentDetails?.PartTimeSince || "--"
+                          values?.ComponentDetails?.PartTimeSince || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1319,7 +1320,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="ComponentDetails.PartTimeSinceCode"
-                            value={values.ComponentDetails?.PartTimeSinceCode || ""}
+                            value={values?.ComponentDetails?.PartTimeSinceCode}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1333,7 +1334,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values.ComponentDetails?.PartTimeSinceCode || "--"
+                          values?.ComponentDetails?.PartTimeSinceCode || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1370,7 +1371,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="SfrAdditionalDetails.FuselageFromSta"
-                            value={values?.SfrAdditionalDetails?.FuselageFromSta || ""}
+                            value={values?.SfrAdditionalDetails?.FuselageFromSta}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1393,7 +1394,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="SfrAdditionalDetails.FuselageToSta"
-                            value={values?.SfrAdditionalDetails?.FuselageToSta || ""}
+                            value={values?.SfrAdditionalDetails?.FuselageToSta}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1428,7 +1429,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <SingleSelect
                             name="SfrAdditionalDetails.CorrisionLevel"
-                            value={values?.SfrAdditionalDetails?.CorrisionLevel || ""}
+                            value={values?.SfrAdditionalDetails?.CorrisionLevel}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1476,7 +1477,7 @@ const ViewSdrData = ({
                           <TextField
                             type="number"
                             name="SfrAdditionalDetails.CrackLength"
-                            value={values?.SfrAdditionalDetails?.CrackLength || ""}
+                            value={values?.SfrAdditionalDetails?.CrackLength}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1541,7 +1542,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <SingleSelect
                             name="SfrAdditionalDetails.CorrisionLevel"
-                            value={values?.SfrAdditionalDetails?.CorrisionLevel || ""}
+                            value={values?.SfrAdditionalDetails?.CorrisionLevel}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1575,7 +1576,7 @@ const ViewSdrData = ({
                           <TextField
                             type="number"
                             name="SfrAdditionalDetails.CrackLength"
-                            value={values?.SfrAdditionalDetails?.CrackLength || ""}
+                            value={values?.SfrAdditionalDetails?.CrackLength}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1637,7 +1638,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="SfrAdditionalDetails.WaterlineFrom"
-                            value={values?.SfrAdditionalDetails?.WaterlineFrom || ""}
+                            value={values?.SfrAdditionalDetails?.WaterlineFrom}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1660,7 +1661,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="SfrAdditionalDetails.WaterlineTo"
-                            value={values?.SfrAdditionalDetails?.WaterlineTo || ""}
+                            value={values?.SfrAdditionalDetails?.WaterlineTo}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1701,7 +1702,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="SfrAdditionalDetails.StringerFrom"
-                            value={values?.SfrAdditionalDetails?.StringerFrom || ""}
+                            value={values?.SfrAdditionalDetails?.StringerFrom}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1724,7 +1725,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <SingleSelect
                             name="SfrAdditionalDetails.StringerFromSide"
-                            value={values?.SfrAdditionalDetails?.StringerFromSide || ""}
+                            value={values?.SfrAdditionalDetails?.StringerFromSide}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1752,7 +1753,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="SfrAdditionalDetails.StringerTo"
-                            value={values?.SfrAdditionalDetails?.StringerTo || ""}
+                            value={values?.SfrAdditionalDetails?.StringerTo}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1782,7 +1783,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <SingleSelect
                             name="SfrAdditionalDetails.StringerToSide"
-                            value={values?.SfrAdditionalDetails?.StringerToSide || ""}
+                            value={values?.SfrAdditionalDetails?.StringerToSide}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1828,7 +1829,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="SfrAdditionalDetails.ButtlineFrom"
-                            value={values?.SfrAdditionalDetails?.ButtlineFrom || ""}
+                            value={values?.SfrAdditionalDetails?.ButtlineFrom}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1851,7 +1852,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <SingleSelect
                             name="SfrAdditionalDetails.ButtlineFromSide"
-                            value={values?.SfrAdditionalDetails?.ButtlineFromSide || ""}
+                            value={values?.SfrAdditionalDetails?.ButtlineFromSide}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1879,7 +1880,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="SfrAdditionalDetails.ButtlineTo"
-                            value={values?.SfrAdditionalDetails?.ButtlineTo || ""}
+                            value={values?.SfrAdditionalDetails?.ButtlineTo}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1909,7 +1910,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <SingleSelect
                             name="SfrAdditionalDetails.ButtlineToSide"
-                            value={values?.SfrAdditionalDetails?.ButtlineToSide || ""}
+                            value={values?.SfrAdditionalDetails?.ButtlineToSide}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1955,7 +1956,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="SfrAdditionalDetails.WingStationFrom"
-                            value={values?.SfrAdditionalDetails?.WingStationFrom || ""}
+                            value={values?.SfrAdditionalDetails?.WingStationFrom}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1978,7 +1979,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <SingleSelect
                             name="SfrAdditionalDetails.WingStationFromSide"
-                            value={values?.SfrAdditionalDetails?.WingStationFromSide || ""}
+                            value={values?.SfrAdditionalDetails?.WingStationFromSide}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -2006,7 +2007,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="SfrAdditionalDetails.WingStationTo"
-                            value={values?.SfrAdditionalDetails?.WingStationTo || ""}
+                            value={values?.SfrAdditionalDetails?.WingStationTo}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -2036,7 +2037,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <SingleSelect
                             name="SfrAdditionalDetails.WingStationToSide"
-                            value={values?.SfrAdditionalDetails?.WingStationToSide || ""}
+                            value={values?.SfrAdditionalDetails?.WingStationToSide}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -2071,7 +2072,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="SfrAdditionalDetails.StructuralOther"
-                            value={values?.SfrAdditionalDetails?.StructuralOther || ""}
+                            value={values?.SfrAdditionalDetails?.StructuralOther}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
