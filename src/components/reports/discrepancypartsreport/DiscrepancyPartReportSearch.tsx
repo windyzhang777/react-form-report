@@ -164,7 +164,7 @@ const DiscrepancyPartsReportSearch = ({
                     helperText={!!touched.partNumber && errors.partNumber}
                     multiline
                     maxRows={4}
-                    className={"sdr-status-edit textareaAutosize"}
+                    className={"sdr-status-edit textareaAutosize w-full"}
                     inputProps={{ style: { resize: "both" } }}
                   />
                 </ListItem>

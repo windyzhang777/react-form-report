@@ -54,7 +54,7 @@ export const eSfrReportSearchColumns = (): GridColDef<GetEsfrReportResResult>[] 
 
     {
       field: "ReportedById",
-      headerName: "Reported By Status",
+      headerName: "Reported By",
       sortable: false,
       minWidth: 300,
       renderCell: ({ row }) =>
