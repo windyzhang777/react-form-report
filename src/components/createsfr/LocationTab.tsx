@@ -18,8 +18,8 @@ import {
   WingDamageProximityOptions,
   ZoneOptions,
 } from "src/commons/types";
+import { useFormCreateSfrData } from "src/components/createsfr/useFormCreateSfrData";
 import { useAppSelector } from "src/redux/hooks";
-import { useFormCreateSfrData } from "./useFormCreateSfrData";
 
 type LocationTabProps = {
   editable: boolean;
