@@ -181,7 +181,7 @@ export const SimpleMultipleSelect = ({
             marginTop: "-8px",
           }}
         >
-          Select up to {maxAllowed} options
+          All
         </InputLabel>
       )}
       <Select

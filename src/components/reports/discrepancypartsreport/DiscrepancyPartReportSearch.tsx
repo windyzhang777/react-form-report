@@ -155,6 +155,7 @@ const DiscrepancyPartsReportSearch = ({
                 <ListItem className="mt-3">Part Number</ListItem>
                 <ListItem>
                   <TextField
+                    placeholder="All"
                     name="partNumber"
                     value={values.partNumber}
                     onChange={handleChange}
@@ -179,6 +180,7 @@ const DiscrepancyPartsReportSearch = ({
                   <ListItem className="mt-3 !pr-0">From</ListItem>
                   <ListItem className="!flex items-center !pr-0">
                     <TextField
+                      placeholder="All"
                       type="date"
                       inputProps={{
                         max: moment(values?.dateTo).format(DATE_HTML_DISPLAY),
@@ -213,6 +215,7 @@ const DiscrepancyPartsReportSearch = ({
                   <ListItem className="mt-3">To</ListItem>
                   <ListItem className="!flex items-center">
                     <TextField
+                      placeholder="All"
                       type="date"
                       inputProps={{
                         min: moment(values?.dateFrom).format(DATE_HTML_DISPLAY),
@@ -245,9 +248,10 @@ const DiscrepancyPartsReportSearch = ({
                 </Grid>
               </Grid>
               <Grid item lg={viewSdrFlag ? 6 : 2} md={viewSdrFlag ? 6 : 4} sm={6}>
-                <ListItem className="mt-3">A/C Number</ListItem>
+                <ListItem className="mt-3">AC Number</ListItem>
                 <ListItem>
                   <TextField
+                    placeholder="All"
                     name="acNumber"
                     value={values.acNumber}
                     onChange={handleChange}
@@ -263,6 +267,7 @@ const DiscrepancyPartsReportSearch = ({
                 <ListItem className="mt-3">Station</ListItem>
                 <ListItem>
                   <TextField
+                    placeholder="All"
                     name="station"
                     value={values.station}
                     onChange={handleChange}
@@ -278,6 +283,7 @@ const DiscrepancyPartsReportSearch = ({
                 <ListItem className="mt-3">ATA Code</ListItem>
                 <ListItem>
                   <TextField
+                    placeholder="All"
                     name="ataCode"
                     value={values.ataCode}
                     onChange={handleChange}
