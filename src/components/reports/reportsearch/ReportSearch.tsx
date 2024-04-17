@@ -186,6 +186,7 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                 <ListItem className="mt-3 whitespace-nowrap">Log Page Number</ListItem>
                 <ListItem>
                   <TextField
+                    placeholder="All"
                     name="logPageNumber"
                     value={values.logPageNumber}
                     onChange={handleChange}
@@ -201,6 +202,7 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                 <ListItem className="mt-3 whitespace-nowrap">Operator Control Number</ListItem>
                 <ListItem>
                   <TextField
+                    placeholder="All"
                     name="auditNumber"
                     value={values.auditNumber}
                     onChange={handleChange}
@@ -215,6 +217,7 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                 <ListItem className="mt-3">AC Number</ListItem>
                 <ListItem>
                   <TextField
+                    placeholder="All"
                     name="aircraftNumber"
                     value={values.aircraftNumber}
                     onChange={handleChange}
@@ -230,6 +233,7 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                 <ListItem className="mt-3">Station</ListItem>
                 <ListItem>
                   <TextField
+                    placeholder="All"
                     name="station"
                     value={values.station}
                     onChange={handleChange}
@@ -245,6 +249,7 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                 <ListItem className="mt-3">Reported By</ListItem>
                 <ListItem>
                   <TextField
+                    placeholder="All"
                     name="reportBy"
                     value={values.reportBy}
                     onChange={handleChange}
@@ -262,6 +267,7 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                 <ListItem className="mt-3">Keyword</ListItem>
                 <ListItem>
                   <TextField
+                    placeholder="All"
                     name="keyword"
                     value={values.keyword}
                     onChange={handleChange}
