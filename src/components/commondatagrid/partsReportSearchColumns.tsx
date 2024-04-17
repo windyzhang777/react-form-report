@@ -33,7 +33,7 @@ export const partsReportSearchColumns = (): GridColDef<GetPartsReportResResult>[
     },
     {
       field: "AircraftNumber",
-      headerName: "A/C Number",
+      headerName: "AC Number",
       sortable: false,
       minWidth: 100,
     },
