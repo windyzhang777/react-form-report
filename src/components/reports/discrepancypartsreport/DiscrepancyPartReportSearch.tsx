@@ -112,7 +112,7 @@ const DiscrepancyPartsReportSearch = ({
                 <ListItem>
                   <SingleSelect
                     defaultValue="All"
-                    name="discrepancyTypes"
+                    name="discrepancyType"
                     value={values.discrepancyType}
                     onChange={handleChange}
                     onBlur={handleBlur}
