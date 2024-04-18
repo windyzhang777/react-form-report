@@ -27,7 +27,7 @@ export const cpcpReportSearchColumns = (): GridColDef<GetCpcpReportResResult>[] 
   return [
     {
       field: "OperatorControlNumber",
-      headerName: "CALA Number",
+      headerName: "Operator Control Number",
       sortable: false,
       minWidth: 200,
     },

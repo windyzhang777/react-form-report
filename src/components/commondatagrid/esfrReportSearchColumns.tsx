@@ -33,7 +33,7 @@ export const eSfrReportSearchColumns = (): GridColDef<GetEsfrReportResResult>[] 
     },
     {
       field: "OperatorControlNumber",
-      headerName: "Audit Number",
+      headerName: "Operator Control Number",
       sortable: false,
       minWidth: 200,
     },

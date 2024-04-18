@@ -49,7 +49,7 @@ export const partsReportSearchColumns = (): GridColDef<GetPartsReportResResult>[
     },
     {
       field: "OperatorControlNumber",
-      headerName: "CALA Number",
+      headerName: "Operator Control Number",
       sortable: false,
       minWidth: 200,
     },
