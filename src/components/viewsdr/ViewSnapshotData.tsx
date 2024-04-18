@@ -320,8 +320,10 @@ const ViewSnapshotData = ({
                             }
                             className={"sdr-status-edit"}
                           />
-                        ) : (
+                        ) : moment(values?.LogPageCreationDate).isValid() ? (
                           moment(values?.LogPageCreationDate).format(DATE_DISPLAY)
+                        ) : (
+                          ""
                         )}
                       </ListItem>
                     </Grid>
