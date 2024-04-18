@@ -12,6 +12,7 @@ import { EsfrUserPolicy } from "src/types/GetProfilerRes";
 export const DATETIME_REQUEST = "YYYY-MM-DDTHH:mm:ss";
 export const DATETIME_REFRESH = "MM/DD/YYYY@HH:mm";
 export const DATETIME_DISPLAY = "MM/DD/YYYY HH:mm:ss";
+export const DATE_DISPLAY = "MM/DD/YYYY";
 export const DATE_HTML_DISPLAY = "YYYY-MM-DD";
 
 export const handleScroll = (ref: RefObject<any> | null) => {
