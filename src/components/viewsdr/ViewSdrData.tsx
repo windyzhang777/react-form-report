@@ -18,7 +18,7 @@ import {
   Sides,
   UserPermission,
 } from "src/commons/types";
-import { DATETIME_DISPLAY, DATETIME_REQUEST, DATE_HTML_DISPLAY, toFixed } from "src/helpers";
+import { DATETIME_REQUEST, DATE_DISPLAY, DATE_HTML_DISPLAY, toFixed } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
 import "./viewSdrData.css";
 
@@ -340,7 +340,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          moment(values?.LogPageCreationDate).format(DATETIME_DISPLAY)
+                          moment(values?.LogPageCreationDate).format(DATE_DISPLAY)
                         )}
                       </ListItem>
                     </Grid>
