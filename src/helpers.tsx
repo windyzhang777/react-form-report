@@ -147,6 +147,14 @@ export const clearLocalStorage = () => {
   });
 };
 
-export const toFixed = (a: number | string | undefined) => {
-  return !!a && !!Number(a) ? Number(a).toFixed(2) : 0;
+export const toFixed = (a: number | string | undefined, maxAllowedDecimal: number = 2) => {
+  return !!a && !!Number(a)
+    ? Number(a) > Math.floor(Number(a))
+      ? Number(a).toFixed(maxAllowedDecimal)
+      : Number(a)
+    : 0;
+};
+
+export const trimMultipleSelected = (arr: string | string[]) => {
+  return Array.isArray(arr) ? (arr.length ? (arr.indexOf("") > -1 ? [] : arr) : arr) : arr;
 };

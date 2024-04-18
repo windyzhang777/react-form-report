@@ -177,6 +177,7 @@ const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearch
                 <ListItem className="mt-3">Fleet</ListItem>
                 <ListItem>
                   <SimpleMultipleSelect
+                    defaultValue="All"
                     name="fleetList"
                     value={values.fleetList || []}
                     onChange={(values) => {

@@ -96,6 +96,7 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                 <ListItem className="mt-3">Report Type</ListItem>
                 <ListItem>
                   <SimpleSingleSelect
+                    defaultValue="All"
                     name="reportType"
                     value={values.reportType}
                     onChange={handleChange}
