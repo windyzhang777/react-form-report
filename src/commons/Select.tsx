@@ -157,7 +157,7 @@ export const SingleSelect = ({
           <FlexCenter>No options available</FlexCenter>
         ) : (
           options.map((option) => (
-            <MenuItem key={option.Id} value={option.Id}>
+            <MenuItem key={option.Id + option.Description} value={option.Id}>
               <FormControlLabel
                 value={option.Id}
                 control={<Radio className="!py-1 !pr-1" checked={option.Id === value} />}
@@ -238,7 +238,11 @@ export const SimpleMultipleSelect = ({
           <FlexCenter>No options available</FlexCenter>
         ) : (
           options.map((option) => (
-            <MenuItem className="!pl-0 !pr-5" key={option.Description} value={option.Description}>
+            <MenuItem
+              className="!pl-0 !pr-5"
+              key={option.Id + option.Description}
+              value={option.Description}
+            >
               <Checkbox className="!py-1 !pr-1" checked={value.indexOf(option.Description) > -1} />
               <ListItemText primary={option.Description} />
             </MenuItem>
@@ -304,7 +308,11 @@ export const MultipleSelect = ({
           <FlexCenter>No options available</FlexCenter>
         ) : (
           options.map((option) => (
-            <MenuItem className="!pl-0 !pr-5" key={option.Id} value={option.Id}>
+            <MenuItem
+              className="!pl-0 !pr-5"
+              key={option.Id + option.Description}
+              value={option.Id}
+            >
               <Checkbox className="!py-1 !pr-1" checked={value.indexOf(option.Id) > -1} />
               <ListItemText primary={option.Description} />
             </MenuItem>
