@@ -100,6 +100,8 @@ export const ValidationSchema = {
     CrackLength: number().test("digits", "Not a valid value", (val) =>
       val ? /^[1-9]\d{0,7}(?:\.\d{1,3})?$/.test(val.toString()) : true
     ),
+    OperatorType: string().matches(/^(\S+$)/, "Not a valid value"),
+    SubmitterType: string().matches(/^(\S+$)/, "Not a valid value"),
   }),
   Comments: string().max(250, "Up to 250 characters"),
   Specify: string().max(100, "Up to 100 characters"),

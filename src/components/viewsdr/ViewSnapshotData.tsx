@@ -54,8 +54,8 @@ const ViewSnapshotData = ({
       SfrAdditionalDetails: {
         SnapshotId: "",
         AtaCode: logpageData?.FleetInfo?.ATACode || "",
-        SubmitterDesignator: snapshotData?.SfrDetails?.SubmitterDesignator || "",
-        SubmitterType: snapshotData?.SfrDetails?.SubmitterType || "",
+        SubmitterDesignator: snapshotData?.SfrDetails?.SubmitterDesignator || "CALA",
+        SubmitterType: snapshotData?.SfrDetails?.SubmitterType || "A",
         OperatorDesignator: snapshotData?.SfrDetails?.OperatorDesignator || "CALA",
         OperatorType: snapshotData?.SfrDetails?.OperatorType || "",
         FAAReceivingRegionCode: "GL",
@@ -260,7 +260,7 @@ const ViewSnapshotData = ({
           validationSchema={object().shape({
             ...ValidationSchema,
             LogPageNumber: string(),
-            CorrectiveAction: string().required(),
+            CorrectiveAction: string().required("Required field"),
           })}
         >
           {({
@@ -1065,7 +1065,10 @@ const ViewSnapshotData = ({
                           <TextField
                             name="ComponentDetails.ComponentName"
                             value={values?.ComponentDetails?.ComponentName}
-                            onChange={handleChange}
+                            onChange={(e) => {
+                              setFieldValue("ComponentDetails.ComponentName", e.target.value);
+                              setFieldValue("SfrAdditionalDetails.ComponentName", e.target.value);
+                            }}
                             onBlur={handleBlur}
                             error={
                               !!touched.ComponentDetails?.ComponentName &&
@@ -1087,23 +1090,32 @@ const ViewSnapshotData = ({
                       <ListItem>
                         {editable ? (
                           <TextField
-                            name="SfrAdditionalDetails.ComponentManufacturerName"
-                            value={values?.SfrAdditionalDetails?.ComponentManufacturerName}
-                            onChange={handleChange}
+                            name="ComponentDetails.ComponentManufactureName"
+                            value={values?.ComponentDetails?.ComponentManufactureName}
+                            onChange={(e) => {
+                              setFieldValue(
+                                "ComponentDetails.ComponentManufactureName",
+                                e.target.value
+                              );
+                              setFieldValue(
+                                "SfrAdditionalDetails.ComponentManufacturerName",
+                                e.target.value
+                              );
+                            }}
                             onBlur={handleBlur}
                             error={
-                              !!touched.SfrAdditionalDetails?.ComponentManufacturerName &&
-                              !!errors.SfrAdditionalDetails?.ComponentManufacturerName
+                              !!touched.ComponentDetails?.ComponentManufactureName &&
+                              !!errors.ComponentDetails?.ComponentManufactureName
                             }
                             helperText={
-                              !!touched.SfrAdditionalDetails?.ComponentManufacturerName &&
-                              errors.SfrAdditionalDetails?.ComponentManufacturerName
+                              !!touched.ComponentDetails?.ComponentManufactureName &&
+                              errors.ComponentDetails?.ComponentManufactureName
                             }
                             className={"sdr-status-edit"}
                             inputProps={{ maxLength: 50 }}
                           />
                         ) : (
-                          values?.SfrAdditionalDetails?.ComponentManufacturerName || "--"
+                          values?.ComponentDetails?.ComponentManufactureName || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1176,23 +1188,29 @@ const ViewSnapshotData = ({
                       <ListItem>
                         {editable ? (
                           <TextField
-                            name="SfrAdditionalDetails.PartModelNumber"
-                            value={values?.SfrAdditionalDetails?.PartModelNumber}
-                            onChange={handleChange}
+                            name="ComponentDetails.ComponentPartModelNumber"
+                            value={values?.ComponentDetails?.ComponentPartModelNumber}
+                            onChange={(e) => {
+                              setFieldValue(
+                                "ComponentDetails.ComponentPartModelNumber",
+                                e.target.value
+                              );
+                              setFieldValue("SfrAdditionalDetails.PartModelNumber", e.target.value);
+                            }}
                             onBlur={handleBlur}
                             error={
-                              !!touched.SfrAdditionalDetails?.PartModelNumber &&
-                              !!errors.SfrAdditionalDetails?.PartModelNumber
+                              !!touched.ComponentDetails?.ComponentPartModelNumber &&
+                              !!errors.ComponentDetails?.ComponentPartModelNumber
                             }
                             helperText={
-                              !!touched.SfrAdditionalDetails?.PartModelNumber &&
-                              errors.SfrAdditionalDetails?.PartModelNumber
+                              !!touched.ComponentDetails?.ComponentPartModelNumber &&
+                              errors.ComponentDetails?.ComponentPartModelNumber
                             }
                             className={"sdr-status-edit"}
                             inputProps={{ maxLength: 50 }}
                           />
                         ) : (
-                          values?.SfrAdditionalDetails?.PartModelNumber || "--"
+                          values?.ComponentDetails?.ComponentPartModelNumber || "--"
                         )}
                       </ListItem>
                     </Grid>
