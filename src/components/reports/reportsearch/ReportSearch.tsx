@@ -96,6 +96,7 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                 <ListItem className="mt-3">Report Type</ListItem>
                 <ListItem>
                   <SimpleSingleSelect
+                    defaultValue="All"
                     name="reportType"
                     value={values.reportType}
                     onChange={handleChange}
@@ -214,7 +215,7 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                 </ListItem>
               </Grid>
               <Grid item lg={viewSdrFlag ? 6 : 2} md={viewSdrFlag ? 6 : 4} sm={6}>
-                <ListItem className="mt-3">A/C Number</ListItem>
+                <ListItem className="mt-3">AC Number</ListItem>
                 <ListItem>
                   <TextField
                     placeholder="All"

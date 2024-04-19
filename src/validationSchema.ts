@@ -92,7 +92,7 @@ export const ValidationSchema = {
       val ? val.toString().trim().length >= 0 : true
     ),
   }),
-  OperatorControlNumber: string().max(17, "Up to 17 characters"),
+  OperatorControlNumber: string().max(20, "Up to 20 characters"),
   ReportedBy: string().max(30, "Up to 30 characters"),
   Keyword: string().max(30, "Up to 30 characters"),
   SfrAdditionalDetails: object().shape({

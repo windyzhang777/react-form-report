@@ -15,13 +15,13 @@ export interface GetSfrMasterDataResResult {
   DetectionMethods: OptionDocument[];
   DiscrepancyParts: OptionDocument[];
   DiscrepancyTypes: OptionDocument[];
+  Fleet: OptionDocument[];
   HowDiscovered: OptionDocument[];
   MfrSources: OptionDocument[];
   NatureofReports: OptionDocument[];
   PrecautionaryProcedures: OptionDocument[];
   ReportableItems: string;
   Stage: OptionDocument[];
-  Fleet: OptionDocument[];
 }
 
 export interface OptionDocument {

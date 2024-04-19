@@ -93,7 +93,11 @@ const HomeScreen = () => {
   const handleFilterInit = (tab: number = tabIndex) => {
     if (tab === SelectedTab.Open) {
       const stored = window.localStorage.getItem("sdr_filter");
-      setFilters(stored ? JSON.parse(stored) : []);
+      setFilters(
+        stored
+          ? JSON.parse(stored)
+          : [LogpageStatus.Carry, LogpageStatus.Defer, LogpageStatus.Cleared]
+      );
     } else {
       setFilters([]);
     }

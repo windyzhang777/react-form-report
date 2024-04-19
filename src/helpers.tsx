@@ -12,6 +12,7 @@ import { EsfrUserPolicy } from "src/types/GetProfilerRes";
 export const DATETIME_REQUEST = "YYYY-MM-DDTHH:mm:ss";
 export const DATETIME_REFRESH = "MM/DD/YYYY@HH:mm";
 export const DATETIME_DISPLAY = "MM/DD/YYYY HH:mm:ss";
+export const DATE_DISPLAY = "MM/DD/YYYY";
 export const DATE_HTML_DISPLAY = "YYYY-MM-DD";
 
 export const handleScroll = (ref: RefObject<any> | null) => {
@@ -146,6 +147,14 @@ export const clearLocalStorage = () => {
   });
 };
 
-export const toFixed = (a: number | string | undefined) => {
-  return !!a && !!Number(a) ? Number(a).toFixed(2) : 0;
+export const toFixed = (a: number | string | undefined, maxAllowedDecimal: number = 2) => {
+  return !!a && !!Number(a)
+    ? Number(a) > Math.floor(Number(a))
+      ? Number(a).toFixed(maxAllowedDecimal)
+      : Number(a)
+    : 0;
+};
+
+export const trimMultipleSelected = (arr: string | string[]) => {
+  return Array.isArray(arr) ? (arr.length ? (arr.indexOf("") > -1 ? [] : arr) : arr) : arr;
 };

@@ -88,12 +88,18 @@ const CreateSdrData = ({
         WingStationToSide: "",
         StructuralOther: "",
       },
+      AircraftDetails: {
+        RegistryNNumber: logpageData?.FleetInfo?.LicenseNumber || "",
+        Manufacturer: logpageData?.FleetInfo?.ManufacturedBy || "",
+        Model: logpageData?.FleetInfo?.ManufacturerPartNumber || "",
+        SerialNumber: logpageData?.FleetInfo?.ManufacturerSerialNumber || "",
+        TotalTime: String(toFixed(logpageData?.FleetInfo?.TotalAircraftTime) || ""),
+        TotalCycles: String(toFixed(logpageData?.FleetInfo?.TotalAircraftCycles) || ""),
+      },
+      LogPageCreationDate: moment(logpageData?.FleetInfo?.Date).format(DATETIME_REQUEST) || "",
       OperatorControlNumber: "",
       CreatedDate: moment().format(DATETIME_REQUEST),
       IsExtracted: false,
-      LogPageCreationDate:
-        moment(logpageData?.FleetInfo?.Date).format(DATETIME_REQUEST) ||
-        moment().format(DATETIME_REQUEST),
       Station: logpageData?.FleetInfo?.Station || "",
       AircraftNumber: logpageData?.FleetInfo?.TailNumber || "",
       LogPageNumber: logpageNumberValue || "",
@@ -116,14 +122,6 @@ const CreateSdrData = ({
       CreatedbyLastName: `${profileData?.LastName || ""}`,
       ModifiedbyFirstName: "",
       ModifiedbyLastName: "",
-      AircraftDetails: {
-        RegistryNNumber: logpageData?.FleetInfo?.LicenseNumber || "",
-        Manufacturer: logpageData?.FleetInfo?.ManufacturedBy || "",
-        Model: logpageData?.FleetInfo?.ManufacturerPartNumber || "",
-        SerialNumber: logpageData?.FleetInfo?.ManufacturerSerialNumber || "",
-        TotalTime: String(toFixed(logpageData?.FleetInfo?.TotalAircraftTime) || ""),
-        TotalCycles: String(toFixed(logpageData?.FleetInfo?.TotalAircraftCycles) || ""),
-      },
       Powerplant: {
         Manufacturer: "",
         Model: "",
@@ -132,7 +130,7 @@ const CreateSdrData = ({
         TotalCycles: "",
       },
       AtaCode: logpageData?.FleetInfo?.ATACode || "",
-      FlightNumber: "",
+      FlightNumber: logpageData?.FleetInfo?.FlightNumber || "",
       CorrectiveAction: logpageData?.FleetInfo?.CorrectiveActions || "",
     }),
     [detailsData, logpageData, profileData]

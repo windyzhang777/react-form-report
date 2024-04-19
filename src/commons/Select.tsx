@@ -14,6 +14,7 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { FocusEventHandler, HTMLInputTypeAttribute, ReactNode } from "react";
 import { FlexCenter } from "src/commons/Box";
+import { trimMultipleSelected } from "src/helpers";
 import { OptionDocument } from "src/types/GetSfrMasterDataRes";
 
 const ITEM_HEIGHT = 88;
@@ -55,6 +56,7 @@ export interface ICommonSelectProps {
 }
 
 export interface ISimpleSingleSelectProps extends ICommonSelectProps {
+  defaultValue?: string;
   onChange: (event: SelectChangeEvent<string>) => void;
   options: string[] | undefined;
   value: string;
@@ -64,6 +66,7 @@ export const SimpleSingleSelect = ({
   className,
   id,
   options,
+  defaultValue = "",
   helperText,
   value,
   ...props
@@ -78,9 +81,14 @@ export const SimpleSingleSelect = ({
           marginTop: "-8px",
         }}
       >
-        All
+        {defaultValue ? "" : "Select One"}
       </InputLabel>
       <Select displayEmpty id={id && id + "-simple-single-select"} value={value} {...props}>
+        {defaultValue && (
+          <MenuItem key={defaultValue} value="">
+            {defaultValue}
+          </MenuItem>
+        )}
         {!options ? (
           <FlexCenter>No options available</FlexCenter>
         ) : (
@@ -123,7 +131,7 @@ export const SingleSelect = ({
             marginTop: "-8px",
           }}
         >
-          {defaultValue ? defaultValue : "Select One"}
+          {defaultValue ? "" : "Select One"}
         </InputLabel>
       )}
       <Select
@@ -131,14 +139,25 @@ export const SingleSelect = ({
         displayEmpty
         id={id && id + "-single-select"}
         MenuProps={MenuProps}
-        renderValue={(selected) => options?.find((option) => option.Id == selected)?.Description}
+        renderValue={(selected) =>
+          options?.find((option) => option.Id == selected)?.Description || defaultValue
+        }
         value={value}
       >
+        {defaultValue && (
+          <MenuItem key={defaultValue} value="">
+            <FormControlLabel
+              value=""
+              control={<Radio className="!py-1 !pr-1" checked={!value} />}
+              label={defaultValue}
+            />
+          </MenuItem>
+        )}
         {!options ? (
           <FlexCenter>No options available</FlexCenter>
         ) : (
           options.map((option) => (
-            <MenuItem key={option.Id} value={option.Id}>
+            <MenuItem key={option.Id + option.Description} value={option.Id}>
               <FormControlLabel
                 value={option.Id}
                 control={<Radio className="!py-1 !pr-1" checked={option.Id === value} />}
@@ -154,6 +173,7 @@ export const SingleSelect = ({
 );
 
 export interface ISimpleMultipleSelectProps extends ICommonSelectProps {
+  defaultValue?: string;
   maxAllowed?: number;
   onChange: (value: string | string[]) => void;
   options: OptionDocument[] | undefined;
@@ -162,6 +182,7 @@ export interface ISimpleMultipleSelectProps extends ICommonSelectProps {
 
 export const SimpleMultipleSelect = ({
   className,
+  defaultValue,
   helperText,
   id,
   onChange,
@@ -181,7 +202,7 @@ export const SimpleMultipleSelect = ({
             marginTop: "-8px",
           }}
         >
-          All
+          {defaultValue ? "" : `Select up to ${maxAllowed} options`}
         </InputLabel>
       )}
       <Select
@@ -191,21 +212,37 @@ export const SimpleMultipleSelect = ({
         MenuProps={MenuProps}
         multiple
         onChange={(e) => {
-          if (value.length < maxAllowed) {
-            onChange(e.target.value);
+          if (!trimMultipleSelected(e.target.value).length) {
+            onChange([]);
           } else {
-            onChange(e.target.value.slice(0, maxAllowed));
+            if (value.length < maxAllowed) {
+              onChange(e.target.value);
+            } else {
+              onChange(e.target.value.slice(0, maxAllowed));
+            }
           }
         }}
-        renderValue={(selected) => selected.join(", ")}
+        renderValue={(selected) =>
+          trimMultipleSelected(selected).length ? selected.join(", ") : defaultValue
+        }
         value={value}
         {...props}
       >
+        {defaultValue && (
+          <MenuItem className="!pl-0 !pr-5" key={defaultValue} value="">
+            <Checkbox className="!py-1 !pr-1" checked={!trimMultipleSelected(value).length} />
+            <ListItemText primary={defaultValue} />
+          </MenuItem>
+        )}
         {!options ? (
           <FlexCenter>No options available</FlexCenter>
         ) : (
           options.map((option) => (
-            <MenuItem className="!pl-0 !pr-5" key={option.Description} value={option.Description}>
+            <MenuItem
+              className="!pl-0 !pr-5"
+              key={option.Id + option.Description}
+              value={option.Description}
+            >
               <Checkbox className="!py-1 !pr-1" checked={value.indexOf(option.Description) > -1} />
               <ListItemText primary={option.Description} />
             </MenuItem>
@@ -271,7 +308,11 @@ export const MultipleSelect = ({
           <FlexCenter>No options available</FlexCenter>
         ) : (
           options.map((option) => (
-            <MenuItem className="!pl-0 !pr-5" key={option.Id} value={option.Id}>
+            <MenuItem
+              className="!pl-0 !pr-5"
+              key={option.Id + option.Description}
+              value={option.Id}
+            >
               <Checkbox className="!py-1 !pr-1" checked={value.indexOf(option.Id) > -1} />
               <ListItemText primary={option.Description} />
             </MenuItem>

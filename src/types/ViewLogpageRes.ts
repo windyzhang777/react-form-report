@@ -16,6 +16,7 @@ export interface FleetInfo {
   CorrectiveActions: string;
   Date: string;
   FleetCode: string;
+  FlightNumber: string;
   LicenseNumber: string;
   ManufacturedBy: string;
   ManufacturerPartNumber: string;

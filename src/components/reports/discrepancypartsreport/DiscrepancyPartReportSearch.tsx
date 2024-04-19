@@ -90,6 +90,7 @@ const DiscrepancyPartsReportSearch = ({
                 <ListItem className="mt-3">Fleet</ListItem>
                 <ListItem>
                   <SimpleMultipleSelect
+                    defaultValue="All"
                     name="fleetList"
                     value={values.fleetList || []}
                     onChange={(values) => {
@@ -112,7 +113,7 @@ const DiscrepancyPartsReportSearch = ({
                 <ListItem>
                   <SingleSelect
                     defaultValue="All"
-                    name="discrepancyTypes"
+                    name="discrepancyType"
                     value={values.discrepancyType}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -248,7 +249,7 @@ const DiscrepancyPartsReportSearch = ({
                 </Grid>
               </Grid>
               <Grid item lg={viewSdrFlag ? 6 : 2} md={viewSdrFlag ? 6 : 4} sm={6}>
-                <ListItem className="mt-3">A/C Number</ListItem>
+                <ListItem className="mt-3">AC Number</ListItem>
                 <ListItem>
                   <TextField
                     placeholder="All"

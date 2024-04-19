@@ -18,7 +18,7 @@ import {
   Sides,
   UserPermission,
 } from "src/commons/types";
-import { DATETIME_REQUEST, DATE_HTML_DISPLAY, toFixed } from "src/helpers";
+import { DATETIME_REQUEST, DATE_DISPLAY, DATE_HTML_DISPLAY, toFixed } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
 import "./viewSdrData.css";
 
@@ -98,12 +98,11 @@ const ViewSdrData = ({
         Manufacturer: logpageData?.FleetInfo?.ManufacturedBy || "",
         Model: logpageData?.FleetInfo?.ManufacturerPartNumber || "",
         SerialNumber: logpageData?.FleetInfo?.ManufacturerSerialNumber || "",
-        TotalTime: "" + logpageData?.FleetInfo?.TotalAircraftTime || "",
-        TotalCycles: "" + logpageData?.FleetInfo?.TotalAircraftCycles || "",
+        TotalTime: String(toFixed(logpageData?.FleetInfo?.TotalAircraftTime) || ""),
+        TotalCycles: String(toFixed(logpageData?.FleetInfo?.TotalAircraftCycles) || ""),
       },
       LogPageCreationDate:
-        (isSdr ? detailsData?.SdrDetails?.CreatedDate : detailsData?.CreatedDate) ||
-        moment().format(DATETIME_REQUEST),
+        (isSdr ? detailsData?.SdrDetails?.CreatedDate : detailsData?.CreatedDate) || "",
       Station: logpageData?.FleetInfo?.Station || "",
       LogPageNumber: detailsData?.LogPageNumber || selectedSdr?.LogpageNumber || "",
       AircraftNumber: logpageData?.FleetInfo?.TailNumber || "",
@@ -154,6 +153,7 @@ const ViewSdrData = ({
         DefectLocationIdentifier: "",
         CoordinateLocationDetails: detailsData?.LocationDetails?.CoordinateLocationDetails || "",
       },
+      FlightNumber: logpageData?.FleetInfo?.FlightNumber || "",
     }),
     [detailsData, followUpFlag, isSdr, logpageData, profileData, selectedSdr]
   );
@@ -233,7 +233,7 @@ const ViewSdrData = ({
                   <ListItem>A/C Total Time</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{toFixed(initialValues?.AircraftDetails?.TotalTime)}</ListItem>
+                  <ListItem>{initialValues?.AircraftDetails?.TotalTime}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -241,7 +241,7 @@ const ViewSdrData = ({
                   <ListItem>A/C Total Cycles</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{toFixed(initialValues?.AircraftDetails?.TotalCycles)}</ListItem>
+                  <ListItem>{initialValues?.AircraftDetails?.TotalCycles}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -249,7 +249,7 @@ const ViewSdrData = ({
                   <ListItem>Flight #</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{initialValues?.AircraftNumber}</ListItem>
+                  <ListItem>{initialValues?.FlightNumber}</ListItem>
                 </Grid>
               </Grid>
             </ArrowMenu>
@@ -339,8 +339,10 @@ const ViewSdrData = ({
                             }
                             className={"sdr-status-edit"}
                           />
+                        ) : moment(values?.LogPageCreationDate).isValid() ? (
+                          moment(values?.LogPageCreationDate).format(DATE_DISPLAY)
                         ) : (
-                          moment(values?.LogPageCreationDate).format(DATE_HTML_DISPLAY)
+                          ""
                         )}
                       </ListItem>
                     </Grid>

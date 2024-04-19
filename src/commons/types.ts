@@ -136,6 +136,7 @@ export interface IEditSdrValues extends Omit<UpsertSDRSnapshotReq, "PartDetails"
   LocationDetails: ILocationDetails;
   ComponentDetails: IComponentDetails & AdditionalPartValues;
   PartDetails: PartDetails & AdditionalPartValues;
+  FlightNumber: string;
 }
 
 export interface AdditionalPartValues {
