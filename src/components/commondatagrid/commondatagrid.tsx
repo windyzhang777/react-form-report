@@ -79,8 +79,9 @@ const CommonDataGrid = ({
   return (
     <>
       <DataGrid
-        className={`${isReport && "!h-[80vh]"}`}
-        autoPageSize={true}
+        className={`${isReport && "!h-[140vh]"}`}
+        initialState={{ pagination: { paginationModel: { pageSize: 20 } } }}
+        autoPageSize={isReport ? false : true}
         // loading={loading}
         disableColumnMenu
         columns={columns as GridColDef<GridValidRowModel>[]}

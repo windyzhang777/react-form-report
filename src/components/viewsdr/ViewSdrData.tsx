@@ -281,7 +281,7 @@ const ViewSdrData = ({
           }) => (
             <form
               onSubmit={handleSubmit}
-              className={`overflow-hidden mb-[4rem] ${isReport && "max-h-[150vh]"}`}
+              className={`overflow-hidden mb-[4rem] ${isReport && "max-h-[210vh]"}`}
             >
               <div
                 id={`view-${isReport ? "report" : "sdr"}-details`}
