@@ -56,8 +56,8 @@ const ViewSdrData = ({
       SfrAdditionalDetails: {
         SnapshotId: "",
         AtaCode: logpageData?.FleetInfo?.ATACode || "",
-        SubmitterDesignator: "",
-        SubmitterType: "",
+        SubmitterDesignator: "CALA",
+        SubmitterType: "A",
         OperatorDesignator: "CALA",
         OperatorType: "G",
         FAAReceivingRegionCode: "GL",
@@ -134,7 +134,8 @@ const ViewSdrData = ({
       ModifiedbyLastName: `${profileData?.LastName}`,
       CreatedDate: moment(detailsData?.CreatedDate).format(DATETIME_REQUEST) || "",
       CorrectiveAction: detailsData?.FleetInfo?.CorrectiveActions || "",
-      OperatorControlNumber: "",
+      OperatorControlNumber:
+        detailsData?.OperatorControlNumber || detailsData?.SdrDetails?.OperatorControlNumber || "",
       IsExtracted: true,
       ComponentDetails: {
         ComponentName: "",
