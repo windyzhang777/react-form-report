@@ -95,7 +95,7 @@ const ViewSnapshotData = ({
         TotalTime: String(toFixed(logpageData?.FleetInfo?.TotalAircraftTime) || ""),
         TotalCycles: String(toFixed(logpageData?.FleetInfo?.TotalAircraftCycles) || ""),
       },
-      LogPageCreationDate: snapshotData?.LogPageCreationDate || "",
+      LogPageCreationDate: snapshotData?.CreatedDate || "",
       Station: logpageData?.FleetInfo?.Station || "",
       LogPageNumber: snapshotData?.LogPageNumber || selectedSdr?.LogpageNumber || "",
       AircraftNumber: logpageData?.FleetInfo?.TailNumber || "",
