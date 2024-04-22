@@ -1,6 +1,6 @@
 import moment from "moment";
+import { DATE_HTML_DISPLAY } from "src/helpers";
 import { array, date, number, object, string } from "yup";
-import { DATE_HTML_DISPLAY } from "./helpers";
 
 export const ValidationSchema = {
   LogPageNumber: string().matches(/^[0-9]{7}$/, "Not a valid Logpage Number"),
