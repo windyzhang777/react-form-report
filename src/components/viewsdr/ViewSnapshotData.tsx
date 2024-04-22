@@ -146,6 +146,7 @@ const ViewSnapshotData = ({
         CoordinateLocationDetails: "",
       },
       FlightNumber: logpageData?.FleetInfo?.FlightNumber || "",
+      MajorRepair: "",
     }),
     [snapshotData, logpageData, isSdr, profileData, selectedSdr]
   );
@@ -270,6 +271,7 @@ const ViewSnapshotData = ({
             handleSubmit,
             isSubmitting,
             setFieldValue,
+            resetForm,
             touched,
             values,
           }) => (
@@ -685,6 +687,9 @@ const ViewSnapshotData = ({
                     <Grid item xs={4}>
                       <ListItem>Receiving District Office</ListItem>
                     </Grid>
+                    <Grid item xs={4}>
+                      <ListItem>Major Repair</ListItem>
+                    </Grid>
                   </Grid>
                   <Grid className={"sdr-status-description"} container spacing={1}>
                     <Grid item xs={4}>
@@ -732,6 +737,25 @@ const ViewSnapshotData = ({
                           />
                         ) : (
                           values?.SfrAdditionalDetails?.ReceivingDistrictOffice
+                        )}
+                      </ListItem>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <ListItem>
+                        {editable ? (
+                          <SimpleSingleSelect
+                            name="MajorRepair"
+                            value={values?.MajorRepair}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={!!touched?.MajorRepair && !!errors?.MajorRepair}
+                            helperText={!!touched?.MajorRepair && errors?.MajorRepair}
+                            options={["Y", "N"]}
+                            id="MajorRepair"
+                            className="w-full"
+                          />
+                        ) : (
+                          values?.MajorRepair || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -2146,7 +2170,10 @@ const ViewSnapshotData = ({
                   primaryLabel={editable ? "Save" : ""}
                   primaryOnClick={handleSubmit}
                   secondaryLabel={editable ? "Cancel" : "Edit"}
-                  secondaryOnClick={onClickEdit}
+                  secondaryOnClick={() => {
+                    resetForm();
+                    onClickEdit();
+                  }}
                 />
               )}
             </form>
