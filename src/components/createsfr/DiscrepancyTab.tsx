@@ -285,7 +285,6 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                   <ListItem>
                     {editable ? (
                       <TextField
-                        type="number"
                         name="DiscrepancyDetails.CrackLength"
                         value={values?.DiscrepancyDetails?.CrackLength || ""}
                         onChange={handleChange}
