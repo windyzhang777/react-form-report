@@ -20,7 +20,7 @@ import CreateSdrData from "src/components/createsdr/CreateSdrData";
 import CreateSfrData from "src/components/createsfr/CreateSfrData";
 import ViewSdrData from "src/components/viewsdr/ViewSdrData";
 import ViewSnapshotData from "src/components/viewsdr/ViewSnapshotData";
-import { filterSdrData, saveTextAsFile } from "src/helpers";
+import { filterSdrData, saveTextAsFileAsync } from "src/helpers";
 import { getAllSdrs } from "src/redux/ducks/getAllSdrs";
 import {
   InsertSnapshotSdrFilename,
@@ -196,7 +196,7 @@ const HomeScreen = () => {
             dispatch(fetchSuccess(res.data.Result));
             setOpenSnackbar(1);
             setSnackbarMessage("Extract SDR Records successful");
-            saveTextAsFile(fileData_?.SdrRecords?.join("\n"), fileData_?.FileName);
+            saveTextAsFileAsync(fileData_?.SdrRecords?.join("\n"), fileData_?.FileName);
             dispatch(updateExtractionStatus(ids));
             dispatch(
               InsertSnapshotSdrFilename({
@@ -398,7 +398,7 @@ const HomeScreen = () => {
             secondaryLabel="Save"
             secondaryOnClick={() => {
               if (fileData) {
-                saveTextAsFile(fileData.SdrRecords?.join("\n"), fileData.FileName);
+                saveTextAsFileAsync(fileData.SdrRecords?.join("\n"), fileData.FileName);
               }
             }}
           />
