@@ -51,13 +51,16 @@ export const eSfrReportSearchColumns = (): GridColDef<GetEsfrReportResResult>[] 
         </Link>
       ),
     },
-
     {
       field: "ReportedById",
       headerName: "Reported By",
       sortable: false,
       minWidth: 300,
       renderCell: ({ row }) =>
+        `${row?.ReportedByFirstName || ""} ${row?.ReportedByLastName || ""}${
+          row?.ReportedById ? ` (${row.ReportedById})` : ""
+        }`,
+      valueGetter: ({ row }) =>
         `${row?.ReportedByFirstName || ""} ${row?.ReportedByLastName || ""}${
           row?.ReportedById ? ` (${row.ReportedById})` : ""
         }`,
@@ -68,6 +71,10 @@ export const eSfrReportSearchColumns = (): GridColDef<GetEsfrReportResResult>[] 
       sortable: false,
       minWidth: 300,
       renderCell: ({ row }) =>
+        `${row?.ApprovedByFirstName || ""} ${row?.ApprovedByLastName || ""}${
+          row?.ApprovedById ? ` (${row.ApprovedById})` : ""
+        }`,
+      valueGetter: ({ row }) =>
         `${row?.ApprovedByFirstName || ""} ${row?.ApprovedByLastName || ""}${
           row?.ApprovedById ? ` (${row.ApprovedById})` : ""
         }`,

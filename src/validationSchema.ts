@@ -67,14 +67,6 @@ export const ValidationSchema = {
       },
     }),
   }),
-  StructureCausingDifficulty: object().shape({
-    CrackLength: number().test("len", "up to 5 digits", (val) =>
-      val ? val.toString().length <= 5 : true
-    ),
-    NumberofCracks: number().test("len", "up to 3 digits", (val) =>
-      val ? val.toString().length <= 3 : true
-    ),
-  }),
   PartDetails: object().shape({
     PartLocation: string().test("len", "Not a valid value", (val) =>
       val ? val.toString().trim().length >= 0 : true
@@ -100,6 +92,8 @@ export const ValidationSchema = {
     CrackLength: number().test("digits", "Not a valid value", (val) =>
       val ? /^[1-9]\d{0,7}(?:\.\d{1,3})?$/.test(val.toString()) : true
     ),
+    OperatorType: string().matches(/^(\S+$)/, "Not a valid value"),
+    SubmitterType: string().matches(/^(\S+$)/, "Not a valid value"),
   }),
   Comments: string().max(250, "Up to 250 characters"),
   Specify: string().max(100, "Up to 100 characters"),

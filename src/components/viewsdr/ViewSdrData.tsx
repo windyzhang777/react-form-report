@@ -56,8 +56,8 @@ const ViewSdrData = ({
       SfrAdditionalDetails: {
         SnapshotId: "",
         AtaCode: logpageData?.FleetInfo?.ATACode || "",
-        SubmitterDesignator: "",
-        SubmitterType: "",
+        SubmitterDesignator: "CALA",
+        SubmitterType: "A",
         OperatorDesignator: "CALA",
         OperatorType: "G",
         FAAReceivingRegionCode: "GL",
@@ -134,7 +134,8 @@ const ViewSdrData = ({
       ModifiedbyLastName: `${profileData?.LastName}`,
       CreatedDate: moment(detailsData?.CreatedDate).format(DATETIME_REQUEST) || "",
       CorrectiveAction: detailsData?.FleetInfo?.CorrectiveActions || "",
-      OperatorControlNumber: "",
+      OperatorControlNumber:
+        detailsData?.OperatorControlNumber || detailsData?.SdrDetails?.OperatorControlNumber || "",
       IsExtracted: true,
       ComponentDetails: {
         ComponentName: "",
@@ -281,7 +282,7 @@ const ViewSdrData = ({
           }) => (
             <form
               onSubmit={handleSubmit}
-              className={`overflow-hidden mb-[4rem] ${isReport && "max-h-[150vh]"}`}
+              className={`overflow-hidden mb-[4rem] ${isReport && "max-h-[210vh]"}`}
             >
               <div
                 id={`view-${isReport ? "report" : "sdr"}-details`}
