@@ -303,6 +303,9 @@ const ViewSnapshotData = ({
                         {editable ? (
                           <TextField
                             type="date"
+                            inputProps={{
+                              max: moment().format(DATE_HTML_DISPLAY),
+                            }}
                             name="LogPageCreationDate"
                             value={moment(values?.LogPageCreationDate).format(DATE_HTML_DISPLAY)}
                             onChange={(e) => {

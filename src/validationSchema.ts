@@ -1,7 +1,10 @@
-import { array, number, object, string } from "yup";
+import moment from "moment";
+import { array, date, number, object, string } from "yup";
+import { DATE_HTML_DISPLAY } from "./helpers";
 
 export const ValidationSchema = {
   LogPageNumber: string().matches(/^[0-9]{7}$/, "Not a valid Logpage Number"),
+  LogPageCreationDate: date().max(moment().format(DATE_HTML_DISPLAY), "Cannot use future date"),
   Station: string().matches(/^[a-zA-Z]{1,3}$/, "Not a valid Station"),
   AircraftNumber: string().matches(/^[0-9]{4}$/, "Not a valid Aircraft Number"),
   AtaCode: string().matches(/^[a-zA-Z0-9]{1,4}$/, "Not a valid ATA Code"),
