@@ -67,14 +67,6 @@ export const ValidationSchema = {
       },
     }),
   }),
-  StructureCausingDifficulty: object().shape({
-    CrackLength: number().test("len", "up to 5 digits", (val) =>
-      val ? val.toString().length <= 5 : true
-    ),
-    NumberofCracks: number().test("len", "up to 3 digits", (val) =>
-      val ? val.toString().length <= 3 : true
-    ),
-  }),
   PartDetails: object().shape({
     PartLocation: string().test("len", "Not a valid value", (val) =>
       val ? val.toString().trim().length >= 0 : true
