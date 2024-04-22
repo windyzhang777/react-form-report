@@ -743,19 +743,18 @@ const ViewSnapshotData = ({
                     <Grid item xs={4}>
                       <ListItem>
                         {editable ? (
-                          <SimpleSingleSelect
+                          <TextField
+                            disabled
                             name="MajorRepair"
-                            value={values?.MajorRepair}
+                            value={values.MajorRepair}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            error={!!touched?.MajorRepair && !!errors?.MajorRepair}
-                            helperText={!!touched?.MajorRepair && errors?.MajorRepair}
-                            options={["Y", "N"]}
-                            id="MajorRepair"
-                            className="w-full"
+                            error={!!touched.MajorRepair && !!errors.MajorRepair}
+                            helperText={!!touched.MajorRepair && errors.MajorRepair}
+                            className={"sdr-status-edit"}
                           />
                         ) : (
-                          values?.MajorRepair || "--"
+                          values.MajorRepair || ""
                         )}
                       </ListItem>
                     </Grid>
