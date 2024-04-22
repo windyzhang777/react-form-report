@@ -5,8 +5,9 @@ import {
   GridColDef,
   GridRowSelectionModel,
   GridValidRowModel,
+  useGridApiRef,
 } from "@mui/x-data-grid";
-import { Dispatch, SetStateAction, useMemo, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { FlexRow } from "src/commons/Box";
 import ButtonGroup from "src/commons/ButtonGroup";
 import DataGrid, { CommonDataGridFooter, ReportDataGridFooter } from "src/commons/DataGrid";
@@ -55,6 +56,7 @@ const CommonDataGrid = ({
   tabIndex,
   viewSdrFlag,
 }: CommonDataGridProps) => {
+  const apiRef = useGridApiRef();
   const { auth } = useAppSelector((state) => state.profile);
   const { loading } = useAppSelector((state) => state.newSdrs);
   const { masterData }: SdrEsfrRecordDetailsStateType = useAppSelector(
@@ -76,11 +78,19 @@ const CommonDataGrid = ({
     handleExtractSdrRecords(selectedSdrsToExtract.map((s) => +(s as string).split("-")[0]));
   };
 
+  useEffect(() => {
+    apiRef?.current?.setPage(0);
+    return () => {
+      apiRef?.current?.setPage(0);
+    };
+  }, [tabIndex]);
+
   return (
     <>
       <DataGrid
+        apiRef={apiRef}
         className={`${isReport && "!h-[140vh]"}`}
-        initialState={{ pagination: { paginationModel: { pageSize: 20 } } }}
+        initialState={{ pagination: { paginationModel: { page: 0, pageSize: 20 } } }}
         autoPageSize={isReport ? false : true}
         // loading={loading}
         disableColumnMenu
