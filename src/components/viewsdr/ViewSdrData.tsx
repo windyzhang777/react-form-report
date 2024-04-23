@@ -136,7 +136,7 @@ const ViewSdrData = ({
       CorrectiveAction: detailsData?.FleetInfo?.CorrectiveActions || "",
       OperatorControlNumber:
         detailsData?.OperatorControlNumber || detailsData?.SdrDetails?.OperatorControlNumber || "",
-      IsExtracted: true,
+      IsExtracted: false,
       ComponentDetails: {
         ComponentName: "",
         ComponentManufactureName: "",

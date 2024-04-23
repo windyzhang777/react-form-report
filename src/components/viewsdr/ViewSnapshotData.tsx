@@ -127,7 +127,7 @@ const ViewSnapshotData = ({
       CreatedDate: snapshotData?.CreatedDate || "",
       CorrectiveAction: snapshotData?.CorrectiveAction || "",
       OperatorControlNumber: snapshotData?.OperatorControlNumber || "",
-      IsExtracted: true,
+      IsExtracted: false,
       ComponentDetails: {
         ComponentName: snapshotData?.SfrDetails?.ComponentName || "",
         ComponentManufactureName: snapshotData?.SfrDetails?.ComponentManufacturerName || "",
