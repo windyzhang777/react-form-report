@@ -4,11 +4,18 @@ import { ReactNode } from "react";
 export interface ICommonListItemProps {
   children: string | ReactNode;
   className?: string;
+  disabled?: boolean;
   required?: boolean;
 }
 
-const CommonListItem = ({ children, required, ...props }: ICommonListItemProps) => (
-  <ListItem {...props}>
+const CommonListItem = ({
+  className,
+  children,
+  disabled,
+  required,
+  ...props
+}: ICommonListItemProps) => (
+  <ListItem className={`${disabled && "text-[#00000061]"} ${className}`} {...props}>
     {children}
     {required && <span className="required">&nbsp;&#42;</span>}
   </ListItem>

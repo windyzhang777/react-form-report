@@ -293,7 +293,7 @@ const ViewSnapshotData = ({
                       <ListItem>Difficulty Date</ListItem>
                     </Grid>
                     <Grid item xs={4}>
-                      <ListItem>Log Page Number</ListItem>
+                      <ListItem disabled={editable}>Log Page Number</ListItem>
                     </Grid>
                     <Grid item xs={4}>
                       <ListItem>Station</ListItem>
@@ -376,7 +376,7 @@ const ViewSnapshotData = ({
                       <ListItem>Submitter Type</ListItem>
                     </Grid>
                     <Grid item xs={4}>
-                      <ListItem>Operator Designator</ListItem>
+                      <ListItem disabled={editable}>Operator Designator</ListItem>
                     </Grid>
                   </Grid>
                   <Grid className={"sdr-status-description"} container spacing={3}>
@@ -459,7 +459,7 @@ const ViewSnapshotData = ({
                       <ListItem>Operator Type</ListItem>
                     </Grid>
                     <Grid item xs={4}>
-                      <ListItem>ATA Code</ListItem>
+                      <ListItem disabled={editable}>ATA Code</ListItem>
                     </Grid>
                     <Grid item xs={4}>
                       <ListItem required={editable}>Nature of Condition</ListItem>
@@ -688,7 +688,7 @@ const ViewSnapshotData = ({
                       <ListItem>Receiving District Office</ListItem>
                     </Grid>
                     <Grid item xs={4}>
-                      <ListItem>Major Repair</ListItem>
+                      <ListItem disabled={editable}>Major Repair</ListItem>
                     </Grid>
                   </Grid>
                   <Grid className={"sdr-status-description"} container spacing={1}>

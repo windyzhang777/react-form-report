@@ -160,9 +160,8 @@ const CreateSdrData = ({
       <Formik
         initialValues={initialValues}
         enableReinitialize
-        onSubmit={(values, { resetForm, setSubmitting }) => {
+        onSubmit={(values, { setSubmitting }) => {
           handleUpsertSdrSnapshot(values);
-          // resetForm();
           setTimeout(() => {
             setSubmitting(false);
           }, 500);
@@ -244,13 +243,13 @@ const CreateSdrData = ({
                 </Grid>
                 <Grid className={"sdr-status-item"} container spacing={3}>
                   <Grid item xs={4}>
-                    <ListItem>Manufacturer</ListItem>
+                    <ListItem disabled>Manufacturer</ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                    <ListItem>Model/Series</ListItem>
+                    <ListItem disabled>Model/Series</ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                    <ListItem>Serial Number</ListItem>
+                    <ListItem disabled>Serial Number</ListItem>
                   </Grid>
                 </Grid>
                 <Grid className={"sdr-status-description"} container spacing={3}>
@@ -259,7 +258,7 @@ const CreateSdrData = ({
                       {editable ? (
                         <TextField
                           name="AircraftDetails.Manufacturer"
-                          disabled={true}
+                          disabled
                           value={values.AircraftDetails?.Manufacturer || ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -275,7 +274,7 @@ const CreateSdrData = ({
                       {editable ? (
                         <TextField
                           name="AircraftDetails.Model"
-                          disabled={true}
+                          disabled
                           value={values.AircraftDetails?.Model || ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -291,7 +290,7 @@ const CreateSdrData = ({
                       {editable ? (
                         <TextField
                           name="AircraftDetails.SerialNumber"
-                          disabled={true}
+                          disabled
                           value={values.AircraftDetails?.SerialNumber || ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -305,10 +304,10 @@ const CreateSdrData = ({
                 </Grid>
                 <Grid className={"sdr-status-item"} container spacing={3}>
                   <Grid item xs={4}>
-                    <ListItem>Total Time</ListItem>
+                    <ListItem disabled>Total Time</ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                    <ListItem>Total Cycles</ListItem>
+                    <ListItem disabled>Total Cycles</ListItem>
                   </Grid>
                 </Grid>
                 <Grid className={"sdr-status-description"} container spacing={3}>
@@ -317,7 +316,7 @@ const CreateSdrData = ({
                       {editable ? (
                         <TextField
                           name="AircraftDetails.TotalTime"
-                          disabled={true}
+                          disabled
                           value={values.AircraftDetails?.TotalTime || ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -333,7 +332,7 @@ const CreateSdrData = ({
                       {editable ? (
                         <TextField
                           name="AircraftDetails.TotalCycles"
-                          disabled={true}
+                          disabled
                           value={values.AircraftDetails?.TotalCycles || ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -352,13 +351,13 @@ const CreateSdrData = ({
                 </Grid>
                 <Grid className={"sdr-status-item"} container spacing={3}>
                   <Grid item xs={4}>
-                    <ListItem>Manufacturer</ListItem>
+                    <ListItem disabled>Manufacturer</ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                    <ListItem>Model/Series</ListItem>
+                    <ListItem disabled>Model/Series</ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                    <ListItem>Serial Number</ListItem>
+                    <ListItem disabled>Serial Number</ListItem>
                   </Grid>
                 </Grid>
                 <Grid className={"sdr-status-description"} container spacing={3}>
@@ -367,7 +366,7 @@ const CreateSdrData = ({
                       {editable ? (
                         <TextField
                           name="Powerplant.Manufacturer"
-                          disabled={true}
+                          disabled
                           value={values.Powerplant?.Manufacturer || ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -383,7 +382,7 @@ const CreateSdrData = ({
                       {editable ? (
                         <TextField
                           name="Powerplant.Model"
-                          disabled={true}
+                          disabled
                           value={values.Powerplant?.Model || ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -399,7 +398,7 @@ const CreateSdrData = ({
                       {editable ? (
                         <TextField
                           name="Powerplant.SerialNumber"
-                          disabled={true}
+                          disabled
                           value={values.Powerplant?.SerialNumber || ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -413,10 +412,10 @@ const CreateSdrData = ({
                 </Grid>
                 <Grid className={"sdr-status-item"} container spacing={3}>
                   <Grid item xs={4}>
-                    <ListItem>Total Time</ListItem>
+                    <ListItem disabled>Total Time</ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                    <ListItem>Total Cycles</ListItem>
+                    <ListItem disabled>Total Cycles</ListItem>
                   </Grid>
                 </Grid>
                 <Grid className={"sdr-status-description"} container spacing={3}>
@@ -425,7 +424,7 @@ const CreateSdrData = ({
                       {editable ? (
                         <TextField
                           name="Powerplant.TotalTime"
-                          disabled={true}
+                          disabled
                           value={values.Powerplant?.TotalTime || ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -441,7 +440,7 @@ const CreateSdrData = ({
                       {editable ? (
                         <TextField
                           name="Powerplant.TotalCycles"
-                          disabled={true}
+                          disabled
                           value={values.Powerplant?.TotalCycles || ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
