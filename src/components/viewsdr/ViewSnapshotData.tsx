@@ -127,7 +127,7 @@ const ViewSnapshotData = ({
       CreatedDate: snapshotData?.CreatedDate || "",
       CorrectiveAction: snapshotData?.CorrectiveAction || "",
       OperatorControlNumber: snapshotData?.OperatorControlNumber || "",
-      IsExtracted: true,
+      IsExtracted: false,
       ComponentDetails: {
         ComponentName: snapshotData?.SfrDetails?.ComponentName || "",
         ComponentManufactureName: snapshotData?.SfrDetails?.ComponentManufacturerName || "",
@@ -146,6 +146,7 @@ const ViewSnapshotData = ({
         CoordinateLocationDetails: "",
       },
       FlightNumber: logpageData?.FleetInfo?.FlightNumber || "",
+      MajorRepair: "",
     }),
     [snapshotData, logpageData, isSdr, profileData, selectedSdr]
   );
@@ -270,6 +271,7 @@ const ViewSnapshotData = ({
             handleSubmit,
             isSubmitting,
             setFieldValue,
+            resetForm,
             touched,
             values,
           }) => (
@@ -291,7 +293,7 @@ const ViewSnapshotData = ({
                       <ListItem>Difficulty Date</ListItem>
                     </Grid>
                     <Grid item xs={4}>
-                      <ListItem>Log Page Number</ListItem>
+                      <ListItem disabled={editable}>Log Page Number</ListItem>
                     </Grid>
                     <Grid item xs={4}>
                       <ListItem>Station</ListItem>
@@ -303,6 +305,9 @@ const ViewSnapshotData = ({
                         {editable ? (
                           <TextField
                             type="date"
+                            inputProps={{
+                              max: moment().format(DATE_HTML_DISPLAY),
+                            }}
                             name="LogPageCreationDate"
                             value={moment(values?.LogPageCreationDate).format(DATE_HTML_DISPLAY)}
                             onChange={(e) => {
@@ -371,7 +376,7 @@ const ViewSnapshotData = ({
                       <ListItem>Submitter Type</ListItem>
                     </Grid>
                     <Grid item xs={4}>
-                      <ListItem>Operator Designator</ListItem>
+                      <ListItem disabled={editable}>Operator Designator</ListItem>
                     </Grid>
                   </Grid>
                   <Grid className={"sdr-status-description"} container spacing={3}>
@@ -454,7 +459,7 @@ const ViewSnapshotData = ({
                       <ListItem>Operator Type</ListItem>
                     </Grid>
                     <Grid item xs={4}>
-                      <ListItem>ATA Code</ListItem>
+                      <ListItem disabled={editable}>ATA Code</ListItem>
                     </Grid>
                     <Grid item xs={4}>
                       <ListItem required={editable}>Nature of Condition</ListItem>
@@ -682,6 +687,9 @@ const ViewSnapshotData = ({
                     <Grid item xs={4}>
                       <ListItem>Receiving District Office</ListItem>
                     </Grid>
+                    <Grid item xs={4}>
+                      <ListItem disabled={editable}>Major Repair</ListItem>
+                    </Grid>
                   </Grid>
                   <Grid className={"sdr-status-description"} container spacing={1}>
                     <Grid item xs={4}>
@@ -729,6 +737,24 @@ const ViewSnapshotData = ({
                           />
                         ) : (
                           values?.SfrAdditionalDetails?.ReceivingDistrictOffice
+                        )}
+                      </ListItem>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <ListItem>
+                        {editable ? (
+                          <TextField
+                            disabled
+                            name="MajorRepair"
+                            value={values.MajorRepair}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={!!touched.MajorRepair && !!errors.MajorRepair}
+                            helperText={!!touched.MajorRepair && errors.MajorRepair}
+                            className={"sdr-status-edit"}
+                          />
+                        ) : (
+                          values.MajorRepair || ""
                         )}
                       </ListItem>
                     </Grid>
@@ -2143,7 +2169,10 @@ const ViewSnapshotData = ({
                   primaryLabel={editable ? "Save" : ""}
                   primaryOnClick={handleSubmit}
                   secondaryLabel={editable ? "Cancel" : "Edit"}
-                  secondaryOnClick={onClickEdit}
+                  secondaryOnClick={() => {
+                    resetForm();
+                    onClickEdit();
+                  }}
                 />
               )}
             </form>

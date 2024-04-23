@@ -94,23 +94,43 @@ export const joinCodes = (arr: string[]) => {
   return res.slice(2);
 };
 
-export const saveTextAsFile = (textToWrite: string, fileNameToSaveAs: string) => {
-  let textFileAsBlob = new Blob([textToWrite], { type: "text/plain" });
-  let downloadLink = document.createElement("a");
-  downloadLink.download = fileNameToSaveAs;
-  downloadLink.innerHTML = "Download File";
-  let blobUrl;
-  if (window.webkitURL != null) {
-    blobUrl = window.webkitURL.createObjectURL(textFileAsBlob);
+export const saveTextAsFileAsync = async (textToWrite: string, fileNameToSaveAs: string) => {
+  const filename = fileNameToSaveAs || "FAA-" + moment().format("MMDDYYYY") + "0002";
+  const content = textToWrite;
+  let textFileAsBlob = new Blob([content], { type: "text/plain" });
+  if (window.showSaveFilePicker) {
+    const options = {
+      suggestedName: filename,
+      types: [
+        {
+          description: "Text file",
+          accept: {
+            "text/plain": [".txt"] as `.${string}`[],
+          },
+        },
+      ],
+    };
+    const handle = await window.showSaveFilePicker(options);
+    const writable = await handle.createWritable();
+    await writable.write(textFileAsBlob);
+    await writable.close();
   } else {
-    blobUrl = window.URL.createObjectURL(textFileAsBlob);
-  }
-  downloadLink.href = blobUrl;
-  downloadLink.click();
-  if (window.webkitURL != null) {
-    window.webkitURL.revokeObjectURL(blobUrl);
-  } else {
-    window.URL.revokeObjectURL(blobUrl);
+    let downloadLink = document.createElement("a");
+    downloadLink.download = filename;
+    downloadLink.innerHTML = "Download File";
+    let blobUrl;
+    if (window.webkitURL) {
+      blobUrl = window.webkitURL.createObjectURL(textFileAsBlob);
+    } else {
+      blobUrl = window.URL.createObjectURL(textFileAsBlob);
+    }
+    downloadLink.href = blobUrl;
+    downloadLink.click();
+    if (window.webkitURL) {
+      window.webkitURL.revokeObjectURL(blobUrl);
+    } else {
+      window.URL.revokeObjectURL(blobUrl);
+    }
   }
 };
 

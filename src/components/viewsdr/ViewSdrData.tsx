@@ -7,7 +7,7 @@ import { FlexBetween, FlexColumn, FlexRow } from "src/commons/Box";
 import ButtonGroup from "src/commons/ButtonGroup";
 import ListItem from "src/commons/ListItem";
 import { ArrowMenu } from "src/commons/Menu";
-import { MultipleSelect, SingleSelect } from "src/commons/Select";
+import { MultipleSelect, SimpleSingleSelect, SingleSelect } from "src/commons/Select";
 import TextField from "src/commons/TextField";
 import {
   IEditSdrValues,
@@ -136,7 +136,7 @@ const ViewSdrData = ({
       CorrectiveAction: detailsData?.FleetInfo?.CorrectiveActions || "",
       OperatorControlNumber:
         detailsData?.OperatorControlNumber || detailsData?.SdrDetails?.OperatorControlNumber || "",
-      IsExtracted: true,
+      IsExtracted: false,
       ComponentDetails: {
         ComponentName: "",
         ComponentManufactureName: "",
@@ -155,6 +155,7 @@ const ViewSdrData = ({
         CoordinateLocationDetails: detailsData?.LocationDetails?.CoordinateLocationDetails || "",
       },
       FlightNumber: logpageData?.FleetInfo?.FlightNumber || "",
+      MajorRepair: "",
     }),
     [detailsData, followUpFlag, isSdr, logpageData, profileData, selectedSdr]
   );
@@ -695,6 +696,9 @@ const ViewSdrData = ({
                     <Grid item xs={4}>
                       <ListItem>Receiving District Office</ListItem>
                     </Grid>
+                    <Grid item xs={4}>
+                      <ListItem>Major Repair</ListItem>
+                    </Grid>
                   </Grid>
                   <Grid className={"sdr-status-description"} container spacing={1}>
                     <Grid item xs={4}>
@@ -740,6 +744,24 @@ const ViewSdrData = ({
                           />
                         ) : (
                           values?.SfrAdditionalDetails?.ReceivingDistrictOffice
+                        )}
+                      </ListItem>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <ListItem>
+                        {editable ? (
+                          <TextField
+                            disabled
+                            name="MajorRepair"
+                            value={values.MajorRepair}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={!!touched.MajorRepair && !!errors.MajorRepair}
+                            helperText={!!touched.MajorRepair && errors.MajorRepair}
+                            className={"sdr-status-edit"}
+                          />
+                        ) : (
+                          values.MajorRepair || ""
                         )}
                       </ListItem>
                     </Grid>
@@ -1726,7 +1748,7 @@ const ViewSdrData = ({
                     <Grid item xs={4}>
                       <ListItem>
                         {editable ? (
-                          <SingleSelect
+                          <SimpleSingleSelect
                             name="SfrAdditionalDetails.StringerFromSide"
                             value={values?.SfrAdditionalDetails?.StringerFromSide}
                             onChange={handleChange}
@@ -1739,9 +1761,11 @@ const ViewSdrData = ({
                               !!touched?.SfrAdditionalDetails?.StringerFromSide &&
                               errors?.SfrAdditionalDetails?.StringerFromSide
                             }
-                            options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                            className={"sdr-status-edit"}
+                            options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder).map(
+                              (r) => r.Description
+                            )}
                             id="SfrAdditionalDetails.StringerFromSide"
+                            className="w-full"
                           />
                         ) : (
                           Sides.find(
@@ -1784,7 +1808,7 @@ const ViewSdrData = ({
                     <Grid item xs={4}>
                       <ListItem>
                         {editable ? (
-                          <SingleSelect
+                          <SimpleSingleSelect
                             name="SfrAdditionalDetails.StringerToSide"
                             value={values?.SfrAdditionalDetails?.StringerToSide}
                             onChange={handleChange}
@@ -1797,9 +1821,11 @@ const ViewSdrData = ({
                               !!touched?.SfrAdditionalDetails?.StringerToSide &&
                               errors?.SfrAdditionalDetails?.StringerToSide
                             }
-                            options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                            className={"sdr-status-edit"}
+                            options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder).map(
+                              (r) => r.Description
+                            )}
                             id="SfrAdditionalDetails.StringerToSide"
+                            className="w-full"
                           />
                         ) : (
                           Sides.find(
@@ -1853,7 +1879,7 @@ const ViewSdrData = ({
                     <Grid item xs={4}>
                       <ListItem>
                         {editable ? (
-                          <SingleSelect
+                          <SimpleSingleSelect
                             name="SfrAdditionalDetails.ButtlineFromSide"
                             value={values?.SfrAdditionalDetails?.ButtlineFromSide}
                             onChange={handleChange}
@@ -1866,9 +1892,11 @@ const ViewSdrData = ({
                               !!touched?.SfrAdditionalDetails?.ButtlineFromSide &&
                               errors?.SfrAdditionalDetails?.ButtlineFromSide
                             }
-                            options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                            className={"sdr-status-edit"}
+                            options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder).map(
+                              (r) => r.Description
+                            )}
                             id="SfrAdditionalDetails.ButtlineFromSide"
+                            className="w-full"
                           />
                         ) : (
                           Sides.find(
@@ -1911,7 +1939,7 @@ const ViewSdrData = ({
                     <Grid item xs={4}>
                       <ListItem>
                         {editable ? (
-                          <SingleSelect
+                          <SimpleSingleSelect
                             name="SfrAdditionalDetails.ButtlineToSide"
                             value={values?.SfrAdditionalDetails?.ButtlineToSide}
                             onChange={handleChange}
@@ -1924,9 +1952,11 @@ const ViewSdrData = ({
                               !!touched?.SfrAdditionalDetails?.ButtlineToSide &&
                               errors?.SfrAdditionalDetails?.ButtlineToSide
                             }
-                            options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                            className={"sdr-status-edit"}
+                            options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder).map(
+                              (r) => r.Description
+                            )}
                             id="SfrAdditionalDetails.ButtlineToSide"
+                            className="w-full"
                           />
                         ) : (
                           Sides.find(
@@ -1980,7 +2010,7 @@ const ViewSdrData = ({
                     <Grid item xs={4}>
                       <ListItem>
                         {editable ? (
-                          <SingleSelect
+                          <SimpleSingleSelect
                             name="SfrAdditionalDetails.WingStationFromSide"
                             value={values?.SfrAdditionalDetails?.WingStationFromSide}
                             onChange={handleChange}
@@ -1993,9 +2023,11 @@ const ViewSdrData = ({
                               !!touched?.SfrAdditionalDetails?.WingStationFromSide &&
                               errors?.SfrAdditionalDetails?.WingStationFromSide
                             }
-                            options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                            className={"sdr-status-edit"}
+                            options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder).map(
+                              (r) => r.Description
+                            )}
                             id="SfrAdditionalDetails.WingStationFromSide"
+                            className="w-full"
                           />
                         ) : (
                           Sides.find(
@@ -2038,7 +2070,7 @@ const ViewSdrData = ({
                     <Grid item xs={4}>
                       <ListItem>
                         {editable ? (
-                          <SingleSelect
+                          <SimpleSingleSelect
                             name="SfrAdditionalDetails.WingStationToSide"
                             value={values?.SfrAdditionalDetails?.WingStationToSide}
                             onChange={handleChange}
@@ -2051,9 +2083,11 @@ const ViewSdrData = ({
                               !!touched?.SfrAdditionalDetails?.WingStationToSide &&
                               errors?.SfrAdditionalDetails?.WingStationToSide
                             }
-                            options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                            className={"sdr-status-edit"}
+                            options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder).map(
+                              (r) => r.Description
+                            )}
                             id="SfrAdditionalDetails.WingStationToSide"
+                            className="w-full"
                           />
                         ) : (
                           Sides.find(
