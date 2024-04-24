@@ -83,10 +83,20 @@ export const SimpleSingleSelect = ({
       >
         {defaultValue ? "" : "Select One"}
       </InputLabel>
-      <Select displayEmpty id={id && id + "-simple-single-select"} value={value} {...props}>
+      <Select
+        displayEmpty
+        id={id && id + "-simple-single-select"}
+        renderValue={(selected) => options?.find((option) => option == selected) || defaultValue}
+        value={value}
+        {...props}
+      >
         {defaultValue && (
           <MenuItem key={defaultValue} value="">
-            {defaultValue}
+            <FormControlLabel
+              value={defaultValue}
+              control={<Radio className="!py-1 !pr-1" checked={!value} />}
+              label={defaultValue}
+            />
           </MenuItem>
         )}
         {!options ? (
@@ -94,7 +104,11 @@ export const SimpleSingleSelect = ({
         ) : (
           options.map((option) => (
             <MenuItem key={option} value={option}>
-              {option}
+              <FormControlLabel
+                value={option}
+                control={<Radio className="!py-1 !pr-1" checked={option === value} />}
+                label={option}
+              />
             </MenuItem>
           ))
         )}

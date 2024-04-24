@@ -2,10 +2,10 @@ import { Link } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
 import { DATETIME_DISPLAY } from "src/helpers";
-import { GetPartsReportResResult } from "src/types/GetDiscrepancyPartsReportRes";
+import { GetPartsDiscrepancyReportResResult } from "src/types/GetPartsDiscrepancyReportRes";
 import config from "src/utils/env.config";
 
-export const partsReportSearchColumns = (): GridColDef<GetPartsReportResResult>[] => {
+export const partsReportSearchColumns = (): GridColDef<GetPartsDiscrepancyReportResResult>[] => {
   const openLogPage = (logpageNumber: string) => {
     let width = window.innerWidth;
     let url = `${config.webTechApiBaseUrl}${
@@ -36,6 +36,8 @@ export const partsReportSearchColumns = (): GridColDef<GetPartsReportResResult>[
       headerName: "A/C Number",
       sortable: false,
       minWidth: 100,
+      renderCell: ({ row }) => row?.AircraftNumber,
+      valueGetter: ({ value }) => `=TEXT(${value},"0000")`,
     },
     {
       field: "DateCreated",

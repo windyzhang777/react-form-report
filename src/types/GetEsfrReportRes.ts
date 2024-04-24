@@ -1,4 +1,4 @@
-import { Type } from "src/types/GetAllEsfrRecordsRes";
+import { Status, Type } from "src/types/GetAllEsfrRecordsRes";
 
 export interface GetEsfrReportRes {
   Timestamp: string;
@@ -9,16 +9,17 @@ export interface GetEsfrReportRes {
 }
 
 export interface GetEsfrReportResResult {
-  AircraftNumber: string;
-  ApprovedByFirstName: string;
-  ApprovedById: string;
-  ApprovedByLastName: string;
+  AircraftNumber: null | string;
+  ApprovedByFirstName: null | string;
+  ApprovedById: null | string;
+  ApprovedByLastName: null | string;
   DateReported: string;
   Id: number;
   LogpageNumber: string;
-  OperatorControlNumber: string;
+  OperatorControlNumber: null | string;
   ReportedByFirstName: string;
   ReportedById: string;
   ReportedByLastName: string;
   ReportType: Type;
+  Status: Status;
 }

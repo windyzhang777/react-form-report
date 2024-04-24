@@ -53,7 +53,7 @@ const ViewSnapshotData = ({
       Type: selectedSdr.Type,
       SfrAdditionalDetails: {
         SnapshotId: "",
-        AtaCode: logpageData?.FleetInfo?.ATACode || "",
+        AtaCode: snapshotData?.SfrDetails?.AtaCode || logpageData?.FleetInfo?.ATACode || "",
         SubmitterDesignator: snapshotData?.SfrDetails?.SubmitterDesignator || "CALA",
         SubmitterType: snapshotData?.SfrDetails?.SubmitterType || "A",
         OperatorDesignator: snapshotData?.SfrDetails?.OperatorDesignator || "CALA",
@@ -96,7 +96,7 @@ const ViewSnapshotData = ({
         TotalCycles: String(toFixed(logpageData?.FleetInfo?.TotalAircraftCycles) || ""),
       },
       LogPageCreationDate: snapshotData?.CreatedDate || "",
-      Station: logpageData?.FleetInfo?.Station || "",
+      Station: snapshotData?.Station || logpageData?.FleetInfo?.Station || "",
       LogPageNumber: snapshotData?.LogPageNumber || selectedSdr?.LogpageNumber || "",
       AircraftNumber: logpageData?.FleetInfo?.TailNumber || "",
       PrecautionaryProcedureIds: snapshotData?.PrecautionaryProcedureIds || [],

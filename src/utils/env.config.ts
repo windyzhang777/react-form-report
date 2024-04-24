@@ -27,7 +27,7 @@ const lineMxVersion = "v64";
 const config: EnvironmentConfig = {
   localhost: {
     ...defaultConfig,
-    apiBaseAddress: `https://unitedtech-linemx.dev.dtj.aws.ual.com/linemx/${lineMxVersion}`,
+    apiBaseAddress: `https://unitedtech-linemx.qa.dtj.aws.ual.com/linemx/${lineMxVersion}`,
     webTechApiBaseUrl: "https://logbook.qa.dsq.aws.ual.com",
     REACT_APP_ENVIRONMENT: "localhost",
     PUBLIC_URL: "/esfr/",
@@ -42,7 +42,7 @@ const config: EnvironmentConfig = {
   },
   development: {
     ...defaultConfig,
-    apiBaseAddress: `https://unitedtech-linemx.dev.dtj.aws.ual.com/linemx/${lineMxVersion}`,
+    apiBaseAddress: `https://unitedtech-linemx.qa.dtj.aws.ual.com/linemx/${lineMxVersion}`,
     webTechApiBaseUrl: "https://logbook.qa.dsq.aws.ual.com",
     REACT_APP_ENVIRONMENT: "development",
     PUBLIC_URL: "/esfr/",
@@ -72,6 +72,8 @@ const config: EnvironmentConfig = {
   },
   stage: {
     ...defaultConfig,
+    apiBaseAddress: `https://unitedtech-linemx.stg.dtj.aws.ual.com/linemx/${lineMxVersion}`,
+    webTechApiBaseUrl: "https://logbook-stg.ual.com",
     REACT_APP_ENVIRONMENT: "staging",
     PUBLIC_URL: "/esfr/",
     REACT_APP_APPLICATION_NAME: "MobileTech",

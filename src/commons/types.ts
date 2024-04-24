@@ -6,9 +6,9 @@ import { GetCpcpReportReq } from "src/types/GetCpcpReportReq";
 import { GetCpcpReportResResult } from "src/types/GetCpcpReportRes";
 import { GetCtnResResult } from "src/types/GetCtnRes";
 import { GetDiscrepancyPartsReportReq } from "src/types/GetDiscrepancyPartsReportReq";
-import { GetPartsReportResResult } from "src/types/GetDiscrepancyPartsReportRes";
 import { GetEsfrReportReq } from "src/types/GetEsfrReportReq";
 import { GetEsfrReportResResult } from "src/types/GetEsfrReportRes";
+import { GetPartsDiscrepancyReportResResult } from "src/types/GetPartsDiscrepancyReportRes";
 import { Employee, GetProfileResResult } from "src/types/GetProfilerRes";
 import { GetSDREsfrRecordDetailsResResult } from "src/types/GetSdrEsfrRecordDetailsRes";
 import { GetSfrMasterDataResResult, OptionDocument } from "src/types/GetSfrMasterDataRes";
@@ -121,10 +121,16 @@ export interface IDiscrepancyPartsReportSearchValues extends GetDiscrepancyParts
   fleetList: string[];
 }
 
+export type IDataGridSdrValue =
+  | TransformedSdrDataType
+  | GetEsfrReportResResult
+  | GetCpcpReportResResult
+  | GetPartsDiscrepancyReportResResult;
+
 export interface IViewSearchSdrResult
   extends GetEsfrReportResResult,
     GetCpcpReportResResult,
-    GetPartsReportResResult {}
+    GetPartsDiscrepancyReportResResult {}
 
 export interface ISaveSdrValues extends Omit<UpsertSDRSnapshotReq, "SfrAdditionalDetails"> {
   Powerplant: Omit<AircraftDetails, "RegistryNNumber">;
@@ -290,7 +296,7 @@ export interface CpcpReportDispatchFuncType {
 
 export interface PartsReportDispatchFuncType {
   type: PartsReportActionType;
-  data?: GetPartsReportResResult[];
+  data?: GetPartsDiscrepancyReportResResult[];
   message?: string;
 }
 
@@ -341,7 +347,7 @@ export interface CpcpReportReducerAction {
 
 export interface PartsReportReducerAction {
   type: PartsReportActionType;
-  data: GetPartsReportResResult[];
+  data: GetPartsDiscrepancyReportResResult[];
   message: string;
 }
 
@@ -388,7 +394,7 @@ export type CpcpReportStateType = {
 
 export type PartsReportStateType = {
   loading: boolean;
-  partsReport: GetPartsReportResResult[] | null;
+  partsReport: GetPartsDiscrepancyReportResResult[] | null;
   error: string;
 };
 

@@ -181,6 +181,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                     {editable ? (
                       <TextFieldGroup
                         count={4}
+                        disables={[false, false, true, false]}
                         maxAllowed={[2, 4, 1, 4]}
                         name="CalDocIdentifier"
                         values={values}

@@ -5,6 +5,7 @@ import { ISaveSfrValues } from "src/commons/types";
 
 export interface ITextFieldGroupProps extends Partial<ICommonTextFieldProps> {
   count: number;
+  disables?: boolean[];
   maxAllowed?: number[];
   name: string;
   onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
@@ -13,6 +14,7 @@ export interface ITextFieldGroupProps extends Partial<ICommonTextFieldProps> {
 
 const TextFieldGroup = ({
   count,
+  disables,
   maxAllowed,
   name,
   values,
@@ -25,6 +27,7 @@ const TextFieldGroup = ({
         <Fragment key={i}>
           <TextField
             className="1 1 25%"
+            disabled={disables?.[i - 1] || false}
             name={`${name}${i}`}
             placeholder={"x".repeat(maxAllowed?.[i - 1] || 4)}
             value={(values as any)[`${name}${i}`] || ""}

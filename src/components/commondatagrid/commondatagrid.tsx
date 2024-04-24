@@ -14,15 +14,12 @@ import DataGrid, { CommonDataGridFooter, ReportDataGridFooter } from "src/common
 import Menu from "src/commons/Menu";
 import Modal from "src/commons/Modal";
 import {
+  IDataGridSdrValue,
   SdrEsfrRecordDetailsStateType,
   SelectedTab,
-  TransformedSdrDataType,
   UserPermission,
 } from "src/commons/types";
 import { useAppSelector } from "src/redux/hooks";
-import { GetCpcpReportResResult } from "src/types/GetCpcpReportRes";
-import { GetPartsReportResResult } from "src/types/GetDiscrepancyPartsReportRes";
-import { GetEsfrReportResResult } from "src/types/GetEsfrReportRes";
 import "./commondatagrid.css";
 
 export interface CommonDataGridProps {
@@ -30,11 +27,7 @@ export interface CommonDataGridProps {
   createSdrFlag?: string;
   handleExtractSdrRecords: (a: number[]) => void;
   isReport?: boolean;
-  sdrData:
-    | TransformedSdrDataType[]
-    | GetEsfrReportResResult[]
-    | GetCpcpReportResResult[]
-    | GetPartsReportResResult[];
+  sdrData: IDataGridSdrValue[];
   selectedSdr: any;
   setCreateSdrFlag: Dispatch<SetStateAction<string>>;
   setSelectedSdr: Dispatch<SetStateAction<any>>;

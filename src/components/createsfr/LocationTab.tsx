@@ -1,7 +1,8 @@
 import { Grid } from "@mui/material";
 import { useFormikContext } from "formik";
+import { useMemo } from "react";
 import ListItem from "src/commons/ListItem";
-import { SingleSelect } from "src/commons/Select";
+import { SimpleSingleSelect, SingleSelect } from "src/commons/Select";
 import TabPanel from "src/commons/TabPanel";
 import TextField from "src/commons/TextField";
 import {
@@ -32,6 +33,20 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
   );
   const { errors, handleBlur, handleChange, touched } = useFormikContext<ISaveSfrValues>();
   const { values } = useFormCreateSfrData();
+  const leFlapOptions = useMemo(() => {
+    const fleetCode = logpageData?.FleetInfo?.FleetCode;
+    switch (true) {
+      case /^737-[3,5,6,7,8,9]00$/.test(fleetCode as string):
+      case /^(03|24|57|67|58|59)$/.test(fleetCode as string):
+        return ["1", "2", "3", "4"];
+      case /^767-[2,4]00$/.test(fleetCode as string):
+      case /^777-200$/.test(fleetCode as string):
+      case /^(20|62|64|25)$/.test(fleetCode as string):
+        return ["1", "2"];
+      default:
+        return ["1"];
+    }
+  }, [logpageData]);
 
   return (
     <>
@@ -665,7 +680,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                 <ListItem>LE Flap #</ListItem>
                 <ListItem>
                   {editable ? (
-                    <SingleSelect
+                    <SimpleSingleSelect
                       name="LocationDetails.LocationType"
                       value={values?.LocationDetails?.LocationType || ""}
                       onChange={handleChange}
@@ -678,9 +693,9 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         !!touched?.LocationDetails?.LocationType &&
                         errors?.LocationDetails?.LocationType
                       }
-                      options={ZoneOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                      className={"sdr-status-edit"}
+                      options={leFlapOptions}
                       id="LocationDetails.LocationType"
+                      className="w-full"
                     />
                   ) : (
                     ""

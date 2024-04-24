@@ -32,7 +32,7 @@ export const useFormCreateSfrData = () => {
     setFieldValue("OriginDetails.CalDocIdentifier", "");
     setFieldValue("CalDocIdentifier1", "");
     setFieldValue("CalDocIdentifier2", "");
-    setFieldValue("CalDocIdentifier3", "");
+    setFieldValue("CalDocIdentifier3", "1");
     setFieldValue("CalDocIdentifier4", "");
   }, [values?.OriginDetails?.CalDocId]);
 

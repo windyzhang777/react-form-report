@@ -9,7 +9,7 @@ export interface GetAllEsfrRecordsRes {
 }
 
 export interface GetAllEsfrRecordsResResult {
-  AircraftNumber: string;
+  AircraftNumber: null | string;
   CreatebyLastName: null | string;
   CreatedBy: string;
   CreatedbyFirstName: null | string;
@@ -18,7 +18,7 @@ export interface GetAllEsfrRecordsResResult {
   IsOlderThan72Hours: boolean;
   LogpageNumber: string;
   LogpageStatus: LogpageStatus | null;
-  OperatorControlNumber: string;
+  OperatorControlNumber: null | string;
   Station: string;
   Status: Status;
   StatusId: SelectedStatus;

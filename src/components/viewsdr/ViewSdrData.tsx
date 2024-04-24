@@ -55,7 +55,7 @@ const ViewSdrData = ({
       Type: selectedSdr?.Type || selectedSdr?.ReportType || "",
       SfrAdditionalDetails: {
         SnapshotId: "",
-        AtaCode: logpageData?.FleetInfo?.ATACode || "",
+        AtaCode: detailsData?.AtaCode || logpageData?.FleetInfo?.ATACode || "",
         SubmitterDesignator: "CALA",
         SubmitterType: "A",
         OperatorDesignator: "CALA",
@@ -103,7 +103,7 @@ const ViewSdrData = ({
       },
       LogPageCreationDate:
         (isSdr ? detailsData?.SdrDetails?.CreatedDate : detailsData?.CreatedDate) || "",
-      Station: logpageData?.FleetInfo?.Station || "",
+      Station: detailsData?.Station || logpageData?.FleetInfo?.Station || "",
       LogPageNumber: detailsData?.LogPageNumber || selectedSdr?.LogpageNumber || "",
       AircraftNumber: logpageData?.FleetInfo?.TailNumber || "",
       PrecautionaryProcedureIds: detailsData?.SdrDetails?.PrecautionaryProcedureIds || [],

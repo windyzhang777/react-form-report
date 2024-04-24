@@ -196,11 +196,11 @@ const CreateSfrData = ({
       DocumentType: [],
       SpecIdentifier1: "",
       SpecIdentifier2: "",
-      SpecIdentifier3: "1",
+      SpecIdentifier3: "",
       SpecIdentifier4: "",
       CalDocIdentifier1: "",
       CalDocIdentifier2: "",
-      CalDocIdentifier3: "",
+      CalDocIdentifier3: "1",
       CalDocIdentifier4: "",
       SRM1: "",
       SRM11: "",
@@ -298,6 +298,13 @@ const CreateSfrData = ({
           LocationDetails: object().shape({
             DefectLocationId: number().min(1, "Required field").required("Required field"),
             ZoneId: number().min(1, "Required field").required("Required field"),
+            AdditionalLocationDetails: ValidationSchema.max100,
+            CoordinateLocationDetails: ValidationSchema.max100,
+            SpecificsLocation: ValidationSchema.max100,
+            FromStr: ValidationSchema.max50,
+            ToStr: ValidationSchema.max50,
+            FromBL: ValidationSchema.max10,
+            ToBL: ValidationSchema.max10,
           }),
         })}
       >

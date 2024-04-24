@@ -6,7 +6,7 @@ import {
   PartsReportStateType,
 } from "src/commons/types";
 import { GetDiscrepancyPartsReportReq } from "src/types/GetDiscrepancyPartsReportReq";
-import { GetPartsReportResResult } from "src/types/GetDiscrepancyPartsReportRes";
+import { GetPartsDiscrepancyReportResResult } from "src/types/GetPartsDiscrepancyReportRes";
 import axiosInstance from "src/utils/axiosInstance";
 import config from "src/utils/env.config";
 
@@ -20,7 +20,7 @@ const initFetch = () => {
   return { type: PartsReportActionType.FETCH_PARTS_REPORT };
 };
 
-const fetchSuccess = (data: GetPartsReportResResult[]) => {
+const fetchSuccess = (data: GetPartsDiscrepancyReportResResult[]) => {
   return {
     type: PartsReportActionType.FETCH_PARTS_REPORT_SUCCESS,
     data,
