@@ -155,7 +155,7 @@ const ViewSdrData = ({
         CoordinateLocationDetails: detailsData?.LocationDetails?.CoordinateLocationDetails || "",
       },
       FlightNumber: logpageData?.FleetInfo?.FlightNumber || "",
-      MajorRepair: "",
+      MajorRepair: detailsData?.IsMajorRepair ? "Y" : "N",
     }),
     [detailsData, followUpFlag, isSdr, logpageData, profileData, selectedSdr]
   );
