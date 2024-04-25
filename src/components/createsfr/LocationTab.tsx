@@ -154,6 +154,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
               values?.LocationDetails?.DefectLocationId === 12 ||
               values?.LocationDetails?.DefectLocationId === 13 ||
               values?.LocationDetails?.DefectLocationId === 17 ||
+              values?.LocationDetails?.DefectLocationId === 18 ||
               values?.LocationDetails?.DefectLocationId === 19) && (
               <div>
                 <ListItem>Side</ListItem>
@@ -224,8 +225,8 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
               values?.LocationDetails?.DefectLocationId === 21 ||
               values?.LocationDetails?.DefectLocationId === 18 ||
               values?.LocationDetails?.DefectLocationId === 19) && (
-              <div>
-                <>
+              <>
+                <div>
                   <ListItem>From STA</ListItem>
                   <ListItem>
                     {editable ? (
@@ -249,8 +250,8 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       ""
                     )}
                   </ListItem>
-                </>
-                <>
+                </div>
+                <div>
                   <ListItem>To STA</ListItem>
                   <ListItem>
                     {editable ? (
@@ -274,8 +275,8 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       ""
                     )}
                   </ListItem>
-                </>
-              </div>
+                </div>
+              </>
             )}
 
             {/* BL */}
@@ -510,8 +511,8 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
 
             {/* STR */}
             {values?.LocationDetails?.DefectLocationId === 8 && (
-              <div>
-                <>
+              <>
+                <div>
                   <ListItem>From STR/Long</ListItem>
                   <ListItem>
                     {editable ? (
@@ -537,7 +538,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   </ListItem>
                   <ListItem>
                     {editable ? (
-                      <SingleSelect
+                      <SimpleSingleSelect
                         name="LocationDetails.FromSide"
                         value={values?.LocationDetails?.FromSide || ""}
                         onChange={handleChange}
@@ -549,15 +550,15 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         helperText={
                           !!touched?.LocationDetails?.FromSide && errors?.LocationDetails?.FromSide
                         }
-                        options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
+                        options={Array.from({ length: 29 }, (_, i) => `${i + 1}`)}
                         id="LocationDetails.FromSide"
                       />
                     ) : (
                       ""
                     )}
                   </ListItem>
-                </>
-                <>
+                </div>
+                <div>
                   <ListItem>To STR/Long</ListItem>
                   <ListItem>
                     {editable ? (
@@ -583,7 +584,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   </ListItem>
                   <ListItem>
                     {editable ? (
-                      <SingleSelect
+                      <SimpleSingleSelect
                         name="LocationDetails.ToSide"
                         value={values?.LocationDetails?.ToSide || ""}
                         onChange={handleChange}
@@ -594,21 +595,21 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         helperText={
                           !!touched?.LocationDetails?.ToSide && errors?.LocationDetails?.ToSide
                         }
-                        options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
+                        options={Array.from({ length: 29 }, (_, i) => `${i + 1}`)}
                         id="LocationDetails.ToSide"
                       />
                     ) : (
                       ""
                     )}
                   </ListItem>
-                </>
-              </div>
+                </div>
+              </>
             )}
 
             {/* Fuselage */}
             {values?.LocationDetails?.DefectLocationId === 8 && (
-              <div>
-                <>
+              <>
+                {/* <div>
                   <ListItem>Elevator Tab</ListItem>
                   <ListItem>
                     {editable ? (
@@ -632,8 +633,8 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       ""
                     )}
                   </ListItem>
-                </>
-                <>
+                </div> */}
+                <div>
                   <ListItem>Fuselage</ListItem>
                   <ListItem>
                     {editable ? (
@@ -656,8 +657,8 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       ""
                     )}
                   </ListItem>
-                </>
-              </div>
+                </div>
+              </>
             )}
 
             {/* LE Flap */}
@@ -898,7 +899,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
               (values?.LocationDetails?.DamageProximityId === 4 ||
                 values?.LocationDetails?.DamageProximityId === 5) && (
                 <>
-                  <>
+                  <div>
                     <ListItem>From STR</ListItem>
                     <ListItem>
                       {editable ? (
@@ -923,8 +924,8 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         ""
                       )}
                     </ListItem>
-                  </>
-                  <>
+                  </div>
+                  <div>
                     <ListItem>To STR</ListItem>
                     <ListItem>
                       {editable ? (
@@ -948,7 +949,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         ""
                       )}
                     </ListItem>
-                  </>
+                  </div>
                 </>
               )}
           </Grid>
