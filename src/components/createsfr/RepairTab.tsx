@@ -261,7 +261,6 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                             (a, b) => a.DisplayOrder - b.DisplayOrder
                           )
                         }
-                        className={"sdr-status-edit"}
                         id="SdrDetails.NatureOfReportIds"
                         maxAllowed={3}
                       />
@@ -295,7 +294,6 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                             (a, b) => a.DisplayOrder - b.DisplayOrder
                           )
                         }
-                        className={"sdr-status-edit"}
                         id="SdrDetails.PrecautionaryProcedureIds"
                         maxAllowed={3}
                       />
@@ -321,7 +319,6 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                           masterData?.Stage &&
                           [...masterData.Stage].sort((a, b) => a.DisplayOrder - b.DisplayOrder)
                         }
-                        className={"sdr-status-edit"}
                         id="SdrDetails.StageId"
                       />
                     ) : (
@@ -352,7 +349,6 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                             (a, b) => a.DisplayOrder - b.DisplayOrder
                           )
                         }
-                        className={"sdr-status-edit"}
                         id="SdrDetails.HowDiscoveredId"
                       />
                     ) : (

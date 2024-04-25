@@ -88,7 +88,6 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                       (a, b) => a.DisplayOrder - b.DisplayOrder
                     )}
                     id="ReportStatus"
-                    className="w-full"
                   />
                 </ListItem>
               </Grid>
@@ -107,7 +106,6 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                       (r) => r.Description
                     )}
                     id="ReportType"
-                    className="w-full"
                   />
                 </ListItem>
               </Grid>

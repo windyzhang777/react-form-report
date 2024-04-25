@@ -103,7 +103,6 @@ const DiscrepancyPartsReportSearch = ({
                       masterData?.Fleet &&
                       [...masterData.Fleet].sort((a, b) => a.DisplayOrder - b.DisplayOrder)
                     }
-                    className={"sdr-status-edit"}
                     id="Fleet"
                   />
                 </ListItem>
@@ -126,7 +125,6 @@ const DiscrepancyPartsReportSearch = ({
                       )
                     }
                     id="DiscrepancyType"
-                    className="w-full"
                   />
                 </ListItem>
               </Grid>
@@ -148,7 +146,6 @@ const DiscrepancyPartsReportSearch = ({
                       )
                     }
                     id="DiscrepancyParts"
-                    className="w-full"
                   />
                 </ListItem>
               </Grid>

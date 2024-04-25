@@ -7,53 +7,58 @@ export interface GetSDREsfrRecordDetailsRes {
 }
 
 export interface GetSDREsfrRecordDetailsResResult {
-  AirCraftNumber: string | null;
-  CreatedBy: string;
-  CreatedbyFirstName: string;
-  CreatedbyLastName: string;
+  AirCraftNumber: null | string;
+  AtaCode: null | string;
+  CreatedBy: null | string;
+  CreatedbyFirstName: null | string;
+  CreatedbyLastName: null | string;
   CreatedDate: string;
-  DiscrepancyDetails: DiscrepancyDetails;
+  DiscrepancyDetails: DiscrepancyDetails | null;
+  FleetCode: null | string;
   FleetInfo: FleetInfo;
-  LocationDetails: LocationDetails;
-  LogPageCreatedBy: string | null;
+  LocationDetails: LocationDetails | null;
+  LogPageCreatedBy: null | string;
   LogPageCreatedDate: string;
-  LogPageNumber: string;
-  ModifiedBy: null;
-  ModifiedbyFirstName: string;
-  ModifiedbyLastName: string;
+  LogPageNumber: null | string;
+  ModifiedBy: null | string;
+  ModifiedbyFirstName: null | string;
+  ModifiedbyLastName: null | string;
   ModifiedDate: string;
   OperatorControlNumber: null;
-  OriginDetails: OriginDetails;
+  OriginDetails: OriginDetails | null;
   RepairDetails: RepairDetails | null;
   SdrDetails: SDRDetails | null;
   SfrActivity: null;
   SfrId: number;
-  Station: string;
+  Station: null | string;
   Status: string;
   StatusId: number;
-  Type: string | null;
+  Type: null;
+  IsMajorRepair?: boolean;
+  IsSfrDowngraded?: boolean;
 }
 
 export interface DiscrepancyDetails {
   AreMultipleCracksInTheSameLocation: boolean;
-  CorrosionCauseComments: string | null;
-  CorrosionCauseId: number;
-  CorrosionExtentId: number;
-  CorrosionLevelId: number;
-  CrackDepth: number;
-  CrackLength: number;
-  CrackWidth: number;
+  CorrosionCauseComments: null;
+  CorrosionCauseId: number | null;
+  CorrosionExtentId: number | null;
+  CorrosionLevelId: number | null;
+  CrackDepth: number | null;
+  CrackLength: number | null;
+  CrackWidth: number | null;
   DiscrepancyPartComments: null;
   DiscrepancyPartDetails: DiscrepancyPartDetail[];
   DiscrepancyTypeComments: null;
   DiscrepancyTypeId: number;
   IsManufacturingLimitExceeded: boolean;
   IsSafeOperationEndangered: boolean;
-  NumberOfCracks: number;
+  NumberOfCracks: number | null;
 }
 
 export interface DiscrepancyPartDetail {
   AtaCode: string;
+  DiscrepancyPartInformationCode: number;
   PartDetails: string;
   PartNumber: string;
   Structure: string;
@@ -73,55 +78,60 @@ export interface FleetInfo {
   TailNumber: string;
   TotalAircraftCycles: number;
   TotalAircraftTime: number;
+  FlightNumber?: string;
 }
 
 export interface LocationDetails {
   AdditionalLocationDetails: null;
   Comments: null;
-  CoordinateLocationDetails: null;
-  DamageProximityId: number;
+  CoordinateLocationDetails: string;
+  DamageProximityId: number | null;
   DefectLocationId: number;
   DefectLocationIdentifier: string;
-  ElevatorTab: null;
-  FromBLLength: number;
-  FromSide: string | null;
-  FromSta: string | null;
-  FromStr: null;
-  Fuselage: null;
+  ElevatorTab: null | string;
+  FromBL: null;
+  FromBLLength: number | null;
+  FromSide: null | string;
+  FromSta: null | string;
+  FromStr: null | string;
+  Fuselage: null | string;
   LocationType: null;
   Other: null;
-  Side: string | null;
-  Specifics: string | null;
+  Side: null | string;
+  Specifics: null;
   SpecificsLocation: null;
   StaType: null;
-  StaTypeId: number;
-  Surface: null;
-  ToBLLength: number;
-  ToSide: string | null;
-  ToSta: string | null;
-  ToStr: null;
+  StaTypeId: number | null;
+  Surface: null | string;
+  ToBL: null;
+  ToBLLength: number | null;
+  ToSide: null | string;
+  ToSta: null | string;
+  ToStr: null | string;
   ZoneId: number;
 }
 
 export interface OriginDetails {
-  CalDocId: number;
-  CalDocIdentifier: string | null;
-  DetectionMethodComments: string | null;
+  CalDocId: number | null;
+  CalDocIdentifier: null;
+  DetectionMethodComments: null | string;
   DetectionMethodId: number;
-  InspectionType: number;
+  InspectionType: null;
   IsScheduledInspection: boolean;
   MfrSourceComments: null;
-  MfrSourceId: number;
-  MfrSourceIdentifier: string | null;
+  MfrSourceId: number | null;
+  MfrSourceIdentifier: null;
   Op: null;
   Rev: null;
-  SpecIdentifier: string | null;
+  SpecIdentifier: null;
+  UnscheduledInspectionTypeComments: null | string;
+  UnscheduledInspectionTypeId: number;
 }
 
 export interface RepairDetails {
   Comments: string;
   DamageStructureStatus: string;
-  DipCode: string;
+  DipCode: null;
   EcraCode: string;
   IsDeferred: boolean;
   IsEcra: boolean;
@@ -143,9 +153,9 @@ export interface RepairType {
 }
 
 export interface SDRDetails {
-  AircraftNumber: null;
-  CorrectiveAction: null;
-  CreatedBy: null;
+  AircraftNumber: string;
+  CorrectiveAction: string;
+  CreatedBy: string;
   CreatedbyFirstName: string;
   CreatedbyLastName: string;
   createdDate: string;
@@ -160,7 +170,7 @@ export interface SDRDetails {
   ModifiedbyFirstName: string;
   ModifiedbyLastName: string;
   NatureOfReportIds: number[];
-  OperatorControlNumber: null;
+  OperatorControlNumber: null | string;
   PartDetails: PartDetails;
   PrecautionaryProcedureIds: number[];
   sdrNumber: string;
@@ -169,6 +179,8 @@ export interface SDRDetails {
   Status: string;
   StatusId: number;
   submittedDate: string;
+  IsMajorRepair?: boolean;
+  IsSdrDowngraded?: boolean;
 }
 
 export interface PartDetails {

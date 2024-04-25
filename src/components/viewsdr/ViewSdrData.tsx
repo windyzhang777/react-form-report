@@ -542,7 +542,6 @@ const ViewSdrData = ({
                                 (a, b) => a.DisplayOrder - b.DisplayOrder
                               )
                             }
-                            className={"sdr-status-edit"}
                             id="NatureofReports"
                             maxAllowed={3}
                           />
@@ -595,7 +594,6 @@ const ViewSdrData = ({
                                 (a, b) => a.DisplayOrder - b.DisplayOrder
                               )
                             }
-                            className={"sdr-status-edit"}
                             id="PrecautionaryProcedures"
                             maxAllowed={4}
                           />
@@ -626,7 +624,6 @@ const ViewSdrData = ({
                               masterData?.Stage &&
                               [...masterData.Stage].sort((a, b) => a.DisplayOrder - b.DisplayOrder)
                             }
-                            className={"sdr-status-edit"}
                             id="StageId"
                           />
                         ) : (
@@ -651,7 +648,6 @@ const ViewSdrData = ({
                                 (a, b) => a.DisplayOrder - b.DisplayOrder
                               )
                             }
-                            className={"sdr-status-edit"}
                             id="HowDiscovered"
                           />
                         ) : (
@@ -1471,7 +1467,6 @@ const ViewSdrData = ({
                                 (a, b) => a.DisplayOrder - b.DisplayOrder
                               )
                             }
-                            className={"sdr-status-edit"}
                             id="SfrAdditionalDetails.CorrisionLevel"
                           />
                         ) : (
@@ -1584,7 +1579,6 @@ const ViewSdrData = ({
                                 (a, b) => a.DisplayOrder - b.DisplayOrder
                               )
                             }
-                            className={"sdr-status-edit"}
                             id="SfrAdditionalDetails.CorrisionLevel"
                           />
                         ) : (
@@ -1765,7 +1759,6 @@ const ViewSdrData = ({
                               (r) => r.Description
                             )}
                             id="SfrAdditionalDetails.StringerFromSide"
-                            className="w-full"
                           />
                         ) : (
                           Sides.find(
@@ -1825,7 +1818,6 @@ const ViewSdrData = ({
                               (r) => r.Description
                             )}
                             id="SfrAdditionalDetails.StringerToSide"
-                            className="w-full"
                           />
                         ) : (
                           Sides.find(
@@ -1896,7 +1888,6 @@ const ViewSdrData = ({
                               (r) => r.Description
                             )}
                             id="SfrAdditionalDetails.ButtlineFromSide"
-                            className="w-full"
                           />
                         ) : (
                           Sides.find(
@@ -1956,7 +1947,6 @@ const ViewSdrData = ({
                               (r) => r.Description
                             )}
                             id="SfrAdditionalDetails.ButtlineToSide"
-                            className="w-full"
                           />
                         ) : (
                           Sides.find(
@@ -2027,7 +2017,6 @@ const ViewSdrData = ({
                               (r) => r.Description
                             )}
                             id="SfrAdditionalDetails.WingStationFromSide"
-                            className="w-full"
                           />
                         ) : (
                           Sides.find(
@@ -2087,7 +2076,6 @@ const ViewSdrData = ({
                               (r) => r.Description
                             )}
                             id="SfrAdditionalDetails.WingStationToSide"
-                            className="w-full"
                           />
                         ) : (
                           Sides.find(

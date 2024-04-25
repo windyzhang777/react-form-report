@@ -117,7 +117,6 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                             (a, b) => a.DisplayOrder - b.DisplayOrder
                           )
                         }
-                        className={"sdr-status-edit"}
                         id="DiscrepancyDetails.CorrosionLevelId"
                       />
                     ) : (
@@ -148,7 +147,6 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                             (a, b) => a.DisplayOrder - b.DisplayOrder
                           )
                         }
-                        className={"sdr-status-edit"}
                         id="DiscrepancyDetails.CorrosionExtentId"
                       />
                     ) : (
@@ -179,7 +177,6 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                             (a, b) => a.DisplayOrder - b.DisplayOrder
                           )
                         }
-                        className={"sdr-status-edit"}
                         id="DiscrepancyDetails.CorrosionCauseId"
                       />
                     ) : (

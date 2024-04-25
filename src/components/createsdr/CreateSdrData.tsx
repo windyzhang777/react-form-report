@@ -642,7 +642,6 @@ const CreateSdrData = ({
                               (a, b) => a.DisplayOrder - b.DisplayOrder
                             )
                           }
-                          className={"sdr-status-edit"}
                           id="PrecautionaryProcedures"
                           maxAllowed={4}
                         />
@@ -669,7 +668,6 @@ const CreateSdrData = ({
                               (a, b) => a.DisplayOrder - b.DisplayOrder
                             )
                           }
-                          className={"sdr-status-edit"}
                           id="NatureofReports"
                           maxAllowed={3}
                         />
@@ -692,7 +690,6 @@ const CreateSdrData = ({
                             masterData?.Stage &&
                             [...masterData.Stage].sort((a, b) => a.DisplayOrder - b.DisplayOrder)
                           }
-                          className={"sdr-status-edit"}
                           id="StageId"
                         />
                       ) : (
@@ -727,7 +724,6 @@ const CreateSdrData = ({
                               (a, b) => a.DisplayOrder - b.DisplayOrder
                             )
                           }
-                          className={"sdr-status-edit"}
                           id="HowDiscovered"
                         />
                       ) : (
