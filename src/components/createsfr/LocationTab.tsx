@@ -76,7 +76,6 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         (a, b) => a.DisplayOrder - b.DisplayOrder
                       )
                     }
-                    className={"sdr-status-edit"}
                     id="LocationDetails.ZoneId"
                   />
                 ) : (
@@ -138,7 +137,6 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         (a, b) => a.DisplayOrder - b.DisplayOrder
                       )
                     }
-                    className={"sdr-status-edit"}
                     id="LocationDetails.DefectLocationId"
                   />
                 ) : (
@@ -169,7 +167,6 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       error={!!touched?.LocationDetails?.Side && !!errors?.LocationDetails?.Side}
                       helperText={!!touched?.LocationDetails?.Side && errors?.LocationDetails?.Side}
                       options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                      className={"sdr-status-edit"}
                       id="LocationDetails.Side"
                     />
                   ) : (
@@ -209,7 +206,6 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         !!touched?.LocationDetails?.Surface && errors?.LocationDetails?.Surface
                       }
                       options={SurfaceOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                      className={"sdr-status-edit"}
                       id="LocationDetails.Surface"
                     />
                   ) : (
@@ -304,7 +300,6 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                           errors?.LocationDetails?.FromBLLength
                         }
                         options={BLOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                        className={"sdr-status-edit"}
                         id="LocationDetails.FromBLLength"
                       />
                     ) : (
@@ -352,7 +347,6 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                           errors?.LocationDetails?.ToBLLength
                         }
                         options={BLOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                        className={"sdr-status-edit"}
                         id="LocationDetails.ToBLLength"
                       />
                     ) : (
@@ -410,7 +404,6 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                           (a, b) => a.DisplayOrder - b.DisplayOrder
                         )
                       }
-                      className={"sdr-status-edit"}
                       id="LocationDetails.StaTypeId"
                     />
                   ) : (
@@ -443,7 +436,6 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       options={RudderDamageProximityOptions.sort(
                         (a, b) => a.DisplayOrder - b.DisplayOrder
                       )}
-                      className={"sdr-status-edit"}
                       id="LocationDetails.DamageProximityId"
                     />
                   ) : (
@@ -476,7 +468,6 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       options={StabDamageProximityOptions.sort(
                         (a, b) => a.DisplayOrder - b.DisplayOrder
                       )}
-                      className={"sdr-status-edit"}
                       id="LocationDetails.DamageProximityId"
                     />
                   ) : (
@@ -508,7 +499,6 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       options={WingDamageProximityOptions.sort(
                         (a, b) => a.DisplayOrder - b.DisplayOrder
                       )}
-                      className={"sdr-status-edit"}
                       id="LocationDetails.DamageProximityId"
                     />
                   ) : (
@@ -560,7 +550,6 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                           !!touched?.LocationDetails?.FromSide && errors?.LocationDetails?.FromSide
                         }
                         options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                        className={"sdr-status-edit"}
                         id="LocationDetails.FromSide"
                       />
                     ) : (
@@ -606,7 +595,6 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                           !!touched?.LocationDetails?.ToSide && errors?.LocationDetails?.ToSide
                         }
                         options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                        className={"sdr-status-edit"}
                         id="LocationDetails.ToSide"
                       />
                     ) : (
@@ -638,7 +626,6 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                           errors?.LocationDetails?.ElevatorTab
                         }
                         options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                        className={"sdr-status-edit"}
                         id="LocationDetails.ElevatorTab"
                       />
                     ) : (
@@ -663,7 +650,6 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                           !!touched?.LocationDetails?.Fuselage && errors?.LocationDetails?.Fuselage
                         }
                         options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                        className={"sdr-status-edit"}
                         id="LocationDetails.Fuselage"
                       />
                     ) : (
@@ -695,7 +681,6 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       }
                       options={leFlapOptions}
                       id="LocationDetails.LocationType"
-                      className="w-full"
                     />
                   ) : (
                     ""
@@ -755,7 +740,6 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         errors?.LocationDetails?.LocationType
                       }
                       options={ZoneOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                      className={"sdr-status-edit"}
                       id="LocationDetails.LocationType"
                     />
                   ) : (
@@ -785,7 +769,6 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         errors?.LocationDetails?.LocationType
                       }
                       options={ZoneOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                      className={"sdr-status-edit"}
                       id="LocationDetails.LocationType"
                     />
                   ) : (
@@ -814,7 +797,6 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         !!touched?.LocationDetails?.Specifics && errors?.LocationDetails?.Specifics
                       }
                       options={SpecificsOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                      className={"sdr-status-edit"}
                       id="LocationDetails.Specifics"
                     />
                   ) : (
@@ -840,7 +822,6 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         !!touched?.LocationDetails?.Other && errors?.LocationDetails?.Other
                       }
                       options={OtherOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                      className={"sdr-status-edit"}
                       id="LocationDetails.Other"
                     />
                   ) : (

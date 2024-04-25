@@ -165,7 +165,6 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                         masterData?.CalDocuments &&
                         [...masterData.CalDocuments].sort((a, b) => a.DisplayOrder - b.DisplayOrder)
                       }
-                      className={"sdr-status-edit"}
                       id="OriginDetails.CalDocId"
                     />
                   ) : (
@@ -376,7 +375,6 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                         masterData?.MfrSources &&
                         [...masterData.MfrSources].sort((a, b) => a.DisplayOrder - b.DisplayOrder)
                       }
-                      className={"sdr-status-edit"}
                       id="OriginDetails.MfrSourceId"
                     />
                   ) : (
@@ -573,7 +571,6 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                           (a, b) => a.DisplayOrder - b.DisplayOrder
                         )
                       }
-                      className={"sdr-status-edit"}
                       id="OriginDetails.DetectionMethodId"
                     />
                   ) : (
@@ -606,7 +603,6 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                         errors?.OriginDetails?.UnscheduledInspectionTypeId
                       }
                       options={TypeOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                      className={"sdr-status-edit"}
                       id="OriginDetails.UnscheduledInspectionTypeId"
                     />
                   ) : (
@@ -698,7 +694,6 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                           (a, b) => a.DisplayOrder - b.DisplayOrder
                         )
                       }
-                      className={"sdr-status-edit"}
                       id="OriginDetails.DetectionMethodId"
                     />
                   ) : (

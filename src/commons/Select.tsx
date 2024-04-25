@@ -31,10 +31,9 @@ const MenuProps: Partial<MenuPropsType> = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      minWidth: 250,
-      display: "flex",
-      // justifyContent: "center",
-      // alignItems: "center",
+      // minWidth: 250,
+      // display: "flex",
+      // maxWidth: 200,
     },
   },
   MenuListProps: {
@@ -86,6 +85,7 @@ export const SimpleSingleSelect = ({
       <Select
         displayEmpty
         id={id && id + "-simple-single-select"}
+        MenuProps={MenuProps}
         renderValue={(selected) => options?.find((option) => option == selected) || defaultValue}
         value={value}
         {...props}

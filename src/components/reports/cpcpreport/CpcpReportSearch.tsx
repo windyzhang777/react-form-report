@@ -169,7 +169,6 @@ const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearch
                       )
                     }
                     id="CorrosionLevel"
-                    className="w-full"
                   />
                 </ListItem>
               </Grid>
@@ -190,7 +189,6 @@ const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearch
                       masterData?.Fleet &&
                       [...masterData.Fleet].sort((a, b) => a.DisplayOrder - b.DisplayOrder)
                     }
-                    className={"sdr-status-edit"}
                     id="Fleet"
                   />
                 </ListItem>
