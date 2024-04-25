@@ -230,7 +230,7 @@ export const SimpleMultipleSelect = ({
             onChange([]);
           } else {
             if (value.length < maxAllowed) {
-              onChange(e.target.value);
+              onChange(Array.isArray(e.target.value) ? e.target.value.sort() : e.target.value);
             } else {
               onChange(e.target.value.slice(0, maxAllowed));
             }
@@ -307,7 +307,7 @@ export const MultipleSelect = ({
         multiple
         onChange={(e) => {
           if (value.length < maxAllowed) {
-            onChange(e.target.value);
+            onChange(Array.isArray(e.target.value) ? e.target.value.sort() : e.target.value);
           } else {
             onChange(e.target.value.slice(0, maxAllowed));
           }
