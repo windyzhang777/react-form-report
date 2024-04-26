@@ -73,10 +73,11 @@ export const ValidationSchema = {
   ReportedBy: string().max(30, "Up to 30 characters"),
   Keyword: string().max(30, "Up to 30 characters"),
   SfrAdditionalDetails: object().shape({
-    NumberOfCracks: number().min(0, "Not a valid value").max(255, "Not a valid value"),
-    CrackLength: number().test("digits", "Not a valid value", (val) =>
-      val ? /^[1-9]\d{0,7}(?:\.\d{1,3})?$/.test(val.toString()) : true
-    ),
+    NumberOfCracks: number()
+      .integer("Not a valid value")
+      .min(0, "Not a valid value")
+      .max(255, "Not a valid value"),
+    CrackLength: string().matches(/^[1-9]\d{0,7}(?:\.\d{1,3})?$/, "Not a valid value"),
     OperatorType: string().matches(/^(\S+$)/, "Not a valid value"),
     SubmitterType: string().matches(/^(\S+$)/, "Not a valid value"),
   }),
@@ -88,8 +89,14 @@ export const ValidationSchema = {
   upTo10: string().max(10, "Up to 10 characters"),
   upTo4: string().max(4, "Up to 4 characters"),
   noLeadingSpace: string().trim().min(1, "Not a valid value"),
-  max99999: number().max(99999, "Not a valid value"),
-  max999: number().max(999, "Not a valid value"),
+  maxInt99999: number()
+    .integer("Not a valid value")
+    .min(0, "Not a valid value")
+    .max(99999, "Not a valid value"),
+  maxInt999: number()
+    .integer("Not a valid value")
+    .min(0, "Not a valid value")
+    .max(999, "Not a valid value"),
 };
 
 export default ValidationSchema;
