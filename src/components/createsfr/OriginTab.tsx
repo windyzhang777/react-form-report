@@ -482,6 +482,8 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                           errors?.OriginDetails?.MfrSourceIdentifier
                         }
                         className={"sdr-status-edit"}
+                        inputProps={{ maxLength: 12 }}
+                        placeholder="xxxxxxxxxxxx"
                       />
                     ) : (
                       ""
@@ -538,7 +540,10 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                           !!touched?.OriginDetails?.MfrSourceComments &&
                           errors?.OriginDetails?.MfrSourceComments
                         }
-                        className={"sdr-status-edit"}
+                        multiline
+                        maxRows={4}
+                        className={"sdr-status-edit textareaAutosize"}
+                        inputProps={{ style: { resize: "both" } }}
                       />
                     ) : (
                       ""
@@ -578,6 +583,37 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                   )}
                 </ListItem>
               </div>
+
+              {/* Other */}
+              {values?.OriginDetails?.DetectionMethodId === 9 && (
+                <div>
+                  <ListItem required>Other</ListItem>
+                  <ListItem>
+                    {editable ? (
+                      <TextField
+                        name="OriginDetails.DetectionMethodComments"
+                        value={values?.OriginDetails?.DetectionMethodComments || ""}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        error={
+                          !!touched?.OriginDetails?.DetectionMethodComments &&
+                          !!errors?.OriginDetails?.DetectionMethodComments
+                        }
+                        helperText={
+                          !!touched?.OriginDetails?.DetectionMethodComments &&
+                          errors?.OriginDetails?.DetectionMethodComments
+                        }
+                        multiline
+                        maxRows={4}
+                        className={"sdr-status-edit textareaAutosize"}
+                        inputProps={{ style: { resize: "both" } }}
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </ListItem>
+                </div>
+              )}
             </Grid>
           </Grid>
         )}

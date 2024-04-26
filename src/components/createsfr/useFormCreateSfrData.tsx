@@ -25,8 +25,19 @@ export const useFormCreateSfrData = () => {
   ]);
 
   useEffect(() => {
+    setFieldValue("OriginDetails.DetectionMethodId", "");
+    setFieldValue("OriginDetails.MfrSourceComments", "");
+    setFieldValue("OriginDetails.DetectionMethodComments", "");
+  }, [values?.OriginDetails?.IsScheduledInspection]);
+
+  useEffect(() => {
     setFieldValue("OriginDetails.MfrSourceIdentifier", "");
+    setFieldValue("OriginDetails.MfrSourceComments", "");
   }, [values?.OriginDetails?.MfrSourceId]);
+
+  useEffect(() => {
+    setFieldValue("OriginDetails.UnscheduledInspectionTypeComments", "");
+  }, [values?.OriginDetails?.UnscheduledInspectionTypeId]);
 
   useEffect(() => {
     setFieldValue("OriginDetails.CalDocIdentifier", "");

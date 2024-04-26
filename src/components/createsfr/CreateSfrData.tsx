@@ -296,8 +296,13 @@ const CreateSfrData = ({
               then: (schema) => schema.max(200, "Up to 200 characters"),
               otherwise: (schema) => schema.max(100, "Up to 100 characters"),
             }),
+            UnscheduledInspectionTypeId: number(),
+            UnscheduledInspectionTypeComments: string().when("UnscheduledInspectionTypeId", {
+              is: (v: number) => v === 5,
+              then: (schema) => schema.max(250, "Up to 250 characters"),
+              otherwise: (schema) => schema.max(100, "Up to 100 characters"),
+            }),
             DetectionMethodId: number().min(1, "Required field").required("Required field"),
-            UnscheduledInspectionTypeComments: ValidationSchema.max250,
             DetectionMethodComments: ValidationSchema.max100,
           }),
           DiscrepancyDetails: object().shape({
@@ -324,6 +329,8 @@ const CreateSfrData = ({
           RepairDetails: object().shape({
             Rev: ValidationSchema.min1,
             Comments: ValidationSchema.max100,
+            MaterialsUtilized: ValidationSchema.max200,
+            ManHoursRequired: ValidationSchema.max4,
           }),
         })}
       >

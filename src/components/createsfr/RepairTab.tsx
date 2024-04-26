@@ -516,7 +516,6 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
               <ListItem>
                 {editable ? (
                   <TextField
-                    type="number"
                     name="RepairDetails.ManHoursRequired"
                     value={values?.RepairDetails?.ManHoursRequired || ""}
                     onChange={handleChange}
@@ -530,7 +529,7 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                       errors?.RepairDetails?.ManHoursRequired
                     }
                     className={"sdr-status-edit"}
-                    inputProps={{ maxLength: 4, max: 9999 }}
+                    placeholder="xxxx"
                   />
                 ) : (
                   ""

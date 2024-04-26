@@ -69,13 +69,6 @@ export const ValidationSchema = {
       },
     }),
   }),
-  // PartDetails: object().shape({
-  //   PartLocation: string().trim().min(1, "Required field"),
-  //   PartCondition: string().trim().min(1, "Required field"),
-  //   PartManufacturerSerialNumber: string().trim().min(1, "Required field"),
-  //   PartSerialNumber: string().trim().min(1, "Required field"),
-  //   PartDescription: string().trim().min(1, "Required field"),
-  // }),
   OperatorControlNumber: string().max(20, "Up to 20 characters"),
   ReportedBy: string().max(30, "Up to 30 characters"),
   Keyword: string().max(30, "Up to 30 characters"),
@@ -89,9 +82,12 @@ export const ValidationSchema = {
   }),
   PartNumber: string().max(30, "Up to 30 characters"),
   max250: string().max(250, "Up to 250 characters"),
+  max200: string().max(200, "Up to 200 characters"),
   max100: string().max(100, "Up to 100 characters"),
   max50: string().max(50, "Up to 50 characters"),
   max10: string().max(10, "Up to 10 characters"),
+  max4: string().max(4, "Up to 4 characters"),
+  min1: string().trim().min(1, "Not a valid value"),
 };
 
 export default ValidationSchema;

@@ -173,7 +173,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                         }
                         options={
                           masterData?.CorrosionCauses &&
-                          [...masterData.CorrosionLevels].sort(
+                          [...masterData.CorrosionCauses].sort(
                             (a, b) => a.DisplayOrder - b.DisplayOrder
                           )
                         }
@@ -192,10 +192,11 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
               values?.DiscrepancyDetails?.DiscrepancyTypeId === 6) && (
               <>
                 <div>
-                  <ListItem>Crack Level</ListItem>
+                  <ListItem>Crack Length (Inches)</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextField
+                        type="number"
                         name="DiscrepancyDetails.CrackLength"
                         value={values?.DiscrepancyDetails?.CrackLength || ""}
                         onChange={handleChange}
@@ -209,6 +210,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                           errors?.DiscrepancyDetails?.CrackLength
                         }
                         className={"sdr-status-edit"}
+                        placeholder="xxxxx"
                       />
                     ) : (
                       ""
@@ -263,6 +265,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                             errors?.DiscrepancyDetails?.NumberOfCracks
                           }
                           className={"sdr-status-edit"}
+                          placeholder="xxx"
                         />
                       ) : (
                         ""
@@ -278,10 +281,11 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
               values?.DiscrepancyDetails?.DiscrepancyTypeId === 8) && (
               <>
                 <div>
-                  <ListItem>Damage Level</ListItem>
+                  <ListItem>Damage Length (Inches)</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextField
+                        type="number"
                         name="DiscrepancyDetails.CrackLength"
                         value={values?.DiscrepancyDetails?.CrackLength || ""}
                         onChange={handleChange}
@@ -295,6 +299,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                           errors?.DiscrepancyDetails?.CrackLength
                         }
                         className={"sdr-status-edit"}
+                        placeholder="xxxxx"
                       />
                     ) : (
                       ""
@@ -302,7 +307,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                   </ListItem>
                 </div>
                 <div>
-                  <ListItem>Damage Width</ListItem>
+                  <ListItem>Damage Width (Inches)</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextField
@@ -320,6 +325,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                           errors?.DiscrepancyDetails?.CrackWidth
                         }
                         className={"sdr-status-edit"}
+                        placeholder="xxxxx"
                       />
                     ) : (
                       ""
@@ -332,7 +338,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
             {/* Dented/Deformed */}
             {values?.DiscrepancyDetails?.DiscrepancyTypeId === 8 && (
               <div>
-                <ListItem>Damage Depth</ListItem>
+                <ListItem>Damage Depth (Inches)</ListItem>
                 <ListItem>
                   {editable ? (
                     <TextField
@@ -350,6 +356,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                         errors?.DiscrepancyDetails?.CrackDepth
                       }
                       className={"sdr-status-edit"}
+                      placeholder="xxxxx"
                     />
                   ) : (
                     ""
