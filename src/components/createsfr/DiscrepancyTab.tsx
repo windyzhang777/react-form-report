@@ -27,34 +27,64 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
         index={SelectedSfrTab.Discrepancy}
         className="sdr-status-grid overflow-y-auto"
       >
-        <div className="relative">
-          <ListItem>Exceed Manufacturer/FAA Limits</ListItem>
-          <ListItem className="!absolute !px-0 left-0 top-[20px]">
-            {editable ? (
-              <SimpleRadio
-                name="DiscrepancyDetails.IsManufacturingLimitExceeded"
-                value={values?.DiscrepancyDetails?.IsManufacturingLimitExceeded}
-                onChange={(values) => {
-                  setFieldValue(
-                    "DiscrepancyDetails.IsManufacturingLimitExceeded",
-                    values === "true"
-                  );
-                }}
-                error={
-                  !!touched?.DiscrepancyDetails?.IsManufacturingLimitExceeded &&
-                  !!errors?.DiscrepancyDetails?.IsManufacturingLimitExceeded
-                }
-                helperText={
-                  !!touched?.DiscrepancyDetails?.IsManufacturingLimitExceeded &&
-                  errors?.DiscrepancyDetails?.IsManufacturingLimitExceeded
-                }
-                className={"sdr-status-edit gap-5"}
-              />
-            ) : (
-              ""
-            )}
-          </ListItem>
-        </div>
+        <Grid container>
+          <Grid item xs={6} className="relative">
+            <ListItem>Exceed Manufacturer/FAA Limits</ListItem>
+            <ListItem className="!absolute !px-0 left-0 top-[20px]">
+              {editable ? (
+                <SimpleRadio
+                  name="DiscrepancyDetails.IsManufacturingLimitExceeded"
+                  value={values?.DiscrepancyDetails?.IsManufacturingLimitExceeded}
+                  onChange={(values) => {
+                    setFieldValue(
+                      "DiscrepancyDetails.IsManufacturingLimitExceeded",
+                      values === "true"
+                    );
+                  }}
+                  error={
+                    !!touched?.DiscrepancyDetails?.IsManufacturingLimitExceeded &&
+                    !!errors?.DiscrepancyDetails?.IsManufacturingLimitExceeded
+                  }
+                  helperText={
+                    !!touched?.DiscrepancyDetails?.IsManufacturingLimitExceeded &&
+                    errors?.DiscrepancyDetails?.IsManufacturingLimitExceeded
+                  }
+                  className={"sdr-status-edit gap-5"}
+                />
+              ) : (
+                ""
+              )}
+            </ListItem>
+          </Grid>
+          <Grid item xs={6} className="relative">
+            <ListItem>Endangers Safe Operations of Aircraft</ListItem>
+            <ListItem className="!absolute !px-0 left-0 top-[20px]">
+              {editable ? (
+                <SimpleRadio
+                  name="DiscrepancyDetails.IsSafeOperationEndangered"
+                  value={values?.DiscrepancyDetails?.IsSafeOperationEndangered}
+                  onChange={(values) => {
+                    setFieldValue(
+                      "DiscrepancyDetails.IsSafeOperationEndangered",
+                      values === "true"
+                    );
+                  }}
+                  error={
+                    !!touched?.DiscrepancyDetails?.IsSafeOperationEndangered &&
+                    !!errors?.DiscrepancyDetails?.IsSafeOperationEndangered
+                  }
+                  helperText={
+                    !!touched?.DiscrepancyDetails?.IsSafeOperationEndangered &&
+                    errors?.DiscrepancyDetails?.IsSafeOperationEndangered
+                  }
+                  className={"sdr-status-edit gap-5"}
+                />
+              ) : (
+                ""
+              )}
+            </ListItem>
+          </Grid>
+        </Grid>
         <Grid container className="!mt-[50px]">
           <Grid item xs={6} className="flex !flex-col gap-4">
             {/* Discrepancy Type */}
