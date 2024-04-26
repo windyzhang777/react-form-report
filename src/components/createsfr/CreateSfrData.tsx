@@ -16,7 +16,7 @@ import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { CreateSfrReq } from "src/types/CreateSfrReq";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
 import ValidationSchema from "src/validationSchema";
-import { array, number, object } from "yup";
+import { array, number, object, string } from "yup";
 import "./createSfrData.css";
 
 export interface ICreateSfrDataProps {
@@ -290,10 +290,23 @@ const CreateSfrData = ({
             HowDiscoveredId: sdrRequired ? ValidationSchema.HowDiscoveredId : number(),
           }),
           OriginDetails: object().shape({
+            MfrSourceId: number(),
+            MfrSourceComments: string().when("MfrSourceId", {
+              is: (v: number) => v === 4,
+              then: (schema) => schema.max(200, "Up to 200 characters"),
+              otherwise: (schema) => schema.max(100, "Up to 100 characters"),
+            }),
             DetectionMethodId: number().min(1, "Required field").required("Required field"),
+            UnscheduledInspectionTypeComments: ValidationSchema.max250,
+            DetectionMethodComments: ValidationSchema.max100,
           }),
           DiscrepancyDetails: object().shape({
             DiscrepancyTypeId: number().min(1, "Required field").required("Required field"),
+            CrackLength: string().matches(/^[0-9]{1,5}$/, "Not a valid value"),
+            CrackWidth: string().matches(/^[0-9]{1,5}$/, "Not a valid value"),
+            CrackDepth: string().matches(/^[0-9]{1,5}$/, "Not a valid value"),
+            NumberOfCracks: string().matches(/^[0-9]{1,3}$/, "Not a valid value"),
+            DiscrepancyTypeComments: ValidationSchema.max100,
           }),
           LocationDetails: object().shape({
             DefectLocationId: number().min(1, "Required field").required("Required field"),
@@ -303,8 +316,14 @@ const CreateSfrData = ({
             SpecificsLocation: ValidationSchema.max100,
             FromStr: ValidationSchema.max50,
             ToStr: ValidationSchema.max50,
+            FromSta: ValidationSchema.max50,
+            ToSta: ValidationSchema.max50,
             FromBL: ValidationSchema.max10,
             ToBL: ValidationSchema.max10,
+          }),
+          RepairDetails: object().shape({
+            Rev: ValidationSchema.min1,
+            Comments: ValidationSchema.max100,
           }),
         })}
       >
