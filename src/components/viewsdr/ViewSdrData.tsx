@@ -114,7 +114,7 @@ const ViewSdrData = ({
       EmployeeId: `${profileData?.EmployeeId}`,
       EmployeeName: `${profileData?.FirstName} ${profileData?.LastName}`,
       PartDetails: {
-        PartTrackingNumber: "",
+        PartTrackingNumber: detailsData?.SdrDetails?.PartDetails?.PartTrackingNumber || "",
         PartManufacturerSerialNumber:
           detailsData?.SdrDetails?.PartDetails?.PartManufacturerSerialNumber || "",
         PartSerialNumber: detailsData?.SdrDetails?.PartDetails?.PartSerialNumber || "",
@@ -791,22 +791,22 @@ const ViewSdrData = ({
                       <ListItem>
                         {editable ? (
                           <TextField
-                            name="PartDetails.PartDescription"
-                            value={values?.PartDetails?.PartDescription}
+                            name="SfrAdditionalDetails.PartName"
+                            value={values?.SfrAdditionalDetails?.PartName}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
-                              !!touched.PartDetails?.PartDescription &&
-                              !!errors.PartDetails?.PartDescription
+                              !!touched.SfrAdditionalDetails?.PartName &&
+                              !!errors.SfrAdditionalDetails?.PartName
                             }
                             helperText={
-                              !!touched.PartDetails?.PartDescription &&
-                              errors.PartDetails?.PartDescription
+                              !!touched.SfrAdditionalDetails?.PartName &&
+                              errors.SfrAdditionalDetails?.PartName
                             }
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values?.PartDetails?.PartDescription
+                          values?.SfrAdditionalDetails?.PartName
                         )}
                       </ListItem>
                     </Grid>
@@ -837,22 +837,22 @@ const ViewSdrData = ({
                       <ListItem>
                         {editable ? (
                           <TextField
-                            name="PartDetails.PartManufacturerSerialNumber"
-                            value={values?.PartDetails?.PartManufacturerSerialNumber}
+                            name="SfrAdditionalDetails.PartNumber"
+                            value={values?.SfrAdditionalDetails?.PartNumber}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
-                              !!touched.PartDetails?.PartManufacturerSerialNumber &&
-                              !!errors.PartDetails?.PartManufacturerSerialNumber
+                              !!touched.SfrAdditionalDetails?.PartNumber &&
+                              !!errors.SfrAdditionalDetails?.PartNumber
                             }
                             helperText={
-                              !!touched.PartDetails?.PartManufacturerSerialNumber &&
-                              errors.PartDetails?.PartManufacturerSerialNumber
+                              !!touched.SfrAdditionalDetails?.PartNumber &&
+                              errors.SfrAdditionalDetails?.PartNumber
                             }
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values?.PartDetails?.PartManufacturerSerialNumber
+                          values?.SfrAdditionalDetails?.PartNumber
                         )}
                       </ListItem>
                     </Grid>

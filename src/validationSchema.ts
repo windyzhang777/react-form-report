@@ -69,18 +69,11 @@ export const ValidationSchema = {
       },
     }),
   }),
-  // PartDetails: object().shape({
-  //   PartLocation: string().trim().min(1, "Required field"),
-  //   PartCondition: string().trim().min(1, "Required field"),
-  //   PartManufacturerSerialNumber: string().trim().min(1, "Required field"),
-  //   PartSerialNumber: string().trim().min(1, "Required field"),
-  //   PartDescription: string().trim().min(1, "Required field"),
-  // }),
   OperatorControlNumber: string().max(20, "Up to 20 characters"),
   ReportedBy: string().max(30, "Up to 30 characters"),
   Keyword: string().max(30, "Up to 30 characters"),
   SfrAdditionalDetails: object().shape({
-    NumberOfCracks: number().min(0, "Not a valid value").max(255),
+    NumberOfCracks: number().min(0, "Not a valid value").max(255, "Not a valid value"),
     CrackLength: number().test("digits", "Not a valid value", (val) =>
       val ? /^[1-9]\d{0,7}(?:\.\d{1,3})?$/.test(val.toString()) : true
     ),
@@ -88,10 +81,15 @@ export const ValidationSchema = {
     SubmitterType: string().matches(/^(\S+$)/, "Not a valid value"),
   }),
   PartNumber: string().max(30, "Up to 30 characters"),
-  max250: string().max(250, "Up to 250 characters"),
-  max100: string().max(100, "Up to 100 characters"),
-  max50: string().max(50, "Up to 50 characters"),
-  max10: string().max(10, "Up to 10 characters"),
+  upTo250: string().max(250, "Up to 250 characters"),
+  upTo200: string().max(200, "Up to 200 characters"),
+  upTo100: string().max(100, "Up to 100 characters"),
+  upTo50: string().max(50, "Up to 50 characters"),
+  upTo10: string().max(10, "Up to 10 characters"),
+  upTo4: string().max(4, "Up to 4 characters"),
+  noLeadingSpace: string().trim().min(1, "Not a valid value"),
+  max99999: number().max(99999, "Not a valid value"),
+  max999: number().max(999, "Not a valid value"),
 };
 
 export default ValidationSchema;

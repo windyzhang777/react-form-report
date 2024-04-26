@@ -25,8 +25,19 @@ export const useFormCreateSfrData = () => {
   ]);
 
   useEffect(() => {
+    setFieldValue("OriginDetails.DetectionMethodId", "");
+    setFieldValue("OriginDetails.MfrSourceComments", "");
+    setFieldValue("OriginDetails.DetectionMethodComments", "");
+  }, [values?.OriginDetails?.IsScheduledInspection]);
+
+  useEffect(() => {
     setFieldValue("OriginDetails.MfrSourceIdentifier", "");
+    setFieldValue("OriginDetails.MfrSourceComments", "");
   }, [values?.OriginDetails?.MfrSourceId]);
+
+  useEffect(() => {
+    setFieldValue("OriginDetails.UnscheduledInspectionTypeComments", "");
+  }, [values?.OriginDetails?.UnscheduledInspectionTypeId]);
 
   useEffect(() => {
     setFieldValue("OriginDetails.CalDocIdentifier", "");
@@ -52,6 +63,52 @@ export const useFormCreateSfrData = () => {
     values?.CalDocIdentifier3,
     values?.CalDocIdentifier4,
   ]);
+
+  // Discrepancy Tab
+  useEffect(() => {
+    setFieldValue("DiscrepancyDetails.CorrosionLevelId", "");
+    setFieldValue("DiscrepancyDetails.CorrosionExtentId", "");
+    setFieldValue("DiscrepancyDetails.CorrosionCauseId", "");
+    setFieldValue("DiscrepancyDetails.CrackLength", "");
+    setFieldValue("DiscrepancyDetails.CrackWidth", "");
+    setFieldValue("DiscrepancyDetails.CrackDepth", "");
+    setFieldValue("DiscrepancyDetails.AreMultipleCracksInTheSameLocation", false);
+    setFieldValue("DiscrepancyDetails.NumberOfCracks", 0);
+    setFieldValue("DiscrepancyDetails.DiscrepancyTypeComments", "");
+  }, [values?.DiscrepancyDetails?.DiscrepancyTypeId]);
+
+  useEffect(() => {
+    setFieldValue("PartNumber", "");
+    setFieldValue("Structure", "");
+    setFieldValue("DiscrepancyDetails.DiscrepancyPartDetails[0].PartNumber", "");
+    setFieldValue("DiscrepancyDetails.DiscrepancyPartDetails[0].Structure", "");
+    setFieldValue("DiscrepancyDetails.DiscrepancyPartComments", "");
+  }, [values?.DiscrepancyDetails?.DiscrepancyPartDetails?.[0]?.DiscrepancyPartInformationCode]);
+
+  // Location Tab
+  useEffect(() => {
+    setFieldValue("LocationDetails.Side", "");
+    setFieldValue("LocationDetails.Surface", "");
+    setFieldValue("LocationDetails.FromSta", "");
+    setFieldValue("LocationDetails.ToSta", "");
+    setFieldValue("LocationDetails.FromBLLength", 0);
+    setFieldValue("LocationDetails.FromBL", "");
+    setFieldValue("LocationDetails.ToBLLength", 0);
+    setFieldValue("LocationDetails.ToBL", "");
+    setFieldValue("LocationDetails.StaTypeId", 0);
+    setFieldValue("LocationDetails.DamageProximityId", 0);
+    setFieldValue("LocationDetails.FromStr", "");
+    setFieldValue("LocationDetails.FromSide", "");
+    setFieldValue("LocationDetails.ToStr", "");
+    setFieldValue("LocationDetails.ToSide", "");
+    setFieldValue("LocationDetails.ElevatorTab", "");
+    setFieldValue("LocationDetails.Fuselage", "");
+    setFieldValue("LocationDetails.LocationType", "");
+    setFieldValue("LocationDetails.Specifics", "");
+    setFieldValue("LocationDetails.Other", "");
+    setFieldValue("LocationDetails.AdditionalLocationDetails", "");
+    setFieldValue("LocationDetails.SpecificsLocation", "");
+  }, [values?.LocationDetails?.DefectLocationId]);
 
   // Repair Tab
   useEffect(() => {

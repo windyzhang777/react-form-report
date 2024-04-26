@@ -16,7 +16,7 @@ import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { CreateSfrReq } from "src/types/CreateSfrReq";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
 import ValidationSchema from "src/validationSchema";
-import { array, number, object } from "yup";
+import { array, number, object, string } from "yup";
 import "./createSfrData.css";
 
 export interface ICreateSfrDataProps {
@@ -192,7 +192,6 @@ const CreateSfrData = ({
       ATASubChapter: "",
       PartNumber: "",
       Structure: "",
-      DiscrepancyPartInformationCode: 0,
       DocumentType: [],
       SpecIdentifier1: "",
       SpecIdentifier2: "",
@@ -290,21 +289,47 @@ const CreateSfrData = ({
             HowDiscoveredId: sdrRequired ? ValidationSchema.HowDiscoveredId : number(),
           }),
           OriginDetails: object().shape({
+            MfrSourceId: number(),
+            MfrSourceComments: string().when("MfrSourceId", {
+              is: (v: number) => v === 4,
+              then: (schema) => schema.max(200, "Up to 200 characters"),
+              otherwise: (schema) => schema.max(100, "Up to 100 characters"),
+            }),
+            UnscheduledInspectionTypeId: number(),
+            UnscheduledInspectionTypeComments: string().when("UnscheduledInspectionTypeId", {
+              is: (v: number) => v === 5,
+              then: (schema) => schema.max(250, "Up to 250 characters"),
+              otherwise: (schema) => schema.max(100, "Up to 100 characters"),
+            }),
             DetectionMethodId: number().min(1, "Required field").required("Required field"),
+            DetectionMethodComments: ValidationSchema.upTo100,
           }),
           DiscrepancyDetails: object().shape({
             DiscrepancyTypeId: number().min(1, "Required field").required("Required field"),
+            CrackLength: ValidationSchema.max99999,
+            CrackWidth: ValidationSchema.max99999,
+            CrackDepth: ValidationSchema.max99999,
+            NumberOfCracks: ValidationSchema.max999,
+            DiscrepancyTypeComments: ValidationSchema.upTo100,
           }),
           LocationDetails: object().shape({
             DefectLocationId: number().min(1, "Required field").required("Required field"),
             ZoneId: number().min(1, "Required field").required("Required field"),
-            AdditionalLocationDetails: ValidationSchema.max100,
-            CoordinateLocationDetails: ValidationSchema.max100,
-            SpecificsLocation: ValidationSchema.max100,
-            FromStr: ValidationSchema.max50,
-            ToStr: ValidationSchema.max50,
-            FromBL: ValidationSchema.max10,
-            ToBL: ValidationSchema.max10,
+            AdditionalLocationDetails: ValidationSchema.upTo100,
+            CoordinateLocationDetails: ValidationSchema.upTo100,
+            SpecificsLocation: ValidationSchema.upTo100,
+            FromStr: ValidationSchema.upTo50,
+            ToStr: ValidationSchema.upTo50,
+            FromSta: ValidationSchema.upTo50,
+            ToSta: ValidationSchema.upTo50,
+            FromBL: ValidationSchema.upTo10,
+            ToBL: ValidationSchema.upTo10,
+          }),
+          RepairDetails: object().shape({
+            Rev: ValidationSchema.noLeadingSpace,
+            Comments: ValidationSchema.upTo100,
+            MaterialsUtilized: ValidationSchema.upTo200,
+            ManHoursRequired: ValidationSchema.upTo4,
           }),
         })}
       >

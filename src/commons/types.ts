@@ -55,7 +55,6 @@ export interface ISaveSfrValues extends CreateSfrReq {
   ATASubChapter: string;
   PartNumber: string;
   Structure: string;
-  DiscrepancyPartInformationCode: number;
   DocumentType: number[];
   SpecIdentifier1: string;
   SpecIdentifier2: string;

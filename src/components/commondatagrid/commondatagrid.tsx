@@ -61,9 +61,8 @@ const CommonDataGrid = ({
   const showCheckbox = useMemo(() => tabIndex === SelectedTab.Approved, [tabIndex]);
 
   const handleCreateSDR = (type: string) => {
-    // if (!viewSdrFlag) { // TODO: not allow creating sdr while editing sdr
+    setViewSdrFlag(false);
     setCreateSdrFlag(type);
-    // }
   };
 
   const handleConfirmExtract = () => {
@@ -113,8 +112,8 @@ const CommonDataGrid = ({
         onCellClick={(data: GridCellParams) => {
           setViewSdrFlag(false);
           if (data.field !== "__check__" && !createSdrFlag) {
-            setSelectedSdr(data?.row);
             setViewSdrFlag(true);
+            setSelectedSdr(data?.row);
           }
         }}
         slots={{

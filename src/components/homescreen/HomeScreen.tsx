@@ -265,7 +265,7 @@ const HomeScreen = () => {
     if (!viewSdrFlag) {
       setSelectedSdr(null);
     }
-  }, [viewSdrFlag]);
+  }, [viewSdrFlag, createSdrFlag]);
 
   return (
     <>
