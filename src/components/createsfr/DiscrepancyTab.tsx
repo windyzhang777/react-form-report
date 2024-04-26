@@ -479,7 +479,13 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                       <TextField
                         name="PartNumber"
                         value={values.PartNumber || ""}
-                        onChange={handleChange}
+                        onChange={(e) => {
+                          setFieldValue("PartNumber", e.target.value);
+                          setFieldValue(
+                            "DiscrepancyDetails.DiscrepancyPartDetails[0].PartNumber",
+                            e.target.value
+                          );
+                        }}
                         onBlur={handleBlur}
                         error={!!touched.PartNumber && !!errors.PartNumber}
                         helperText={!!touched.PartNumber && errors.PartNumber}
@@ -497,7 +503,13 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                       <TextField
                         name="Structure"
                         value={values.Structure || ""}
-                        onChange={handleChange}
+                        onChange={(e) => {
+                          setFieldValue("Structure", e.target.value);
+                          setFieldValue(
+                            "DiscrepancyDetails.DiscrepancyPartDetails[0].Structure",
+                            e.target.value
+                          );
+                        }}
                         onBlur={handleBlur}
                         error={!!touched.Structure && !!errors.Structure}
                         helperText={!!touched.Structure && errors.Structure}

@@ -192,7 +192,6 @@ const CreateSfrData = ({
       ATASubChapter: "",
       PartNumber: "",
       Structure: "",
-      DiscrepancyPartInformationCode: 0,
       DocumentType: [],
       SpecIdentifier1: "",
       SpecIdentifier2: "",
