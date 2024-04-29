@@ -31,8 +31,8 @@ export interface AircraftDetails {
   Manufacturer: string;
   Model: string;
   SerialNumber: string;
-  TotalTime: string;
-  TotalCycles: string;
+  TotalTime: string | number;
+  TotalCycles: string | number;
 }
 
 export interface PartDetails {

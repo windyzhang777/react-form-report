@@ -38,6 +38,8 @@ export interface GetApprovedSDRResResult {
   Station: string;
   Status: string;
   StatusId: number;
+  IsMajorRepair?: boolean;
+  IsSdrDowngraded?: boolean;
 }
 
 export interface AircraftDetails {

@@ -1,5 +1,5 @@
 import { Box, Grid } from "@mui/material";
-import { useFormikContext } from "formik";
+import { FormikErrors, FormikTouched, useFormikContext } from "formik";
 import { ChangeEventHandler, Dispatch, FocusEventHandler, SetStateAction, useEffect } from "react";
 import { FlexColumn } from "src/commons/Box";
 import ListItem from "src/commons/ListItem";
@@ -402,6 +402,8 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                     handleChange={handleChange}
                     name={name as string}
                     values={values}
+                    touched={touched}
+                    errors={errors}
                   />
                 );
               case 4:
@@ -415,9 +417,12 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                             count={2}
                             maxAllowed={[4, 5]}
                             name="RepairECRA"
+                            path="RepairDetails.RepairECRA"
                             values={values}
                             onChange={handleChange}
                             onBlur={handleBlur}
+                            touched={touched}
+                            errors={errors}
                           />
                         ) : (
                           ""
@@ -545,13 +550,23 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
 
 interface IDocumentGridProps {
   editable: boolean;
+  errors: FormikErrors<ISaveSfrValues> & { [key: string]: any };
   handleBlur: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   handleChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   name: string;
-  values: ISaveSfrValues;
+  touched: FormikTouched<ISaveSfrValues> & { [key: string]: any };
+  values: ISaveSfrValues & { [key: string]: any };
 }
 
-const DocumentGrid = ({ editable, handleBlur, handleChange, name, values }: IDocumentGridProps) => (
+const DocumentGrid = ({
+  editable,
+  errors,
+  handleBlur,
+  handleChange,
+  name,
+  touched,
+  values,
+}: IDocumentGridProps) => (
   <Grid container>
     <Grid item xs={4}>
       <ListItem>{name}1</ListItem>
@@ -561,9 +576,12 @@ const DocumentGrid = ({ editable, handleBlur, handleChange, name, values }: IDoc
             count={3}
             maxAllowed={[2, 2, 2]}
             name={`${name}1`}
+            path={`${name}1`}
             values={values}
             onChange={handleChange}
             onBlur={handleBlur}
+            touched={touched}
+            errors={errors}
           />
         ) : (
           ""
@@ -578,9 +596,12 @@ const DocumentGrid = ({ editable, handleBlur, handleChange, name, values }: IDoc
             count={3}
             maxAllowed={[2, 2, 2]}
             name={`${name}2`}
+            path={`${name}2`}
             values={values}
             onChange={handleChange}
             onBlur={handleBlur}
+            touched={touched}
+            errors={errors}
           />
         ) : (
           ""
@@ -595,9 +616,12 @@ const DocumentGrid = ({ editable, handleBlur, handleChange, name, values }: IDoc
             count={3}
             maxAllowed={[2, 2, 2]}
             name={`${name}3`}
+            path={`${name}3`}
             values={values}
             onChange={handleChange}
             onBlur={handleBlur}
+            touched={touched}
+            errors={errors}
           />
         ) : (
           ""
@@ -610,9 +634,11 @@ const DocumentGrid = ({ editable, handleBlur, handleChange, name, values }: IDoc
         {editable ? (
           <TextField
             name={`${name}Page`}
-            value={(values as any)?.[`${name}Page`] || ""}
+            value={values?.[`${name}Page`] || ""}
             onChange={handleChange}
             onBlur={handleBlur}
+            error={!!touched?.[`${name}Page`] && !!errors?.[`${name}Page`]}
+            helperText={!!touched?.[`${name}Page`] && errors?.[`${name}Page`]}
             className={"sdr-status-edit"}
             inputProps={{ maxLength: 3 }}
             placeholder="xxx"
@@ -628,9 +654,11 @@ const DocumentGrid = ({ editable, handleBlur, handleChange, name, values }: IDoc
         {editable ? (
           <TextField
             name={`${name}Fig`}
-            value={(values as any)?.[`${name}Fig`] || ""}
+            value={values?.[`${name}Fig`] || ""}
             onChange={handleChange}
             onBlur={handleBlur}
+            error={!!touched?.[`${name}Fig`] && !!errors?.[`${name}Fig`]}
+            helperText={!!touched?.[`${name}Fig`] && errors?.[`${name}Fig`]}
             className={"sdr-status-edit"}
             inputProps={{ maxLength: 3 }}
             placeholder="xxx"

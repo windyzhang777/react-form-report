@@ -94,7 +94,7 @@ const CreateSdrData = ({
         Model: logpageData?.FleetInfo?.ManufacturerPartNumber || "",
         SerialNumber: logpageData?.FleetInfo?.ManufacturerSerialNumber || "",
         TotalTime: String(toFixed(logpageData?.FleetInfo?.TotalAircraftTime) || ""),
-        TotalCycles: String(toFixed(logpageData?.FleetInfo?.TotalAircraftCycles) || ""),
+        TotalCycles: logpageData?.FleetInfo?.TotalAircraftCycles || "",
       },
       LogPageCreationDate: logpageData?.FleetInfo?.Date || "",
       OperatorControlNumber: "",

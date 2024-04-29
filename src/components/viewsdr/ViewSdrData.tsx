@@ -99,7 +99,7 @@ const ViewSdrData = ({
         Model: logpageData?.FleetInfo?.ManufacturerPartNumber || "",
         SerialNumber: logpageData?.FleetInfo?.ManufacturerSerialNumber || "",
         TotalTime: String(toFixed(logpageData?.FleetInfo?.TotalAircraftTime) || ""),
-        TotalCycles: String(toFixed(logpageData?.FleetInfo?.TotalAircraftCycles) || ""),
+        TotalCycles: logpageData?.FleetInfo?.TotalAircraftCycles || "",
       },
       LogPageCreationDate:
         (isSdr ? detailsData?.SdrDetails?.CreatedDate : detailsData?.CreatedDate) || "",
@@ -168,7 +168,7 @@ const ViewSdrData = ({
     <>
       <FlexColumn className={"view-sdr h-full relative"}>
         <FlexBetween className={"subpage-title bottom-divider"} sx={{ pt: "1px" }}>
-          <p>Service Difficulty Report - #{selectedSdr?.Id}</p>
+          <p>{isSdr ? "Service Difficulty" : "Significant Findings"} Report - #{selectedSdr?.Id}</p>
           <IconButton
             onClick={() => {
               setViewSdrFlag(false);

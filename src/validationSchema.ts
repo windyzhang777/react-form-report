@@ -78,17 +78,24 @@ export const ValidationSchema = {
       .min(0, "Not a valid value")
       .max(255, "Not a valid value"),
     CrackLength: string().matches(/^[1-9]\d{0,7}(?:\.\d{1,3})?$/, "Not a valid value"),
-    OperatorType: string().matches(/^(\S+$)/, "Not a valid value"),
-    SubmitterType: string().matches(/^(\S+$)/, "Not a valid value"),
+    OperatorType: string()
+      .trim()
+      .matches(/^[a-zA-Z0-9]+$/, "Not a valid value"),
+    SubmitterType: string()
+      .trim()
+      .matches(/^[a-zA-Z0-9]+$/, "Not a valid value"),
   }),
   PartNumber: string().max(30, "Up to 30 characters"),
   upTo250: string().max(250, "Up to 250 characters"),
   upTo200: string().max(200, "Up to 200 characters"),
   upTo100: string().max(100, "Up to 100 characters"),
   upTo50: string().max(50, "Up to 50 characters"),
-  upTo10: string().max(10, "Up to 10 characters"),
-  upTo4: string().max(4, "Up to 4 characters"),
-  noLeadingSpace: string().trim().min(1, "Not a valid value"),
+  upTo10: string().matches(/^[a-zA-Z0-9]{0,10}$/, "Not a valid value"),
+  upTo7: string().matches(/^[a-zA-Z0-9]{0,7}$/, "Not a valid value"),
+  upTo4: string().matches(/^[a-zA-Z0-9]{0,4}$/, "Not a valid value"),
+  noLeadingSpace: string()
+    .trim()
+    .matches(/^[a-zA-Z0-9]+$/, "Not a valid value"),
   maxInt99999: number()
     .integer("Not a valid value")
     .min(0, "Not a valid value")
@@ -97,6 +104,16 @@ export const ValidationSchema = {
     .integer("Not a valid value")
     .min(0, "Not a valid value")
     .max(999, "Not a valid value"),
+};
+
+export const validationRegex = {
+  WorkCard: /^[a-zA-Z1-9]{2}-[a-zA-Z1-9]{4}-1-[a-zA-Z1-9]{4}/,
+  FCD: /^[a-zA-Z1-9]{4}-[a-zA-Z1-9]{5}/,
+  DIP: /^[a-zA-Z1-9]{7}/,
+  Spec: /^[a-zA-Z1-9]{4}-[a-zA-Z1-9]{2}-[a-zA-Z1-9]{1}-[a-zA-Z1-9]{4}/,
+  AMM: /^[a-zA-Z1-9]{2}-[a-zA-Z1-9]{2}-[a-zA-Z1-9]{2}/,
+  RepairECRA: /^[a-zA-Z1-9]{4}-[a-zA-Z1-9]{5}/,
+  Fig: /^[a-zA-Z1-9]{3}/,
 };
 
 export default ValidationSchema;

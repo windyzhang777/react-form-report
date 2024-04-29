@@ -93,7 +93,7 @@ const ViewSnapshotData = ({
         Model: logpageData?.FleetInfo?.ManufacturerPartNumber || "",
         SerialNumber: logpageData?.FleetInfo?.ManufacturerSerialNumber || "",
         TotalTime: String(toFixed(logpageData?.FleetInfo?.TotalAircraftTime) || ""),
-        TotalCycles: String(toFixed(logpageData?.FleetInfo?.TotalAircraftCycles) || ""),
+        TotalCycles: logpageData?.FleetInfo?.TotalAircraftCycles || "",
       },
       LogPageCreationDate: snapshotData?.CreatedDate || "",
       Station: snapshotData?.Station || logpageData?.FleetInfo?.Station || "",
@@ -146,7 +146,7 @@ const ViewSnapshotData = ({
         CoordinateLocationDetails: "",
       },
       FlightNumber: logpageData?.FleetInfo?.FlightNumber || "",
-      MajorRepair: "",
+      MajorRepair: snapshotData?.IsMajorRepair ? "Y" : "N",
     }),
     [snapshotData, logpageData, isSdr, profileData, selectedSdr]
   );
@@ -421,6 +421,7 @@ const ViewSnapshotData = ({
                               errors?.SfrAdditionalDetails?.SubmitterType
                             }
                             className={"sdr-status-edit"}
+                            placeholder="x"
                             inputProps={{ maxLength: 1 }}
                           />
                         ) : (
@@ -483,6 +484,7 @@ const ViewSnapshotData = ({
                               errors?.SfrAdditionalDetails?.OperatorType
                             }
                             className={"sdr-status-edit"}
+                            placeholder="x"
                             inputProps={{ maxLength: 1 }}
                           />
                         ) : (
