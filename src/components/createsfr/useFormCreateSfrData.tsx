@@ -30,6 +30,13 @@ export const useFormCreateSfrData = () => {
     setFieldValue("OriginDetails.MfrSourceComments", "");
     setFieldValue("OriginDetails.DetectionMethodComments", "");
     setFieldValue("OriginDetails.UnscheduledInspectionTypeComments", "");
+    setFieldValue("OriginDetails.UnscheduledInspectionTypeId", "");
+    setFieldValue("OriginDetails.CalDocId", 0);
+    setFieldValue("OriginDetails.MfrSourceId", 0);
+    setFieldTouched("OriginDetails.MfrSourceIdentifier", false);
+    setFieldError("OriginDetails.MfrSourceIdentifier", "");
+    setFieldTouched("OriginDetails.CalDocIdentifier", false);
+    setFieldError("OriginDetails.CalDocIdentifier", "");
   }, [values?.OriginDetails?.IsScheduledInspection]);
 
   useEffect(() => {
@@ -54,6 +61,7 @@ export const useFormCreateSfrData = () => {
     setFieldError("OriginDetails.CalDocIdentifier", "");
     if (values?.OriginDetails?.CalDocId === 1) {
       setFieldValue("CalDocIdentifier3", "1");
+      setFieldValue("OriginDetails.CalDocIdentifier", "1");
     }
   }, [values?.OriginDetails?.CalDocId]);
 
@@ -167,6 +175,8 @@ export const useFormCreateSfrData = () => {
     setFieldValue("RepairECRA1", "");
     setFieldValue("RepairECRA2", "");
     setFieldValue("RepairDetails.Comments", "");
+    setFieldTouched("RepairDetails.Comments", false);
+    setFieldError("RepairDetails.Comments", "");
   }, [values.DocumentType]);
 
   useEffect(() => {

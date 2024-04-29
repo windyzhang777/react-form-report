@@ -10,7 +10,7 @@ export interface ITextFieldGroupProps extends Partial<ICommonTextFieldProps> {
   count: number;
   disables?: boolean[];
   errors?: FormikErrors<ISaveSfrValues> & { [key: string]: any };
-  maxAllowed?: number[];
+  maxAllowed: number[];
   name: string;
   onBlur?: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
@@ -38,7 +38,7 @@ const TextFieldGroup = ({
 
   return (
     <FlexColumn>
-      <FlexRow className="mb-[5px]">
+      <FlexRow className="mb-[5px] relative">
         {Array.from({ length: count }, (_, i) => i + 1).map((i) => (
           <Fragment key={i}>
             <TextField
@@ -47,7 +47,12 @@ const TextFieldGroup = ({
               name={`${name}${i}`}
               placeholder={"x".repeat(maxAllowed?.[i - 1] || 4)}
               value={values?.[`${name}${i}`] || ""}
-              error={!!touched?.[`${name}${i}`] && !!errors?.[`${name}${i}`]}
+              error={
+                values?.[`${name}${i}`].length < maxAllowed?.[i - 1] &&
+                path &&
+                errors &&
+                get(errors, path)
+              }
               inputProps={{
                 maxLength: maxAllowed?.[i - 1] || "unset",
               }}
@@ -57,7 +62,11 @@ const TextFieldGroup = ({
           </Fragment>
         ))}
       </FlexRow>
-      {error && <FormHelperText error={error}>{helperText}</FormHelperText>}
+      {error && (
+        <FormHelperText className="absolute bottom-[-18px]" error={error}>
+          {helperText}
+        </FormHelperText>
+      )}
     </FlexColumn>
   );
 };

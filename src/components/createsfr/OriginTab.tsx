@@ -399,7 +399,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
 
               {values?.OriginDetails?.MfrSourceId === 1 && (
                 <div>
-                  <ListItem>CTN</ListItem>
+                  <ListItem required>CTN</ListItem>
                   <ListItem>
                     {editable ? (
                       <ClickableTextField
@@ -425,7 +425,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
               )}
               {values?.OriginDetails?.MfrSourceId === 2 && (
                 <div>
-                  <ListItem>SSI</ListItem>
+                  <ListItem required>SSI</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextField
@@ -453,7 +453,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
               )}
               {values?.OriginDetails?.MfrSourceId === 3 && (
                 <div>
-                  <ListItem>SID</ListItem>
+                  <ListItem required>SID</ListItem>
                   <ListItem>
                     {editable ? (
                       <ClickableTextField
@@ -479,7 +479,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
               )}
               {values?.OriginDetails?.MfrSourceId === 4 && (
                 <div>
-                  <ListItem>SSID</ListItem>
+                  <ListItem required>SSID</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextField
@@ -567,7 +567,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
               )}
 
               {/* Detection Method */}
-              <div>
+              <div className="mb-[5px]">
                 <ListItem required>Detection Method</ListItem>
                 <ListItem>
                   {editable ? (
