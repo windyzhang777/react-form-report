@@ -20,6 +20,7 @@
     "axios": "^1.5.0",
     "env-cmd": "^10.1.0",
     "formik": "^2.4.5",
+    "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -53,7 +54,9 @@
       "react-app/jest"
     ]
   },
-  "eslintIgnore": ["types.ts"],
+  "eslintIgnore": [
+    "types.ts"
+  ],
   "browserslist": {
     "production": [
       ">0.2%",
@@ -69,6 +72,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/file-saver": "^2.0.7",
+    "@types/lodash": "^4.17.0",
     "@types/wicg-file-system-access": "^2023.10.5",
     "postcss-nesting": "^12.1.0",
     "tailwindcss": "^3.4.1"
