@@ -54,8 +54,8 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
               <SimpleRadio
                 name="RepairDetails.IsDeferred"
                 value={values?.RepairDetails?.IsDeferred}
-                onChange={(values) => {
-                  setFieldValue("RepairDetails.IsDeferred", values === "true");
+                onChange={(value) => {
+                  setFieldValue("RepairDetails.IsDeferred", value === "true");
                 }}
                 error={!!touched?.RepairDetails?.IsDeferred && !!errors?.RepairDetails?.IsDeferred}
                 helperText={
