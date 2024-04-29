@@ -146,7 +146,7 @@ const ViewSnapshotData = ({
         CoordinateLocationDetails: "",
       },
       FlightNumber: logpageData?.FleetInfo?.FlightNumber || "",
-      MajorRepair: snapshotData?.IsMajorRepair ? "Y" : "N",
+      IsMajorRepair: snapshotData?.IsMajorRepair || false,
       SdrReportable: "",
     }),
     [snapshotData, logpageData, isSdr, profileData, selectedSdr]
@@ -744,16 +744,18 @@ const ViewSnapshotData = ({
                         {editable ? (
                           <TextField
                             disabled
-                            name="MajorRepair"
-                            value={values.MajorRepair}
+                            name="IsMajorRepair"
+                            value={values.IsMajorRepair ? "Y" : "N"}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            error={!!touched.MajorRepair && !!errors.MajorRepair}
-                            helperText={!!touched.MajorRepair && errors.MajorRepair}
+                            error={!!touched.IsMajorRepair && !!errors.IsMajorRepair}
+                            helperText={!!touched.IsMajorRepair && errors.IsMajorRepair}
                             className={"sdr-status-edit"}
                           />
+                        ) : values.IsMajorRepair ? (
+                          "Y"
                         ) : (
-                          values.MajorRepair || ""
+                          "N"
                         )}
                       </ListItem>
                     </Grid>
