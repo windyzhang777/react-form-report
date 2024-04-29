@@ -4,7 +4,8 @@ import { ISaveSfrValues } from "src/commons/types";
 import { formatCodes, joinCodes } from "src/helpers";
 
 export const useFormCreateSfrData = () => {
-  const { setFieldValue, values } = useFormikContext<ISaveSfrValues>();
+  const { setFieldError, setFieldTouched, setFieldValue, values } =
+    useFormikContext<ISaveSfrValues>();
 
   // Origin Tab
   useEffect(() => {
@@ -46,6 +47,11 @@ export const useFormCreateSfrData = () => {
     setFieldValue("CalDocIdentifier2", "");
     setFieldValue("CalDocIdentifier3", "");
     setFieldValue("CalDocIdentifier4", "");
+    setFieldTouched("CalDocIdentifier1", false);
+    setFieldTouched("CalDocIdentifier2", false);
+    setFieldTouched("CalDocIdentifier3", false);
+    setFieldTouched("CalDocIdentifier4", false);
+    setFieldError("OriginDetails.CalDocIdentifier", "");
     if (values?.OriginDetails?.CalDocId === 1) {
       setFieldValue("CalDocIdentifier3", "1");
     }
