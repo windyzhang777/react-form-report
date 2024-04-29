@@ -30,11 +30,10 @@ const TextFieldGroup = ({
   values,
   ...props
 }: ITextFieldGroupProps) => {
-  const error =
-    Array.from({ length: count }, (_, i) => i + 1).some(
-      (i) => touched?.[`${name}${i}`] && errors?.[`${name}${i}`]
-    ) ||
-    (path && errors && !!get(errors, path));
+  const error = Array.from({ length: count }, (_, i) => i + 1).some(
+    (i) =>
+      touched?.[`${name}${i}`] && (errors?.[`${name}${i}`] || (path && errors && get(errors, path)))
+  );
   const helperText = path && errors && get(errors, path);
 
   return (
