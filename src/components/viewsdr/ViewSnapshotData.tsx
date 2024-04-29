@@ -147,6 +147,7 @@ const ViewSnapshotData = ({
       },
       FlightNumber: logpageData?.FleetInfo?.FlightNumber || "",
       MajorRepair: snapshotData?.IsMajorRepair ? "Y" : "N",
+      SdrReportable: "",
     }),
     [snapshotData, logpageData, isSdr, profileData, selectedSdr]
   );
@@ -753,6 +754,31 @@ const ViewSnapshotData = ({
                           />
                         ) : (
                           values.MajorRepair || ""
+                        )}
+                      </ListItem>
+                    </Grid>
+                  </Grid>
+                  <Grid className={"sdr-status-item"} container spacing={1}>
+                    <Grid item xs={4}>
+                      <ListItem disabled={editable}>SDR Reportable</ListItem>
+                    </Grid>
+                  </Grid>
+                  <Grid className={"sdr-status-description"} container spacing={1}>
+                    <Grid item xs={4}>
+                      <ListItem>
+                        {editable ? (
+                          <TextField
+                            disabled
+                            name="SdrReportable"
+                            value={values.SdrReportable}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={!!touched.SdrReportable && !!errors.SdrReportable}
+                            helperText={!!touched.SdrReportable && errors.SdrReportable}
+                            className={"sdr-status-edit"}
+                          />
+                        ) : (
+                          values.SdrReportable || ""
                         )}
                       </ListItem>
                     </Grid>
