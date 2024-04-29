@@ -320,10 +320,9 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         helperText={
                           !!touched.LocationDetails?.FromBL && errors.LocationDetails?.FromBL
                         }
-                        multiline
-                        maxRows={4}
-                        className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ style: { resize: "both" } }}
+                        className={"sdr-status-edit"}
+                        inputProps={{ maxLength: 10 }}
+                        placeholder="xxxxxxxxxx"
                       />
                     ) : (
                       ""
@@ -365,10 +364,9 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         helperText={
                           !!touched?.LocationDetails?.ToBL && errors?.LocationDetails?.ToBL
                         }
-                        multiline
-                        maxRows={4}
-                        className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ style: { resize: "both" } }}
+                        className={"sdr-status-edit"}
+                        inputProps={{ maxLength: 10 }}
+                        placeholder="xxxxxxxxxx"
                       />
                     ) : (
                       ""

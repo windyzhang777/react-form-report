@@ -90,9 +90,9 @@ export const ValidationSchema = {
   upTo200: string().max(200, "Up to 200 characters"),
   upTo100: string().max(100, "Up to 100 characters"),
   upTo50: string().max(50, "Up to 50 characters"),
-  upTo10: string().matches(/^[a-zA-Z0-9]{0,10}$/, "Not a valid value"),
-  upTo7: string().matches(/^[a-zA-Z0-9]{0,7}$/, "Not a valid value"),
-  upTo4: string().matches(/^[a-zA-Z0-9]{0,4}$/, "Not a valid value"),
+  upTo10: string().matches(/^[a-zA-Z0-9]{0,10}$/, "Up to 10 characters"),
+  upTo7: string().matches(/^[a-zA-Z0-9]{0,7}$/, "Up to 7 characters"),
+  upTo4: string().matches(/^[a-zA-Z0-9]{0,4}$/, "Up to 4 characters"),
   noLeadingSpace: string()
     .trim()
     .matches(/^[a-zA-Z0-9]+$/, "Not a valid value"),
