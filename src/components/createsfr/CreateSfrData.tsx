@@ -15,7 +15,7 @@ import { resetLogpageDataSuccess } from "src/redux/ducks/getSdrEsfrRecordDetails
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { CreateSfrReq } from "src/types/CreateSfrReq";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
-import ValidationSchema from "src/validationSchema";
+import ValidationSchema, { validationRegex } from "src/validationSchema";
 import { array, number, object, string } from "yup";
 import "./createSfrData.css";
 
@@ -292,24 +292,50 @@ const CreateSfrData = ({
             MfrSourceId: number(),
             MfrSourceComments: string().when("MfrSourceId", {
               is: (v: number) => v === 4,
-              then: (schema) => schema.max(200, "Up to 200 characters"),
-              otherwise: (schema) => schema.max(100, "Up to 100 characters"),
+              then: () => ValidationSchema.upTo200,
+              otherwise: () => ValidationSchema.upTo100,
             }),
             UnscheduledInspectionTypeId: number(),
             UnscheduledInspectionTypeComments: string().when("UnscheduledInspectionTypeId", {
               is: (v: number) => v === 5,
-              then: (schema) => schema.max(250, "Up to 250 characters"),
-              otherwise: (schema) => schema.max(100, "Up to 100 characters"),
+              then: () => ValidationSchema.upTo250,
+              otherwise: () => ValidationSchema.upTo100,
             }),
+            CalDocId: number(),
+            CalDocIdentifier: string().test(
+              "textGroup",
+              "Not a valid value",
+              (value, validationContext) => {
+                const {
+                  parent: { CalDocId },
+                } = validationContext;
+                if (!value) return true;
+                if (CalDocId === 1) {
+                  return validationRegex.WorkCard.test(value);
+                } else if (CalDocId === 2 || CalDocId === 3) {
+                  return validationRegex.FCD.test(value);
+                } else if (CalDocId === 4 || CalDocId === 5) {
+                  return validationRegex.DIP.test(value);
+                }
+                return true;
+              }
+            ),
+            // .when("CalDocId", {
+            //   is: (v: number) => v === 4 || v === 5,
+            //   then: () => ValidationSchema.upTo7,
+            // }),
+            SpecIdentifier: string().test("textGroup", "Not a valid value", (value) =>
+              value ? validationRegex.Spec.test(value) : true
+            ),
             DetectionMethodId: number().min(1, "Required field").required("Required field"),
             DetectionMethodComments: ValidationSchema.upTo100,
           }),
           DiscrepancyDetails: object().shape({
             DiscrepancyTypeId: number().min(1, "Required field").required("Required field"),
-            CrackLength: ValidationSchema.max99999,
-            CrackWidth: ValidationSchema.max99999,
-            CrackDepth: ValidationSchema.max99999,
-            NumberOfCracks: ValidationSchema.max999,
+            CrackLength: ValidationSchema.maxInt99999,
+            CrackWidth: ValidationSchema.maxInt99999,
+            CrackDepth: ValidationSchema.maxInt99999,
+            NumberOfCracks: ValidationSchema.maxInt999,
             DiscrepancyTypeComments: ValidationSchema.upTo100,
           }),
           LocationDetails: object().shape({
@@ -325,11 +351,76 @@ const CreateSfrData = ({
             FromBL: ValidationSchema.upTo10,
             ToBL: ValidationSchema.upTo10,
           }),
+          SRM1: string().test("textGroup", "Not a valid value", (value) => {
+            if (!value) return true;
+            return validationRegex.AMM.test(value);
+          }),
+          SRM2: string().test("textGroup", "Not a valid value", (value) => {
+            if (!value) return true;
+            return validationRegex.AMM.test(value);
+          }),
+          SRM3: string().test("textGroup", "Not a valid value", (value) => {
+            if (!value) return true;
+            return validationRegex.AMM.test(value);
+          }),
+          SRMPage: string().test("textGroup", "Not a valid value", (value) => {
+            if (!value) return true;
+            return validationRegex.Fig.test(value);
+          }),
+          SRMFig: string().test("textGroup", "Not a valid value", (value) => {
+            if (!value) return true;
+            return validationRegex.Fig.test(value);
+          }),
+          AMM1: string().test("textGroup", "Not a valid value", (value) => {
+            if (!value) return true;
+            return validationRegex.AMM.test(value);
+          }),
+          AMM2: string().test("textGroup", "Not a valid value", (value) => {
+            if (!value) return true;
+            return validationRegex.AMM.test(value);
+          }),
+          AMM3: string().test("textGroup", "Not a valid value", (value) => {
+            if (!value) return true;
+            return validationRegex.AMM.test(value);
+          }),
+          AMMPage: string().test("textGroup", "Not a valid value", (value) => {
+            if (!value) return true;
+            return validationRegex.Fig.test(value);
+          }),
+          AMMFig: string().test("textGroup", "Not a valid value", (value) => {
+            if (!value) return true;
+            return validationRegex.Fig.test(value);
+          }),
+          CMM1: string().test("textGroup", "Not a valid value", (value) => {
+            if (!value) return true;
+            return validationRegex.AMM.test(value);
+          }),
+          CMM2: string().test("textGroup", "Not a valid value", (value) => {
+            if (!value) return true;
+            return validationRegex.AMM.test(value);
+          }),
+          CMM3: string().test("textGroup", "Not a valid value", (value) => {
+            if (!value) return true;
+            return validationRegex.AMM.test(value);
+          }),
+          CMMPage: string().test("textGroup", "Not a valid value", (value) => {
+            if (!value) return true;
+            return validationRegex.Fig.test(value);
+          }),
+          CMMFig: string().test("textGroup", "Not a valid value", (value) => {
+            if (!value) return true;
+            return validationRegex.Fig.test(value);
+          }),
           RepairDetails: object().shape({
             Rev: ValidationSchema.noLeadingSpace,
+            DipCode: ValidationSchema.upTo7,
             Comments: ValidationSchema.upTo100,
             MaterialsUtilized: ValidationSchema.upTo200,
             ManHoursRequired: ValidationSchema.upTo4,
+            RepairECRA: string().test("textGroup", "Not a valid value", (value) => {
+              if (!value) return true;
+              return validationRegex.RepairECRA.test(value);
+            }),
           }),
         })}
       >

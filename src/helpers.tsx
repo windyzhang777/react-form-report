@@ -73,7 +73,7 @@ export const formatCodes = (arr: string[]) => {
   let res = "";
   for (const a of arr) {
     if (!a) {
-      break;
+      continue;
     } else {
       res += "-" + a;
     }

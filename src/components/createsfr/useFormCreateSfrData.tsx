@@ -43,8 +43,11 @@ export const useFormCreateSfrData = () => {
     setFieldValue("OriginDetails.CalDocIdentifier", "");
     setFieldValue("CalDocIdentifier1", "");
     setFieldValue("CalDocIdentifier2", "");
-    setFieldValue("CalDocIdentifier3", "1");
+    setFieldValue("CalDocIdentifier3", "");
     setFieldValue("CalDocIdentifier4", "");
+    if (values?.OriginDetails?.CalDocId === 1) {
+      setFieldValue("CalDocIdentifier3", "1");
+    }
   }, [values?.OriginDetails?.CalDocId]);
 
   useEffect(() => {
@@ -112,6 +115,54 @@ export const useFormCreateSfrData = () => {
 
   // Repair Tab
   useEffect(() => {
+    setFieldValue("SRM1", "");
+    setFieldValue("SRM11", "");
+    setFieldValue("SRM12", "");
+    setFieldValue("SRM13", "");
+    setFieldValue("SRM2", "");
+    setFieldValue("SRM21", "");
+    setFieldValue("SRM22", "");
+    setFieldValue("SRM23", "");
+    setFieldValue("SRM3", "");
+    setFieldValue("SRM31", "");
+    setFieldValue("SRM32", "");
+    setFieldValue("SRM33", "");
+    setFieldValue("SRMPage", "");
+    setFieldValue("SRMFig", "");
+    setFieldValue("AMM1", "");
+    setFieldValue("AMM11", "");
+    setFieldValue("AMM12", "");
+    setFieldValue("AMM13", "");
+    setFieldValue("AMM2", "");
+    setFieldValue("AMM21", "");
+    setFieldValue("AMM22", "");
+    setFieldValue("AMM23", "");
+    setFieldValue("AMM3", "");
+    setFieldValue("AMM31", "");
+    setFieldValue("AMM32", "");
+    setFieldValue("AMM33", "");
+    setFieldValue("AMMPage", "");
+    setFieldValue("AMMFig", "");
+    setFieldValue("CMM1", "");
+    setFieldValue("CMM11", "");
+    setFieldValue("CMM12", "");
+    setFieldValue("CMM13", "");
+    setFieldValue("CMM2", "");
+    setFieldValue("CMM21", "");
+    setFieldValue("CMM22", "");
+    setFieldValue("CMM23", "");
+    setFieldValue("CMM3", "");
+    setFieldValue("CMM31", "");
+    setFieldValue("CMM32", "");
+    setFieldValue("CMM33", "");
+    setFieldValue("CMMPage", "");
+    setFieldValue("CMMFig", "");
+    setFieldValue("RepairECRA1", "");
+    setFieldValue("RepairECRA2", "");
+    setFieldValue("RepairDetails.Comments", "");
+  }, [values.DocumentType]);
+
+  useEffect(() => {
     setFieldValue(
       "RepairDetails.RepairECRA",
       formatCodes([values.RepairECRA1, values.RepairECRA2])
@@ -168,7 +219,6 @@ export const useFormCreateSfrData = () => {
       },
       {
         Code: joinCodes([values.CMM1, values.CMM2, values.CMM3]),
-
         Page: values.CMMPage,
         Fig: values.CMMFig,
       },

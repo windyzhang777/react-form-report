@@ -99,7 +99,7 @@ const ViewSdrData = ({
         Model: logpageData?.FleetInfo?.ManufacturerPartNumber || "",
         SerialNumber: logpageData?.FleetInfo?.ManufacturerSerialNumber || "",
         TotalTime: String(toFixed(logpageData?.FleetInfo?.TotalAircraftTime) || ""),
-        TotalCycles: String(toFixed(logpageData?.FleetInfo?.TotalAircraftCycles) || ""),
+        TotalCycles: logpageData?.FleetInfo?.TotalAircraftCycles || "",
       },
       LogPageCreationDate:
         (isSdr ? detailsData?.SdrDetails?.CreatedDate : detailsData?.CreatedDate) || "",
@@ -156,6 +156,7 @@ const ViewSdrData = ({
       },
       FlightNumber: logpageData?.FleetInfo?.FlightNumber || "",
       MajorRepair: detailsData?.IsMajorRepair ? "Y" : "N",
+      SdrReportable: "",
     }),
     [detailsData, followUpFlag, isSdr, logpageData, profileData, selectedSdr]
   );
@@ -168,7 +169,9 @@ const ViewSdrData = ({
     <>
       <FlexColumn className={"view-sdr h-full relative"}>
         <FlexBetween className={"subpage-title bottom-divider"} sx={{ pt: "1px" }}>
-          <p>Service Difficulty Report - #{selectedSdr?.Id}</p>
+          <p>
+            {isSdr ? "Service Difficulty" : "Significant Findings"} Report - #{selectedSdr?.Id}
+          </p>
           <IconButton
             onClick={() => {
               setViewSdrFlag(false);
@@ -758,6 +761,31 @@ const ViewSdrData = ({
                           />
                         ) : (
                           values.MajorRepair || ""
+                        )}
+                      </ListItem>
+                    </Grid>
+                  </Grid>
+                  <Grid className={"sdr-status-item"} container spacing={1}>
+                    <Grid item xs={4}>
+                      <ListItem>SDR Reportable</ListItem>
+                    </Grid>
+                  </Grid>
+                  <Grid className={"sdr-status-description"} container spacing={1}>
+                    <Grid item xs={4}>
+                      <ListItem>
+                        {editable ? (
+                          <TextField
+                            disabled
+                            name="SdrReportable"
+                            value={values.SdrReportable}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={!!touched.SdrReportable && !!errors.SdrReportable}
+                            helperText={!!touched.SdrReportable && errors.SdrReportable}
+                            className={"sdr-status-edit"}
+                          />
+                        ) : (
+                          values.SdrReportable || ""
                         )}
                       </ListItem>
                     </Grid>

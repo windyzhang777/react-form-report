@@ -35,10 +35,10 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                 <SimpleRadio
                   name="DiscrepancyDetails.IsManufacturingLimitExceeded"
                   value={values?.DiscrepancyDetails?.IsManufacturingLimitExceeded}
-                  onChange={(values) => {
+                  onChange={(value) => {
                     setFieldValue(
                       "DiscrepancyDetails.IsManufacturingLimitExceeded",
-                      values === "true"
+                      value === "true"
                     );
                   }}
                   error={
@@ -63,11 +63,8 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                 <SimpleRadio
                   name="DiscrepancyDetails.IsSafeOperationEndangered"
                   value={values?.DiscrepancyDetails?.IsSafeOperationEndangered}
-                  onChange={(values) => {
-                    setFieldValue(
-                      "DiscrepancyDetails.IsSafeOperationEndangered",
-                      values === "true"
-                    );
+                  onChange={(value) => {
+                    setFieldValue("DiscrepancyDetails.IsSafeOperationEndangered", value === "true");
                   }}
                   error={
                     !!touched?.DiscrepancyDetails?.IsSafeOperationEndangered &&

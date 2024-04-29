@@ -93,7 +93,7 @@ const ViewSnapshotData = ({
         Model: logpageData?.FleetInfo?.ManufacturerPartNumber || "",
         SerialNumber: logpageData?.FleetInfo?.ManufacturerSerialNumber || "",
         TotalTime: String(toFixed(logpageData?.FleetInfo?.TotalAircraftTime) || ""),
-        TotalCycles: String(toFixed(logpageData?.FleetInfo?.TotalAircraftCycles) || ""),
+        TotalCycles: logpageData?.FleetInfo?.TotalAircraftCycles || "",
       },
       LogPageCreationDate: snapshotData?.CreatedDate || "",
       Station: snapshotData?.Station || logpageData?.FleetInfo?.Station || "",
@@ -146,7 +146,8 @@ const ViewSnapshotData = ({
         CoordinateLocationDetails: "",
       },
       FlightNumber: logpageData?.FleetInfo?.FlightNumber || "",
-      MajorRepair: "",
+      MajorRepair: snapshotData?.IsMajorRepair ? "Y" : "N",
+      SdrReportable: "",
     }),
     [snapshotData, logpageData, isSdr, profileData, selectedSdr]
   );
@@ -421,6 +422,7 @@ const ViewSnapshotData = ({
                               errors?.SfrAdditionalDetails?.SubmitterType
                             }
                             className={"sdr-status-edit"}
+                            placeholder="x"
                             inputProps={{ maxLength: 1 }}
                           />
                         ) : (
@@ -483,6 +485,7 @@ const ViewSnapshotData = ({
                               errors?.SfrAdditionalDetails?.OperatorType
                             }
                             className={"sdr-status-edit"}
+                            placeholder="x"
                             inputProps={{ maxLength: 1 }}
                           />
                         ) : (
@@ -751,6 +754,31 @@ const ViewSnapshotData = ({
                           />
                         ) : (
                           values.MajorRepair || ""
+                        )}
+                      </ListItem>
+                    </Grid>
+                  </Grid>
+                  <Grid className={"sdr-status-item"} container spacing={1}>
+                    <Grid item xs={4}>
+                      <ListItem disabled={editable}>SDR Reportable</ListItem>
+                    </Grid>
+                  </Grid>
+                  <Grid className={"sdr-status-description"} container spacing={1}>
+                    <Grid item xs={4}>
+                      <ListItem>
+                        {editable ? (
+                          <TextField
+                            disabled
+                            name="SdrReportable"
+                            value={values.SdrReportable}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={!!touched.SdrReportable && !!errors.SdrReportable}
+                            helperText={!!touched.SdrReportable && errors.SdrReportable}
+                            className={"sdr-status-edit"}
+                          />
+                        ) : (
+                          values.SdrReportable || ""
                         )}
                       </ListItem>
                     </Grid>

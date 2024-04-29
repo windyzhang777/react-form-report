@@ -183,8 +183,11 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                         disables={[false, false, true, false]}
                         maxAllowed={[2, 4, 1, 4]}
                         name="CalDocIdentifier"
+                        path="OriginDetails.CalDocIdentifier"
                         values={values}
                         onChange={handleChange}
+                        touched={touched}
+                        errors={errors}
                         onBlur={handleBlur}
                       />
                     ) : (
@@ -202,9 +205,12 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                         count={2}
                         maxAllowed={[4, 5]}
                         name="CalDocIdentifier"
+                        path="OriginDetails.CalDocIdentifier"
                         values={values}
                         onChange={handleChange}
                         onBlur={handleBlur}
+                        touched={touched}
+                        errors={errors}
                       />
                     ) : (
                       ""
@@ -221,9 +227,12 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                         count={2}
                         maxAllowed={[4, 5]}
                         name="CalDocIdentifier"
+                        path="OriginDetails.CalDocIdentifier"
                         values={values}
                         onChange={handleChange}
                         onBlur={handleBlur}
+                        touched={touched}
+                        errors={errors}
                       />
                     ) : (
                       ""
@@ -250,6 +259,8 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                           errors?.OriginDetails?.CalDocIdentifier
                         }
                         className={"sdr-status-edit"}
+                        inputProps={{ maxLength: 7 }}
+                        placeholder="xxxxxxx"
                       />
                     ) : (
                       ""
@@ -343,9 +354,12 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                       count={4}
                       maxAllowed={[4, 2, 1, 4]}
                       name="SpecIdentifier"
+                      path="OriginDetails.SpecIdentifier"
                       values={values}
                       onChange={handleChange}
                       onBlur={handleBlur}
+                      touched={touched}
+                      errors={errors}
                     />
                   ) : (
                     ""
