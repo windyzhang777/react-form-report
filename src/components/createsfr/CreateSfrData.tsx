@@ -297,7 +297,7 @@ const CreateSfrData = ({
             }),
             UnscheduledInspectionTypeId: number(),
             UnscheduledInspectionTypeComments: string().when("UnscheduledInspectionTypeId", {
-              is: (v: number) => v === 5,
+              is: (v: number) => v === 3,
               then: () => ValidationSchema.upTo250,
               otherwise: () => ValidationSchema.upTo100,
             }),

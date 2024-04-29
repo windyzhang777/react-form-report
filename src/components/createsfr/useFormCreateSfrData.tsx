@@ -28,6 +28,7 @@ export const useFormCreateSfrData = () => {
     setFieldValue("OriginDetails.DetectionMethodId", "");
     setFieldValue("OriginDetails.MfrSourceComments", "");
     setFieldValue("OriginDetails.DetectionMethodComments", "");
+    setFieldValue("OriginDetails.UnscheduledInspectionTypeComments", "");
   }, [values?.OriginDetails?.IsScheduledInspection]);
 
   useEffect(() => {
