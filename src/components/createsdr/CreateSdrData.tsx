@@ -132,6 +132,7 @@ const CreateSdrData = ({
       AtaCode: logpageData?.FleetInfo?.ATACode || "",
       FlightNumber: logpageData?.FleetInfo?.FlightNumber || "",
       CorrectiveAction: logpageData?.FleetInfo?.CorrectiveActions || "",
+      IsMajorRepair: false,
     }),
     [detailsData, logpageData, profileData]
   );
