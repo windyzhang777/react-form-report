@@ -37,7 +37,7 @@ export const partsReportSearchColumns = (): GridColDef<GetPartsDiscrepancyReport
       sortable: false,
       minWidth: 100,
       renderCell: ({ row }) => row?.AircraftNumber,
-      valueGetter: ({ value }) => `=TEXT(${value},"0000")`,
+      valueGetter: ({ value }) => (value ? `=TEXT(${value},"0000")` : value),
     },
     {
       field: "DateCreated",
@@ -80,6 +80,8 @@ export const partsReportSearchColumns = (): GridColDef<GetPartsDiscrepancyReport
       headerName: "ATA Code",
       sortable: false,
       minWidth: 100,
+      renderCell: ({ row }) => row?.AtaCode,
+      valueGetter: ({ value }) => (value ? `=TEXT(${value},"0000")` : value),
     },
     {
       field: "defectDescription",
