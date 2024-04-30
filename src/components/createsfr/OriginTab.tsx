@@ -133,8 +133,8 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                       handleFetchLogpageData(values.LogPageNumber);
                     }
                   }}
-                  inputProps={{ ref: logPageNumberRef }}
-                  placeholder="Enter a Logpage Number"
+                  inputProps={{ maxLength: 7, ref: logPageNumberRef }}
+                  placeholder="xxxxxxx"
                 />
               ) : (
                 ""
