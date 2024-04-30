@@ -90,10 +90,22 @@ export const useFormCreateSfrData = () => {
     setFieldValue("DiscrepancyDetails.CrackLength", "");
     setFieldValue("DiscrepancyDetails.CrackWidth", "");
     setFieldValue("DiscrepancyDetails.CrackDepth", "");
+    setFieldTouched("DiscrepancyDetails.CrackLength", false);
+    setFieldTouched("DiscrepancyDetails.CrackWidth", false);
+    setFieldTouched("DiscrepancyDetails.CrackDepth", false);
+    setFieldError("DiscrepancyDetails.CrackLength", "");
+    setFieldError("DiscrepancyDetails.CrackWidth", "");
+    setFieldError("DiscrepancyDetails.CrackDepth", "");
     setFieldValue("DiscrepancyDetails.AreMultipleCracksInTheSameLocation", false);
     setFieldValue("DiscrepancyDetails.NumberOfCracks", 0);
     setFieldValue("DiscrepancyDetails.DiscrepancyTypeComments", "");
   }, [values?.DiscrepancyDetails?.DiscrepancyTypeId]);
+
+  useEffect(() => {
+    setFieldValue("DiscrepancyDetails.NumberOfCracks", 0);
+    setFieldTouched("DiscrepancyDetails.NumberOfCracks", false);
+    setFieldError("DiscrepancyDetails.NumberOfCracks", "");
+  }, [values?.DiscrepancyDetails?.AreMultipleCracksInTheSameLocation]);
 
   useEffect(() => {
     setFieldValue("PartNumber", "");

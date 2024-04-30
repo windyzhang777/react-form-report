@@ -97,14 +97,8 @@ export const ValidationSchema = {
   hasValues: string()
     .min(2, "Required field")
     .matches(/^[a-zA-Z0-9]+$/, "Not a valid value"),
-  maxInt99999: number()
-    .integer("Not a valid value")
-    .min(0, "Not a valid value")
-    .max(99999, "Not a valid value"),
-  maxInt999: number()
-    .integer("Not a valid value")
-    .min(0, "Not a valid value")
-    .max(999, "Not a valid value"),
+  intTo5: string().matches(/^[0-9]{0,5}$/, "Up to 5 characters"),
+  intTo3: string().matches(/^[0-9]{0,3}$/, "Up to 3 characters"),
 };
 
 export const validationRegex = {

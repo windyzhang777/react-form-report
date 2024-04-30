@@ -339,10 +339,10 @@ const CreateSfrData = ({
           }),
           DiscrepancyDetails: object().shape({
             DiscrepancyTypeId: number().min(1, "Required field").required("Required field"),
-            CrackLength: ValidationSchema.maxInt99999,
-            CrackWidth: ValidationSchema.maxInt99999,
-            CrackDepth: ValidationSchema.maxInt99999,
-            NumberOfCracks: ValidationSchema.maxInt999,
+            CrackLength: ValidationSchema.intTo5,
+            CrackWidth: ValidationSchema.intTo5,
+            CrackDepth: ValidationSchema.intTo5,
+            NumberOfCracks: ValidationSchema.intTo3,
             DiscrepancyTypeComments: ValidationSchema.upTo100,
           }),
           LocationDetails: object().shape({
