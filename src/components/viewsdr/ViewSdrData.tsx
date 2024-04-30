@@ -155,8 +155,14 @@ const ViewSdrData = ({
         CoordinateLocationDetails: detailsData?.LocationDetails?.CoordinateLocationDetails || "",
       },
       FlightNumber: logpageData?.FleetInfo?.FlightNumber || "",
-      IsMajorRepair: detailsData?.IsMajorRepair || false,
-      SdrReportable: "",
+      IsMajorRepair:
+        (isSdr
+          ? detailsData?.SdrDetails?.IsMajorRepair
+          : detailsData?.RepairDetails?.IsMajorRepair) || false,
+      IsSdrReportable:
+        (isSdr
+          ? detailsData?.SdrDetails?.IsSdrReportable
+          : detailsData?.RepairDetails?.IsSdrReportable) || false,
     }),
     [detailsData, followUpFlag, isSdr, logpageData, profileData, selectedSdr]
   );
@@ -778,16 +784,18 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             disabled
-                            name="SdrReportable"
-                            value={values.SdrReportable}
+                            name="IsSdrReportable"
+                            value={values.IsSdrReportable ? "Y" : "N"}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            error={!!touched.SdrReportable && !!errors.SdrReportable}
-                            helperText={!!touched.SdrReportable && errors.SdrReportable}
+                            error={!!touched.IsSdrReportable && !!errors.IsSdrReportable}
+                            helperText={!!touched.IsSdrReportable && errors.IsSdrReportable}
                             className={"sdr-status-edit"}
                           />
+                        ) : values.IsSdrReportable ? (
+                          "Y"
                         ) : (
-                          values.SdrReportable || ""
+                          "N"
                         )}
                       </ListItem>
                     </Grid>

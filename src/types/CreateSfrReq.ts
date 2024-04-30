@@ -22,6 +22,9 @@ export interface CreateSfrReq {
   ModifiedbyLastName: string;
   FleetCode: string;
   AtaCode: string;
+  IsSfrDowngraded?: boolean;
+  IsMajorRepair?: boolean;
+  IsSfrCompleted?: boolean;
 }
 
 export interface DiscrepancyDetails {
@@ -33,9 +36,9 @@ export interface DiscrepancyDetails {
   CorrosionCauseComments: string;
   AreMultipleCracksInTheSameLocation: boolean;
   NumberOfCracks: number;
-  CrackLength: string | number;
-  CrackWidth: string | number;
-  CrackDepth: string | number;
+  CrackLength: number | string;
+  CrackWidth: number | string;
+  CrackDepth: number | string;
   DiscrepancyTypeComments: string;
   IsSafeOperationEndangered: boolean;
   DiscrepancyPartComments: string;
@@ -142,6 +145,9 @@ export interface SDRDetails {
   CorrectiveAction: string;
   OperatorControlNumber: string;
   IsExtracted: boolean;
+  IsSdrDowngraded?: boolean;
+  IsMajorRepair?: boolean;
+  IsSdrCompleted?: boolean;
 }
 
 export interface PartDetails {

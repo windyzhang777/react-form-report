@@ -34,8 +34,9 @@ export interface GetSDREsfrRecordDetailsResResult {
   Status: string;
   StatusId: number;
   Type: null;
-  IsMajorRepair?: boolean;
-  IsSfrDowngraded?: boolean;
+  IsMajorRepair: boolean;
+  IsSfrDowngraded: boolean;
+  IsSfrCompleted: boolean;
 }
 
 export interface DiscrepancyDetails {
@@ -78,7 +79,7 @@ export interface FleetInfo {
   TailNumber: string;
   TotalAircraftCycles: number;
   TotalAircraftTime: number;
-  FlightNumber?: string;
+  FlightNumber: string;
 }
 
 export interface LocationDetails {
@@ -179,8 +180,10 @@ export interface SDRDetails {
   Status: string;
   StatusId: number;
   submittedDate: string;
-  IsMajorRepair?: boolean;
-  IsSdrDowngraded?: boolean;
+  IsMajorRepair: boolean;
+  IsSdrDowngraded: boolean;
+  IsSdrCompleted: boolean;
+  IsSdrReportable: boolean;
 }
 
 export interface PartDetails {
@@ -190,4 +193,8 @@ export interface PartDetails {
   PartManufacturerSerialNumber: string;
   PartSerialNumber: string;
   PartTrackingNumber: null;
+  PartCycleSince: null;
+  PartTimeSince: null;
+  PartTotalCycles: null;
+  PartTotalTime: null;
 }

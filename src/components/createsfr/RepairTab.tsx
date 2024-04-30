@@ -177,11 +177,14 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
             </Grid>
             <Grid item xs={6} className="flex !flex-col gap-2">
               <div className="relative">
-                <ListItem className="whitespace-nowrap">SDR Reportable?</ListItem>
+                <ListItem className="whitespace-nowrap" disabled>
+                  SDR Reportable?
+                </ListItem>
                 <ListItem className="!absolute !px-0 left-0 top-[20px]">
                   {editable ? (
                     <SimpleRadio
                       name="RepairDetails.IsSdrReportable"
+                      disabled
                       value={values?.RepairDetails?.IsSdrReportable}
                       onChange={(value) => {
                         setFieldValue("RepairDetails.IsSdrReportable", value === "true");

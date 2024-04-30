@@ -25,8 +25,9 @@ export interface UpsertSDRSnapshotReq {
   OperatorControlNumber: string;
   IsExtracted: boolean;
   IsSdrDowngraded?: boolean;
-  IsMajorRepair: boolean;
+  IsMajorRepair?: boolean;
   IsSdrCompleted?: boolean;
+  IsSdrReportable?: boolean;
 }
 
 export interface AircraftDetails {
@@ -45,6 +46,10 @@ export interface PartDetails {
   PartLocation: string;
   PartCondition: string;
   PartDescription: string;
+  PartTotalTime?: string;
+  PartTotalCycles?: string;
+  PartTimeSince?: string;
+  PartCycleSince?: string;
 }
 
 export interface SfrAdditionalDetails {

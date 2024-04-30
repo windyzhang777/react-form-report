@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 
 export interface ICommonRadioProps {
   className?: string;
+  disabled?: boolean;
   error?: boolean;
   helperText?: ReactNode;
   name: string;
@@ -41,7 +42,14 @@ const CommonRadio = ({
 
 export interface ISimpleRadioProps extends Omit<ICommonRadioProps, "options"> {}
 
-export const SimpleRadio = ({ error, helperText, name, onChange, ...props }: ISimpleRadioProps) => {
+export const SimpleRadio = ({
+  disabled,
+  error,
+  helperText,
+  name,
+  onChange,
+  ...props
+}: ISimpleRadioProps) => {
   return (
     <FormControl>
       <RadioGroup
@@ -57,6 +65,7 @@ export const SimpleRadio = ({ error, helperText, name, onChange, ...props }: ISi
             value={option}
             control={<Radio />}
             label={option ? "Yes" : "No"}
+            disabled={disabled}
           />
         ))}
       </RadioGroup>
