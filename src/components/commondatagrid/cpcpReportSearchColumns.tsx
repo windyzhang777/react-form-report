@@ -60,6 +60,8 @@ export const cpcpReportSearchColumns = (): GridColDef<GetCpcpReportResResult>[] 
       headerName: "A/C Number",
       sortable: false,
       minWidth: 100,
+      renderCell: ({ row }) => row?.AircraftNumber,
+      valueGetter: ({ value }) => (value ? `=TEXT(${value},"0000")` : value),
     },
     {
       field: "Fleet",
@@ -78,6 +80,8 @@ export const cpcpReportSearchColumns = (): GridColDef<GetCpcpReportResResult>[] 
       headerName: "ATA Code",
       sortable: false,
       minWidth: 120,
+      renderCell: ({ row }) => row?.AtaCode,
+      valueGetter: ({ value }) => (value ? `=TEXT(${value},"0000")` : value),
     },
     {
       field: "CtnNumber",
