@@ -30,6 +30,13 @@ export const useFormCreateSfrData = () => {
     setFieldValue("OriginDetails.MfrSourceComments", "");
     setFieldValue("OriginDetails.DetectionMethodComments", "");
     setFieldValue("OriginDetails.UnscheduledInspectionTypeComments", "");
+    setFieldValue("OriginDetails.UnscheduledInspectionTypeId", "");
+    setFieldValue("OriginDetails.CalDocId", 0);
+    setFieldValue("OriginDetails.MfrSourceId", 0);
+    setFieldTouched("OriginDetails.MfrSourceIdentifier", false);
+    setFieldError("OriginDetails.MfrSourceIdentifier", "");
+    setFieldTouched("OriginDetails.CalDocIdentifier", false);
+    setFieldError("OriginDetails.CalDocIdentifier", "");
   }, [values?.OriginDetails?.IsScheduledInspection]);
 
   useEffect(() => {
@@ -54,6 +61,7 @@ export const useFormCreateSfrData = () => {
     setFieldError("OriginDetails.CalDocIdentifier", "");
     if (values?.OriginDetails?.CalDocId === 1) {
       setFieldValue("CalDocIdentifier3", "1");
+      setFieldValue("OriginDetails.CalDocIdentifier", "1");
     }
   }, [values?.OriginDetails?.CalDocId]);
 
@@ -82,10 +90,22 @@ export const useFormCreateSfrData = () => {
     setFieldValue("DiscrepancyDetails.CrackLength", "");
     setFieldValue("DiscrepancyDetails.CrackWidth", "");
     setFieldValue("DiscrepancyDetails.CrackDepth", "");
+    setFieldTouched("DiscrepancyDetails.CrackLength", false);
+    setFieldTouched("DiscrepancyDetails.CrackWidth", false);
+    setFieldTouched("DiscrepancyDetails.CrackDepth", false);
+    setFieldError("DiscrepancyDetails.CrackLength", "");
+    setFieldError("DiscrepancyDetails.CrackWidth", "");
+    setFieldError("DiscrepancyDetails.CrackDepth", "");
     setFieldValue("DiscrepancyDetails.AreMultipleCracksInTheSameLocation", false);
     setFieldValue("DiscrepancyDetails.NumberOfCracks", 0);
     setFieldValue("DiscrepancyDetails.DiscrepancyTypeComments", "");
   }, [values?.DiscrepancyDetails?.DiscrepancyTypeId]);
+
+  useEffect(() => {
+    setFieldValue("DiscrepancyDetails.NumberOfCracks", 0);
+    setFieldTouched("DiscrepancyDetails.NumberOfCracks", false);
+    setFieldError("DiscrepancyDetails.NumberOfCracks", "");
+  }, [values?.DiscrepancyDetails?.AreMultipleCracksInTheSameLocation]);
 
   useEffect(() => {
     setFieldValue("PartNumber", "");
@@ -167,6 +187,8 @@ export const useFormCreateSfrData = () => {
     setFieldValue("RepairECRA1", "");
     setFieldValue("RepairECRA2", "");
     setFieldValue("RepairDetails.Comments", "");
+    setFieldTouched("RepairDetails.Comments", false);
+    setFieldError("RepairDetails.Comments", "");
   }, [values.DocumentType]);
 
   useEffect(() => {

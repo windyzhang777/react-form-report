@@ -219,8 +219,8 @@ const CreateSdrData = ({
                               handleFetchLogpageData(values.LogPageNumber);
                             }
                           }}
-                          inputProps={{ ref: logPageNumberRef }}
-                          placeholder="Enter a Logpage Number"
+                          inputProps={{ ref: logPageNumberRef, maxLength: 7 }}
+                          placeholder="xxxxxxx"
                         />
                       ) : (
                         ""

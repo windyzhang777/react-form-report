@@ -133,7 +133,7 @@ const CreateSfrData = ({
         CrackWidth: "",
         CrackDepth: "",
         DiscrepancyTypeComments: "",
-        IsSafeOperationEndangered: true,
+        IsSafeOperationEndangered: false,
         DiscrepancyPartComments: "",
         DiscrepancyPartDetails: [
           {
@@ -290,6 +290,10 @@ const CreateSfrData = ({
           }),
           OriginDetails: object().shape({
             MfrSourceId: number(),
+            MfrSourceIdentifier: string().when("MfrSourceId", {
+              is: (v: number) => !!v,
+              then: (schema) => schema.required("Required field"),
+            }),
             MfrSourceComments: string().when("MfrSourceId", {
               is: (v: number) => v === 4,
               then: () => ValidationSchema.upTo200,
@@ -302,24 +306,27 @@ const CreateSfrData = ({
               otherwise: () => ValidationSchema.upTo100,
             }),
             CalDocId: number(),
-            CalDocIdentifier: string().test(
-              "textGroup",
-              "Not a valid value",
-              (value, validationContext) => {
+            CalDocIdentifier: string()
+              .when("CalDocId", {
+                is: (v: number) => !!v,
+                then: () => ValidationSchema.hasValues,
+              })
+              .test("textGroup", "Not a valid value", (value, validationContext) => {
                 const {
                   parent: { CalDocId },
                 } = validationContext;
                 if (!value) return true;
                 if (CalDocId === 1) {
-                  return validationRegex.WorkCard.test(value);
+                  if (value !== "1") {
+                    return validationRegex.WorkCard.test(value);
+                  }
                 } else if (CalDocId === 2 || CalDocId === 3) {
                   return validationRegex.FCD.test(value);
                 } else if (CalDocId === 4 || CalDocId === 5) {
                   return validationRegex.DIP.test(value);
                 }
                 return true;
-              }
-            ),
+              }),
             // .when("CalDocId", {
             //   is: (v: number) => v === 4 || v === 5,
             //   then: () => ValidationSchema.upTo7,
@@ -332,10 +339,10 @@ const CreateSfrData = ({
           }),
           DiscrepancyDetails: object().shape({
             DiscrepancyTypeId: number().min(1, "Required field").required("Required field"),
-            CrackLength: ValidationSchema.maxInt99999,
-            CrackWidth: ValidationSchema.maxInt99999,
-            CrackDepth: ValidationSchema.maxInt99999,
-            NumberOfCracks: ValidationSchema.maxInt999,
+            CrackLength: ValidationSchema.intTo5,
+            CrackWidth: ValidationSchema.intTo5,
+            CrackDepth: ValidationSchema.intTo5,
+            NumberOfCracks: ValidationSchema.intTo3,
             DiscrepancyTypeComments: ValidationSchema.upTo100,
           }),
           LocationDetails: object().shape({
@@ -412,7 +419,7 @@ const CreateSfrData = ({
             return validationRegex.Fig.test(value);
           }),
           RepairDetails: object().shape({
-            Rev: ValidationSchema.noLeadingSpace,
+            Rev: ValidationSchema.hasValue,
             DipCode: ValidationSchema.upTo7,
             Comments: ValidationSchema.upTo100,
             MaterialsUtilized: ValidationSchema.upTo200,

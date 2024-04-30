@@ -555,7 +555,7 @@ export const StabDamageProximityOptions: OptionDocument[] = [
 
 export const WingDamageProximityOptions: OptionDocument[] = [
   {
-    Description: "Front Spar Spar",
+    Description: "Front Spar",
     DisplayOrder: 1,
     Id: 1,
   },
@@ -565,7 +565,7 @@ export const WingDamageProximityOptions: OptionDocument[] = [
     Id: 2,
   },
   {
-    Description: "Rear Spar Spar",
+    Description: "Rear Spar",
     DisplayOrder: 3,
     Id: 3,
   },

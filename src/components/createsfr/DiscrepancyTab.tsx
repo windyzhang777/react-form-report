@@ -6,6 +6,7 @@ import { SingleSelect } from "src/commons/Select";
 import TabPanel from "src/commons/TabPanel";
 import TextField from "src/commons/TextField";
 import { ISaveSfrValues, SdrEsfrRecordDetailsStateType, SelectedSfrTab } from "src/commons/types";
+import { convertNumberText } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
 
 type DiscrepancyTabProps = {
@@ -223,10 +224,14 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                   <ListItem>
                     {editable ? (
                       <TextField
-                        type="number"
                         name="DiscrepancyDetails.CrackLength"
                         value={values?.DiscrepancyDetails?.CrackLength || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "DiscrepancyDetails.CrackLength",
+                            convertNumberText(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched?.DiscrepancyDetails?.CrackLength &&
@@ -237,6 +242,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                           errors?.DiscrepancyDetails?.CrackLength
                         }
                         className={"sdr-status-edit"}
+                        inputProps={{ maxLength: 5 }}
                         placeholder="xxxxx"
                       />
                     ) : (
@@ -278,10 +284,14 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                     <ListItem>
                       {editable ? (
                         <TextField
-                          type="number"
                           name="DiscrepancyDetails.NumberOfCracks"
                           value={values?.DiscrepancyDetails?.NumberOfCracks || ""}
-                          onChange={handleChange}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "DiscrepancyDetails.NumberOfCracks",
+                              convertNumberText(e.target.value)
+                            )
+                          }
                           onBlur={handleBlur}
                           error={
                             !!touched?.DiscrepancyDetails?.NumberOfCracks &&
@@ -292,6 +302,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                             errors?.DiscrepancyDetails?.NumberOfCracks
                           }
                           className={"sdr-status-edit"}
+                          inputProps={{ maxLength: 3 }}
                           placeholder="xxx"
                         />
                       ) : (
@@ -312,10 +323,14 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                   <ListItem>
                     {editable ? (
                       <TextField
-                        type="number"
                         name="DiscrepancyDetails.CrackLength"
                         value={values?.DiscrepancyDetails?.CrackLength || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "DiscrepancyDetails.CrackLength",
+                            convertNumberText(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched?.DiscrepancyDetails?.CrackLength &&
@@ -326,6 +341,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                           errors?.DiscrepancyDetails?.CrackLength
                         }
                         className={"sdr-status-edit"}
+                        inputProps={{ maxLength: 5 }}
                         placeholder="xxxxx"
                       />
                     ) : (
@@ -338,10 +354,14 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                   <ListItem>
                     {editable ? (
                       <TextField
-                        type="number"
                         name="DiscrepancyDetails.CrackWidth"
                         value={values?.DiscrepancyDetails?.CrackWidth || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "DiscrepancyDetails.CrackWidth",
+                            convertNumberText(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched?.DiscrepancyDetails?.CrackWidth &&
@@ -352,6 +372,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                           errors?.DiscrepancyDetails?.CrackWidth
                         }
                         className={"sdr-status-edit"}
+                        inputProps={{ maxLength: 5 }}
                         placeholder="xxxxx"
                       />
                     ) : (
@@ -369,10 +390,14 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                 <ListItem>
                   {editable ? (
                     <TextField
-                      type="number"
                       name="DiscrepancyDetails.CrackDepth"
                       value={values?.DiscrepancyDetails?.CrackDepth || ""}
-                      onChange={handleChange}
+                      onChange={(e) =>
+                        setFieldValue(
+                          "DiscrepancyDetails.CrackDepth",
+                          convertNumberText(e.target.value)
+                        )
+                      }
                       onBlur={handleBlur}
                       error={
                         !!touched?.DiscrepancyDetails?.CrackDepth &&
@@ -383,6 +408,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                         errors?.DiscrepancyDetails?.CrackDepth
                       }
                       className={"sdr-status-edit"}
+                      inputProps={{ maxLength: 5 }}
                       placeholder="xxxxx"
                     />
                   ) : (
