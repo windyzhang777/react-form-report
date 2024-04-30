@@ -133,7 +133,7 @@ const CreateSfrData = ({
         CrackWidth: "",
         CrackDepth: "",
         DiscrepancyTypeComments: "",
-        IsSafeOperationEndangered: true,
+        IsSafeOperationEndangered: false,
         DiscrepancyPartComments: "",
         DiscrepancyPartDetails: [
           {
