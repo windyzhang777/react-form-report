@@ -133,6 +133,7 @@ const CreateSdrData = ({
       FlightNumber: logpageData?.FleetInfo?.FlightNumber || "",
       CorrectiveAction: logpageData?.FleetInfo?.CorrectiveActions || "",
       IsMajorRepair: false,
+      IsSdrReportable: false,
     }),
     [detailsData, logpageData, profileData]
   );
