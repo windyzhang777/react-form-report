@@ -69,7 +69,7 @@ const DiscrepancyPartsReportSearch = ({
           ...ValidationSchema,
           acNumber: ValidationSchema.AircraftNumber,
           station: ValidationSchema.Station,
-          partNumber: ValidationSchema.PartNumber,
+          partNumber: ValidationSchema.upTo30,
           ataCode: ValidationSchema.AtaCode,
         })}
       >
@@ -163,7 +163,7 @@ const DiscrepancyPartsReportSearch = ({
                     multiline
                     maxRows={4}
                     className={"sdr-status-edit textareaAutosize w-full"}
-                    inputProps={{ style: { resize: "both" } }}
+                    inputProps={{ maxLength: 30, style: { resize: "both" } }}
                   />
                 </ListItem>
               </Grid>

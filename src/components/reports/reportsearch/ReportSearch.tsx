@@ -57,8 +57,8 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
           auditNumber: ValidationSchema.OperatorControlNumber,
           aircraftNumber: ValidationSchema.AircraftNumber,
           station: ValidationSchema.Station,
-          reportBy: string().max(30, "Up to 30 characters"),
-          keyword: string().max(30, "Up to 30 characters"),
+          reportBy: ValidationSchema.upTo30,
+          keyword: ValidationSchema.upTo30,
         })}
       >
         {({
@@ -258,7 +258,7 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                     multiline
                     maxRows={4}
                     className={"sdr-status-edit textareaAutosize w-full"}
-                    inputProps={{ style: { resize: "both" } }}
+                    inputProps={{ maxLength: 30, style: { resize: "both" } }}
                   />
                 </ListItem>
               </Grid>
@@ -276,7 +276,7 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                     multiline
                     maxRows={4}
                     className={"sdr-status-edit textareaAutosize w-full"}
-                    inputProps={{ style: { resize: "both" } }}
+                    inputProps={{ maxLength: 30, style: { resize: "both" } }}
                   />
                 </ListItem>
               </Grid>

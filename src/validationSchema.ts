@@ -69,9 +69,10 @@ export const ValidationSchema = {
       },
     }),
   }),
-  OperatorControlNumber: string().max(20, "Up to 20 characters"),
-  ReportedBy: string().max(30, "Up to 30 characters"),
-  Keyword: string().max(30, "Up to 30 characters"),
+  OperatorControlNumber: string().matches(
+    /^[a-zA-Z0-9]{0,20}$/,
+    "Alpha-numeric text only & up to 20 characters"
+  ),
   SfrAdditionalDetails: object().shape({
     NumberOfCracks: number()
       .integer("Not a valid value")
@@ -85,11 +86,11 @@ export const ValidationSchema = {
       .trim()
       .matches(/^[a-zA-Z0-9]+$/, "Not a valid value"),
   }),
-  PartNumber: string().max(30, "Up to 30 characters"),
   upTo250: string().max(250, "Up to 250 characters"),
   upTo200: string().max(200, "Up to 200 characters"),
   upTo100: string().max(100, "Up to 100 characters"),
   upTo50: string().max(50, "Up to 50 characters"),
+  upTo30: string().matches(/^[a-zA-Z0-9]{0,30}$/, "Alpha-numeric text only & up to 30 characters"),
   upTo10: string().matches(/^[a-zA-Z0-9]{0,10}$/, "Alpha-numeric text only & up to 10 characters"),
   upTo7: string().matches(/^[a-zA-Z0-9]{0,7}$/, "Alpha-numeric text only & up to 7 characters"),
   upTo4: string().matches(/^[a-zA-Z0-9]{0,4}$/, "Alpha-numeric text only & up to 4 characters"),
