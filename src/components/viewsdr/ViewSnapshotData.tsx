@@ -107,16 +107,16 @@ const ViewSnapshotData = ({
       EmployeeId: `${profileData?.EmployeeId}`,
       EmployeeName: `${profileData?.FirstName} ${profileData?.LastName}`,
       PartDetails: {
-        PartTrackingNumber: snapshotData?.PartTrackingNumber || "",
-        PartManufacturerSerialNumber: snapshotData?.PartManufacturerSerialNumber || "",
-        PartSerialNumber: snapshotData?.PartSerialNumber || "",
-        PartLocation: snapshotData?.PartLocation || "",
-        PartCondition: snapshotData?.PartCondition || "",
-        PartDescription: snapshotData?.PartDescription || "",
-        PartTotalTime: "",
-        PartTotalCycles: "",
-        PartTimeSince: "",
-        PartTimeSinceCode: "",
+        PartTrackingNumber: snapshotData?.PartDetails?.PartTrackingNumber || "",
+        PartManufacturerSerialNumber: snapshotData?.PartDetails?.PartManufacturerSerialNumber || "",
+        PartSerialNumber: snapshotData?.PartDetails?.PartSerialNumber || "",
+        PartLocation: snapshotData?.PartDetails?.PartLocation || "",
+        PartCondition: snapshotData?.PartDetails?.PartCondition || "",
+        PartDescription: snapshotData?.PartDetails?.PartDescription || "",
+        PartTotalTime: snapshotData?.PartDetails?.PartTotalTime || "",
+        PartTotalCycles: snapshotData?.PartDetails?.PartTotalCycles || "",
+        PartTimeSince: snapshotData?.PartDetails?.PartTimeSince || "",
+        PartCycleSince: snapshotData?.PartDetails?.PartCycleSince || "",
       },
       CreatedbyFirstName:
         (isSdr ? snapshotData?.CreatedbyFirstName : snapshotData?.CreatedbyFirstName) || "",
@@ -1062,22 +1062,22 @@ const ViewSnapshotData = ({
                       <ListItem>
                         {editable ? (
                           <TextField
-                            name="PartDetails.PartTimeSinceCode"
-                            value={values?.PartDetails?.PartTimeSinceCode}
+                            name="PartDetails.PartCycleSince"
+                            value={values?.PartDetails?.PartCycleSince}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
-                              !!touched.PartDetails?.PartTimeSinceCode &&
-                              !!errors.PartDetails?.PartTimeSinceCode
+                              !!touched.PartDetails?.PartCycleSince &&
+                              !!errors.PartDetails?.PartCycleSince
                             }
                             helperText={
-                              !!touched.PartDetails?.PartTimeSinceCode &&
-                              errors.PartDetails?.PartTimeSinceCode
+                              !!touched.PartDetails?.PartCycleSince &&
+                              errors.PartDetails?.PartCycleSince
                             }
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values?.PartDetails?.PartTimeSinceCode
+                          values?.PartDetails?.PartCycleSince
                         )}
                       </ListItem>
                     </Grid>

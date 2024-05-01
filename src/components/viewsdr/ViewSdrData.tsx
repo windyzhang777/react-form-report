@@ -121,10 +121,10 @@ const ViewSdrData = ({
         PartLocation: detailsData?.SdrDetails?.PartDetails?.PartLocation || "",
         PartCondition: detailsData?.SdrDetails?.PartDetails?.PartCondition || "",
         PartDescription: detailsData?.SdrDetails?.PartDetails?.PartDescription || "",
-        PartTotalTime: "",
-        PartTotalCycles: "",
-        PartTimeSince: "",
-        PartTimeSinceCode: "",
+        PartTotalTime: detailsData?.SdrDetails?.PartDetails?.PartTotalTime || "",
+        PartTotalCycles: detailsData?.SdrDetails?.PartDetails?.PartTotalCycles || "",
+        PartTimeSince: detailsData?.SdrDetails?.PartDetails?.PartTimeSince || "",
+        PartCycleSince: detailsData?.SdrDetails?.PartDetails?.PartCycleSince || "",
       },
       CreatedbyFirstName:
         (isSdr ? detailsData?.CreatedbyFirstName : detailsData?.CreatedbyFirstName) || "",
@@ -1069,22 +1069,22 @@ const ViewSdrData = ({
                       <ListItem>
                         {editable ? (
                           <TextField
-                            name="PartDetails.PartTimeSinceCode"
-                            value={values?.PartDetails?.PartTimeSinceCode}
+                            name="PartDetails.PartCycleSince"
+                            value={values?.PartDetails?.PartCycleSince}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
-                              !!touched.PartDetails?.PartTimeSinceCode &&
-                              !!errors.PartDetails?.PartTimeSinceCode
+                              !!touched.PartDetails?.PartCycleSince &&
+                              !!errors.PartDetails?.PartCycleSince
                             }
                             helperText={
-                              !!touched.PartDetails?.PartTimeSinceCode &&
-                              errors.PartDetails?.PartTimeSinceCode
+                              !!touched.PartDetails?.PartCycleSince &&
+                              errors.PartDetails?.PartCycleSince
                             }
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values?.PartDetails?.PartTimeSinceCode
+                          values?.PartDetails?.PartCycleSince
                         )}
                       </ListItem>
                     </Grid>

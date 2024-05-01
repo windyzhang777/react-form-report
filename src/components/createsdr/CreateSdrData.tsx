@@ -117,6 +117,10 @@ const CreateSdrData = ({
         PartLocation: "",
         PartCondition: "",
         PartDescription: "",
+        PartTotalTime: "",
+        PartTotalCycles: "",
+        PartTimeSince: "",
+        PartCycleSince: "",
       },
       CreatedbyFirstName: `${profileData?.FirstName || ""}`,
       CreatedbyLastName: `${profileData?.LastName || ""}`,
@@ -856,6 +860,9 @@ const CreateSdrData = ({
                   <Grid item xs={4}>
                     <ListItem>Part Location</ListItem>
                   </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>Part Total Time (hours)</ListItem>
+                  </Grid>
                 </Grid>
                 <Grid className={"sdr-status-description"} container spacing={3}>
                   <Grid item xs={4}>
@@ -900,6 +907,111 @@ const CreateSdrData = ({
                         />
                       ) : (
                         ""
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="PartDetails.PartTotalTime"
+                          value={values?.PartDetails?.PartTotalTime}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.PartDetails?.PartTotalTime &&
+                            !!errors.PartDetails?.PartTotalTime
+                          }
+                          helperText={
+                            !!touched.PartDetails?.PartTotalTime &&
+                            errors.PartDetails?.PartTotalTime
+                          }
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        values?.PartDetails?.PartTotalTime
+                      )}
+                    </ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>Part Total Cycles</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>Part Time Since (hours)</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>Part Time Since Code</ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-description"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="PartDetails.PartTotalCycles"
+                          value={values?.PartDetails?.PartTotalCycles}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.PartDetails?.PartTotalCycles &&
+                            !!errors.PartDetails?.PartTotalCycles
+                          }
+                          helperText={
+                            !!touched.PartDetails?.PartTotalCycles &&
+                            errors.PartDetails?.PartTotalCycles
+                          }
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        values?.PartDetails?.PartTotalCycles
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="PartDetails.PartTimeSince"
+                          value={values?.PartDetails?.PartTimeSince}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.PartDetails?.PartTimeSince &&
+                            !!errors.PartDetails?.PartTimeSince
+                          }
+                          helperText={
+                            !!touched.PartDetails?.PartTimeSince &&
+                            errors.PartDetails?.PartTimeSince
+                          }
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        values?.PartDetails?.PartTimeSince
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="PartDetails.PartCycleSince"
+                          value={values?.PartDetails?.PartCycleSince}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.PartDetails?.PartCycleSince &&
+                            !!errors.PartDetails?.PartCycleSince
+                          }
+                          helperText={
+                            !!touched.PartDetails?.PartCycleSince &&
+                            errors.PartDetails?.PartCycleSince
+                          }
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        values?.PartDetails?.PartCycleSince
                       )}
                     </ListItem>
                   </Grid>
