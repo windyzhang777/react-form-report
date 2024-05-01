@@ -52,7 +52,7 @@ export const cpcpReportSearchColumns = (): GridColDef<GetCpcpReportResResult>[] 
       type: "dateTime",
       sortable: false,
       sortingOrder: ["desc", "asc"],
-      valueFormatter: ({ value }) => new Date(value),
+      valueFormatter: ({ value }) => moment(value).format(DATETIME_DISPLAY),
       renderCell: ({ row }) => moment(row?.DateCreated).format(DATETIME_DISPLAY),
     },
     {

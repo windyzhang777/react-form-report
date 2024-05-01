@@ -86,7 +86,7 @@ export const eSfrReportSearchColumns = (): GridColDef<GetEsfrReportResResult>[] 
       type: "dateTime",
       sortable: false,
       sortingOrder: ["desc", "asc"],
-      valueFormatter: ({ value }) => new Date(value),
+      valueFormatter: ({ value }) => moment(value).format(DATETIME_DISPLAY),
       renderCell: ({ row }) => moment(row?.DateReported).format(DATETIME_DISPLAY),
     },
     {
