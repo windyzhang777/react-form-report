@@ -282,8 +282,8 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
             {/* BL */}
             {(values?.LocationDetails?.DefectLocationId === 4 ||
               values?.LocationDetails?.DefectLocationId === 5) && (
-              <div>
-                <>
+              <>
+                <div>
                   <ListItem>From BL</ListItem>
                   <ListItem>
                     {editable ? (
@@ -328,8 +328,8 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       ""
                     )}
                   </ListItem>
-                </>
-                <>
+                </div>
+                <div>
                   <ListItem>To BL</ListItem>
                   <ListItem>
                     {editable ? (
@@ -372,8 +372,8 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       ""
                     )}
                   </ListItem>
-                </>
-              </div>
+                </div>
+              </>
             )}
 
             {/* Type */}
