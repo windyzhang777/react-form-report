@@ -55,7 +55,7 @@ const ViewSdrData = ({
       Type: selectedSdr?.Type || selectedSdr?.ReportType || "",
       SfrAdditionalDetails: {
         SnapshotId: "",
-        AtaCode: detailsData?.AtaCode || logpageData?.FleetInfo?.ATACode || "",
+        AtaCode: detailsData?.AtaCode || detailsData?.FleetInfo?.ATACode || "",
         SubmitterDesignator: "CALA",
         SubmitterType: "A",
         OperatorDesignator: "CALA",
@@ -68,8 +68,14 @@ const ViewSdrData = ({
         ComponentName: "",
         ComponentManufacturerName: "",
         PartModelNumber: "",
-        FuselageFromSta: detailsData?.LocationDetails?.FromSta || "",
-        FuselageToSta: detailsData?.LocationDetails?.ToSta || "",
+        FuselageFromSta:
+          detailsData?.LocationDetails?.DefectLocationId === 8
+            ? detailsData?.LocationDetails?.FromSta
+            : "",
+        FuselageToSta:
+          detailsData?.LocationDetails?.DefectLocationId === 8
+            ? detailsData?.LocationDetails?.ToSta
+            : "",
         CorrisionLevel: detailsData?.DiscrepancyDetails?.CorrosionLevelId
           ? "" + detailsData.DiscrepancyDetails.CorrosionLevelId
           : "",
@@ -87,11 +93,23 @@ const ViewSdrData = ({
         ButtlineFromSide: "",
         ButtlineTo: "",
         ButtlineToSide: "",
-        WingStationFrom: "",
-        WingStationFromSide: "",
-        WingStationTo: "",
-        WingStationToSide: "",
-        StructuralOther: detailsData?.LocationDetails?.Other || "",
+        WingStationFrom:
+          detailsData?.LocationDetails?.DefectLocationId === 19
+            ? detailsData?.LocationDetails?.FromSta
+            : "",
+        WingStationFromSide:
+          detailsData?.LocationDetails?.DefectLocationId === 19
+            ? detailsData?.LocationDetails?.FromSide
+            : "",
+        WingStationTo:
+          detailsData?.LocationDetails?.DefectLocationId === 19
+            ? detailsData?.LocationDetails?.ToSta
+            : "",
+        WingStationToSide:
+          detailsData?.LocationDetails?.DefectLocationId === 19
+            ? detailsData?.LocationDetails?.ToSide
+            : "",
+        StructuralOther: detailsData?.DiscrepancyDetails?.DiscrepancyTypeComments || "",
       },
       AircraftDetails: {
         RegistryNNumber: logpageData?.FleetInfo?.LicenseNumber || "",
@@ -121,10 +139,10 @@ const ViewSdrData = ({
         PartLocation: detailsData?.SdrDetails?.PartDetails?.PartLocation || "",
         PartCondition: detailsData?.SdrDetails?.PartDetails?.PartCondition || "",
         PartDescription: detailsData?.SdrDetails?.PartDetails?.PartDescription || "",
-        PartTotalTime: "",
-        PartTotalCycles: "",
-        PartTimeSince: "",
-        PartTimeSinceCode: "",
+        PartTotalTime: detailsData?.SdrDetails?.PartDetails?.PartTotalTime || "",
+        PartTotalCycles: detailsData?.SdrDetails?.PartDetails?.PartTotalCycles || "",
+        PartTimeSince: detailsData?.SdrDetails?.PartDetails?.PartTimeSince || "",
+        PartCycleSince: detailsData?.SdrDetails?.PartDetails?.PartCycleSince || "",
       },
       CreatedbyFirstName:
         (isSdr ? detailsData?.CreatedbyFirstName : detailsData?.CreatedbyFirstName) || "",
@@ -1069,22 +1087,22 @@ const ViewSdrData = ({
                       <ListItem>
                         {editable ? (
                           <TextField
-                            name="PartDetails.PartTimeSinceCode"
-                            value={values?.PartDetails?.PartTimeSinceCode}
+                            name="PartDetails.PartCycleSince"
+                            value={values?.PartDetails?.PartCycleSince}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
-                              !!touched.PartDetails?.PartTimeSinceCode &&
-                              !!errors.PartDetails?.PartTimeSinceCode
+                              !!touched.PartDetails?.PartCycleSince &&
+                              !!errors.PartDetails?.PartCycleSince
                             }
                             helperText={
-                              !!touched.PartDetails?.PartTimeSinceCode &&
-                              errors.PartDetails?.PartTimeSinceCode
+                              !!touched.PartDetails?.PartCycleSince &&
+                              errors.PartDetails?.PartCycleSince
                             }
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values?.PartDetails?.PartTimeSinceCode
+                          values?.PartDetails?.PartCycleSince
                         )}
                       </ListItem>
                     </Grid>
@@ -1529,104 +1547,6 @@ const ViewSdrData = ({
                     </Grid>
                   </Grid>
                   <Grid className={"sdr-status-description"} container spacing={3}>
-                    <Grid item xs={4}>
-                      <ListItem>
-                        {editable ? (
-                          <TextField
-                            type="number"
-                            name="SfrAdditionalDetails.CrackLength"
-                            value={values?.SfrAdditionalDetails?.CrackLength}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            error={
-                              !!touched?.SfrAdditionalDetails?.CrackLength &&
-                              !!errors?.SfrAdditionalDetails?.CrackLength
-                            }
-                            helperText={
-                              !!touched?.SfrAdditionalDetails?.CrackLength &&
-                              errors?.SfrAdditionalDetails?.CrackLength
-                            }
-                            className={"sdr-status-edit"}
-                          />
-                        ) : (
-                          values?.SfrAdditionalDetails?.CrackLength || "--"
-                        )}
-                      </ListItem>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <ListItem>
-                        {editable ? (
-                          <TextField
-                            type="number"
-                            name="SfrAdditionalDetails.NumberOfCracks"
-                            value={values?.SfrAdditionalDetails?.NumberOfCracks ?? ""}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            error={
-                              !!touched?.SfrAdditionalDetails?.NumberOfCracks &&
-                              !!errors?.SfrAdditionalDetails?.NumberOfCracks
-                            }
-                            helperText={
-                              !!touched?.SfrAdditionalDetails?.NumberOfCracks &&
-                              errors?.SfrAdditionalDetails?.NumberOfCracks
-                            }
-                            className={"sdr-status-edit"}
-                          />
-                        ) : (
-                          values?.SfrAdditionalDetails?.NumberOfCracks ?? "--"
-                        )}
-                      </ListItem>
-                    </Grid>
-                  </Grid>
-                  <Grid className={"sdr-status-section-title"} container spacing={3}>
-                    <Grid item xs={12}>
-                      <ListItem>Corrosion and Crack</ListItem>
-                    </Grid>
-                  </Grid>
-                  <Grid className={"sdr-status-item"} container spacing={3}>
-                    <Grid item xs={4}>
-                      <ListItem>Corrosion Level</ListItem>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <ListItem>Crack Length (Inches)</ListItem>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <ListItem>Number of Cracks</ListItem>
-                    </Grid>
-                  </Grid>
-                  <Grid className={"sdr-status-description"} container spacing={3}>
-                    <Grid item xs={4}>
-                      <ListItem>
-                        {editable ? (
-                          <SingleSelect
-                            name="SfrAdditionalDetails.CorrisionLevel"
-                            value={values?.SfrAdditionalDetails?.CorrisionLevel}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            error={
-                              !!touched?.SfrAdditionalDetails?.CorrisionLevel &&
-                              !!errors?.SfrAdditionalDetails?.CorrisionLevel
-                            }
-                            helperText={
-                              !!touched?.SfrAdditionalDetails?.CorrisionLevel &&
-                              errors?.SfrAdditionalDetails?.CorrisionLevel
-                            }
-                            options={
-                              masterData?.CorrosionLevels &&
-                              [...masterData.CorrosionLevels].sort(
-                                (a, b) => a.DisplayOrder - b.DisplayOrder
-                              )
-                            }
-                            id="SfrAdditionalDetails.CorrisionLevel"
-                          />
-                        ) : (
-                          masterData?.CorrosionLevels.find(
-                            (option) =>
-                              "" + option.Id === values?.SfrAdditionalDetails?.CorrisionLevel
-                          )?.Description || "--"
-                        )}
-                      </ListItem>
-                    </Grid>
                     <Grid item xs={4}>
                       <ListItem>
                         {editable ? (

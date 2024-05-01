@@ -113,10 +113,10 @@ const ViewSnapshotData = ({
         PartLocation: snapshotData?.PartLocation || "",
         PartCondition: snapshotData?.PartCondition || "",
         PartDescription: snapshotData?.PartDescription || "",
-        PartTotalTime: "",
-        PartTotalCycles: "",
-        PartTimeSince: "",
-        PartTimeSinceCode: "",
+        PartTotalTime: snapshotData?.PartTotalTime || "",
+        PartTotalCycles: snapshotData?.PartTotalCycles || "",
+        PartTimeSince: snapshotData?.PartTimeSince || "",
+        PartCycleSince: snapshotData?.PartCycleSince || "",
       },
       CreatedbyFirstName:
         (isSdr ? snapshotData?.CreatedbyFirstName : snapshotData?.CreatedbyFirstName) || "",
@@ -1062,22 +1062,22 @@ const ViewSnapshotData = ({
                       <ListItem>
                         {editable ? (
                           <TextField
-                            name="PartDetails.PartTimeSinceCode"
-                            value={values?.PartDetails?.PartTimeSinceCode}
+                            name="PartDetails.PartCycleSince"
+                            value={values?.PartDetails?.PartCycleSince}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
-                              !!touched.PartDetails?.PartTimeSinceCode &&
-                              !!errors.PartDetails?.PartTimeSinceCode
+                              !!touched.PartDetails?.PartCycleSince &&
+                              !!errors.PartDetails?.PartCycleSince
                             }
                             helperText={
-                              !!touched.PartDetails?.PartTimeSinceCode &&
-                              errors.PartDetails?.PartTimeSinceCode
+                              !!touched.PartDetails?.PartCycleSince &&
+                              errors.PartDetails?.PartCycleSince
                             }
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values?.PartDetails?.PartTimeSinceCode
+                          values?.PartDetails?.PartCycleSince
                         )}
                       </ListItem>
                     </Grid>
@@ -1545,104 +1545,6 @@ const ViewSnapshotData = ({
                     </Grid>
                   </Grid>
                   <Grid className={"sdr-status-description"} container spacing={3}>
-                    <Grid item xs={4}>
-                      <ListItem>
-                        {editable ? (
-                          <TextField
-                            type="number"
-                            name="SfrAdditionalDetails.CrackLength"
-                            value={values?.SfrAdditionalDetails?.CrackLength}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            error={
-                              !!touched?.SfrAdditionalDetails?.CrackLength &&
-                              !!errors?.SfrAdditionalDetails?.CrackLength
-                            }
-                            helperText={
-                              !!touched?.SfrAdditionalDetails?.CrackLength &&
-                              errors?.SfrAdditionalDetails?.CrackLength
-                            }
-                            className={"sdr-status-edit"}
-                          />
-                        ) : (
-                          values?.SfrAdditionalDetails?.CrackLength || "--"
-                        )}
-                      </ListItem>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <ListItem>
-                        {editable ? (
-                          <TextField
-                            type="number"
-                            name="SfrAdditionalDetails.NumberOfCracks"
-                            value={values?.SfrAdditionalDetails?.NumberOfCracks ?? ""}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            error={
-                              !!touched?.SfrAdditionalDetails?.NumberOfCracks &&
-                              !!errors?.SfrAdditionalDetails?.NumberOfCracks
-                            }
-                            helperText={
-                              !!touched?.SfrAdditionalDetails?.NumberOfCracks &&
-                              errors?.SfrAdditionalDetails?.NumberOfCracks
-                            }
-                            className={"sdr-status-edit"}
-                          />
-                        ) : (
-                          values?.SfrAdditionalDetails?.NumberOfCracks ?? "--"
-                        )}
-                      </ListItem>
-                    </Grid>
-                  </Grid>
-                  <Grid className={"sdr-status-section-title"} container spacing={3}>
-                    <Grid item xs={12}>
-                      <ListItem>Corrosion and Crack</ListItem>
-                    </Grid>
-                  </Grid>
-                  <Grid className={"sdr-status-item"} container spacing={3}>
-                    <Grid item xs={4}>
-                      <ListItem>Corrosion Level</ListItem>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <ListItem>Crack Length (Inches)</ListItem>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <ListItem>Number of Cracks</ListItem>
-                    </Grid>
-                  </Grid>
-                  <Grid className={"sdr-status-description"} container spacing={3}>
-                    <Grid item xs={4}>
-                      <ListItem>
-                        {editable ? (
-                          <SingleSelect
-                            name="SfrAdditionalDetails.CorrisionLevel"
-                            value={values?.SfrAdditionalDetails?.CorrisionLevel}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            error={
-                              !!touched?.SfrAdditionalDetails?.CorrisionLevel &&
-                              !!errors?.SfrAdditionalDetails?.CorrisionLevel
-                            }
-                            helperText={
-                              !!touched?.SfrAdditionalDetails?.CorrisionLevel &&
-                              errors?.SfrAdditionalDetails?.CorrisionLevel
-                            }
-                            options={
-                              masterData?.CorrosionLevels &&
-                              [...masterData.CorrosionLevels].sort(
-                                (a, b) => a.DisplayOrder - b.DisplayOrder
-                              )
-                            }
-                            id="SfrAdditionalDetails.CorrisionLevel"
-                          />
-                        ) : (
-                          masterData?.CorrosionLevels.find(
-                            (option) =>
-                              "" + option.Id === values?.SfrAdditionalDetails?.CorrisionLevel
-                          )?.Description || ""
-                        )}
-                      </ListItem>
-                    </Grid>
                     <Grid item xs={4}>
                       <ListItem>
                         {editable ? (

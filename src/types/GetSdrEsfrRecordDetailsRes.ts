@@ -92,13 +92,13 @@ export interface LocationDetails {
   ElevatorTab: null | string;
   FromBL: null;
   FromBLLength: number | null;
-  FromSide: null | string;
-  FromSta: null | string;
-  FromStr: null | string;
+  FromSide: string;
+  FromSta: string;
+  FromStr: string;
   Fuselage: null | string;
   LocationType: null;
   Other: null;
-  Side: null | string;
+  Side: string;
   Specifics: null;
   SpecificsLocation: null;
   StaType: null;
@@ -106,9 +106,9 @@ export interface LocationDetails {
   Surface: null | string;
   ToBL: null;
   ToBLLength: number | null;
-  ToSide: null | string;
-  ToSta: null | string;
-  ToStr: null | string;
+  ToSide: string;
+  ToSta: string;
+  ToStr: string;
   ZoneId: number;
 }
 

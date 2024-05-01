@@ -42,6 +42,10 @@ export interface GetApprovedSDRResResult {
   IsSdrDowngraded: boolean;
   IsSdrCompleted: boolean;
   IsSdrReportable: boolean;
+  PartCycleSince: string;
+  PartTimeSince: string;
+  PartTotalCycles: string;
+  PartTotalTime: string;
 }
 
 export interface AircraftDetails {

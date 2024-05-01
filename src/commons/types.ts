@@ -12,7 +12,7 @@ import { GetPartsDiscrepancyReportResResult } from "src/types/GetPartsDiscrepanc
 import { Employee, GetProfileResResult } from "src/types/GetProfilerRes";
 import { GetSDREsfrRecordDetailsResResult } from "src/types/GetSdrEsfrRecordDetailsRes";
 import { GetSfrMasterDataResResult, OptionDocument } from "src/types/GetSfrMasterDataRes";
-import { PartDetails, UpsertSDRSnapshotReq } from "src/types/UpsertSdrSnapshotReq";
+import { UpsertSDRSnapshotReq } from "src/types/UpsertSdrSnapshotReq";
 import { ViewLogpageResResult } from "src/types/ViewLogpageRes";
 import config from "src/utils/env.config";
 
@@ -131,16 +131,15 @@ export interface IViewSearchSdrResult
     GetCpcpReportResResult,
     GetPartsDiscrepancyReportResResult {}
 
-export interface ISaveSdrValues extends Omit<UpsertSDRSnapshotReq, "SfrAdditionalDetails"> {
+export interface ISaveSdrValues extends UpsertSDRSnapshotReq {
   Powerplant: Omit<AircraftDetails, "RegistryNNumber">;
   AtaCode: string;
   FlightNumber: string;
 }
 
-export interface IEditSdrValues extends Omit<UpsertSDRSnapshotReq, "PartDetails"> {
+export interface IEditSdrValues extends UpsertSDRSnapshotReq {
   LocationDetails: ILocationDetails;
   ComponentDetails: IComponentDetails & AdditionalPartValues;
-  PartDetails: PartDetails & AdditionalPartValues;
   FlightNumber: string;
 }
 
