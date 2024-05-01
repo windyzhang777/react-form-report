@@ -558,7 +558,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   <ListItem>To STR/Long</ListItem>
                   <ListItem>
                     {editable ? (
-                      <SimpleSingleSelect
+                      <SingleSelect
                         name="LocationDetails.ToSide"
                         value={values?.LocationDetails?.ToSide || ""}
                         onChange={handleChange}
@@ -569,7 +569,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         helperText={
                           !!touched?.LocationDetails?.ToSide && errors?.LocationDetails?.ToSide
                         }
-                        options={Array.from({ length: 29 }, (_, i) => `${i + 1}`)}
+                        options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                         id="LocationDetails.ToSide"
                       />
                     ) : (
@@ -578,7 +578,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   </ListItem>
                   <ListItem>
                     {editable ? (
-                      <SingleSelect
+                      <SimpleSingleSelect
                         name="LocationDetails.ToStr"
                         value={values?.LocationDetails?.ToStr || ""}
                         onChange={handleChange}
@@ -589,7 +589,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         helperText={
                           !!touched?.LocationDetails?.ToStr && errors?.LocationDetails?.ToStr
                         }
-                        options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
+                        options={Array.from({ length: 29 }, (_, i) => `${i + 1}`)}
                         id="LocationDetails.ToStr"
                       />
                     ) : (
