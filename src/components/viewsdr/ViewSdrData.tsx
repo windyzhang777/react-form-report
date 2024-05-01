@@ -64,7 +64,7 @@ const ViewSdrData = ({
         ReceivingDistrictOffice: "33",
         PartName: "",
         PartManufacturerName: "",
-        PartNumber: "",
+        PartNumber: detailsData?.SdrDetails?.PartDetails?.PartManufacturerSerialNumber || "",
         ComponentName: "",
         ComponentManufacturerName: "",
         PartModelNumber: "",

@@ -103,7 +103,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     multiline
                     maxRows={4}
                     className={"sdr-status-edit textareaAutosize"}
-                    inputProps={{ style: { resize: "both" } }}
+                    inputProps={{ maxLength: 100, style: { resize: "both" } }}
                   />
                 ) : (
                   ""
@@ -244,7 +244,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ style: { resize: "both" } }}
+                        inputProps={{ maxLength: 50, style: { resize: "both" } }}
                       />
                     ) : (
                       ""
@@ -269,7 +269,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ style: { resize: "both" } }}
+                        inputProps={{ maxLength: 50, style: { resize: "both" } }}
                       />
                     ) : (
                       ""
@@ -514,29 +514,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   <ListItem>From STR/Long</ListItem>
                   <ListItem>
                     {editable ? (
-                      <TextField
-                        name="LocationDetails.FromStr"
-                        value={values?.LocationDetails?.FromStr || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={
-                          !!touched?.LocationDetails?.FromStr && !!errors?.LocationDetails?.FromStr
-                        }
-                        helperText={
-                          !!touched?.LocationDetails?.FromStr && errors?.LocationDetails?.FromStr
-                        }
-                        multiline
-                        maxRows={4}
-                        className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ style: { resize: "both" } }}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                  <ListItem>
-                    {editable ? (
-                      <SimpleSingleSelect
+                      <SingleSelect
                         name="LocationDetails.FromSide"
                         value={values?.LocationDetails?.FromSide || ""}
                         onChange={handleChange}
@@ -548,8 +526,28 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         helperText={
                           !!touched?.LocationDetails?.FromSide && errors?.LocationDetails?.FromSide
                         }
-                        options={Array.from({ length: 29 }, (_, i) => `${i + 1}`)}
+                        options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                         id="LocationDetails.FromSide"
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </ListItem>
+                  <ListItem>
+                    {editable ? (
+                      <SimpleSingleSelect
+                        name="LocationDetails.FromStr"
+                        value={values?.LocationDetails?.FromStr || ""}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        error={
+                          !!touched?.LocationDetails?.FromStr && !!errors?.LocationDetails?.FromStr
+                        }
+                        helperText={
+                          !!touched?.LocationDetails?.FromStr && errors?.LocationDetails?.FromStr
+                        }
+                        options={Array.from({ length: 29 }, (_, i) => `${i + 1}`)}
+                        id="LocationDetails.FromStr"
                       />
                     ) : (
                       ""
@@ -560,29 +558,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   <ListItem>To STR/Long</ListItem>
                   <ListItem>
                     {editable ? (
-                      <TextField
-                        name="LocationDetails.ToStr"
-                        value={values?.LocationDetails?.ToStr || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={
-                          !!touched?.LocationDetails?.ToStr && !!errors?.LocationDetails?.ToStr
-                        }
-                        helperText={
-                          !!touched?.LocationDetails?.ToStr && errors?.LocationDetails?.ToStr
-                        }
-                        multiline
-                        maxRows={4}
-                        className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ style: { resize: "both" } }}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                  <ListItem>
-                    {editable ? (
-                      <SimpleSingleSelect
+                      <SingleSelect
                         name="LocationDetails.ToSide"
                         value={values?.LocationDetails?.ToSide || ""}
                         onChange={handleChange}
@@ -593,8 +569,28 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         helperText={
                           !!touched?.LocationDetails?.ToSide && errors?.LocationDetails?.ToSide
                         }
-                        options={Array.from({ length: 29 }, (_, i) => `${i + 1}`)}
+                        options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
                         id="LocationDetails.ToSide"
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </ListItem>
+                  <ListItem>
+                    {editable ? (
+                      <SimpleSingleSelect
+                        name="LocationDetails.ToStr"
+                        value={values?.LocationDetails?.ToStr || ""}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        error={
+                          !!touched?.LocationDetails?.ToStr && !!errors?.LocationDetails?.ToStr
+                        }
+                        helperText={
+                          !!touched?.LocationDetails?.ToStr && errors?.LocationDetails?.ToStr
+                        }
+                        options={Array.from({ length: 29 }, (_, i) => `${i + 1}`)}
+                        id="LocationDetails.ToStr"
                       />
                     ) : (
                       ""
@@ -710,7 +706,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       multiline
                       maxRows={4}
                       className={"sdr-status-edit textareaAutosize"}
-                      inputProps={{ style: { resize: "both" } }}
+                      inputProps={{ maxLength: 50, style: { resize: "both" } }}
                     />
                   ) : (
                     ""
@@ -852,7 +848,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       multiline
                       maxRows={4}
                       className={"sdr-status-edit textareaAutosize"}
-                      inputProps={{ style: { resize: "both" } }}
+                      inputProps={{ maxLength: 100, style: { resize: "both" } }}
                     />
                   ) : (
                     ""
@@ -883,7 +879,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       multiline
                       maxRows={4}
                       className={"sdr-status-edit textareaAutosize"}
-                      inputProps={{ style: { resize: "both" } }}
+                      inputProps={{ maxLength: 100, style: { resize: "both" } }}
                     />
                   ) : (
                     ""
@@ -916,7 +912,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                           multiline
                           maxRows={4}
                           className={"sdr-status-edit textareaAutosize"}
-                          inputProps={{ style: { resize: "both" } }}
+                          inputProps={{ maxLength: 50, style: { resize: "both" } }}
                         />
                       ) : (
                         ""
@@ -941,7 +937,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                           multiline
                           maxRows={4}
                           className={"sdr-status-edit textareaAutosize"}
-                          inputProps={{ style: { resize: "both" } }}
+                          inputProps={{ maxLength: 50, style: { resize: "both" } }}
                         />
                       ) : (
                         ""
