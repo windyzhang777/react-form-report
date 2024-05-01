@@ -55,7 +55,7 @@ const ViewSdrData = ({
       Type: selectedSdr?.Type || selectedSdr?.ReportType || "",
       SfrAdditionalDetails: {
         SnapshotId: "",
-        AtaCode: detailsData?.AtaCode || logpageData?.FleetInfo?.ATACode || "",
+        AtaCode: detailsData?.AtaCode || detailsData?.FleetInfo?.ATACode || "",
         SubmitterDesignator: "CALA",
         SubmitterType: "A",
         OperatorDesignator: "CALA",
@@ -68,8 +68,14 @@ const ViewSdrData = ({
         ComponentName: "",
         ComponentManufacturerName: "",
         PartModelNumber: "",
-        FuselageFromSta: detailsData?.LocationDetails?.FromSta || "",
-        FuselageToSta: detailsData?.LocationDetails?.ToSta || "",
+        FuselageFromSta:
+          detailsData?.LocationDetails?.DefectLocationId === 8
+            ? detailsData?.LocationDetails?.FromSta
+            : "",
+        FuselageToSta:
+          detailsData?.LocationDetails?.DefectLocationId === 8
+            ? detailsData?.LocationDetails?.ToSta
+            : "",
         CorrisionLevel: detailsData?.DiscrepancyDetails?.CorrosionLevelId
           ? "" + detailsData.DiscrepancyDetails.CorrosionLevelId
           : "",
@@ -87,11 +93,23 @@ const ViewSdrData = ({
         ButtlineFromSide: "",
         ButtlineTo: "",
         ButtlineToSide: "",
-        WingStationFrom: "",
-        WingStationFromSide: "",
-        WingStationTo: "",
-        WingStationToSide: "",
-        StructuralOther: detailsData?.LocationDetails?.Other || "",
+        WingStationFrom:
+          detailsData?.LocationDetails?.DefectLocationId === 19
+            ? detailsData?.LocationDetails?.FromSta
+            : "",
+        WingStationFromSide:
+          detailsData?.LocationDetails?.DefectLocationId === 19
+            ? detailsData?.LocationDetails?.FromSide
+            : "",
+        WingStationTo:
+          detailsData?.LocationDetails?.DefectLocationId === 19
+            ? detailsData?.LocationDetails?.ToSta
+            : "",
+        WingStationToSide:
+          detailsData?.LocationDetails?.DefectLocationId === 19
+            ? detailsData?.LocationDetails?.ToSide
+            : "",
+        StructuralOther: detailsData?.DiscrepancyDetails?.DiscrepancyTypeComments || "",
       },
       AircraftDetails: {
         RegistryNNumber: logpageData?.FleetInfo?.LicenseNumber || "",
