@@ -62,7 +62,7 @@ const ViewSnapshotData = ({
         ReceivingDistrictOffice: "33",
         PartName: snapshotData?.SfrDetails?.PartName || "",
         PartManufacturerName: snapshotData?.SfrDetails?.PartManufacturerName || "",
-        PartNumber: snapshotData?.SfrDetails?.PartNumber || "",
+        PartNumber: snapshotData?.PartManufacturerSerialNumber || "",
         ComponentName: snapshotData?.SfrDetails?.ComponentName || "",
         ComponentManufacturerName: snapshotData?.SfrDetails?.ComponentManufacturerName || "",
         PartModelNumber: snapshotData?.SfrDetails?.PartModelNumber || "",

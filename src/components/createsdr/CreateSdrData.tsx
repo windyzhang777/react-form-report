@@ -787,17 +787,17 @@ const CreateSdrData = ({
                     <ListItem>
                       {editable ? (
                         <TextField
-                          name="PartDetails.PartSerialNumber"
-                          value={values.PartDetails?.PartSerialNumber || ""}
+                          name="PartDetails.PartManufacturerSerialNumber"
+                          value={values.PartDetails?.PartManufacturerSerialNumber || ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
                           error={
-                            !!touched.PartDetails?.PartSerialNumber &&
-                            !!errors.PartDetails?.PartSerialNumber
+                            !!touched.PartDetails?.PartManufacturerSerialNumber &&
+                            !!errors.PartDetails?.PartManufacturerSerialNumber
                           }
                           helperText={
-                            !!touched.PartDetails?.PartSerialNumber &&
-                            errors.PartDetails?.PartSerialNumber
+                            !!touched.PartDetails?.PartManufacturerSerialNumber &&
+                            errors.PartDetails?.PartManufacturerSerialNumber
                           }
                           className={"sdr-status-edit"}
                         />
@@ -810,17 +810,17 @@ const CreateSdrData = ({
                     <ListItem>
                       {editable ? (
                         <TextField
-                          name="PartDetails.PartManufacturerSerialNumber"
-                          value={values.PartDetails?.PartManufacturerSerialNumber || ""}
+                          name="PartDetails.PartSerialNumber"
+                          value={values.PartDetails?.PartSerialNumber || ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
                           error={
-                            !!touched.PartDetails?.PartManufacturerSerialNumber &&
-                            !!errors.PartDetails?.PartManufacturerSerialNumber
+                            !!touched.PartDetails?.PartSerialNumber &&
+                            !!errors.PartDetails?.PartSerialNumber
                           }
                           helperText={
-                            !!touched.PartDetails?.PartManufacturerSerialNumber &&
-                            errors.PartDetails?.PartManufacturerSerialNumber
+                            !!touched.PartDetails?.PartSerialNumber &&
+                            errors.PartDetails?.PartSerialNumber
                           }
                           className={"sdr-status-edit"}
                         />
