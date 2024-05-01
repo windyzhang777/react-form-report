@@ -527,7 +527,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ style: { resize: "both" } }}
+                        inputProps={{ maxLength: 200, style: { resize: "both" } }}
                       />
                     ) : (
                       ""
@@ -557,7 +557,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ style: { resize: "both" } }}
+                        inputProps={{ maxLength: 100, style: { resize: "both" } }}
                       />
                     ) : (
                       ""
@@ -620,7 +620,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ style: { resize: "both" } }}
+                        inputProps={{ maxLength: 100, style: { resize: "both" } }}
                       />
                     ) : (
                       ""
@@ -681,7 +681,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ style: { resize: "both" } }}
+                        inputProps={{ maxLength: 250, style: { resize: "both" } }}
                       />
                     ) : (
                       ""
@@ -710,7 +710,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ style: { resize: "both" } }}
+                        inputProps={{ maxLength: 100, style: { resize: "both" } }}
                       />
                     ) : (
                       ""
@@ -773,7 +773,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ style: { resize: "both" } }}
+                        inputProps={{ maxLength: 100, style: { resize: "both" } }}
                       />
                     ) : (
                       ""

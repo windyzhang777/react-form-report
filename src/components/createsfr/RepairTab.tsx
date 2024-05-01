@@ -474,7 +474,7 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                           multiline
                           maxRows={4}
                           className={"sdr-status-edit textareaAutosize"}
-                          inputProps={{ style: { resize: "both" } }}
+                          inputProps={{ maxLength: 100, style: { resize: "both" } }}
                         />
                       ) : (
                         ""
@@ -512,7 +512,7 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                     multiline
                     maxRows={4}
                     className={"sdr-status-edit textareaAutosize"}
-                    inputProps={{ style: { resize: "both" } }}
+                    inputProps={{ maxLength: 200, style: { resize: "both" } }}
                   />
                 ) : (
                   ""
@@ -537,6 +537,7 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                       errors?.RepairDetails?.ManHoursRequired
                     }
                     className={"sdr-status-edit"}
+                    inputProps={{ maxLength: 4 }}
                     placeholder="xxxx"
                   />
                 ) : (
