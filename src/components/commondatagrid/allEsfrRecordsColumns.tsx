@@ -78,7 +78,7 @@ export const allEsfrRecordsColumns = (
       type: "dateTime",
       sortable: false,
       sortingOrder: ["desc", "asc"],
-      valueFormatter: ({ value }) => new Date(value),
+      valueFormatter: ({ value }) => moment(value).format(DATETIME_DISPLAY),
       renderCell: ({ row }) => (
         <p className={row.IsOlderThan72Hours ? "paragraph-text" : ""}>
           {moment(row?.CreatedDate).format(DATETIME_DISPLAY)}

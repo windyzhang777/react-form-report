@@ -8,7 +8,7 @@ import TextField from "src/commons/TextField";
 import { IReportSearchValues, ReportStatus, ReportType } from "src/commons/types";
 import { DATE_HTML_DISPLAY } from "src/helpers";
 import ValidationSchema from "src/validationSchema";
-import { object, string } from "yup";
+import { object } from "yup";
 
 export interface IReportSearchProps {
   handleSearchReport: (a: IReportSearchValues) => void;
@@ -53,7 +53,7 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
         }}
         validationSchema={object().shape({
           ...ValidationSchema,
-          logPageNumber: string().max(7, "Up to 7 characters"),
+          logPageNumber: ValidationSchema.upTo7,
           auditNumber: ValidationSchema.OperatorControlNumber,
           aircraftNumber: ValidationSchema.AircraftNumber,
           station: ValidationSchema.Station,
@@ -209,6 +209,7 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                     error={!!touched.auditNumber && !!errors.auditNumber}
                     helperText={!!touched.auditNumber && errors.auditNumber}
                     className="w-full"
+                    inputProps={{ maxLength: 20 }}
                   />
                 </ListItem>
               </Grid>

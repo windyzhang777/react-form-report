@@ -130,7 +130,7 @@ const ViewSnapshotData = ({
       IsExtracted: false,
       ComponentDetails: {
         ComponentName: snapshotData?.SfrDetails?.ComponentName || "",
-        ComponentManufactureName: snapshotData?.SfrDetails?.ComponentManufacturerName || "",
+        ComponentManufacturerName: snapshotData?.SfrDetails?.ComponentManufacturerName || "",
         ComponentPartNumber: "",
         ComponentPartSerialNumber: "",
         ComponentPartModelNumber: "",
@@ -1144,11 +1144,11 @@ const ViewSnapshotData = ({
                       <ListItem>
                         {editable ? (
                           <TextField
-                            name="ComponentDetails.ComponentManufactureName"
-                            value={values?.ComponentDetails?.ComponentManufactureName}
+                            name="ComponentDetails.ComponentManufacturerName"
+                            value={values?.ComponentDetails?.ComponentManufacturerName}
                             onChange={(e) => {
                               setFieldValue(
-                                "ComponentDetails.ComponentManufactureName",
+                                "ComponentDetails.ComponentManufacturerName",
                                 e.target.value
                               );
                               setFieldValue(
@@ -1158,18 +1158,18 @@ const ViewSnapshotData = ({
                             }}
                             onBlur={handleBlur}
                             error={
-                              !!touched.ComponentDetails?.ComponentManufactureName &&
-                              !!errors.ComponentDetails?.ComponentManufactureName
+                              !!touched.ComponentDetails?.ComponentManufacturerName &&
+                              !!errors.ComponentDetails?.ComponentManufacturerName
                             }
                             helperText={
-                              !!touched.ComponentDetails?.ComponentManufactureName &&
-                              errors.ComponentDetails?.ComponentManufactureName
+                              !!touched.ComponentDetails?.ComponentManufacturerName &&
+                              errors.ComponentDetails?.ComponentManufacturerName
                             }
                             className={"sdr-status-edit"}
                             inputProps={{ maxLength: 50 }}
                           />
                         ) : (
-                          values?.ComponentDetails?.ComponentManufactureName || "--"
+                          values?.ComponentDetails?.ComponentManufacturerName || "--"
                         )}
                       </ListItem>
                     </Grid>

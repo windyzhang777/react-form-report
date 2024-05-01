@@ -37,43 +37,6 @@ export interface GetSDREsfrRecordDetailsResResult {
   IsMajorRepair: boolean;
   IsSfrDowngraded: boolean;
   IsSfrCompleted: boolean;
-  AircraftDetails?: AircraftDetails;
-  AircraftNumber?: string;
-  CorrectiveAction?: string;
-  EmployeeId?: null;
-  EmployeeName?: null;
-  HowDiscoveredId?: number;
-  IsExtracted?: boolean;
-  IsSdrCompleted?: boolean;
-  IsSdrDowngraded?: boolean;
-  IsSdrReportable?: boolean;
-  LogPageCreationDate?: string;
-  NatureOfReportIds?: number[];
-  PartCondition?: string;
-  PartCycleSince?: null;
-  PartDescription?: string;
-  PartDetails?: null;
-  PartLocation?: string;
-  PartManufacturerSerialNumber?: string;
-  PartSerialNumber?: string;
-  PartTimeSince?: null;
-  PartTotalCycles?: null;
-  PartTotalTime?: null;
-  PartTrackingNumber?: string;
-  PrecautionaryProcedureIds?: number[];
-  SdrId?: number;
-  SfrDetails?: SfrDetails;
-  SnapshotId?: number;
-  StageId?: number;
-}
-
-export interface AircraftDetails {
-  Manufacturer: string;
-  Model: string;
-  RegistryNNumber: string;
-  SerialNumber: string;
-  TotalCycles: string;
-  TotalTime: string;
 }
 
 export interface DiscrepancyDetails {
@@ -108,7 +71,7 @@ export interface FleetInfo {
   Date: string;
   FleetCode: string;
   LicenseNumber: string;
-  ManufacturedBy: string;
+  ManufacturedBy: ManufacturedBy;
   ManufacturerPartNumber: string;
   ManufacturerSerialNumber: string;
   SceptreCode: string;
@@ -117,6 +80,12 @@ export interface FleetInfo {
   TotalAircraftCycles: number;
   TotalAircraftTime: number;
   FlightNumber: string;
+}
+
+export enum ManufacturedBy {
+  Airbus = "AIRBUS",
+  Bac = "BAC",
+  Boeing = "BOEING",
 }
 
 export interface LocationDetails {
@@ -234,41 +203,4 @@ export interface PartDetails {
   PartTimeSince: null;
   PartTotalCycles: null;
   PartTotalTime: null;
-}
-
-export interface SfrDetails {
-  AtaCode: string;
-  ButtlineFrom: string;
-  ButtlineFromSide: string;
-  ButtlineTo: string;
-  ButtlineToSide: string;
-  ComponentManufacturerName: string;
-  ComponentName: string;
-  CorrisionLevel: string;
-  CrackLength: null;
-  FAAReceivingRegionCode: string;
-  FuselageFromSta: string;
-  FuselageToSta: string;
-  NumberOfCracks: number;
-  OperatorDesignator: string;
-  OperatorType: string;
-  PartManufacturerName: string;
-  PartModelNumber: string;
-  PartName: string;
-  PartNumber: string;
-  ReceivingDistrictOffice: string;
-  SnapshotId: string;
-  StringerFrom: string;
-  StringerFromSide: string;
-  StringerTo: string;
-  StringerToSide: string;
-  StructuralOther: string;
-  SubmitterDesignator: string;
-  SubmitterType: string;
-  WaterlineFrom: string;
-  WaterlineTo: string;
-  WingStationFrom: string;
-  WingStationFromSide: string;
-  WingStationTo: string;
-  WingStationToSide: string;
 }

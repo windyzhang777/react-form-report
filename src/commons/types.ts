@@ -152,7 +152,7 @@ export interface AdditionalPartValues {
 
 export interface IComponentDetails {
   ComponentName: string;
-  ComponentManufactureName: string;
+  ComponentManufacturerName: string;
   ComponentPartNumber: string;
   ComponentPartSerialNumber: string;
   ComponentPartModelNumber: string;

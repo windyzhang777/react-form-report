@@ -14,7 +14,7 @@ export const ValidationSchema = {
   SubmitterDesignator: string().max(10, "Up to 10 characters"),
   ComponentDetails: object().shape({
     ComponentName: string().ensure(),
-    ComponentManufactureName: string().when("ComponentName", {
+    ComponentManufacturerName: string().when("ComponentName", {
       is: (v: string) => !!v && v.trim().length > 0,
       then(schema) {
         return schema.required("Required field");
@@ -86,10 +86,19 @@ export const ValidationSchema = {
       .trim()
       .matches(/^[a-zA-Z0-9]+$/, "Not a valid value"),
   }),
-  upTo250: string().max(250, "Up to 250 characters"),
-  upTo200: string().max(200, "Up to 200 characters"),
-  upTo100: string().max(100, "Up to 100 characters"),
-  upTo50: string().max(50, "Up to 50 characters"),
+  upTo250: string().matches(
+    /^[a-zA-Z0-9]{0,250}$/,
+    "Alpha-numeric text only & up to 250 characters"
+  ),
+  upTo200: string().matches(
+    /^[a-zA-Z0-9]{0,200}$/,
+    "Alpha-numeric text only & up to 200 characters"
+  ),
+  upTo100: string().matches(
+    /^[a-zA-Z0-9]{0,100}$/,
+    "Alpha-numeric text only & up to 100 characters"
+  ),
+  upTo50: string().matches(/^[a-zA-Z0-9]{0,50}$/, "Alpha-numeric text only & up to 50 characters"),
   upTo30: string().matches(/^[a-zA-Z0-9]{0,30}$/, "Alpha-numeric text only & up to 30 characters"),
   upTo10: string().matches(/^[a-zA-Z0-9]{0,10}$/, "Alpha-numeric text only & up to 10 characters"),
   upTo7: string().matches(/^[a-zA-Z0-9]{0,7}$/, "Alpha-numeric text only & up to 7 characters"),
