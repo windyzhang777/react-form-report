@@ -25,7 +25,7 @@ export interface GetApprovedSDRResResult {
   OperatorControlNumber: string;
   PartCondition: string;
   PartDescription: string;
-  PartDetails: PartDetails | null;
+  PartDetails: null;
   PartLocation: string;
   PartManufacturerSerialNumber: string;
   PartSerialNumber: string;
@@ -42,6 +42,10 @@ export interface GetApprovedSDRResResult {
   IsSdrDowngraded: boolean;
   IsSdrCompleted: boolean;
   IsSdrReportable: boolean;
+  PartCycleSince: string;
+  PartTimeSince: string;
+  PartTotalCycles: string;
+  PartTotalTime: string;
 }
 
 export interface AircraftDetails {
@@ -51,19 +55,6 @@ export interface AircraftDetails {
   SerialNumber: string;
   TotalCycles: string;
   TotalTime: string;
-}
-
-export interface PartDetails {
-  PartTrackingNumber: string;
-  PartManufacturerSerialNumber: string;
-  PartSerialNumber: string;
-  PartLocation: string;
-  PartCondition: string;
-  PartDescription: string;
-  PartTotalTime: string;
-  PartTotalCycles: string;
-  PartTimeSince: string;
-  PartCycleSince: string;
 }
 
 export interface SfrDetails {
