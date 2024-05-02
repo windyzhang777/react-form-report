@@ -46,10 +46,10 @@ export interface PartDetails {
   PartLocation: string;
   PartCondition: string;
   PartDescription: string;
-  PartTotalTime?: string;
-  PartTotalCycles?: string;
-  PartTimeSince?: string;
-  PartCycleSince?: string;
+  PartTotalTime: string;
+  PartTotalCycles: string;
+  PartTimeSince: string;
+  PartCycleSince: string;
 }
 
 export interface SfrAdditionalDetails {
