@@ -15,8 +15,8 @@ import { resetLogpageDataSuccess } from "src/redux/ducks/getSdrEsfrRecordDetails
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { CreateSfrReq } from "src/types/CreateSfrReq";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
-import ValidationSchema, { validationRegex } from "src/validationSchema";
-import { array, number, object, string } from "yup";
+import ValidationSchema, { errMsg } from "src/validationSchema";
+import { array, number, object } from "yup";
 import "./createSfrData.css";
 
 export interface ICreateSfrDataProps {
@@ -279,7 +279,8 @@ const CreateSfrData = ({
           }, 500);
         }}
         validationSchema={object().shape({
-          LogPageNumber: ValidationSchema.LogPageNumber.required("Required field"),
+          ...ValidationSchema,
+          LogPageNumber: ValidationSchema.LogPageNumber.required(errMsg.required),
           SdrDetails: object().shape({
             PrecautionaryProcedureIds: sdrRequired
               ? ValidationSchema.PrecautionaryProcedureIds
@@ -287,147 +288,6 @@ const CreateSfrData = ({
             NatureOfReportIds: sdrRequired ? ValidationSchema.NatureOfReportIds : array(),
             StageId: sdrRequired ? ValidationSchema.StageId : number(),
             HowDiscoveredId: sdrRequired ? ValidationSchema.HowDiscoveredId : number(),
-          }),
-          OriginDetails: object().shape({
-            MfrSourceId: number(),
-            MfrSourceIdentifier: string().when("MfrSourceId", {
-              is: (v: number) => !!v,
-              then: (schema) => schema.required("Required field"),
-            }),
-            MfrSourceComments: string().when("MfrSourceId", {
-              is: (v: number) => v === 4,
-              then: () => ValidationSchema.upTo200,
-              otherwise: () => ValidationSchema.upTo100,
-            }),
-            UnscheduledInspectionTypeId: number(),
-            UnscheduledInspectionTypeComments: string().when("UnscheduledInspectionTypeId", {
-              is: (v: number) => v === 3,
-              then: () => ValidationSchema.upTo250,
-              otherwise: () => ValidationSchema.upTo100,
-            }),
-            CalDocId: number(),
-            CalDocIdentifier: string()
-              .when("CalDocId", {
-                is: (v: number) => !!v,
-                then: () => ValidationSchema.hasValues,
-              })
-              .test("textGroup", "Not a valid value", (value, validationContext) => {
-                const {
-                  parent: { CalDocId },
-                } = validationContext;
-                if (!value) return true;
-                if (CalDocId === 1) {
-                  if (value !== "1") {
-                    return validationRegex.WorkCard.test(value);
-                  }
-                } else if (CalDocId === 2 || CalDocId === 3) {
-                  return validationRegex.FCD.test(value);
-                } else if (CalDocId === 4 || CalDocId === 5) {
-                  return validationRegex.DIP.test(value);
-                }
-                return true;
-              }),
-            // .when("CalDocId", {
-            //   is: (v: number) => v === 4 || v === 5,
-            //   then: () => ValidationSchema.upTo7,
-            // }),
-            SpecIdentifier: string().test("textGroup", "Not a valid value", (value) =>
-              value ? validationRegex.Spec.test(value) : true
-            ),
-            DetectionMethodId: number().min(1, "Required field").required("Required field"),
-            DetectionMethodComments: ValidationSchema.upTo100,
-          }),
-          DiscrepancyDetails: object().shape({
-            DiscrepancyTypeId: number().min(1, "Required field").required("Required field"),
-            CrackLength: ValidationSchema.intTo5,
-            CrackWidth: ValidationSchema.intTo5,
-            CrackDepth: ValidationSchema.intTo5,
-            NumberOfCracks: ValidationSchema.intTo3,
-            DiscrepancyTypeComments: ValidationSchema.upTo100,
-          }),
-          LocationDetails: object().shape({
-            DefectLocationId: number().min(1, "Required field").required("Required field"),
-            ZoneId: number().min(1, "Required field").required("Required field"),
-            AdditionalLocationDetails: ValidationSchema.upTo100,
-            CoordinateLocationDetails: ValidationSchema.upTo100,
-            SpecificsLocation: ValidationSchema.upTo100,
-            // FromStr: ValidationSchema.upTo50,
-            // ToStr: ValidationSchema.upTo50,
-            FromSta: ValidationSchema.upTo50,
-            ToSta: ValidationSchema.upTo50,
-            FromBL: ValidationSchema.upTo10,
-            ToBL: ValidationSchema.upTo10,
-          }),
-          SRM1: string().test("textGroup", "Not a valid value", (value) => {
-            if (!value) return true;
-            return validationRegex.AMM.test(value);
-          }),
-          SRM2: string().test("textGroup", "Not a valid value", (value) => {
-            if (!value) return true;
-            return validationRegex.AMM.test(value);
-          }),
-          SRM3: string().test("textGroup", "Not a valid value", (value) => {
-            if (!value) return true;
-            return validationRegex.AMM.test(value);
-          }),
-          SRMPage: string().test("textGroup", "Not a valid value", (value) => {
-            if (!value) return true;
-            return validationRegex.Fig.test(value);
-          }),
-          SRMFig: string().test("textGroup", "Not a valid value", (value) => {
-            if (!value) return true;
-            return validationRegex.Fig.test(value);
-          }),
-          AMM1: string().test("textGroup", "Not a valid value", (value) => {
-            if (!value) return true;
-            return validationRegex.AMM.test(value);
-          }),
-          AMM2: string().test("textGroup", "Not a valid value", (value) => {
-            if (!value) return true;
-            return validationRegex.AMM.test(value);
-          }),
-          AMM3: string().test("textGroup", "Not a valid value", (value) => {
-            if (!value) return true;
-            return validationRegex.AMM.test(value);
-          }),
-          AMMPage: string().test("textGroup", "Not a valid value", (value) => {
-            if (!value) return true;
-            return validationRegex.Fig.test(value);
-          }),
-          AMMFig: string().test("textGroup", "Not a valid value", (value) => {
-            if (!value) return true;
-            return validationRegex.Fig.test(value);
-          }),
-          CMM1: string().test("textGroup", "Not a valid value", (value) => {
-            if (!value) return true;
-            return validationRegex.AMM.test(value);
-          }),
-          CMM2: string().test("textGroup", "Not a valid value", (value) => {
-            if (!value) return true;
-            return validationRegex.AMM.test(value);
-          }),
-          CMM3: string().test("textGroup", "Not a valid value", (value) => {
-            if (!value) return true;
-            return validationRegex.AMM.test(value);
-          }),
-          CMMPage: string().test("textGroup", "Not a valid value", (value) => {
-            if (!value) return true;
-            return validationRegex.Fig.test(value);
-          }),
-          CMMFig: string().test("textGroup", "Not a valid value", (value) => {
-            if (!value) return true;
-            return validationRegex.Fig.test(value);
-          }),
-          RepairDetails: object().shape({
-            Rev: ValidationSchema.hasValue,
-            DipCode: ValidationSchema.upTo7,
-            Comments: ValidationSchema.upTo100,
-            MaterialsUtilized: ValidationSchema.upTo200,
-            ManHoursRequired: ValidationSchema.upTo4,
-            RepairECRA: string().test("textGroup", "Not a valid value", (value) => {
-              if (!value) return true;
-              return validationRegex.RepairECRA.test(value);
-            }),
           }),
         })}
       >

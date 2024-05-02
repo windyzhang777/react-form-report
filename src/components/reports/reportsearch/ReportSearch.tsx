@@ -53,12 +53,9 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
         }}
         validationSchema={object().shape({
           ...ValidationSchema,
-          logPageNumber: ValidationSchema.upTo7,
           auditNumber: ValidationSchema.OperatorControlNumber,
           aircraftNumber: ValidationSchema.AircraftNumber,
           station: ValidationSchema.Station,
-          reportBy: ValidationSchema.upTo30,
-          keyword: ValidationSchema.upTo30,
         })}
       >
         {({
