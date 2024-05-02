@@ -77,7 +77,7 @@ export const ReportDataGridFooter = () => {
       }}
     >
       <Button color="secondary" onClick={handleExport}>
-        Export Results
+        Extract
       </Button>
       <GridPagination />
     </GridFooterContainer>
