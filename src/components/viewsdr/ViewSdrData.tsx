@@ -12,6 +12,7 @@ import TextField from "src/commons/TextField";
 import {
   IEditSdrValues,
   IViewSdrResult,
+  PartTimeSinceCodeOptions,
   SdrEsfrRecordDetailsStateType,
   SelectedStatus,
   SelectedTab,
@@ -1024,6 +1025,7 @@ const ViewSdrData = ({
                               errors.PartDetails?.PartTotalTime
                             }
                             className={"sdr-status-edit"}
+                            placeholder="Up to 3 decimals"
                           />
                         ) : (
                           values?.PartDetails?.PartTotalTime
@@ -1047,6 +1049,7 @@ const ViewSdrData = ({
                               errors.PartDetails?.PartTotalCycles
                             }
                             className={"sdr-status-edit"}
+                            placeholder="Up to 3 decimals"
                           />
                         ) : (
                           values?.PartDetails?.PartTotalCycles
@@ -1070,6 +1073,7 @@ const ViewSdrData = ({
                               errors.PartDetails?.PartTimeSince
                             }
                             className={"sdr-status-edit"}
+                            placeholder="Up to 3 decimals"
                           />
                         ) : (
                           values?.PartDetails?.PartTimeSince
@@ -1086,20 +1090,23 @@ const ViewSdrData = ({
                     <Grid item xs={4}>
                       <ListItem>
                         {editable ? (
-                          <TextField
+                          <SimpleSingleSelect
                             name="PartDetails.PartCycleSince"
-                            value={values?.PartDetails?.PartCycleSince}
+                            value={values?.PartDetails?.PartCycleSince || ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
-                              !!touched.PartDetails?.PartCycleSince &&
-                              !!errors.PartDetails?.PartCycleSince
+                              !!touched?.PartDetails?.PartCycleSince &&
+                              !!errors?.PartDetails?.PartCycleSince
                             }
                             helperText={
-                              !!touched.PartDetails?.PartCycleSince &&
-                              errors.PartDetails?.PartCycleSince
+                              !!touched?.PartDetails?.PartCycleSince &&
+                              errors?.PartDetails?.PartCycleSince
                             }
-                            className={"sdr-status-edit"}
+                            options={PartTimeSinceCodeOptions.sort(
+                              (a, b) => a.DisplayOrder - b.DisplayOrder
+                            ).map((r) => r.Description)}
+                            id="PartDetails.PartCycleSince"
                           />
                         ) : (
                           values?.PartDetails?.PartCycleSince
@@ -1331,6 +1338,7 @@ const ViewSdrData = ({
                               errors.ComponentDetails?.PartTotalTime
                             }
                             className={"sdr-status-edit"}
+                            placeholder="Up to 3 decimals"
                           />
                         ) : (
                           values?.ComponentDetails?.PartTotalTime || "--"
@@ -1354,6 +1362,7 @@ const ViewSdrData = ({
                               errors.ComponentDetails?.PartTotalCycles
                             }
                             className={"sdr-status-edit"}
+                            placeholder="Up to 3 decimals"
                           />
                         ) : (
                           values?.ComponentDetails?.PartTotalCycles || "--"
@@ -1377,6 +1386,7 @@ const ViewSdrData = ({
                               errors.ComponentDetails?.PartTimeSince
                             }
                             className={"sdr-status-edit"}
+                            placeholder="Up to 3 decimals"
                           />
                         ) : (
                           values?.ComponentDetails?.PartTimeSince || "--"
@@ -1395,20 +1405,23 @@ const ViewSdrData = ({
                     <Grid item xs={4}>
                       <ListItem>
                         {editable ? (
-                          <TextField
+                          <SimpleSingleSelect
                             name="ComponentDetails.PartTimeSinceCode"
-                            value={values?.ComponentDetails?.PartTimeSinceCode}
+                            value={values?.ComponentDetails?.PartTimeSinceCode || ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
-                              !!touched.ComponentDetails?.PartTimeSinceCode &&
-                              !!errors.ComponentDetails?.PartTimeSinceCode
+                              !!touched?.ComponentDetails?.PartTimeSinceCode &&
+                              !!errors?.ComponentDetails?.PartTimeSinceCode
                             }
                             helperText={
-                              !!touched.ComponentDetails?.PartTimeSinceCode &&
-                              errors.ComponentDetails?.PartTimeSinceCode
+                              !!touched?.ComponentDetails?.PartTimeSinceCode &&
+                              errors?.ComponentDetails?.PartTimeSinceCode
                             }
-                            className={"sdr-status-edit"}
+                            options={PartTimeSinceCodeOptions.sort(
+                              (a, b) => a.DisplayOrder - b.DisplayOrder
+                            ).map((r) => r.Description)}
+                            id="ComponentDetails.PartTimeSinceCode"
                           />
                         ) : (
                           values?.ComponentDetails?.PartTimeSinceCode || "--"
@@ -1551,7 +1564,6 @@ const ViewSdrData = ({
                       <ListItem>
                         {editable ? (
                           <TextField
-                            type="number"
                             name="SfrAdditionalDetails.CrackLength"
                             value={values?.SfrAdditionalDetails?.CrackLength}
                             onChange={handleChange}
@@ -1575,7 +1587,6 @@ const ViewSdrData = ({
                       <ListItem>
                         {editable ? (
                           <TextField
-                            type="number"
                             name="SfrAdditionalDetails.NumberOfCracks"
                             value={values?.SfrAdditionalDetails?.NumberOfCracks ?? ""}
                             onChange={handleChange}

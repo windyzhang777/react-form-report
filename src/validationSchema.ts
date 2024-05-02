@@ -1,117 +1,12 @@
 import moment from "moment";
 import { array, date, number, object, string } from "yup";
 
-export const ValidationSchema = {
-  LogPageNumber: string().matches(/^[0-9]{7}$/, "Not a valid Logpage Number"),
-  LogPageCreationDate: date().max(moment().endOf("day"), "Cannot use future date"),
-  Station: string().matches(/^[a-zA-Z]{1,3}$/, "Not a valid Station"),
-  AircraftNumber: string().matches(/^[0-9]{4}$/, "Not a valid Aircraft Number"),
-  AtaCode: string().matches(/^[a-zA-Z0-9]{1,4}$/, "Not a valid ATA Code"),
-  PrecautionaryProcedureIds: array().min(1, "Required field").max(4),
-  NatureOfReportIds: array().min(1, "Required field").max(3),
-  StageId: number().min(1, "Required field"),
-  HowDiscoveredId: number().min(1, "Required field"),
-  SubmitterDesignator: string().max(10, "Up to 10 characters"),
-  ComponentDetails: object().shape({
-    ComponentName: string().ensure(),
-    ComponentManufacturerName: string().when("ComponentName", {
-      is: (v: string) => !!v && v.trim().length > 0,
-      then(schema) {
-        return schema.required("Required field");
-      },
-    }),
-    ComponentPartNumber: string().when("ComponentName", {
-      is: (v: string) => !!v && v.trim().length > 0,
-      then(schema) {
-        return schema.required("Required field");
-      },
-    }),
-    ComponentPartSerialNumber: string().when("ComponentName", {
-      is: (v: string) => !!v && v.trim().length > 0,
-      then(schema) {
-        return schema.required("Required field");
-      },
-    }),
-    ComponentPartModelNumber: string().when("ComponentName", {
-      is: (v: string) => !!v && v.trim().length > 0,
-      then(schema) {
-        return schema.required("Required field");
-      },
-    }),
-    ComponentLocation: string().when("ComponentName", {
-      is: (v: string) => !!v && v.trim().length > 0,
-      then(schema) {
-        return schema.required("Required field");
-      },
-    }),
-    PartTotalTime: string().when("ComponentName", {
-      is: (v: string) => !!v && v.trim().length > 0,
-      then(schema) {
-        return schema.required("Required field");
-      },
-    }),
-    PartTotalCycles: string().when("ComponentName", {
-      is: (v: string) => !!v && v.trim().length > 0,
-      then(schema) {
-        return schema.required("Required field");
-      },
-    }),
-    PartTimeSince: string().when("ComponentName", {
-      is: (v: string) => !!v && v.trim().length > 0,
-      then(schema) {
-        return schema.required("Required field");
-      },
-    }),
-    PartTimeSinceCode: string().when("ComponentName", {
-      is: (v: string) => !!v && v.trim().length > 0,
-      then(schema) {
-        return schema.required("Required field");
-      },
-    }),
-  }),
-  OperatorControlNumber: string().matches(
-    /^[a-zA-Z0-9]{0,20}$/,
-    "Alpha-numeric text only & up to 20 characters"
-  ),
-  SfrAdditionalDetails: object().shape({
-    NumberOfCracks: number()
-      .integer("Not a valid value")
-      .min(0, "Not a valid value")
-      .max(255, "Not a valid value"),
-    CrackLength: string().matches(/^[1-9]\d{0,7}(?:\.\d{1,3})?$/, "Not a valid value"),
-    OperatorType: string()
-      .trim()
-      .matches(/^[a-zA-Z0-9]+$/, "Not a valid value"),
-    SubmitterType: string()
-      .trim()
-      .matches(/^[a-zA-Z0-9]+$/, "Not a valid value"),
-  }),
-  upTo250: string().matches(
-    /^[a-zA-Z0-9]{0,250}$/,
-    "Alpha-numeric text only & up to 250 characters"
-  ),
-  upTo200: string().matches(
-    /^[a-zA-Z0-9]{0,200}$/,
-    "Alpha-numeric text only & up to 200 characters"
-  ),
-  upTo100: string().matches(
-    /^[a-zA-Z0-9]{0,100}$/,
-    "Alpha-numeric text only & up to 100 characters"
-  ),
-  upTo50: string().matches(/^[a-zA-Z0-9]{0,50}$/, "Alpha-numeric text only & up to 50 characters"),
-  upTo30: string().matches(/^[a-zA-Z0-9]{0,30}$/, "Alpha-numeric text only & up to 30 characters"),
-  upTo10: string().matches(/^[a-zA-Z0-9]{0,10}$/, "Alpha-numeric text only & up to 10 characters"),
-  upTo7: string().matches(/^[a-zA-Z0-9]{0,7}$/, "Alpha-numeric text only & up to 7 characters"),
-  upTo4: string().matches(/^[a-zA-Z0-9]{0,4}$/, "Alpha-numeric text only & up to 4 characters"),
-  hasValue: string().matches(/^[a-zA-Z0-9]+$/, "Not a valid value"),
-  hasValues: string()
-    .min(2, "Required field")
-    .matches(/^[a-zA-Z0-9]+$/, "Not a valid value"),
-  intTo5: string().matches(/^[0-9]{0,5}$/, "Up to 5 numbers"),
-  intTo3: string().matches(/^[0-9]{0,3}$/, "Up to 3 numbers"),
-};
-
-export const validationRegex = {
+export const regex = {
+  LogPageNumber: /^[0-9]{7}$/,
+  Station: /^[a-zA-Z]{1,3}$/,
+  AircraftNumber: /^[0-9]{4}$/,
+  AtaCode: /^[a-zA-Z0-9]{1,4}$/,
+  OperatorControlNumber: /^[a-zA-Z0-9]{0,20}$/,
   WorkCard: /^[a-zA-Z1-9]{2}-[a-zA-Z1-9]{4}-1-[a-zA-Z1-9]{4}/,
   FCD: /^[a-zA-Z1-9]{4}-[a-zA-Z1-9]{5}/,
   DIP: /^[a-zA-Z1-9]{7}/,
@@ -119,6 +14,251 @@ export const validationRegex = {
   AMM: /^[a-zA-Z1-9]{2}-[a-zA-Z1-9]{2}-[a-zA-Z1-9]{2}/,
   RepairECRA: /^[a-zA-Z1-9]{4}-[a-zA-Z1-9]{5}/,
   Fig: /^[a-zA-Z1-9]{3}/,
+  // common
+  number7D3: /^[1-9]\d{0,7}(?:\.\d{1,3})?$/,
+  numberD3: /^(0|[1-9]\d*)(?:\.\d{1,3})?$/,
+  alphaNumeric: /^[a-zA-Z0-9.]+$/,
+  hasValue: /^[a-zA-Z0-9]+$/,
+  numOnly: /^(0|[1-9]\d*){1,7}(?:\.\d{1,3})?$/,
+};
+
+export const errMsg = {
+  alphaNumeric: "Alpha-numeric text only",
+  notValidValue: "Not a valid value",
+  notValidNum: "Not a valid number",
+  required: "Required field",
+  posInt: "Positive integer only",
+  noFuture: "Cannot use future date",
+  upTo: (count: number) => "Up to " + count + " alpha-numeric characters",
+};
+
+export const commonSchema = {
+  hasValue: string().matches(regex.hasValue, errMsg.notValidValue),
+  hasValues: string().min(2, errMsg.required).matches(regex.hasValue, errMsg.notValidValue),
+  numOnly: string().matches(regex.numOnly, errMsg.notValidNum),
+  upTo: (count: number) => string().matches(regex.alphaNumeric, errMsg.upTo(count)),
+  numberD3: string().matches(regex.numberD3, errMsg.notValidNum),
+  intOnly: number()
+    .typeError(errMsg.posInt)
+    .integer(errMsg.notValidValue)
+    .min(0, errMsg.notValidValue)
+    .max(255, errMsg.notValidValue),
+};
+
+export const ValidationSchema = {
+  LogPageNumber: string().matches(regex.LogPageNumber, "Not a valid Logpage Number"),
+  LogPageCreationDate: date().max(moment().endOf("day"), errMsg.noFuture),
+  Station: string().matches(regex.Station, "Not a valid Station"),
+  AircraftNumber: string().matches(regex.AircraftNumber, "Not a valid Aircraft Number"),
+  AtaCode: string().matches(regex.AtaCode, "Not a valid ATA Code"),
+  OperatorControlNumber: string().matches(regex.OperatorControlNumber, errMsg.upTo(20)),
+
+  // view, update, createSdr
+  PrecautionaryProcedureIds: array().min(1, errMsg.required).max(4),
+  NatureOfReportIds: array().min(1, errMsg.required).max(3),
+  StageId: number().min(1, errMsg.required),
+  HowDiscoveredId: number().min(1, errMsg.required),
+  SubmitterDesignator: string().max(10, errMsg.upTo(10)),
+  ComponentDetails: object().shape({
+    ComponentName: string().ensure(),
+    ComponentManufacturerName: string().when("ComponentName", {
+      is: (v: string) => !!v && v.trim().length > 0,
+      then: (schema) => schema.required(errMsg.required),
+    }),
+    ComponentPartNumber: string().when("ComponentName", {
+      is: (v: string) => !!v && v.trim().length > 0,
+      then: (schema) => schema.required(errMsg.required),
+    }),
+    ComponentPartSerialNumber: string().when("ComponentName", {
+      is: (v: string) => !!v && v.trim().length > 0,
+      then: (schema) => schema.required(errMsg.required),
+    }),
+    ComponentPartModelNumber: string().when("ComponentName", {
+      is: (v: string) => !!v && v.trim().length > 0,
+      then: (schema) => schema.required(errMsg.required),
+    }),
+    ComponentLocation: string().when("ComponentName", {
+      is: (v: string) => !!v && v.trim().length > 0,
+      then: (schema) => schema.required(errMsg.required),
+    }),
+    PartTotalTime: string().when("ComponentName", {
+      is: (v: string) => !!v && v.trim().length > 0,
+      then: () => commonSchema.numberD3.required(errMsg.required),
+      otherwise: () => commonSchema.numberD3,
+    }),
+    PartTotalCycles: string().when("ComponentName", {
+      is: (v: string) => !!v && v.trim().length > 0,
+      then: () => commonSchema.numberD3.required(errMsg.required),
+      otherwise: () => commonSchema.numberD3,
+    }),
+    PartTimeSince: string().when("ComponentName", {
+      is: (v: string) => !!v && v.trim().length > 0,
+      then: () => commonSchema.numberD3.required(errMsg.required),
+      otherwise: () => commonSchema.numberD3,
+    }),
+    PartTimeSinceCode: string().when("ComponentName", {
+      is: (v: string) => !!v && v.trim().length > 0,
+      then: (schema) => schema.required(errMsg.required),
+    }),
+  }),
+  PartDetails: object().shape({
+    PartTotalTime: commonSchema.numberD3,
+    PartTotalCycles: commonSchema.numberD3,
+    PartTimeSince: commonSchema.numberD3,
+  }),
+  SfrAdditionalDetails: object().shape({
+    NumberOfCracks: number()
+      .typeError(errMsg.posInt)
+      .integer(errMsg.notValidValue)
+      .min(0, errMsg.notValidValue)
+      .max(255, errMsg.notValidValue),
+    CrackLength: string().matches(regex.number7D3, errMsg.notValidNum),
+    OperatorType: string().trim().matches(regex.hasValue, errMsg.notValidNum),
+    SubmitterType: string().trim().matches(regex.hasValue, errMsg.notValidValue),
+  }),
+
+  // createSfr
+  OriginDetails: object().shape({
+    MfrSourceId: number(),
+    MfrSourceIdentifier: string().when("MfrSourceId", {
+      is: (v: number) => !!v,
+      then: (schema) => schema.required(errMsg.required),
+    }),
+    MfrSourceComments: string().when("MfrSourceId", {
+      is: (v: number) => v === 4,
+      then: () => commonSchema.upTo(200),
+      otherwise: () => commonSchema.upTo(100),
+    }),
+    UnscheduledInspectionTypeId: number(),
+    UnscheduledInspectionTypeComments: string().when("UnscheduledInspectionTypeId", {
+      is: (v: number) => v === 3,
+      then: () => commonSchema.upTo(250),
+      otherwise: () => commonSchema.upTo(100),
+    }),
+    CalDocId: number(),
+    CalDocIdentifier: string()
+      .when("CalDocId", {
+        is: (v: number) => !!v,
+        then: () => commonSchema.hasValues,
+      })
+      .test("textGroup", errMsg.notValidValue, (value, validationContext) => {
+        const {
+          parent: { CalDocId },
+        } = validationContext;
+        if (!value) return true;
+        if (CalDocId === 1) {
+          if (value !== "1") {
+            return regex.WorkCard.test(value);
+          }
+        } else if (CalDocId === 2 || CalDocId === 3) {
+          return regex.FCD.test(value);
+        } else if (CalDocId === 4 || CalDocId === 5) {
+          return regex.DIP.test(value);
+        }
+        return true;
+      }),
+    // .when("CalDocId", {
+    //   is: (v: number) => v === 4 || v === 5,
+    //   then: () => commonSchema.upTo(7),
+    // }),
+    SpecIdentifier: string().test("textGroup", errMsg.notValidValue, (value) =>
+      value ? regex.Spec.test(value) : true
+    ),
+    DetectionMethodId: number().min(1, errMsg.required).required(errMsg.required),
+    DetectionMethodComments: commonSchema.upTo(100),
+  }),
+  DiscrepancyDetails: object().shape({
+    DiscrepancyTypeId: number().min(1, errMsg.required).required(errMsg.required),
+    CrackLength: commonSchema.numOnly,
+    CrackWidth: commonSchema.numOnly,
+    CrackDepth: commonSchema.numOnly,
+    NumberOfCracks: commonSchema.intOnly,
+    DiscrepancyTypeComments: commonSchema.upTo(100),
+  }),
+  LocationDetails: object().shape({
+    DefectLocationId: number().min(1, errMsg.required).required(errMsg.required),
+    ZoneId: number().min(1, errMsg.required).required(errMsg.required),
+    AdditionalLocationDetails: commonSchema.upTo(100),
+    CoordinateLocationDetails: commonSchema.upTo(100),
+    SpecificsLocation: commonSchema.upTo(100),
+    // FromStr: commonSchema.upTo(50),
+    // ToStr: commonSchema.upTo(50),
+    FromSta: commonSchema.upTo(50),
+    ToSta: commonSchema.upTo(50),
+    FromBL: commonSchema.upTo(10),
+    ToBL: commonSchema.upTo(10),
+  }),
+  SRM1: string().test("textGroup", errMsg.notValidValue, (value) => {
+    if (!value) return true;
+    return regex.AMM.test(value);
+  }),
+  SRM2: string().test("textGroup", errMsg.notValidValue, (value) => {
+    if (!value) return true;
+    return regex.AMM.test(value);
+  }),
+  SRM3: string().test("textGroup", errMsg.notValidValue, (value) => {
+    if (!value) return true;
+    return regex.AMM.test(value);
+  }),
+  SRMPage: string().test("textGroup", errMsg.notValidValue, (value) => {
+    if (!value) return true;
+    return regex.Fig.test(value);
+  }),
+  SRMFig: string().test("textGroup", errMsg.notValidValue, (value) => {
+    if (!value) return true;
+    return regex.Fig.test(value);
+  }),
+  AMM1: string().test("textGroup", errMsg.notValidValue, (value) => {
+    if (!value) return true;
+    return regex.AMM.test(value);
+  }),
+  AMM2: string().test("textGroup", errMsg.notValidValue, (value) => {
+    if (!value) return true;
+    return regex.AMM.test(value);
+  }),
+  AMM3: string().test("textGroup", errMsg.notValidValue, (value) => {
+    if (!value) return true;
+    return regex.AMM.test(value);
+  }),
+  AMMPage: string().test("textGroup", errMsg.notValidValue, (value) => {
+    if (!value) return true;
+    return regex.Fig.test(value);
+  }),
+  AMMFig: string().test("textGroup", errMsg.notValidValue, (value) => {
+    if (!value) return true;
+    return regex.Fig.test(value);
+  }),
+  CMM1: string().test("textGroup", errMsg.notValidValue, (value) => {
+    if (!value) return true;
+    return regex.AMM.test(value);
+  }),
+  CMM2: string().test("textGroup", errMsg.notValidValue, (value) => {
+    if (!value) return true;
+    return regex.AMM.test(value);
+  }),
+  CMM3: string().test("textGroup", errMsg.notValidValue, (value) => {
+    if (!value) return true;
+    return regex.AMM.test(value);
+  }),
+  CMMPage: string().test("textGroup", errMsg.notValidValue, (value) => {
+    if (!value) return true;
+    return regex.Fig.test(value);
+  }),
+  CMMFig: string().test("textGroup", errMsg.notValidValue, (value) => {
+    if (!value) return true;
+    return regex.Fig.test(value);
+  }),
+  RepairDetails: object().shape({
+    Rev: commonSchema.hasValue,
+    DipCode: commonSchema.upTo(7),
+    Comments: commonSchema.upTo(100),
+    MaterialsUtilized: commonSchema.upTo(200),
+    ManHoursRequired: commonSchema.upTo(4),
+    RepairECRA: string().test("textGroup", errMsg.notValidValue, (value) => {
+      if (!value) return true;
+      return regex.RepairECRA.test(value);
+    }),
+  }),
 };
 
 export default ValidationSchema;

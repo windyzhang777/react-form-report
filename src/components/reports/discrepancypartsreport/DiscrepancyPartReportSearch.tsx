@@ -69,7 +69,6 @@ const DiscrepancyPartsReportSearch = ({
           ...ValidationSchema,
           acNumber: ValidationSchema.AircraftNumber,
           station: ValidationSchema.Station,
-          partNumber: ValidationSchema.upTo30,
           ataCode: ValidationSchema.AtaCode,
         })}
       >

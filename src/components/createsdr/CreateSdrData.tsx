@@ -23,7 +23,7 @@ import {
 import { resetLogpageDataSuccess } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
-import ValidationSchema from "src/validationSchema";
+import ValidationSchema, { errMsg } from "src/validationSchema";
 import { object, string } from "yup";
 import "./createSdrData.css";
 
@@ -179,7 +179,7 @@ const CreateSdrData = ({
         }}
         validationSchema={object().shape({
           ...ValidationSchema,
-          LogPageNumber: ValidationSchema.LogPageNumber.required("Required field"),
+          LogPageNumber: ValidationSchema.LogPageNumber.required(errMsg.required),
           AircraftNumber: string(),
           SfrAdditionalDetails: object().nullable(),
         })}
@@ -937,6 +937,7 @@ const CreateSdrData = ({
                             errors.PartDetails?.PartTotalTime
                           }
                           className={"sdr-status-edit"}
+                          placeholder="Up to 3 decimals"
                         />
                       ) : (
                         values?.PartDetails?.PartTotalTime
@@ -973,6 +974,7 @@ const CreateSdrData = ({
                             errors.PartDetails?.PartTotalCycles
                           }
                           className={"sdr-status-edit"}
+                          placeholder="Up to 3 decimals"
                         />
                       ) : (
                         values?.PartDetails?.PartTotalCycles
@@ -996,6 +998,7 @@ const CreateSdrData = ({
                             errors.PartDetails?.PartTimeSince
                           }
                           className={"sdr-status-edit"}
+                          placeholder="Up to 3 decimals"
                         />
                       ) : (
                         values?.PartDetails?.PartTimeSince
