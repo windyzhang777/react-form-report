@@ -23,7 +23,7 @@ export const regex = {
 };
 
 export const errMsg = {
-  alphaNumeric: "Alpha-numeric text only",
+  alphaNumeric: "Alpha-numeric characters only",
   notValidValue: "Not a valid value",
   notValidNum: "Not a valid number",
   required: "Required field",
@@ -123,7 +123,8 @@ export const ValidationSchemaSFR = {
     MfrSourceId: number(),
     MfrSourceIdentifier: string().when("MfrSourceId", {
       is: (v: number) => !!v,
-      then: (schema) => schema.required(errMsg.required),
+      then: () =>
+        string().matches(regex.alphaNumeric, errMsg.alphaNumeric).required(errMsg.required),
     }),
     MfrSourceComments: string().when("MfrSourceId", {
       is: (v: number) => v === 4,
