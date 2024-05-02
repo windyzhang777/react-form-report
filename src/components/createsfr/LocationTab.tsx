@@ -63,7 +63,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                 {editable ? (
                   <SingleSelect
                     name="LocationDetails.ZoneId"
-                    value={values?.LocationDetails?.ZoneId || ""}
+                    value={values?.LocationDetails?.ZoneId}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched?.LocationDetails?.ZoneId && !!errors?.LocationDetails?.ZoneId}
@@ -120,7 +120,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                 {editable ? (
                   <SingleSelect
                     name="LocationDetails.DefectLocationId"
-                    value={values?.LocationDetails?.DefectLocationId || ""}
+                    value={values?.LocationDetails?.DefectLocationId}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={
@@ -162,7 +162,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   {editable ? (
                     <SingleSelect
                       name="LocationDetails.Side"
-                      value={values?.LocationDetails?.Side || ""}
+                      value={values?.LocationDetails?.Side}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={!!touched?.LocationDetails?.Side && !!errors?.LocationDetails?.Side}
@@ -197,7 +197,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   {editable ? (
                     <SingleSelect
                       name="LocationDetails.Surface"
-                      value={values?.LocationDetails?.Surface || ""}
+                      value={values?.LocationDetails?.Surface}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={
@@ -289,7 +289,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     {editable ? (
                       <SingleSelect
                         name="LocationDetails.FromBLLength"
-                        value={values?.LocationDetails?.FromBLLength || ""}
+                        value={values?.LocationDetails?.FromBLLength}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
@@ -335,7 +335,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     {editable ? (
                       <SingleSelect
                         name="LocationDetails.ToBLLength"
-                        value={values?.LocationDetails?.ToBLLength || ""}
+                        value={values?.LocationDetails?.ToBLLength}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
@@ -387,7 +387,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   {editable ? (
                     <SingleSelect
                       name="LocationDetails.StaTypeId"
-                      value={values?.LocationDetails?.StaTypeId || ""}
+                      value={values?.LocationDetails?.StaTypeId}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={
@@ -421,7 +421,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   {editable ? (
                     <SingleSelect
                       name="LocationDetails.DamageProximityId"
-                      value={values?.LocationDetails?.DamageProximityId || ""}
+                      value={values?.LocationDetails?.DamageProximityId}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={
@@ -453,7 +453,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   {editable ? (
                     <SingleSelect
                       name="LocationDetails.DamageProximityId"
-                      value={values?.LocationDetails?.DamageProximityId || ""}
+                      value={values?.LocationDetails?.DamageProximityId}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={
@@ -484,7 +484,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   {editable ? (
                     <SingleSelect
                       name="LocationDetails.DamageProximityId"
-                      value={values?.LocationDetails?.DamageProximityId || ""}
+                      value={values?.LocationDetails?.DamageProximityId}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={
@@ -516,7 +516,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     {editable ? (
                       <SingleSelect
                         name="LocationDetails.FromSide"
-                        value={values?.LocationDetails?.FromSide || ""}
+                        value={values?.LocationDetails?.FromSide}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
@@ -537,7 +537,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     {editable ? (
                       <SimpleSingleSelect
                         name="LocationDetails.FromStr"
-                        value={values?.LocationDetails?.FromStr || ""}
+                        value={values?.LocationDetails?.FromStr}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
@@ -560,7 +560,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     {editable ? (
                       <SingleSelect
                         name="LocationDetails.ToSide"
-                        value={values?.LocationDetails?.ToSide || ""}
+                        value={values?.LocationDetails?.ToSide}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
@@ -580,7 +580,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     {editable ? (
                       <SimpleSingleSelect
                         name="LocationDetails.ToStr"
-                        value={values?.LocationDetails?.ToStr || ""}
+                        value={values?.LocationDetails?.ToStr}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
@@ -609,7 +609,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     {editable ? (
                       <SingleSelect
                         name="LocationDetails.ElevatorTab"
-                        value={values?.LocationDetails?.ElevatorTab || ""}
+                        value={values?.LocationDetails?.ElevatorTab}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
@@ -634,7 +634,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     {editable ? (
                       <SingleSelect
                         name="LocationDetails.Fuselage"
-                        value={values?.LocationDetails?.Fuselage || ""}
+                        value={values?.LocationDetails?.Fuselage}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
@@ -663,7 +663,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   {editable ? (
                     <SimpleSingleSelect
                       name="LocationDetails.LocationType"
-                      value={values?.LocationDetails?.LocationType || ""}
+                      value={values?.LocationDetails?.LocationType}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={
@@ -723,7 +723,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   {editable ? (
                     <SingleSelect
                       name="LocationDetails.LocationType"
-                      value={values?.LocationDetails?.LocationType || ""}
+                      value={values?.LocationDetails?.LocationType}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={
@@ -752,7 +752,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   {editable ? (
                     <SingleSelect
                       name="LocationDetails.LocationType"
-                      value={values?.LocationDetails?.LocationType || ""}
+                      value={values?.LocationDetails?.LocationType}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={
@@ -781,7 +781,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   {editable ? (
                     <SingleSelect
                       name="LocationDetails.Specifics"
-                      value={values?.LocationDetails?.Specifics || ""}
+                      value={values?.LocationDetails?.Specifics}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={
@@ -809,7 +809,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   {editable ? (
                     <SingleSelect
                       name="LocationDetails.Other"
-                      value={values?.LocationDetails?.Other || ""}
+                      value={values?.LocationDetails?.Other}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={!!touched?.LocationDetails?.Other && !!errors?.LocationDetails?.Other}

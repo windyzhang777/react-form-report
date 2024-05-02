@@ -178,6 +178,3 @@ export const toFixed = (a: number | string | undefined, maxAllowedDecimal: numbe
 export const trimMultipleSelected = (arr: string | string[]) => {
   return Array.isArray(arr) ? (arr.length ? (arr.indexOf("") > -1 ? [] : arr) : arr) : arr;
 };
-
-export const convertNumberText = (text: string): string =>
-  Number("" + Number(text)) ? "" + Number(text) : "";

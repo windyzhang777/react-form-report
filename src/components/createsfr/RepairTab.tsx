@@ -313,7 +313,7 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                     {editable ? (
                       <SingleSelect
                         name="SdrDetails.StageId"
-                        value={values?.SdrDetails?.StageId || ""}
+                        value={values?.SdrDetails?.StageId}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={!!touched?.SdrDetails?.StageId && !!errors?.SdrDetails?.StageId}
@@ -335,7 +335,7 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                     {editable ? (
                       <SingleSelect
                         name="SdrDetails.HowDiscoveredId"
-                        value={values?.SdrDetails?.HowDiscoveredId || ""}
+                        value={values?.SdrDetails?.HowDiscoveredId}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={

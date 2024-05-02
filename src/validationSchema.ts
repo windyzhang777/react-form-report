@@ -15,11 +15,11 @@ export const regex = {
   RepairECRA: /^[a-zA-Z1-9]{4}-[a-zA-Z1-9]{5}/,
   Fig: /^[a-zA-Z1-9]{3}/,
   // common
-  number7D3: /^[1-9]\d{0,7}(?:\.\d{1,3})?$/,
+  number7D3: /^(0|[1-9]{1,7})(?:\.\d{1,3})?$/,
   numberD3: /^(0|[1-9]\d*)(?:\.\d{1,3})?$/,
   alphaNumeric: /^[a-zA-Z0-9.]+$/,
   hasValue: /^[a-zA-Z0-9]+$/,
-  numOnly: /^(0|[1-9]\d*){1,7}(?:\.\d{1,3})?$/,
+  numOnly: /^(0|[1-9]\d*)(?:\.\d{1,3})?$/,
 };
 
 export const errMsg = {
@@ -116,8 +116,9 @@ export const ValidationSchema = {
     OperatorType: string().trim().matches(regex.hasValue, errMsg.notValidNum),
     SubmitterType: string().trim().matches(regex.hasValue, errMsg.notValidValue),
   }),
+};
 
-  // createSfr
+export const ValidationSchemaSFR = {
   OriginDetails: object().shape({
     MfrSourceId: number(),
     MfrSourceIdentifier: string().when("MfrSourceId", {
@@ -169,9 +170,9 @@ export const ValidationSchema = {
   }),
   DiscrepancyDetails: object().shape({
     DiscrepancyTypeId: number().min(1, errMsg.required).required(errMsg.required),
-    CrackLength: commonSchema.numOnly,
-    CrackWidth: commonSchema.numOnly,
-    CrackDepth: commonSchema.numOnly,
+    CrackLength: commonSchema.numberD3,
+    CrackWidth: commonSchema.numberD3,
+    CrackDepth: commonSchema.numberD3,
     NumberOfCracks: commonSchema.intOnly,
     DiscrepancyTypeComments: commonSchema.upTo(100),
   }),

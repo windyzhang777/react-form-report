@@ -6,7 +6,6 @@ import { SingleSelect } from "src/commons/Select";
 import TabPanel from "src/commons/TabPanel";
 import TextField from "src/commons/TextField";
 import { ISaveSfrValues, SdrEsfrRecordDetailsStateType, SelectedSfrTab } from "src/commons/types";
-import { convertNumberText } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
 
 type DiscrepancyTabProps = {
@@ -92,7 +91,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                 {editable ? (
                   <SingleSelect
                     name="DiscrepancyDetails.DiscrepancyTypeId"
-                    value={values?.DiscrepancyDetails?.DiscrepancyTypeId || ""}
+                    value={values?.DiscrepancyDetails?.DiscrepancyTypeId}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={
@@ -128,7 +127,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                     {editable ? (
                       <SingleSelect
                         name="DiscrepancyDetails.CorrosionLevelId"
-                        value={values?.DiscrepancyDetails?.CorrosionLevelId || ""}
+                        value={values?.DiscrepancyDetails?.CorrosionLevelId}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
@@ -158,7 +157,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                     {editable ? (
                       <SingleSelect
                         name="DiscrepancyDetails.CorrosionExtentId"
-                        value={values?.DiscrepancyDetails?.CorrosionExtentId || ""}
+                        value={values?.DiscrepancyDetails?.CorrosionExtentId}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
@@ -188,7 +187,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                     {editable ? (
                       <SingleSelect
                         name="DiscrepancyDetails.CorrosionCauseId"
-                        value={values?.DiscrepancyDetails?.CorrosionCauseId || ""}
+                        value={values?.DiscrepancyDetails?.CorrosionCauseId}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
@@ -226,12 +225,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                       <TextField
                         name="DiscrepancyDetails.CrackLength"
                         value={values?.DiscrepancyDetails?.CrackLength || ""}
-                        onChange={(e) =>
-                          setFieldValue(
-                            "DiscrepancyDetails.CrackLength",
-                            convertNumberText(e.target.value)
-                          )
-                        }
+                        onChange={handleChange}
                         onBlur={handleBlur}
                         error={
                           !!touched?.DiscrepancyDetails?.CrackLength &&
@@ -286,12 +280,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                         <TextField
                           name="DiscrepancyDetails.NumberOfCracks"
                           value={values?.DiscrepancyDetails?.NumberOfCracks || ""}
-                          onChange={(e) =>
-                            setFieldValue(
-                              "DiscrepancyDetails.NumberOfCracks",
-                              convertNumberText(e.target.value)
-                            )
-                          }
+                          onChange={handleChange}
                           onBlur={handleBlur}
                           error={
                             !!touched?.DiscrepancyDetails?.NumberOfCracks &&
@@ -325,12 +314,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                       <TextField
                         name="DiscrepancyDetails.CrackLength"
                         value={values?.DiscrepancyDetails?.CrackLength || ""}
-                        onChange={(e) =>
-                          setFieldValue(
-                            "DiscrepancyDetails.CrackLength",
-                            convertNumberText(e.target.value)
-                          )
-                        }
+                        onChange={handleChange}
                         onBlur={handleBlur}
                         error={
                           !!touched?.DiscrepancyDetails?.CrackLength &&
@@ -356,12 +340,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                       <TextField
                         name="DiscrepancyDetails.CrackWidth"
                         value={values?.DiscrepancyDetails?.CrackWidth || ""}
-                        onChange={(e) =>
-                          setFieldValue(
-                            "DiscrepancyDetails.CrackWidth",
-                            convertNumberText(e.target.value)
-                          )
-                        }
+                        onChange={handleChange}
                         onBlur={handleBlur}
                         error={
                           !!touched?.DiscrepancyDetails?.CrackWidth &&
@@ -392,12 +371,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                     <TextField
                       name="DiscrepancyDetails.CrackDepth"
                       value={values?.DiscrepancyDetails?.CrackDepth || ""}
-                      onChange={(e) =>
-                        setFieldValue(
-                          "DiscrepancyDetails.CrackDepth",
-                          convertNumberText(e.target.value)
-                        )
-                      }
+                      onChange={handleChange}
                       onBlur={handleBlur}
                       error={
                         !!touched?.DiscrepancyDetails?.CrackDepth &&
@@ -459,7 +433,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                     name="DiscrepancyDetails.DiscrepancyPartDetails[0].DiscrepancyPartInformationCode"
                     value={
                       values?.DiscrepancyDetails?.DiscrepancyPartDetails?.[0]
-                        ?.DiscrepancyPartInformationCode || ""
+                        ?.DiscrepancyPartInformationCode
                     }
                     onChange={handleChange}
                     onBlur={handleBlur}

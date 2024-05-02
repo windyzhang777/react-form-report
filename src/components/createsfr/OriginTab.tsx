@@ -152,7 +152,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                   {editable ? (
                     <SingleSelect
                       name="OriginDetails.CalDocId"
-                      value={values?.OriginDetails?.CalDocId || ""}
+                      value={values?.OriginDetails?.CalDocId}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={
@@ -375,7 +375,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                   {editable ? (
                     <SingleSelect
                       name="OriginDetails.MfrSourceId"
-                      value={values?.OriginDetails?.MfrSourceId || ""}
+                      value={values?.OriginDetails?.MfrSourceId}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={
@@ -573,7 +573,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                   {editable ? (
                     <SingleSelect
                       name="OriginDetails.DetectionMethodId"
-                      value={values?.OriginDetails?.DetectionMethodId || ""}
+                      value={values?.OriginDetails?.DetectionMethodId}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={
@@ -641,7 +641,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                   {editable ? (
                     <SingleSelect
                       name="OriginDetails.UnscheduledInspectionTypeId"
-                      value={values?.OriginDetails?.UnscheduledInspectionTypeId || ""}
+                      value={values?.OriginDetails?.UnscheduledInspectionTypeId}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={
@@ -727,7 +727,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                   {editable ? (
                     <SingleSelect
                       name="OriginDetails.DetectionMethodId"
-                      value={values?.OriginDetails?.DetectionMethodId || ""}
+                      value={values?.OriginDetails?.DetectionMethodId}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={

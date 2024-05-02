@@ -15,7 +15,7 @@ import { resetLogpageDataSuccess } from "src/redux/ducks/getSdrEsfrRecordDetails
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { CreateSfrReq } from "src/types/CreateSfrReq";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
-import ValidationSchema, { errMsg } from "src/validationSchema";
+import ValidationSchema, { ValidationSchemaSFR, errMsg } from "src/validationSchema";
 import { array, number, object } from "yup";
 import "./createSfrData.css";
 
@@ -279,7 +279,7 @@ const CreateSfrData = ({
           }, 500);
         }}
         validationSchema={object().shape({
-          ...ValidationSchema,
+          ...ValidationSchemaSFR,
           LogPageNumber: ValidationSchema.LogPageNumber.required(errMsg.required),
           SdrDetails: object().shape({
             PrecautionaryProcedureIds: sdrRequired
