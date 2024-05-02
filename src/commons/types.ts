@@ -716,3 +716,21 @@ export const ZoneOptions: OptionDocument[] = [
     Id: 1,
   },
 ];
+
+export const PartTimeSinceCodeOptions: OptionDocument[] = [
+  {
+    Description: "Overhaul",
+    DisplayOrder: 1,
+    Id: 1,
+  },
+  {
+    Description: "Repair",
+    DisplayOrder: 2,
+    Id: 2,
+  },
+  {
+    Description: "Installed",
+    DisplayOrder: 3,
+    Id: 3,
+  },
+];

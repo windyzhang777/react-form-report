@@ -5,9 +5,14 @@ import { Dispatch, SetStateAction, useEffect, useMemo, useRef } from "react";
 import { FlexColumn } from "src/commons/Box";
 import ButtonGroup from "src/commons/ButtonGroup";
 import ListItem from "src/commons/ListItem";
-import { MultipleSelect, SingleSelect } from "src/commons/Select";
+import { MultipleSelect, SimpleSingleSelect, SingleSelect } from "src/commons/Select";
 import TextField from "src/commons/TextField";
-import { ISaveSdrValues, SdrEsfrRecordDetailsStateType, SelectedStatus } from "src/commons/types";
+import {
+  ISaveSdrValues,
+  PartTimeSinceCodeOptions,
+  SdrEsfrRecordDetailsStateType,
+  SelectedStatus,
+} from "src/commons/types";
 import {
   DATETIME_REQUEST,
   DATE_HTML_DISPLAY,
@@ -476,10 +481,10 @@ const CreateSdrData = ({
                     <ListItem>Date</ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                    <ListItem>Station</ListItem>
+                    <ListItem disabled>Station</ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                    <ListItem>A/C Number</ListItem>
+                    <ListItem disabled>A/C Number</ListItem>
                   </Grid>
                 </Grid>
                 <Grid className={"sdr-status-description"} container spacing={3}>
@@ -512,6 +517,7 @@ const CreateSdrData = ({
                     <ListItem>
                       {editable ? (
                         <TextField
+                          disabled
                           name="Station"
                           value={values.Station || ""}
                           onChange={handleChange}
@@ -529,6 +535,7 @@ const CreateSdrData = ({
                     <ListItem>
                       {editable ? (
                         <TextField
+                          disabled
                           name="AircraftNumber"
                           value={values.AircraftNumber || ""}
                           onChange={handleChange}
@@ -545,13 +552,13 @@ const CreateSdrData = ({
                 </Grid>
                 <Grid className={"sdr-status-item"} container spacing={3}>
                   <Grid item xs={4}>
-                    <ListItem>N-Number</ListItem>
+                    <ListItem disabled>N-Number</ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                    <ListItem>ATA Code</ListItem>
+                    <ListItem disabled>ATA Code</ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                    <ListItem>Flight Number</ListItem>
+                    <ListItem disabled>Flight Number</ListItem>
                   </Grid>
                 </Grid>
                 <Grid className={"sdr-status-description"} container spacing={3}>
@@ -559,6 +566,7 @@ const CreateSdrData = ({
                     <ListItem>
                       {editable ? (
                         <TextField
+                          disabled
                           name="AircraftDetails.RegistryNNumber"
                           value={values?.AircraftDetails?.RegistryNNumber || ""}
                           onChange={handleChange}
@@ -582,6 +590,7 @@ const CreateSdrData = ({
                     <ListItem>
                       {editable ? (
                         <TextField
+                          disabled
                           name="AtaCode"
                           value={values.AtaCode || ""}
                           onChange={handleChange}
@@ -599,6 +608,7 @@ const CreateSdrData = ({
                     <ListItem>
                       {editable ? (
                         <TextField
+                          disabled
                           name="FlightNumber"
                           value={values.FlightNumber || ""}
                           onChange={handleChange}
@@ -995,20 +1005,23 @@ const CreateSdrData = ({
                   <Grid item xs={4}>
                     <ListItem>
                       {editable ? (
-                        <TextField
+                        <SimpleSingleSelect
                           name="PartDetails.PartCycleSince"
-                          value={values?.PartDetails?.PartCycleSince}
+                          value={values?.PartDetails?.PartCycleSince || ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
                           error={
-                            !!touched.PartDetails?.PartCycleSince &&
-                            !!errors.PartDetails?.PartCycleSince
+                            !!touched?.PartDetails?.PartCycleSince &&
+                            !!errors?.PartDetails?.PartCycleSince
                           }
                           helperText={
-                            !!touched.PartDetails?.PartCycleSince &&
-                            errors.PartDetails?.PartCycleSince
+                            !!touched?.PartDetails?.PartCycleSince &&
+                            errors?.PartDetails?.PartCycleSince
                           }
-                          className={"sdr-status-edit"}
+                          options={PartTimeSinceCodeOptions.sort(
+                            (a, b) => a.DisplayOrder - b.DisplayOrder
+                          ).map((r) => r.Description)}
+                          id="PartDetails.PartCycleSince"
                         />
                       ) : (
                         values?.PartDetails?.PartCycleSince
