@@ -47,12 +47,12 @@ const TextFieldGroup = ({
               name={`${name}${i}`}
               placeholder={"x".repeat(maxAllowed?.[i - 1] || 4)}
               value={values?.[`${name}${i}`] || ""}
-              error={
-                values?.[`${name}${i}`].length < maxAllowed?.[i - 1] &&
-                path &&
-                errors &&
-                get(errors, path)
-              }
+              // error={
+              //   values?.[`${name}${i}`].length < maxAllowed?.[i - 1] &&
+              //   path &&
+              //   errors &&
+              //   get(errors, path)
+              // }
               inputProps={{
                 maxLength: maxAllowed?.[i - 1] || "unset",
               }}
