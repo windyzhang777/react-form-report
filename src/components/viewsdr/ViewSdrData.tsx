@@ -63,7 +63,7 @@ const ViewSdrData = ({
         OperatorType: "G",
         FAAReceivingRegionCode: "GL",
         ReceivingDistrictOffice: "33",
-        PartName: "",
+        PartName: detailsData?.SdrDetails?.PartDetails?.PartDescription || "",
         PartManufacturerName: "",
         PartNumber: detailsData?.SdrDetails?.PartDetails?.PartManufacturerSerialNumber || "",
         ComponentName: "",
@@ -145,10 +145,8 @@ const ViewSdrData = ({
         PartTimeSince: detailsData?.SdrDetails?.PartDetails?.PartTimeSince || "",
         PartCycleSince: detailsData?.SdrDetails?.PartDetails?.PartCycleSince || "",
       },
-      CreatedbyFirstName:
-        (isSdr ? detailsData?.CreatedbyFirstName : detailsData?.CreatedbyFirstName) || "",
-      CreatedbyLastName:
-        (isSdr ? detailsData?.CreatedbyLastName : detailsData?.CreatedbyLastName) || "",
+      CreatedbyFirstName: detailsData?.CreatedbyFirstName || "",
+      CreatedbyLastName: detailsData?.CreatedbyLastName || "",
       ModifiedbyFirstName: `${profileData?.FirstName}`,
       ModifiedbyLastName: `${profileData?.LastName}`,
       CreatedDate: moment(detailsData?.CreatedDate).format(DATETIME_REQUEST) || "",
