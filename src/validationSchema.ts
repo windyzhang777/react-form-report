@@ -130,8 +130,9 @@ export const ValidationSchemaSFR = {
   OriginDetails: object().shape({
     MfrSourceId: number(),
     MfrSourceIdentifier: string().when("MfrSourceId", {
-      is: (v: number) => !!v,
-      then: () =>
+      is: (v: number) => v === 1 || v === 3,
+      then: () => string().required(errMsg.required),
+      otherwise: () =>
         string().matches(regex.alphaNumeric, errMsg.alphaNumeric).required(errMsg.required),
     }),
     MfrSourceComments: string().when("MfrSourceId", {

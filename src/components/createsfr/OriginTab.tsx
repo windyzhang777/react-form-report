@@ -37,7 +37,7 @@ type OriginTabProps = {
 export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: OriginTabProps) => {
   const dispatch = useAppDispatch();
   const logPageNumberRef = useRef<HTMLInputElement>(null);
-  const { masterData, ctnData }: SdrEsfrRecordDetailsStateType = useAppSelector(
+  const { masterData, ctnData, logpageData }: SdrEsfrRecordDetailsStateType = useAppSelector(
     (state) => state.sdrEsfrRecordDetails
   );
   const { errors, handleBlur, handleChange, setFieldValue, touched } =
@@ -52,21 +52,31 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
   );
 
   const toggleSelect = () => {
-    dispatch(resetCtnDataSuccess());
-    setOpenSelect(!openSelectCtn);
+    if (logpageData) {
+      setOpenSelect(!openSelectCtn);
+      setFieldValue("searchDescription", "");
+    }
   };
 
+  useEffect(() => {
+    dispatch(resetCtnDataSuccess());
+  }, [values?.OriginDetails?.MfrSourceId, values?.OriginDetails?.MfrSourceIdentifier]);
+
   const handleGetData = () => {
-    switch (values?.OriginDetails?.MfrSourceId) {
-      case 1:
-        dispatch(getCtnData(values.FleetCode));
-        break;
-      case 2:
-      case 3:
-        dispatch(getSidData(values.FleetCode));
-        break;
-      default:
-        break;
+    if (logpageData) {
+      switch (values?.OriginDetails?.MfrSourceId) {
+        case 1:
+          logpageData?.FleetInfo?.SceptreCode &&
+            dispatch(getCtnData(logpageData.FleetInfo.SceptreCode));
+          break;
+        case 2:
+        case 3:
+          logpageData?.FleetInfo?.SceptreCode &&
+            dispatch(getSidData(logpageData.FleetInfo.SceptreCode));
+          break;
+        default:
+          break;
+      }
     }
   };
 
@@ -854,7 +864,18 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                   flex: 1,
                 },
               ]}
-              rows={ctnData!.FleetMasterResponse}
+              rows={
+                !values.searchDescription
+                  ? ctnData!.FleetMasterResponse
+                  : ctnData!.FleetMasterResponse.filter(
+                      (data) =>
+                        data.Code.toLowerCase().indexOf(values.searchDescription.toLowerCase()) >=
+                          0 ||
+                        data.Description.toLowerCase().indexOf(
+                          values.searchDescription.toLowerCase()
+                        ) >= 0
+                    )
+              }
               disableColumnMenu
               disableRowSelectionOnClick
               onCellClick={(data: GridCellParams) => {
