@@ -7,7 +7,11 @@ import TabPanel from "src/commons/TabPanel";
 import TextField from "src/commons/TextField";
 import { ISaveSfrValues, SdrEsfrRecordDetailsStateType, SelectedSfrTab } from "src/commons/types";
 import { useAppSelector } from "src/redux/hooks";
-import { removeNonAlphaNumeric, removeNonNumeric } from "src/validationSchema";
+import {
+  removeNonAlphaNumeric,
+  removeNonNumeric,
+  removeNonNumericDecimal,
+} from "src/validationSchema";
 
 type DiscrepancyTabProps = {
   editable: boolean;
@@ -229,7 +233,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                         onChange={(e) =>
                           setFieldValue(
                             "DiscrepancyDetails.CrackLength",
-                            removeNonNumeric(e.target.value)
+                            removeNonNumericDecimal(e.target.value)
                           )
                         }
                         onBlur={handleBlur}
@@ -328,7 +332,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                         onChange={(e) =>
                           setFieldValue(
                             "DiscrepancyDetails.CrackLength",
-                            removeNonNumeric(e.target.value)
+                            removeNonNumericDecimal(e.target.value)
                           )
                         }
                         onBlur={handleBlur}
@@ -359,7 +363,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                         onChange={(e) =>
                           setFieldValue(
                             "DiscrepancyDetails.CrackWidth",
-                            removeNonNumeric(e.target.value)
+                            removeNonNumericDecimal(e.target.value)
                           )
                         }
                         onBlur={handleBlur}
@@ -395,7 +399,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                       onChange={(e) =>
                         setFieldValue(
                           "DiscrepancyDetails.CrackDepth",
-                          removeNonNumeric(e.target.value)
+                          removeNonNumericDecimal(e.target.value)
                         )
                       }
                       onBlur={handleBlur}
