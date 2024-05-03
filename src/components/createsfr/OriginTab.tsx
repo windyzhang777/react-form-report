@@ -26,6 +26,7 @@ import {
   resetCtnDataSuccess,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
+import { removeNonAlphaNumeric } from "src/validationSchema";
 
 type OriginTabProps = {
   editable: boolean;
@@ -248,7 +249,12 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                       <TextField
                         name="OriginDetails.CalDocIdentifier"
                         value={values?.OriginDetails?.CalDocIdentifier || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "OriginDetails.CalDocIdentifier",
+                            removeNonAlphaNumeric(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched?.OriginDetails?.CalDocIdentifier &&
@@ -276,7 +282,12 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                       <TextField
                         name="OriginDetails.CalDocIdentifier"
                         value={values?.OriginDetails?.CalDocIdentifier || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "OriginDetails.CalDocIdentifier",
+                            removeNonAlphaNumeric(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched?.OriginDetails?.CalDocIdentifier &&
@@ -431,7 +442,12 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                       <TextField
                         name="OriginDetails.MfrSourceIdentifier"
                         value={values?.OriginDetails?.MfrSourceIdentifier || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "OriginDetails.MfrSourceIdentifier",
+                            removeNonAlphaNumeric(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched?.OriginDetails?.MfrSourceIdentifier &&
@@ -485,7 +501,12 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                       <TextField
                         name="OriginDetails.MfrSourceIdentifier"
                         value={values?.OriginDetails?.MfrSourceIdentifier || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "OriginDetails.MfrSourceIdentifier",
+                            removeNonAlphaNumeric(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched?.OriginDetails?.MfrSourceIdentifier &&
