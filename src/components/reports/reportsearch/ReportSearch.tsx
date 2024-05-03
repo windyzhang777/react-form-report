@@ -76,7 +76,7 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                 <ListItem>
                   <SingleSelect
                     name="reportStatus"
-                    value={values.reportStatus}
+                    value={values.reportStatus || ""}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.reportStatus && !!errors.reportStatus}
@@ -94,7 +94,7 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                   <SimpleSingleSelect
                     defaultValue="All"
                     name="reportType"
-                    value={values.reportType}
+                    value={values.reportType || ""}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.reportType && !!errors.reportType}

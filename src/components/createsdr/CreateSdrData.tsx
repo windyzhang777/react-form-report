@@ -1010,7 +1010,7 @@ const CreateSdrData = ({
                       {editable ? (
                         <SimpleSingleSelect
                           name="PartDetails.PartCycleSince"
-                          value={values?.PartDetails?.PartCycleSince}
+                          value={values?.PartDetails?.PartCycleSince || ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
                           error={

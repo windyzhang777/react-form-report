@@ -610,7 +610,7 @@ const ViewSnapshotData = ({
                         {editable ? (
                           <SingleSelect
                             name="StageId"
-                            value={values?.StageId}
+                            value={values?.StageId || ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={!!touched?.StageId && !!errors?.StageId}
@@ -632,7 +632,7 @@ const ViewSnapshotData = ({
                         {editable ? (
                           <SingleSelect
                             name="HowDiscoveredId"
-                            value={values?.HowDiscoveredId}
+                            value={values?.HowDiscoveredId || ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={!!touched?.HowDiscoveredId && !!errors?.HowDiscoveredId}
@@ -1517,7 +1517,7 @@ const ViewSnapshotData = ({
                         {editable ? (
                           <SingleSelect
                             name="SfrAdditionalDetails.CorrisionLevel"
-                            value={values?.SfrAdditionalDetails?.CorrisionLevel}
+                            value={values?.SfrAdditionalDetails?.CorrisionLevel || ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1714,7 +1714,7 @@ const ViewSnapshotData = ({
                         {editable ? (
                           <SimpleSingleSelect
                             name="SfrAdditionalDetails.StringerFromSide"
-                            value={values?.SfrAdditionalDetails?.StringerFromSide}
+                            value={values?.SfrAdditionalDetails?.StringerFromSide || ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1774,7 +1774,7 @@ const ViewSnapshotData = ({
                         {editable ? (
                           <SimpleSingleSelect
                             name="SfrAdditionalDetails.StringerToSide"
-                            value={values?.SfrAdditionalDetails?.StringerToSide}
+                            value={values?.SfrAdditionalDetails?.StringerToSide || ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1845,7 +1845,7 @@ const ViewSnapshotData = ({
                         {editable ? (
                           <SimpleSingleSelect
                             name="SfrAdditionalDetails.ButtlineFromSide"
-                            value={values?.SfrAdditionalDetails?.ButtlineFromSide}
+                            value={values?.SfrAdditionalDetails?.ButtlineFromSide || ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1905,7 +1905,7 @@ const ViewSnapshotData = ({
                         {editable ? (
                           <SimpleSingleSelect
                             name="SfrAdditionalDetails.ButtlineToSide"
-                            value={values?.SfrAdditionalDetails?.ButtlineToSide}
+                            value={values?.SfrAdditionalDetails?.ButtlineToSide || ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1976,7 +1976,7 @@ const ViewSnapshotData = ({
                         {editable ? (
                           <SimpleSingleSelect
                             name="SfrAdditionalDetails.WingStationFromSide"
-                            value={values?.SfrAdditionalDetails?.WingStationFromSide}
+                            value={values?.SfrAdditionalDetails?.WingStationFromSide || ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -2036,7 +2036,7 @@ const ViewSnapshotData = ({
                         {editable ? (
                           <SimpleSingleSelect
                             name="SfrAdditionalDetails.WingStationToSide"
-                            value={values?.SfrAdditionalDetails?.WingStationToSide}
+                            value={values?.SfrAdditionalDetails?.WingStationToSide || ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
