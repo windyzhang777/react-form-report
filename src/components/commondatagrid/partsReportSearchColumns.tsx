@@ -84,7 +84,7 @@ export const partsReportSearchColumns = (): GridColDef<GetPartsDiscrepancyReport
       valueGetter: ({ value }) => (value ? `=TEXT(${value},"0000")` : value),
     },
     {
-      field: "defectDescription",
+      field: "DefectDescription",
       headerName: "Defect Description",
       sortable: false,
       minWidth: 120,
@@ -96,13 +96,13 @@ export const partsReportSearchColumns = (): GridColDef<GetPartsDiscrepancyReport
       minWidth: 200,
     },
     {
-      field: "partName",
+      field: "PartName",
       headerName: "Part Name",
       sortable: false,
       minWidth: 120,
     },
     {
-      field: "partNumber",
+      field: "PartNumber",
       headerName: "Part Number",
       sortable: false,
       minWidth: 120,
