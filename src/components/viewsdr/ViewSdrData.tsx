@@ -1011,6 +1011,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="PartDetails.PartTotalTime"
+                            type="number"
                             value={values?.PartDetails?.PartTotalTime}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -1035,6 +1036,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="PartDetails.PartTotalCycles"
+                            type="number"
                             value={values?.PartDetails?.PartTotalCycles}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -1059,6 +1061,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="PartDetails.PartTimeSince"
+                            type="number"
                             value={values?.PartDetails?.PartTimeSince}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -1324,6 +1327,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="ComponentDetails.PartTotalTime"
+                            type="number"
                             value={values?.ComponentDetails?.PartTotalTime}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -1348,6 +1352,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="ComponentDetails.PartTotalCycles"
+                            type="number"
                             value={values?.ComponentDetails?.PartTotalCycles}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -1372,6 +1377,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="ComponentDetails.PartTimeSince"
+                            type="number"
                             value={values?.ComponentDetails?.PartTimeSince}
                             onChange={handleChange}
                             onBlur={handleBlur}

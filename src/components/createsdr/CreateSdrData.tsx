@@ -925,6 +925,7 @@ const CreateSdrData = ({
                       {editable ? (
                         <TextField
                           name="PartDetails.PartTotalTime"
+                          type="number"
                           value={values?.PartDetails?.PartTotalTime}
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -962,6 +963,7 @@ const CreateSdrData = ({
                       {editable ? (
                         <TextField
                           name="PartDetails.PartTotalCycles"
+                          type="number"
                           value={values?.PartDetails?.PartTotalCycles}
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -986,6 +988,7 @@ const CreateSdrData = ({
                       {editable ? (
                         <TextField
                           name="PartDetails.PartTimeSince"
+                          type="number"
                           value={values?.PartDetails?.PartTimeSince}
                           onChange={handleChange}
                           onBlur={handleBlur}
