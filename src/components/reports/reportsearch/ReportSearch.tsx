@@ -7,7 +7,11 @@ import { SimpleSingleSelect, SingleSelect } from "src/commons/Select";
 import TextField from "src/commons/TextField";
 import { IReportSearchValues, ReportStatus, ReportType } from "src/commons/types";
 import { DATE_HTML_DISPLAY } from "src/helpers";
-import ValidationSchema from "src/validationSchema";
+import ValidationSchema, {
+  commonSchema,
+  removeNonAlphabet,
+  removeNonNumeric,
+} from "src/validationSchema";
 import { object } from "yup";
 
 export interface IReportSearchProps {
@@ -53,6 +57,7 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
         }}
         validationSchema={object().shape({
           ...ValidationSchema,
+          logPageNumber: commonSchema.upToNum(7),
           auditNumber: ValidationSchema.OperatorControlNumber,
           aircraftNumber: ValidationSchema.AircraftNumber,
           station: ValidationSchema.Station,
@@ -76,7 +81,7 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                 <ListItem>
                   <SingleSelect
                     name="reportStatus"
-                    value={values.reportStatus || ""}
+                    value={values.reportStatus || 0}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.reportStatus && !!errors.reportStatus}
@@ -185,7 +190,9 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                     placeholder="All"
                     name="logPageNumber"
                     value={values.logPageNumber}
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setFieldValue("logPageNumber", removeNonNumeric(e.target.value))
+                    }
                     onBlur={handleBlur}
                     error={!!touched.logPageNumber && !!errors.logPageNumber}
                     helperText={!!touched.logPageNumber && errors.logPageNumber}
@@ -217,7 +224,9 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                     placeholder="All"
                     name="aircraftNumber"
                     value={values.aircraftNumber}
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setFieldValue("aircraftNumber", removeNonNumeric(e.target.value))
+                    }
                     onBlur={handleBlur}
                     error={!!touched.aircraftNumber && !!errors.aircraftNumber}
                     helperText={!!touched.aircraftNumber && errors.aircraftNumber}
@@ -233,7 +242,7 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                     placeholder="All"
                     name="station"
                     value={values.station}
-                    onChange={handleChange}
+                    onChange={(e) => setFieldValue("station", removeNonAlphabet(e.target.value))}
                     onBlur={handleBlur}
                     error={!!touched.station && !!errors.station}
                     helperText={!!touched.station && errors.station}

@@ -1,10 +1,11 @@
 import { FormHelperText } from "@mui/material";
-import { FormikErrors, FormikTouched } from "formik";
+import { FormikErrors, FormikTouched, useFormikContext } from "formik";
 import { get } from "lodash";
 import { ChangeEventHandler, FocusEventHandler, Fragment } from "react";
 import { FlexColumn, FlexRow } from "src/commons/Box";
 import TextField, { ICommonTextFieldProps } from "src/commons/TextField";
 import { ISaveSfrValues } from "src/commons/types";
+import { removeNonAlphaNumeric } from "src/validationSchema";
 
 export interface ITextFieldGroupProps extends Partial<ICommonTextFieldProps> {
   count: number;
@@ -25,11 +26,14 @@ const TextFieldGroup = ({
   errors,
   maxAllowed,
   name,
+  onChange,
   path,
   touched,
   values,
   ...props
 }: ITextFieldGroupProps) => {
+  const { setFieldValue } = useFormikContext<ISaveSfrValues>();
+
   const error = Array.from({ length: count }, (_, i) => i + 1).some(
     (i) =>
       touched?.[`${name}${i}`] && (errors?.[`${name}${i}`] || (path && errors && get(errors, path)))
@@ -47,6 +51,7 @@ const TextFieldGroup = ({
               name={`${name}${i}`}
               placeholder={"x".repeat(maxAllowed?.[i - 1] || 4)}
               value={values?.[`${name}${i}`] || ""}
+              onChange={(e) => setFieldValue(`${name}${i}`, removeNonAlphaNumeric(e.target.value))}
               // error={
               //   values?.[`${name}${i}`].length < maxAllowed?.[i - 1] &&
               //   path &&
