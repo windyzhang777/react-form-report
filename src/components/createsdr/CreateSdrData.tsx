@@ -63,7 +63,7 @@ const CreateSdrData = ({
         SubmitterDesignator: "CALA",
         SubmitterType: "A",
         OperatorDesignator: "CALA",
-        OperatorType: "",
+        OperatorType: "A",
         FAAReceivingRegionCode: "GL",
         ReceivingDistrictOffice: "33",
         PartName: "",
