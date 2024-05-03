@@ -147,12 +147,10 @@ export const ValidationSchemaSFR = {
       otherwise: () => commonSchema.upTo(100),
     }),
     CalDocId: number(),
-    CalDocIdentifier: string()
-      .when("CalDocId", {
-        is: (v: number) => !!v,
-        then: () => commonSchema.hasValues,
-      })
-      .test("textGroup", errMsg.notValidValue, (value, validationContext) => {
+    CalDocIdentifier: string().test(
+      "textGroup",
+      errMsg.notValidValue,
+      (value, validationContext) => {
         const {
           parent: { CalDocId },
         } = validationContext;
@@ -167,7 +165,8 @@ export const ValidationSchemaSFR = {
           return regex.DIP.test(value);
         }
         return true;
-      }),
+      }
+    ),
     // .when("CalDocId", {
     //   is: (v: number) => v === 4 || v === 5,
     //   then: () => commonSchema.upTo(7),
