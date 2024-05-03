@@ -298,7 +298,7 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                           )
                         }
                         id="SdrDetails.PrecautionaryProcedureIds"
-                        maxAllowed={3}
+                        maxAllowed={4}
                       />
                     ) : (
                       ""
