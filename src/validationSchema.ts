@@ -131,7 +131,7 @@ export const ValidationSchemaSFR = {
     MfrSourceId: number(),
     MfrSourceIdentifier: string().when("MfrSourceId", {
       is: (v: number) => v === 1 || v === 3,
-      then: () => string().required(errMsg.required),
+      then: (schema) => schema.required(errMsg.required),
       otherwise: () =>
         string().matches(regex.alphaNumeric, errMsg.alphaNumeric).required(errMsg.required),
     }),

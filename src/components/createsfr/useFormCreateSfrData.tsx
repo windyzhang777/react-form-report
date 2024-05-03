@@ -41,7 +41,11 @@ export const useFormCreateSfrData = () => {
 
   useEffect(() => {
     setFieldValue("OriginDetails.MfrSourceIdentifier", "");
+    setFieldTouched("OriginDetails.MfrSourceIdentifier", false);
+    setFieldError("OriginDetails.MfrSourceIdentifier", "");
     setFieldValue("OriginDetails.MfrSourceComments", "");
+    setFieldTouched("OriginDetails.MfrSourceComments", false);
+    setFieldError("OriginDetails.MfrSourceComments", "");
   }, [values?.OriginDetails?.MfrSourceId]);
 
   useEffect(() => {

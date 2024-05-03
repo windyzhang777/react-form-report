@@ -1,5 +1,5 @@
-import { Button, Grid, Typography } from "@mui/material";
-import { GridCellParams } from "@mui/x-data-grid";
+import { Button, Grid, Radio, Typography } from "@mui/material";
+import { GridRowSelectionModel } from "@mui/x-data-grid";
 import { useFormikContext } from "formik";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FlexRow, InfoBox, WarningBox } from "src/commons/Box";
@@ -44,6 +44,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
     useFormikContext<ISaveSfrValues>();
   const { values } = useFormCreateSfrData();
   const [openSelectCtn, setOpenSelect] = useState<boolean>(false);
+  const [selectionModel, setSelectionModel] = useState<GridRowSelectionModel>([]);
   const selectedMFRSource = useMemo(
     () =>
       masterData?.MfrSources?.find((m) => m.Id === values?.OriginDetails?.MfrSourceId)
@@ -53,14 +54,22 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
 
   const toggleSelect = () => {
     if (logpageData) {
-      setOpenSelect(!openSelectCtn);
-      setFieldValue("searchDescription", "");
+      setOpenSelect((prev) => {
+        if (prev) {
+          setFieldValue("searchDescription", "");
+        }
+        if (!prev && !ctnData) {
+          handleGetData();
+        }
+        return !prev;
+      });
     }
   };
 
   useEffect(() => {
+    setSelectionModel([]);
     dispatch(resetCtnDataSuccess());
-  }, [values?.OriginDetails?.MfrSourceId, values?.OriginDetails?.MfrSourceIdentifier]);
+  }, [values?.OriginDetails?.MfrSourceId]);
 
   const handleGetData = () => {
     if (logpageData) {
@@ -850,6 +859,14 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
           ) : (
             <DataGrid
               className="!h-[400px]"
+              sx={{
+                "& .MuiDataGrid-columnHeaderCheckbox .MuiDataGrid-columnHeaderTitleContainer": {
+                  display: "none",
+                },
+              }}
+              slots={{
+                baseCheckbox: (props) => <Radio {...props} />,
+              }}
               columns={[
                 {
                   field: "Code",
@@ -878,22 +895,39 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
               }
               disableColumnMenu
               disableRowSelectionOnClick
-              onCellClick={(data: GridCellParams) => {
-                setFieldValue("OriginDetails.MfrSourceIdentifier", data?.row?.Code);
-                toggleSelect();
-              }}
+              // onCellClick={(data: GridCellParams) => {
+              //   setFieldValue("OriginDetails.MfrSourceIdentifier", data?.row?.Code);
+              //   setSelectedData(data?.row?.Code);
+              //   toggleSelect();
+              // }}
               getRowId={(row) => row.Code}
               getRowClassName={(params) =>
                 params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd"
               }
               hideFooter
+              checkboxSelection
+              rowSelectionModel={selectionModel}
+              hideFooterSelectedRowCount
+              onRowSelectionModelChange={(sdrIds) => {
+                if (sdrIds.length > 1) {
+                  const selectionSet = new Set(selectionModel);
+                  const result = sdrIds.filter((s) => !selectionSet.has(s));
+                  setSelectionModel(result);
+                } else {
+                  setSelectionModel(sdrIds);
+                }
+              }}
             />
           )}
           <ButtonGroup
             className="justify-end mt-4"
             primaryLabel="Select"
             secondaryLabel="Cancel"
-            primaryOnClick={handleGetData}
+            primaryDisabled={!selectionModel?.[0]}
+            primaryOnClick={() => {
+              setFieldValue("OriginDetails.MfrSourceIdentifier", selectionModel[0]);
+              toggleSelect();
+            }}
             secondaryOnClick={toggleSelect}
           />
         </Modal>
