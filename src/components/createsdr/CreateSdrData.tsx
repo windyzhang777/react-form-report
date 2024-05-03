@@ -23,7 +23,7 @@ import {
 import { resetLogpageDataSuccess } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
-import ValidationSchema, { errMsg } from "src/validationSchema";
+import ValidationSchema, { errMsg, removeNonNumericDecimal } from "src/validationSchema";
 import { object, string } from "yup";
 import "./createSdrData.css";
 
@@ -927,7 +927,12 @@ const CreateSdrData = ({
                           name="PartDetails.PartTotalTime"
                           type="number"
                           value={values?.PartDetails?.PartTotalTime}
-                          onChange={handleChange}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "PartDetails.PartTotalTime",
+                              removeNonNumericDecimal(e.target.value)
+                            )
+                          }
                           onBlur={handleBlur}
                           error={
                             !!touched.PartDetails?.PartTotalTime &&
@@ -965,7 +970,12 @@ const CreateSdrData = ({
                           name="PartDetails.PartTotalCycles"
                           type="number"
                           value={values?.PartDetails?.PartTotalCycles}
-                          onChange={handleChange}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "PartDetails.PartTotalCycles",
+                              removeNonNumericDecimal(e.target.value)
+                            )
+                          }
                           onBlur={handleBlur}
                           error={
                             !!touched.PartDetails?.PartTotalCycles &&
@@ -990,7 +1000,12 @@ const CreateSdrData = ({
                           name="PartDetails.PartTimeSince"
                           type="number"
                           value={values?.PartDetails?.PartTimeSince}
-                          onChange={handleChange}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "PartDetails.PartTimeSince",
+                              removeNonNumericDecimal(e.target.value)
+                            )
+                          }
                           onBlur={handleBlur}
                           error={
                             !!touched.PartDetails?.PartTimeSince &&

@@ -19,8 +19,8 @@ export const regex = {
   numberD3: /^(0|[1-9]\d*)(?:\.\d{1,3})?$/,
   alphaNumeric: /^[a-zA-Z0-9\s.]+$/,
   nonAlphaNumeric: /[^a-zA-Z0-9]/gi,
-  nonNumericDecimal: /[^0-9.]/gi,
   nonNumeric: /[^0-9]/gi,
+  nonNumericDecimal: /[^0-9.]/gi,
   nonAlphabetic: /[^a-zA-Z]/gi,
   hasValue: /^[a-zA-Z0-9]+$/,
   numOnly: /^(0|[1-9]\d*)(?:\.\d{1,3})?$/,
@@ -28,8 +28,8 @@ export const regex = {
 };
 
 export const removeNonAlphaNumeric = (text: string) => text.replace(regex.nonAlphaNumeric, "");
-export const removeNonNumericDecimal = (text: string) => text.replace(regex.nonNumericDecimal, "");
 export const removeNonNumeric = (text: string) => text.replace(regex.nonNumeric, "");
+export const removeNonNumericDecimal = (text: string) => text.replace(regex.nonNumericDecimal, "");
 export const removeNonAlphabet = (text: string) => text.replace(regex.nonAlphabetic, "");
 
 export const errMsg = {
