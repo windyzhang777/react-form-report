@@ -52,12 +52,13 @@ const TextFieldGroup = ({
               placeholder={"x".repeat(maxAllowed?.[i - 1] || 4)}
               value={values?.[`${name}${i}`] || ""}
               onChange={(e) => setFieldValue(`${name}${i}`, removeNonAlphaNumeric(e.target.value))}
-              // error={
-              //   values?.[`${name}${i}`].length < maxAllowed?.[i - 1] &&
-              //   path &&
-              //   errors &&
-              //   get(errors, path)
-              // }
+              error={
+                touched?.[`${name}${i}`] &&
+                values?.[`${name}${i}`].length < maxAllowed?.[i - 1] &&
+                path &&
+                errors &&
+                get(errors, path)
+              }
               inputProps={{
                 maxLength: maxAllowed?.[i - 1] || "unset",
               }}
