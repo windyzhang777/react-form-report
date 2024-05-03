@@ -112,7 +112,7 @@ const DiscrepancyPartsReportSearch = ({
                   <SingleSelect
                     defaultValue="All"
                     name="discrepancyType"
-                    value={values.discrepancyType}
+                    value={values.discrepancyType || ""}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.discrepancyType && !!errors.discrepancyType}
@@ -133,7 +133,7 @@ const DiscrepancyPartsReportSearch = ({
                   <SingleSelect
                     defaultValue="All"
                     name="discrepancyParts"
-                    value={values.discrepancyParts}
+                    value={values.discrepancyParts || ""}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.discrepancyParts && !!errors.discrepancyParts}

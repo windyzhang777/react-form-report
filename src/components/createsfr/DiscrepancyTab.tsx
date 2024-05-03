@@ -91,7 +91,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                 {editable ? (
                   <SingleSelect
                     name="DiscrepancyDetails.DiscrepancyTypeId"
-                    value={values?.DiscrepancyDetails?.DiscrepancyTypeId}
+                    value={values?.DiscrepancyDetails?.DiscrepancyTypeId || ""}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={
@@ -127,7 +127,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                     {editable ? (
                       <SingleSelect
                         name="DiscrepancyDetails.CorrosionLevelId"
-                        value={values?.DiscrepancyDetails?.CorrosionLevelId}
+                        value={values?.DiscrepancyDetails?.CorrosionLevelId || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
@@ -157,7 +157,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                     {editable ? (
                       <SingleSelect
                         name="DiscrepancyDetails.CorrosionExtentId"
-                        value={values?.DiscrepancyDetails?.CorrosionExtentId}
+                        value={values?.DiscrepancyDetails?.CorrosionExtentId || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
@@ -187,7 +187,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                     {editable ? (
                       <SingleSelect
                         name="DiscrepancyDetails.CorrosionCauseId"
-                        value={values?.DiscrepancyDetails?.CorrosionCauseId}
+                        value={values?.DiscrepancyDetails?.CorrosionCauseId || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
@@ -433,7 +433,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                     name="DiscrepancyDetails.DiscrepancyPartDetails[0].DiscrepancyPartInformationCode"
                     value={
                       values?.DiscrepancyDetails?.DiscrepancyPartDetails?.[0]
-                        ?.DiscrepancyPartInformationCode
+                        ?.DiscrepancyPartInformationCode || ""
                     }
                     onChange={handleChange}
                     onBlur={handleBlur}

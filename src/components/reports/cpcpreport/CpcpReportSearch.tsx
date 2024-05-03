@@ -157,7 +157,7 @@ const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearch
                   <SingleSelect
                     defaultValue="All"
                     name="corrosionLevel"
-                    value={values.corrosionLevel}
+                    value={values.corrosionLevel || ""}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={!!touched.corrosionLevel && !!errors.corrosionLevel}
