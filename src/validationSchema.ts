@@ -7,20 +7,30 @@ export const regex = {
   AircraftNumber: /^[0-9]{4}$/,
   AtaCode: /^[a-zA-Z0-9]{1,4}$/,
   OperatorControlNumber: /^[a-zA-Z0-9]{0,20}$/,
-  WorkCard: /^[a-zA-Z1-9]{2}-[a-zA-Z1-9]{4}-1-[a-zA-Z1-9]{4}/,
-  FCD: /^[a-zA-Z1-9]{4}-[a-zA-Z1-9]{5}/,
-  DIP: /^[a-zA-Z1-9]{7}/,
-  Spec: /^[a-zA-Z1-9]{4}-[a-zA-Z1-9]{2}-[a-zA-Z1-9]{1}-[a-zA-Z1-9]{4}/,
-  AMM: /^[a-zA-Z1-9]{2}-[a-zA-Z1-9]{2}-[a-zA-Z1-9]{2}/,
-  RepairECRA: /^[a-zA-Z1-9]{4}-[a-zA-Z1-9]{5}/,
-  Fig: /^[a-zA-Z1-9]{3}/,
+  WorkCard: /^[a-zA-Z0-9]{2}-[a-zA-Z0-9]{4}-1-[a-zA-Z0-9]{4}/,
+  FCD: /^[a-zA-Z0-9]{4}-[a-zA-Z0-9]{5}/,
+  DIP: /^[a-zA-Z0-9]{7}/,
+  Spec: /^[a-zA-Z0-9]{4}-[a-zA-Z0-9]{2}-[a-zA-Z0-9]{1}-[a-zA-Z0-9]{4}/,
+  AMM: /^[a-zA-Z0-9]{2}-[a-zA-Z0-9]{2}-[a-zA-Z0-9]{2}/,
+  RepairECRA: /^[a-zA-Z0-9]{4}-[a-zA-Z0-9]{5}/,
+  Fig: /^[a-zA-Z0-9]{3}/,
   // common
   number7D3: /^(0|[1-9]{1,7})(?:\.\d{1,3})?$/,
   numberD3: /^(0|[1-9]\d*)(?:\.\d{1,3})?$/,
-  alphaNumeric: /^[a-zA-Z0-9.]+$/,
+  alphaNumeric: /^[a-zA-Z0-9\s.]+$/,
+  nonAlphaNumeric: /[^a-zA-Z0-9]/gi,
+  nonNumeric: /[^0-9]/gi,
+  nonNumericDecimal: /[^0-9.]/gi,
+  nonAlphabetic: /[^a-zA-Z]/gi,
   hasValue: /^[a-zA-Z0-9]+$/,
   numOnly: /^(0|[1-9]\d*)(?:\.\d{1,3})?$/,
+  intOnly: /^([1-9]\d*)$/,
 };
+
+export const removeNonAlphaNumeric = (text: string) => text.replace(regex.nonAlphaNumeric, "");
+export const removeNonNumeric = (text: string) => text.replace(regex.nonNumeric, "");
+export const removeNonNumericDecimal = (text: string) => text.replace(regex.nonNumericDecimal, "");
+export const removeNonAlphabet = (text: string) => text.replace(regex.nonAlphabetic, "");
 
 export const errMsg = {
   alphaNumeric: "Alpha-numeric characters only",
@@ -30,6 +40,7 @@ export const errMsg = {
   posInt: "Positive integer only",
   noFuture: "Cannot use future date",
   upTo: (count: number) => "Up to " + count + " alpha-numeric characters",
+  upToNum: (count: number) => "Up to " + count + " numbers",
 };
 
 export const commonSchema = {
@@ -37,6 +48,7 @@ export const commonSchema = {
   hasValues: string().min(2, errMsg.required).matches(regex.hasValue, errMsg.notValidValue),
   numOnly: string().matches(regex.numOnly, errMsg.notValidNum),
   upTo: (count: number) => string().matches(regex.alphaNumeric, errMsg.upTo(count)),
+  upToNum: (count: number) => string().matches(regex.numOnly, errMsg.upToNum(count)),
   numberD3: string().matches(regex.numberD3, errMsg.notValidNum),
   intOnly: number()
     .typeError(errMsg.posInt)
@@ -107,11 +119,7 @@ export const ValidationSchema = {
     PartTimeSince: commonSchema.numberD3,
   }),
   SfrAdditionalDetails: object().shape({
-    NumberOfCracks: number()
-      .typeError(errMsg.posInt)
-      .integer(errMsg.notValidValue)
-      .min(0, errMsg.notValidValue)
-      .max(255, errMsg.notValidValue),
+    NumberOfCracks: commonSchema.intOnly,
     CrackLength: string().matches(regex.number7D3, errMsg.notValidNum),
     OperatorType: string().trim().matches(regex.hasValue, errMsg.notValidNum),
     SubmitterType: string().trim().matches(regex.hasValue, errMsg.notValidValue),
@@ -122,8 +130,9 @@ export const ValidationSchemaSFR = {
   OriginDetails: object().shape({
     MfrSourceId: number(),
     MfrSourceIdentifier: string().when("MfrSourceId", {
-      is: (v: number) => !!v,
-      then: () =>
+      is: (v: number) => v === 1 || v === 3,
+      then: (schema) => schema.required(errMsg.required),
+      otherwise: () =>
         string().matches(regex.alphaNumeric, errMsg.alphaNumeric).required(errMsg.required),
     }),
     MfrSourceComments: string().when("MfrSourceId", {

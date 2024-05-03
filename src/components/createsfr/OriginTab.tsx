@@ -1,5 +1,5 @@
-import { Button, Grid, Typography } from "@mui/material";
-import { GridCellParams } from "@mui/x-data-grid";
+import { Button, Grid, Radio, Typography } from "@mui/material";
+import { GridRowSelectionModel } from "@mui/x-data-grid";
 import { useFormikContext } from "formik";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FlexRow, InfoBox, WarningBox } from "src/commons/Box";
@@ -26,6 +26,7 @@ import {
   resetCtnDataSuccess,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
+import { removeNonAlphaNumeric } from "src/validationSchema";
 
 type OriginTabProps = {
   editable: boolean;
@@ -36,13 +37,14 @@ type OriginTabProps = {
 export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: OriginTabProps) => {
   const dispatch = useAppDispatch();
   const logPageNumberRef = useRef<HTMLInputElement>(null);
-  const { masterData, ctnData }: SdrEsfrRecordDetailsStateType = useAppSelector(
+  const { masterData, ctnData, logpageData }: SdrEsfrRecordDetailsStateType = useAppSelector(
     (state) => state.sdrEsfrRecordDetails
   );
   const { errors, handleBlur, handleChange, setFieldValue, touched } =
     useFormikContext<ISaveSfrValues>();
   const { values } = useFormCreateSfrData();
   const [openSelectCtn, setOpenSelect] = useState<boolean>(false);
+  const [selectionModel, setSelectionModel] = useState<GridRowSelectionModel>([]);
   const selectedMFRSource = useMemo(
     () =>
       masterData?.MfrSources?.find((m) => m.Id === values?.OriginDetails?.MfrSourceId)
@@ -51,21 +53,39 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
   );
 
   const toggleSelect = () => {
-    dispatch(resetCtnDataSuccess());
-    setOpenSelect(!openSelectCtn);
+    if (logpageData) {
+      setOpenSelect((prev) => {
+        if (prev) {
+          setFieldValue("searchDescription", "");
+        }
+        if (!prev && !ctnData) {
+          handleGetData();
+        }
+        return !prev;
+      });
+    }
   };
 
+  useEffect(() => {
+    setSelectionModel([]);
+    dispatch(resetCtnDataSuccess());
+  }, [values?.OriginDetails?.MfrSourceId]);
+
   const handleGetData = () => {
-    switch (values?.OriginDetails?.MfrSourceId) {
-      case 1:
-        dispatch(getCtnData(values.FleetCode));
-        break;
-      case 2:
-      case 3:
-        dispatch(getSidData(values.FleetCode));
-        break;
-      default:
-        break;
+    if (logpageData) {
+      switch (values?.OriginDetails?.MfrSourceId) {
+        case 1:
+          logpageData?.FleetInfo?.SceptreCode &&
+            dispatch(getCtnData(logpageData.FleetInfo.SceptreCode));
+          break;
+        case 2:
+        case 3:
+          logpageData?.FleetInfo?.SceptreCode &&
+            dispatch(getSidData(logpageData.FleetInfo.SceptreCode));
+          break;
+        default:
+          break;
+      }
     }
   };
 
@@ -248,7 +268,12 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                       <TextField
                         name="OriginDetails.CalDocIdentifier"
                         value={values?.OriginDetails?.CalDocIdentifier || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "OriginDetails.CalDocIdentifier",
+                            removeNonAlphaNumeric(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched?.OriginDetails?.CalDocIdentifier &&
@@ -276,7 +301,12 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                       <TextField
                         name="OriginDetails.CalDocIdentifier"
                         value={values?.OriginDetails?.CalDocIdentifier || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "OriginDetails.CalDocIdentifier",
+                            removeNonAlphaNumeric(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched?.OriginDetails?.CalDocIdentifier &&
@@ -431,7 +461,12 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                       <TextField
                         name="OriginDetails.MfrSourceIdentifier"
                         value={values?.OriginDetails?.MfrSourceIdentifier || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "OriginDetails.MfrSourceIdentifier",
+                            removeNonAlphaNumeric(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched?.OriginDetails?.MfrSourceIdentifier &&
@@ -485,7 +520,12 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                       <TextField
                         name="OriginDetails.MfrSourceIdentifier"
                         value={values?.OriginDetails?.MfrSourceIdentifier || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "OriginDetails.MfrSourceIdentifier",
+                            removeNonAlphaNumeric(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched?.OriginDetails?.MfrSourceIdentifier &&
@@ -819,6 +859,14 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
           ) : (
             <DataGrid
               className="!h-[400px]"
+              sx={{
+                "& .MuiDataGrid-columnHeaderCheckbox .MuiDataGrid-columnHeaderTitleContainer": {
+                  display: "none",
+                },
+              }}
+              slots={{
+                baseCheckbox: (props) => <Radio {...props} />,
+              }}
               columns={[
                 {
                   field: "Code",
@@ -833,25 +881,53 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                   flex: 1,
                 },
               ]}
-              rows={ctnData!.FleetMasterResponse}
+              rows={
+                !values.searchDescription
+                  ? ctnData!.FleetMasterResponse
+                  : ctnData!.FleetMasterResponse.filter(
+                      (data) =>
+                        data.Code.toLowerCase().indexOf(values.searchDescription.toLowerCase()) >=
+                          0 ||
+                        data.Description.toLowerCase().indexOf(
+                          values.searchDescription.toLowerCase()
+                        ) >= 0
+                    )
+              }
               disableColumnMenu
               disableRowSelectionOnClick
-              onCellClick={(data: GridCellParams) => {
-                setFieldValue("OriginDetails.MfrSourceIdentifier", data?.row?.Code);
-                toggleSelect();
-              }}
+              // onCellClick={(data: GridCellParams) => {
+              //   setFieldValue("OriginDetails.MfrSourceIdentifier", data?.row?.Code);
+              //   setSelectedData(data?.row?.Code);
+              //   toggleSelect();
+              // }}
               getRowId={(row) => row.Code}
               getRowClassName={(params) =>
                 params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd"
               }
               hideFooter
+              checkboxSelection
+              rowSelectionModel={selectionModel}
+              hideFooterSelectedRowCount
+              onRowSelectionModelChange={(sdrIds) => {
+                if (sdrIds.length > 1) {
+                  const selectionSet = new Set(selectionModel);
+                  const result = sdrIds.filter((s) => !selectionSet.has(s));
+                  setSelectionModel(result);
+                } else {
+                  setSelectionModel(sdrIds);
+                }
+              }}
             />
           )}
           <ButtonGroup
             className="justify-end mt-4"
             primaryLabel="Select"
             secondaryLabel="Cancel"
-            primaryOnClick={handleGetData}
+            primaryDisabled={!selectionModel?.[0]}
+            primaryOnClick={() => {
+              setFieldValue("OriginDetails.MfrSourceIdentifier", selectionModel[0]);
+              toggleSelect();
+            }}
             secondaryOnClick={toggleSelect}
           />
         </Modal>

@@ -60,7 +60,7 @@ const CreateSfrData = ({
       AirCraftNumber: logpageData?.FleetInfo?.TailNumber || "",
       OriginDetails: {
         IsScheduledInspection: true,
-        CalDocId: 0,
+        CalDocId: 1,
         InspectionType: 0,
         CalDocIdentifier: "",
         SpecIdentifier: "",

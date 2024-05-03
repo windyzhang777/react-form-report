@@ -31,7 +31,7 @@ export const useFormCreateSfrData = () => {
     setFieldValue("OriginDetails.DetectionMethodComments", "");
     setFieldValue("OriginDetails.UnscheduledInspectionTypeComments", "");
     setFieldValue("OriginDetails.UnscheduledInspectionTypeId", "");
-    setFieldValue("OriginDetails.CalDocId", 0);
+    setFieldValue("OriginDetails.CalDocId", 1);
     setFieldValue("OriginDetails.MfrSourceId", 0);
     setFieldTouched("OriginDetails.MfrSourceIdentifier", false);
     setFieldError("OriginDetails.MfrSourceIdentifier", "");
@@ -41,7 +41,11 @@ export const useFormCreateSfrData = () => {
 
   useEffect(() => {
     setFieldValue("OriginDetails.MfrSourceIdentifier", "");
+    setFieldTouched("OriginDetails.MfrSourceIdentifier", false);
+    setFieldError("OriginDetails.MfrSourceIdentifier", "");
     setFieldValue("OriginDetails.MfrSourceComments", "");
+    setFieldTouched("OriginDetails.MfrSourceComments", false);
+    setFieldError("OriginDetails.MfrSourceComments", "");
   }, [values?.OriginDetails?.MfrSourceId]);
 
   useEffect(() => {

@@ -20,7 +20,12 @@ import {
 } from "src/commons/types";
 import { DATE_DISPLAY, DATE_HTML_DISPLAY, toFixed } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
-import ValidationSchema from "src/validationSchema";
+import ValidationSchema, {
+  removeNonAlphaNumeric,
+  removeNonAlphabet,
+  removeNonNumeric,
+  removeNonNumericDecimal,
+} from "src/validationSchema";
 import { object, string } from "yup";
 import "./viewSdrData.css";
 
@@ -358,11 +363,14 @@ const ViewSnapshotData = ({
                           <TextField
                             name="Station"
                             value={values?.Station}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue("Station", removeNonAlphabet(e.target.value))
+                            }
                             onBlur={handleBlur}
                             error={!!touched?.Station && !!errors?.Station}
                             helperText={!!touched?.Station && errors?.Station}
                             className={"sdr-status-edit"}
+                            inputProps={{ maxLength: 3 }}
                           />
                         ) : (
                           values?.Station
@@ -388,7 +396,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="SfrAdditionalDetails.SubmitterDesignator"
                             value={values?.SfrAdditionalDetails?.SubmitterDesignator}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "SfrAdditionalDetails.SubmitterDesignator",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched?.SfrAdditionalDetails?.SubmitterDesignator &&
@@ -412,7 +425,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="SfrAdditionalDetails.SubmitterType"
                             value={values?.SfrAdditionalDetails?.SubmitterType}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "SfrAdditionalDetails.SubmitterType",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched?.SfrAdditionalDetails?.SubmitterType &&
@@ -698,7 +716,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="SfrAdditionalDetails.FAAReceivingRegionCode"
                             value={values?.SfrAdditionalDetails?.FAAReceivingRegionCode}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "SfrAdditionalDetails.FAAReceivingRegionCode",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched?.SfrAdditionalDetails?.FAAReceivingRegionCode &&
@@ -709,7 +732,7 @@ const ViewSnapshotData = ({
                               errors?.SfrAdditionalDetails?.FAAReceivingRegionCode
                             }
                             className={"sdr-status-edit"}
-                            inputProps={{ maxLength: 10 }}
+                            inputProps={{ maxLength: 2 }}
                           />
                         ) : (
                           values?.SfrAdditionalDetails?.FAAReceivingRegionCode
@@ -722,7 +745,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="SfrAdditionalDetails.ReceivingDistrictOffice"
                             value={values?.SfrAdditionalDetails?.ReceivingDistrictOffice}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "SfrAdditionalDetails.ReceivingDistrictOffice",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched?.SfrAdditionalDetails?.ReceivingDistrictOffice &&
@@ -733,7 +761,7 @@ const ViewSnapshotData = ({
                               errors?.SfrAdditionalDetails?.ReceivingDistrictOffice
                             }
                             className={"sdr-status-edit"}
-                            inputProps={{ maxLength: 3 }}
+                            inputProps={{ maxLength: 2 }}
                           />
                         ) : (
                           values?.SfrAdditionalDetails?.ReceivingDistrictOffice
@@ -830,7 +858,7 @@ const ViewSnapshotData = ({
                               errors.SfrAdditionalDetails?.PartName
                             }
                             className={"sdr-status-edit"}
-                            inputProps={{ maxLength: 50 }}
+                            inputProps={{ maxLength: 24 }}
                           />
                         ) : (
                           values?.SfrAdditionalDetails?.PartName
@@ -854,7 +882,7 @@ const ViewSnapshotData = ({
                               errors?.SfrAdditionalDetails?.PartManufacturerName
                             }
                             className={"sdr-status-edit"}
-                            inputProps={{ maxLength: 50 }}
+                            inputProps={{ maxLength: 15 }}
                           />
                         ) : (
                           values?.SfrAdditionalDetails?.PartManufacturerName
@@ -878,7 +906,7 @@ const ViewSnapshotData = ({
                               errors.SfrAdditionalDetails?.PartNumber
                             }
                             className={"sdr-status-edit"}
-                            inputProps={{ maxLength: 50 }}
+                            inputProps={{ maxLength: 24 }}
                           />
                         ) : (
                           values?.SfrAdditionalDetails?.PartNumber
@@ -915,7 +943,7 @@ const ViewSnapshotData = ({
                               errors.PartDetails?.PartSerialNumber
                             }
                             className={"sdr-status-edit"}
-                            inputProps={{ maxLength: 50 }}
+                            inputProps={{ maxLength: 15 }}
                           />
                         ) : (
                           values?.PartDetails?.PartSerialNumber
@@ -939,7 +967,7 @@ const ViewSnapshotData = ({
                               errors.PartDetails?.PartCondition
                             }
                             className={"sdr-status-edit"}
-                            inputProps={{ maxLength: 50 }}
+                            inputProps={{ maxLength: 20 }}
                           />
                         ) : (
                           values?.PartDetails?.PartCondition
@@ -963,7 +991,7 @@ const ViewSnapshotData = ({
                               errors.PartDetails?.PartLocation
                             }
                             className={"sdr-status-edit"}
-                            inputProps={{ maxLength: 50 }}
+                            inputProps={{ maxLength: 20 }}
                           />
                         ) : (
                           values?.PartDetails?.PartLocation
@@ -988,8 +1016,14 @@ const ViewSnapshotData = ({
                         {editable ? (
                           <TextField
                             name="PartDetails.PartTotalTime"
+                            type="number"
                             value={values?.PartDetails?.PartTotalTime}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "PartDetails.PartTotalTime",
+                                removeNonNumericDecimal(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched.PartDetails?.PartTotalTime &&
@@ -1012,8 +1046,14 @@ const ViewSnapshotData = ({
                         {editable ? (
                           <TextField
                             name="PartDetails.PartTotalCycles"
+                            type="number"
                             value={values?.PartDetails?.PartTotalCycles}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "PartDetails.PartTotalCycles",
+                                removeNonNumericDecimal(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched.PartDetails?.PartTotalCycles &&
@@ -1036,8 +1076,14 @@ const ViewSnapshotData = ({
                         {editable ? (
                           <TextField
                             name="PartDetails.PartTimeSince"
+                            type="number"
                             value={values?.PartDetails?.PartTimeSince}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "PartDetails.PartTimeSince",
+                                removeNonNumericDecimal(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched.PartDetails?.PartTimeSince &&
@@ -1322,8 +1368,14 @@ const ViewSnapshotData = ({
                         {editable ? (
                           <TextField
                             name="ComponentDetails.PartTotalTime"
+                            type="number"
                             value={values?.ComponentDetails?.PartTotalTime}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "ComponentDetails.PartTotalTime",
+                                removeNonNumericDecimal(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched.ComponentDetails?.PartTotalTime &&
@@ -1346,8 +1398,14 @@ const ViewSnapshotData = ({
                         {editable ? (
                           <TextField
                             name="ComponentDetails.PartTotalCycles"
+                            type="number"
                             value={values?.ComponentDetails?.PartTotalCycles}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "ComponentDetails.PartTotalCycles",
+                                removeNonNumericDecimal(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched.ComponentDetails?.PartTotalCycles &&
@@ -1370,8 +1428,14 @@ const ViewSnapshotData = ({
                         {editable ? (
                           <TextField
                             name="ComponentDetails.PartTimeSince"
+                            type="number"
                             value={values?.ComponentDetails?.PartTimeSince}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "ComponentDetails.PartTimeSince",
+                                removeNonNumericDecimal(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched.ComponentDetails?.PartTimeSince &&
@@ -1564,7 +1628,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="SfrAdditionalDetails.CrackLength"
                             value={values?.SfrAdditionalDetails?.CrackLength}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "SfrAdditionalDetails.CrackLength",
+                                removeNonNumericDecimal(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched?.SfrAdditionalDetails?.CrackLength &&
@@ -1586,8 +1655,13 @@ const ViewSnapshotData = ({
                         {editable ? (
                           <TextField
                             name="SfrAdditionalDetails.NumberOfCracks"
-                            value={values?.SfrAdditionalDetails?.NumberOfCracks ?? ""}
-                            onChange={handleChange}
+                            value={values?.SfrAdditionalDetails?.NumberOfCracks || ""}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "SfrAdditionalDetails.NumberOfCracks",
+                                removeNonNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched?.SfrAdditionalDetails?.NumberOfCracks &&
@@ -1600,7 +1674,7 @@ const ViewSnapshotData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values?.SfrAdditionalDetails?.NumberOfCracks ?? "--"
+                          values?.SfrAdditionalDetails?.NumberOfCracks || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1625,7 +1699,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="SfrAdditionalDetails.WaterlineFrom"
                             value={values?.SfrAdditionalDetails?.WaterlineFrom}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "SfrAdditionalDetails.WaterlineFrom",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched?.SfrAdditionalDetails?.WaterlineFrom &&
@@ -1649,7 +1728,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="SfrAdditionalDetails.WaterlineTo"
                             value={values?.SfrAdditionalDetails?.WaterlineTo}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "SfrAdditionalDetails.WaterlineTo",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched?.SfrAdditionalDetails?.WaterlineTo &&
@@ -1691,7 +1775,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="SfrAdditionalDetails.StringerFrom"
                             value={values?.SfrAdditionalDetails?.StringerFrom}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "SfrAdditionalDetails.StringerFrom",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched?.SfrAdditionalDetails?.StringerFrom &&
@@ -1744,7 +1833,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="SfrAdditionalDetails.StringerTo"
                             value={values?.SfrAdditionalDetails?.StringerTo}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "SfrAdditionalDetails.StringerTo",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched?.SfrAdditionalDetails?.StringerTo &&
@@ -1822,7 +1916,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="SfrAdditionalDetails.ButtlineFrom"
                             value={values?.SfrAdditionalDetails?.ButtlineFrom}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "SfrAdditionalDetails.ButtlineFrom",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched?.SfrAdditionalDetails?.ButtlineFrom &&
@@ -1875,7 +1974,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="SfrAdditionalDetails.ButtlineTo"
                             value={values?.SfrAdditionalDetails?.ButtlineTo}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "SfrAdditionalDetails.ButtlineTo",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched?.SfrAdditionalDetails?.ButtlineTo &&
@@ -1953,7 +2057,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="SfrAdditionalDetails.WingStationFrom"
                             value={values?.SfrAdditionalDetails?.WingStationFrom}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "SfrAdditionalDetails.WingStationFrom",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched?.SfrAdditionalDetails?.WingStationFrom &&
@@ -2006,7 +2115,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="SfrAdditionalDetails.WingStationTo"
                             value={values?.SfrAdditionalDetails?.WingStationTo}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "SfrAdditionalDetails.WingStationTo",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched?.SfrAdditionalDetails?.WingStationTo &&
@@ -2073,7 +2187,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="SfrAdditionalDetails.StructuralOther"
                             value={values?.SfrAdditionalDetails?.StructuralOther}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "SfrAdditionalDetails.StructuralOther",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched?.SfrAdditionalDetails?.StructuralOther &&

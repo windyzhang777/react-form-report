@@ -21,6 +21,7 @@ import {
 } from "src/commons/types";
 import { useFormCreateSfrData } from "src/components/createsfr/useFormCreateSfrData";
 import { useAppSelector } from "src/redux/hooks";
+import { removeNonAlphaNumeric } from "src/validationSchema";
 
 type LocationTabProps = {
   editable: boolean;
@@ -31,7 +32,8 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
   const { masterData, logpageData }: SdrEsfrRecordDetailsStateType = useAppSelector(
     (state) => state.sdrEsfrRecordDetails
   );
-  const { errors, handleBlur, handleChange, touched } = useFormikContext<ISaveSfrValues>();
+  const { errors, handleBlur, handleChange, setFieldValue, touched } =
+    useFormikContext<ISaveSfrValues>();
   const { values } = useFormCreateSfrData();
   const leFlapOptions = useMemo(() => {
     const fleetCode = logpageData?.FleetInfo?.FleetCode;
@@ -233,7 +235,12 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       <TextField
                         name="LocationDetails.FromSta"
                         value={values?.LocationDetails?.FromSta || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "LocationDetails.FromSta",
+                            removeNonAlphaNumeric(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched?.LocationDetails?.FromSta && !!errors?.LocationDetails?.FromSta
@@ -258,7 +265,12 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       <TextField
                         name="LocationDetails.ToSta"
                         value={values?.LocationDetails?.ToSta || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "LocationDetails.ToSta",
+                            removeNonAlphaNumeric(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched?.LocationDetails?.ToSta && !!errors?.LocationDetails?.ToSta
@@ -312,7 +324,12 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       <TextField
                         name="LocationDetails.FromBL"
                         value={values.LocationDetails?.FromBL || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "LocationDetails.FromBL",
+                            removeNonAlphaNumeric(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched.LocationDetails?.FromBL && !!errors.LocationDetails?.FromBL
@@ -358,7 +375,12 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       <TextField
                         name="LocationDetails.ToBL"
                         value={values?.LocationDetails?.ToBL || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "LocationDetails.ToBL",
+                            removeNonAlphaNumeric(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={!!touched?.LocationDetails?.ToBL && !!errors?.LocationDetails?.ToBL}
                         helperText={
@@ -900,7 +922,12 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         <TextField
                           name="LocationDetails.FromStr"
                           value={values?.LocationDetails?.FromStr || ""}
-                          onChange={handleChange}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "LocationDetails.FromStr",
+                              removeNonAlphaNumeric(e.target.value)
+                            )
+                          }
                           onBlur={handleBlur}
                           error={
                             !!touched?.LocationDetails?.FromStr &&
@@ -926,7 +953,12 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         <TextField
                           name="LocationDetails.ToStr"
                           value={values?.LocationDetails?.ToStr || ""}
-                          onChange={handleChange}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "LocationDetails.ToStr",
+                              removeNonAlphaNumeric(e.target.value)
+                            )
+                          }
                           onBlur={handleBlur}
                           error={
                             !!touched?.LocationDetails?.ToStr && !!errors?.LocationDetails?.ToStr

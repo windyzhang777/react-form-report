@@ -7,6 +7,11 @@ import TabPanel from "src/commons/TabPanel";
 import TextField from "src/commons/TextField";
 import { ISaveSfrValues, SdrEsfrRecordDetailsStateType, SelectedSfrTab } from "src/commons/types";
 import { useAppSelector } from "src/redux/hooks";
+import {
+  removeNonAlphaNumeric,
+  removeNonNumeric,
+  removeNonNumericDecimal,
+} from "src/validationSchema";
 
 type DiscrepancyTabProps = {
   editable: boolean;
@@ -225,7 +230,12 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                       <TextField
                         name="DiscrepancyDetails.CrackLength"
                         value={values?.DiscrepancyDetails?.CrackLength || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "DiscrepancyDetails.CrackLength",
+                            removeNonNumericDecimal(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched?.DiscrepancyDetails?.CrackLength &&
@@ -280,7 +290,12 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                         <TextField
                           name="DiscrepancyDetails.NumberOfCracks"
                           value={values?.DiscrepancyDetails?.NumberOfCracks || ""}
-                          onChange={handleChange}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "DiscrepancyDetails.NumberOfCracks",
+                              removeNonNumeric(e.target.value)
+                            )
+                          }
                           onBlur={handleBlur}
                           error={
                             !!touched?.DiscrepancyDetails?.NumberOfCracks &&
@@ -314,7 +329,12 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                       <TextField
                         name="DiscrepancyDetails.CrackLength"
                         value={values?.DiscrepancyDetails?.CrackLength || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "DiscrepancyDetails.CrackLength",
+                            removeNonNumericDecimal(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched?.DiscrepancyDetails?.CrackLength &&
@@ -340,7 +360,12 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                       <TextField
                         name="DiscrepancyDetails.CrackWidth"
                         value={values?.DiscrepancyDetails?.CrackWidth || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "DiscrepancyDetails.CrackWidth",
+                            removeNonNumericDecimal(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched?.DiscrepancyDetails?.CrackWidth &&
@@ -371,7 +396,12 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                     <TextField
                       name="DiscrepancyDetails.CrackDepth"
                       value={values?.DiscrepancyDetails?.CrackDepth || ""}
-                      onChange={handleChange}
+                      onChange={(e) =>
+                        setFieldValue(
+                          "DiscrepancyDetails.CrackDepth",
+                          removeNonNumericDecimal(e.target.value)
+                        )
+                      }
                       onBlur={handleBlur}
                       error={
                         !!touched?.DiscrepancyDetails?.CrackDepth &&
@@ -507,10 +537,10 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                         name="PartNumber"
                         value={values.PartNumber || ""}
                         onChange={(e) => {
-                          setFieldValue("PartNumber", e.target.value);
+                          setFieldValue("PartNumber", removeNonNumeric(e.target.value));
                           setFieldValue(
                             "DiscrepancyDetails.DiscrepancyPartDetails[0].PartNumber",
-                            e.target.value
+                            removeNonNumeric(e.target.value)
                           );
                         }}
                         onBlur={handleBlur}
@@ -531,10 +561,10 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                         name="Structure"
                         value={values.Structure || ""}
                         onChange={(e) => {
-                          setFieldValue("Structure", e.target.value);
+                          setFieldValue("Structure", removeNonAlphaNumeric(e.target.value));
                           setFieldValue(
                             "DiscrepancyDetails.DiscrepancyPartDetails[0].Structure",
-                            e.target.value
+                            removeNonAlphaNumeric(e.target.value)
                           );
                         }}
                         onBlur={handleBlur}

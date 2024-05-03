@@ -50,7 +50,7 @@ export enum RadioType {
 export interface ICreateSfrReqNoSdr extends Omit<CreateSfrReq, "SdrDetails"> {}
 
 export interface ISaveSfrValues extends CreateSfrReq {
-  searchDescription: String;
+  searchDescription: string;
   ATAChapter: string;
   ATASubChapter: string;
   PartNumber: string;

@@ -16,6 +16,7 @@ import {
 } from "src/commons/types";
 import { useFormCreateSfrData } from "src/components/createsfr/useFormCreateSfrData";
 import { useAppSelector } from "src/redux/hooks";
+import { removeNonAlphaNumeric } from "src/validationSchema";
 
 type RepairTabProps = {
   editable: boolean;
@@ -76,7 +77,9 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                 <TextField
                   name="RepairDetails.DipCode"
                   value={values?.RepairDetails?.DipCode || ""}
-                  onChange={handleChange}
+                  onChange={(e) =>
+                    setFieldValue("RepairDetails.DipCode", removeNonAlphaNumeric(e.target.value))
+                  }
                   onBlur={handleBlur}
                   error={!!touched?.RepairDetails?.DipCode && !!errors?.RepairDetails?.DipCode}
                   helperText={!!touched?.RepairDetails?.DipCode && errors?.RepairDetails?.DipCode}
@@ -298,7 +301,7 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                           )
                         }
                         id="SdrDetails.PrecautionaryProcedureIds"
-                        maxAllowed={3}
+                        maxAllowed={4}
                       />
                     ) : (
                       ""
@@ -526,7 +529,12 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                   <TextField
                     name="RepairDetails.ManHoursRequired"
                     value={values?.RepairDetails?.ManHoursRequired || ""}
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setFieldValue(
+                        "RepairDetails.ManHoursRequired",
+                        removeNonAlphaNumeric(e.target.value)
+                      )
+                    }
                     onBlur={handleBlur}
                     error={
                       !!touched?.RepairDetails?.ManHoursRequired &&
