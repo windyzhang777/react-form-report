@@ -9,6 +9,7 @@ import { IReportSearchValues, ReportStatus, ReportType } from "src/commons/types
 import { DATE_HTML_DISPLAY } from "src/helpers";
 import ValidationSchema, {
   commonSchema,
+  removeNonAlphaNumeric,
   removeNonAlphabet,
   removeNonNumeric,
 } from "src/validationSchema";
@@ -208,7 +209,9 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                     placeholder="All"
                     name="auditNumber"
                     value={values.auditNumber}
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setFieldValue("auditNumber", removeNonAlphaNumeric(e.target.value))
+                    }
                     onBlur={handleBlur}
                     error={!!touched.auditNumber && !!errors.auditNumber}
                     helperText={!!touched.auditNumber && errors.auditNumber}
@@ -258,7 +261,9 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                     placeholder="All"
                     name="reportBy"
                     value={values.reportBy}
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setFieldValue("reportBy", removeNonAlphaNumeric(e.target.value))
+                    }
                     onBlur={handleBlur}
                     error={!!touched.reportBy && !!errors.reportBy}
                     helperText={!!touched.reportBy && errors.reportBy}
@@ -276,7 +281,9 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                     placeholder="All"
                     name="keyword"
                     value={values.keyword}
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setFieldValue("keyword", removeNonAlphaNumeric(e.target.value))
+                    }
                     onBlur={handleBlur}
                     error={!!touched.keyword && !!errors.keyword}
                     helperText={!!touched.keyword && errors.keyword}
