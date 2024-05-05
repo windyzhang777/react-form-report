@@ -431,7 +431,12 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                     <TextField
                       name="DiscrepancyDetails.DiscrepancyTypeComments"
                       value={values?.DiscrepancyDetails?.DiscrepancyTypeComments || ""}
-                      onChange={handleChange}
+                      onChange={(e) =>
+                        setFieldValue(
+                          "DiscrepancyDetails.DiscrepancyTypeComments",
+                          removeNonAlphaNumeric(e.target.value)
+                        )
+                      }
                       onBlur={handleBlur}
                       error={
                         !!touched?.DiscrepancyDetails?.DiscrepancyTypeComments &&
@@ -504,7 +509,12 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                     <TextField
                       name="DiscrepancyDetails.DiscrepancyTypeComments"
                       value={values?.DiscrepancyDetails?.DiscrepancyTypeComments || ""}
-                      onChange={handleChange}
+                      onChange={(e) =>
+                        setFieldValue(
+                          "DiscrepancyDetails.DiscrepancyTypeComments",
+                          removeNonAlphaNumeric(e.target.value)
+                        )
+                      }
                       onBlur={handleBlur}
                       error={
                         !!touched?.DiscrepancyDetails?.DiscrepancyTypeComments &&
@@ -584,7 +594,12 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                       <TextField
                         name="DiscrepancyDetails.DiscrepancyPartComments"
                         value={values?.DiscrepancyDetails?.DiscrepancyPartComments || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "DiscrepancyDetails.DiscrepancyPartComments",
+                            removeNonAlphaNumeric(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched?.DiscrepancyDetails?.DiscrepancyPartComments &&

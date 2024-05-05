@@ -472,7 +472,12 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                         <TextField
                           name="RepairDetails.Comments"
                           value={values?.RepairDetails?.Comments || ""}
-                          onChange={handleChange}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "RepairDetails.Commentsber",
+                              removeNonAlphaNumeric(e.target.value)
+                            )
+                          }
                           onBlur={handleBlur}
                           error={
                             !!touched?.RepairDetails?.Comments && !!errors?.RepairDetails?.Comments
@@ -508,7 +513,12 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                   <TextField
                     name="RepairDetails.MaterialsUtilized"
                     value={values?.RepairDetails?.MaterialsUtilized || ""}
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setFieldValue(
+                        "RepairDetails.MaterialsUtilized",
+                        removeNonAlphaNumeric(e.target.value)
+                      )
+                    }
                     onBlur={handleBlur}
                     error={
                       !!touched?.RepairDetails?.MaterialsUtilized &&
