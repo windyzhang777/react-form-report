@@ -63,6 +63,8 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
         }
         return !prev;
       });
+    } else {
+      handleFocus(logPageNumberRef);
     }
   };
 
@@ -144,7 +146,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                   name="LogPageNumber"
                   value={values.LogPageNumber || ""}
                   onChange={(e) =>
-                    setFieldValue("values.LogPageNumber", removeNonAlphaNumeric(e.target.value))
+                    setFieldValue("LogPageNumber", removeNonAlphaNumeric(e.target.value))
                   }
                   onBlur={handleBlur}
                   error={!!touched.LogPageNumber && !!errors.LogPageNumber}
