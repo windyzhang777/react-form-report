@@ -408,6 +408,7 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                     handleChange={handleChange}
                     name={name as string}
                     values={values}
+                    setFieldValue={setFieldValue}
                     touched={touched}
                     errors={errors}
                   />
@@ -442,7 +443,12 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                           <TextField
                             name="RepairDetails.Rev"
                             value={values?.RepairDetails?.Rev || ""}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "values.RepairDetails.Rev",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={!!touched?.RepairDetails?.Rev && !!errors?.RepairDetails?.Rev}
                             helperText={!!touched?.RepairDetails?.Rev && errors?.RepairDetails?.Rev}
@@ -466,7 +472,12 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                         <TextField
                           name="RepairDetails.Comments"
                           value={values?.RepairDetails?.Comments || ""}
-                          onChange={handleChange}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "RepairDetails.Commentsber",
+                              removeNonAlphaNumeric(e.target.value)
+                            )
+                          }
                           onBlur={handleBlur}
                           error={
                             !!touched?.RepairDetails?.Comments && !!errors?.RepairDetails?.Comments
@@ -477,7 +488,7 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                           multiline
                           maxRows={4}
                           className={"sdr-status-edit textareaAutosize"}
-                          inputProps={{ maxLength: 100, style: { resize: "both" } }}
+                          inputProps={{ maxLength: 100 }}
                         />
                       ) : (
                         ""
@@ -502,7 +513,12 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                   <TextField
                     name="RepairDetails.MaterialsUtilized"
                     value={values?.RepairDetails?.MaterialsUtilized || ""}
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setFieldValue(
+                        "RepairDetails.MaterialsUtilized",
+                        removeNonAlphaNumeric(e.target.value)
+                      )
+                    }
                     onBlur={handleBlur}
                     error={
                       !!touched?.RepairDetails?.MaterialsUtilized &&
@@ -515,7 +531,7 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                     multiline
                     maxRows={4}
                     className={"sdr-status-edit textareaAutosize"}
-                    inputProps={{ maxLength: 200, style: { resize: "both" } }}
+                    inputProps={{ maxLength: 200 }}
                   />
                 ) : (
                   ""
@@ -566,6 +582,11 @@ interface IDocumentGridProps {
   handleBlur: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   handleChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   name: string;
+  setFieldValue: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) => Promise<void | FormikErrors<ISaveSfrValues>>;
   touched: FormikTouched<ISaveSfrValues> & { [key: string]: any };
   values: ISaveSfrValues & { [key: string]: any };
 }
@@ -576,6 +597,7 @@ const DocumentGrid = ({
   handleBlur,
   handleChange,
   name,
+  setFieldValue,
   touched,
   values,
 }: IDocumentGridProps) => (
@@ -640,14 +662,14 @@ const DocumentGrid = ({
         )}
       </ListItem>
     </Grid>
-    <Grid item xs={4}>
+    <Grid item xs={4} className="!mt-4">
       <ListItem>Page</ListItem>
       <ListItem>
         {editable ? (
           <TextField
             name={`${name}Page`}
             value={values?.[`${name}Page`] || ""}
-            onChange={handleChange}
+            onChange={(e) => setFieldValue(`${name}Page`, removeNonAlphaNumeric(e.target.value))}
             onBlur={handleBlur}
             error={!!touched?.[`${name}Page`] && !!errors?.[`${name}Page`]}
             helperText={!!touched?.[`${name}Page`] && errors?.[`${name}Page`]}
@@ -660,14 +682,14 @@ const DocumentGrid = ({
         )}
       </ListItem>
     </Grid>
-    <Grid item xs={4}>
+    <Grid item xs={4} className="!mt-4">
       <ListItem>Fig</ListItem>
       <ListItem>
         {editable ? (
           <TextField
             name={`${name}Fig`}
             value={values?.[`${name}Fig`] || ""}
-            onChange={handleChange}
+            onChange={(e) => setFieldValue(`${name}Fig`, removeNonAlphaNumeric(e.target.value))}
             onBlur={handleBlur}
             error={!!touched?.[`${name}Fig`] && !!errors?.[`${name}Fig`]}
             helperText={!!touched?.[`${name}Fig`] && errors?.[`${name}Fig`]}

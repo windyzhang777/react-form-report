@@ -92,7 +92,12 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   <TextField
                     name="LocationDetails.CoordinateLocationDetails"
                     value={values?.LocationDetails?.CoordinateLocationDetails || ""}
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setFieldValue(
+                        "LocationDetails.CoordinateLocationDetails",
+                        removeNonAlphaNumeric(e.target.value)
+                      )
+                    }
                     onBlur={handleBlur}
                     error={
                       !!touched?.LocationDetails?.CoordinateLocationDetails &&
@@ -105,7 +110,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     multiline
                     maxRows={4}
                     className={"sdr-status-edit textareaAutosize"}
-                    inputProps={{ maxLength: 100, style: { resize: "both" } }}
+                    inputProps={{ maxLength: 100 }}
                   />
                 ) : (
                   ""
@@ -251,7 +256,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ maxLength: 50, style: { resize: "both" } }}
+                        inputProps={{ maxLength: 50 }}
                       />
                     ) : (
                       ""
@@ -281,7 +286,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ maxLength: 50, style: { resize: "both" } }}
+                        inputProps={{ maxLength: 50 }}
                       />
                     ) : (
                       ""
@@ -715,7 +720,12 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     <TextField
                       name="LocationDetails.LocationType"
                       value={values?.LocationDetails?.LocationType || ""}
-                      onChange={handleChange}
+                      onChange={(e) =>
+                        setFieldValue(
+                          "LocationDetails.LocationType",
+                          removeNonAlphaNumeric(e.target.value)
+                        )
+                      }
                       onBlur={handleBlur}
                       error={
                         !!touched?.LocationDetails?.LocationType &&
@@ -728,7 +738,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       multiline
                       maxRows={4}
                       className={"sdr-status-edit textareaAutosize"}
-                      inputProps={{ maxLength: 50, style: { resize: "both" } }}
+                      inputProps={{ maxLength: 50 }}
                     />
                   ) : (
                     ""
@@ -857,7 +867,12 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     <TextField
                       name="LocationDetails.AdditionalLocationDetails"
                       value={values?.LocationDetails?.AdditionalLocationDetails || ""}
-                      onChange={handleChange}
+                      onChange={(e) =>
+                        setFieldValue(
+                          "LocationDetails.AdditionalLocationDetails",
+                          removeNonAlphaNumeric(e.target.value)
+                        )
+                      }
                       onBlur={handleBlur}
                       error={
                         !!touched?.LocationDetails?.AdditionalLocationDetails &&
@@ -870,7 +885,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       multiline
                       maxRows={4}
                       className={"sdr-status-edit textareaAutosize"}
-                      inputProps={{ maxLength: 100, style: { resize: "both" } }}
+                      inputProps={{ maxLength: 100 }}
                     />
                   ) : (
                     ""
@@ -888,7 +903,12 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     <TextField
                       name="LocationDetails.SpecificsLocation"
                       value={values?.LocationDetails?.SpecificsLocation || ""}
-                      onChange={handleChange}
+                      onChange={(e) =>
+                        setFieldValue(
+                          "LocationDetails.SpecificsLocation",
+                          removeNonAlphaNumeric(e.target.value)
+                        )
+                      }
                       onBlur={handleBlur}
                       error={
                         !!touched?.LocationDetails?.SpecificsLocation &&
@@ -901,7 +921,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       multiline
                       maxRows={4}
                       className={"sdr-status-edit textareaAutosize"}
-                      inputProps={{ maxLength: 100, style: { resize: "both" } }}
+                      inputProps={{ maxLength: 100 }}
                     />
                   ) : (
                     ""
@@ -939,7 +959,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                           multiline
                           maxRows={4}
                           className={"sdr-status-edit textareaAutosize"}
-                          inputProps={{ maxLength: 50, style: { resize: "both" } }}
+                          inputProps={{ maxLength: 50 }}
                         />
                       ) : (
                         ""
@@ -969,7 +989,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                           multiline
                           maxRows={4}
                           className={"sdr-status-edit textareaAutosize"}
-                          inputProps={{ maxLength: 50, style: { resize: "both" } }}
+                          inputProps={{ maxLength: 50 }}
                         />
                       ) : (
                         ""

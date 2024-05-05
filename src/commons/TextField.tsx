@@ -40,7 +40,7 @@ const CommonTextField = ({ placeholder, type, ...props }: ICommonTextFieldProps)
     <TextField
       placeholder={props.disabled ? "" : placeholder || placeholderText}
       size={"small"}
-      type={type ? type : "text"}
+      type={type || "text"}
       {...props}
     />
   );

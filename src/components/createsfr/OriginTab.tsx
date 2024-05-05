@@ -143,7 +143,9 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                 <TextField
                   name="LogPageNumber"
                   value={values.LogPageNumber || ""}
-                  onChange={handleChange}
+                  onChange={(e) =>
+                    setFieldValue("values.LogPageNumber", removeNonAlphaNumeric(e.target.value))
+                  }
                   onBlur={handleBlur}
                   error={!!touched.LogPageNumber && !!errors.LogPageNumber}
                   helperText={!!touched.LogPageNumber && errors.LogPageNumber}
@@ -336,7 +338,9 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                       <TextField
                         name="OriginDetails.Rev"
                         value={values?.OriginDetails?.Rev || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue("OriginDetails.Rev", removeNonAlphaNumeric(e.target.value))
+                        }
                         onBlur={handleBlur}
                         error={!!touched?.OriginDetails?.Rev && !!errors?.OriginDetails?.Rev}
                         helperText={!!touched?.OriginDetails?.Rev && errors?.OriginDetails?.Rev}
@@ -360,7 +364,9 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                       <TextField
                         name="OriginDetails.Op"
                         value={values?.OriginDetails?.Op || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue("OriginDetails.Op", removeNonAlphaNumeric(e.target.value))
+                        }
                         onBlur={handleBlur}
                         error={!!touched?.OriginDetails?.Op && !!errors?.OriginDetails?.Op}
                         helperText={!!touched?.OriginDetails?.Op && errors?.OriginDetails?.Op}
@@ -554,7 +560,12 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                       <TextField
                         name="OriginDetails.MfrSourceComments"
                         value={values?.OriginDetails?.MfrSourceComments || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "OriginDetails.MfrSourceComments",
+                            removeNonAlphaNumeric(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched?.OriginDetails?.MfrSourceComments &&
@@ -567,7 +578,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ maxLength: 200, style: { resize: "both" } }}
+                        inputProps={{ maxLength: 200 }}
                       />
                     ) : (
                       ""
@@ -584,7 +595,12 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                       <TextField
                         name="OriginDetails.MfrSourceComments"
                         value={values?.OriginDetails?.MfrSourceComments || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "OriginDetails.MfrSourceComments",
+                            removeNonAlphaNumeric(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched?.OriginDetails?.MfrSourceComments &&
@@ -597,7 +613,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ maxLength: 100, style: { resize: "both" } }}
+                        inputProps={{ maxLength: 100 }}
                       />
                     ) : (
                       ""
@@ -641,13 +657,18 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
               {/* Other */}
               {values?.OriginDetails?.DetectionMethodId === 9 && (
                 <div>
-                  <ListItem required>Other</ListItem>
+                  <ListItem>Other</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextField
                         name="OriginDetails.DetectionMethodComments"
                         value={values?.OriginDetails?.DetectionMethodComments || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "OriginDetails.DetectionMethodComments",
+                            removeNonAlphaNumeric(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched?.OriginDetails?.DetectionMethodComments &&
@@ -660,7 +681,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ maxLength: 100, style: { resize: "both" } }}
+                        inputProps={{ maxLength: 100 }}
                       />
                     ) : (
                       ""
@@ -708,7 +729,12 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                       <TextField
                         name="OriginDetails.UnscheduledInspectionTypeComments"
                         value={values?.OriginDetails?.UnscheduledInspectionTypeComments || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "OriginDetails.UnscheduledInspectionTypeComments",
+                            removeNonAlphaNumeric(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched?.OriginDetails?.UnscheduledInspectionTypeComments &&
@@ -721,7 +747,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ maxLength: 250, style: { resize: "both" } }}
+                        inputProps={{ maxLength: 250 }}
                       />
                     ) : (
                       ""
@@ -737,7 +763,12 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                       <TextField
                         name="OriginDetails.UnscheduledInspectionTypeComments"
                         value={values?.OriginDetails?.UnscheduledInspectionTypeComments || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "OriginDetails.UnscheduledInspectionTypeComments",
+                            removeNonAlphaNumeric(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched?.OriginDetails?.UnscheduledInspectionTypeComments &&
@@ -750,7 +781,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ maxLength: 100, style: { resize: "both" } }}
+                        inputProps={{ maxLength: 100 }}
                       />
                     ) : (
                       ""
@@ -800,7 +831,12 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                       <TextField
                         name="OriginDetails.DetectionMethodComments"
                         value={values?.OriginDetails?.DetectionMethodComments || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "OriginDetails.DetectionMethodComments",
+                            removeNonAlphaNumeric(e.target.value)
+                          )
+                        }
                         onBlur={handleBlur}
                         error={
                           !!touched?.OriginDetails?.DetectionMethodComments &&
@@ -813,7 +849,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ maxLength: 100, style: { resize: "both" } }}
+                        inputProps={{ maxLength: 100 }}
                       />
                     ) : (
                       ""

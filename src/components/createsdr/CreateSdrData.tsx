@@ -760,7 +760,6 @@ const CreateSdrData = ({
                           multiline
                           maxRows={4}
                           className={"sdr-status-edit textareaAutosize"}
-                          inputProps={{ style: { resize: "both" } }}
                         />
                       ) : (
                         ""
