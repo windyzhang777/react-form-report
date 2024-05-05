@@ -690,7 +690,6 @@ const ViewSnapshotData = ({
                             multiline
                             maxRows={4}
                             className={"sdr-status-edit textareaAutosize"}
-                            inputProps={{ style: { resize: "both" } }}
                           />
                         ) : (
                           values?.CorrectiveAction

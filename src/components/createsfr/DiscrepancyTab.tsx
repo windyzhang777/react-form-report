@@ -444,7 +444,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                       multiline
                       maxRows={4}
                       className={"sdr-status-edit textareaAutosize"}
-                      inputProps={{ maxLength: 100, style: { resize: "both" } }}
+                      inputProps={{ maxLength: 100 }}
                     />
                   ) : (
                     ""
@@ -517,7 +517,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                       multiline
                       maxRows={4}
                       className={"sdr-status-edit textareaAutosize"}
-                      inputProps={{ maxLength: 100, style: { resize: "both" } }}
+                      inputProps={{ maxLength: 100 }}
                     />
                   ) : (
                     ""
@@ -597,7 +597,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ style: { resize: "both" } }}
+                        inputProps={{}}
                       />
                     ) : (
                       ""

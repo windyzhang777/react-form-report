@@ -105,7 +105,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     multiline
                     maxRows={4}
                     className={"sdr-status-edit textareaAutosize"}
-                    inputProps={{ maxLength: 100, style: { resize: "both" } }}
+                    inputProps={{ maxLength: 100 }}
                   />
                 ) : (
                   ""
@@ -251,7 +251,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ maxLength: 50, style: { resize: "both" } }}
+                        inputProps={{ maxLength: 50 }}
                       />
                     ) : (
                       ""
@@ -281,7 +281,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{ maxLength: 50, style: { resize: "both" } }}
+                        inputProps={{ maxLength: 50 }}
                       />
                     ) : (
                       ""
@@ -728,7 +728,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       multiline
                       maxRows={4}
                       className={"sdr-status-edit textareaAutosize"}
-                      inputProps={{ maxLength: 50, style: { resize: "both" } }}
+                      inputProps={{ maxLength: 50 }}
                     />
                   ) : (
                     ""
@@ -870,7 +870,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       multiline
                       maxRows={4}
                       className={"sdr-status-edit textareaAutosize"}
-                      inputProps={{ maxLength: 100, style: { resize: "both" } }}
+                      inputProps={{ maxLength: 100 }}
                     />
                   ) : (
                     ""
@@ -901,7 +901,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       multiline
                       maxRows={4}
                       className={"sdr-status-edit textareaAutosize"}
-                      inputProps={{ maxLength: 100, style: { resize: "both" } }}
+                      inputProps={{ maxLength: 100 }}
                     />
                   ) : (
                     ""
@@ -939,7 +939,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                           multiline
                           maxRows={4}
                           className={"sdr-status-edit textareaAutosize"}
-                          inputProps={{ maxLength: 50, style: { resize: "both" } }}
+                          inputProps={{ maxLength: 50 }}
                         />
                       ) : (
                         ""
@@ -969,7 +969,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                           multiline
                           maxRows={4}
                           className={"sdr-status-edit textareaAutosize"}
-                          inputProps={{ maxLength: 50, style: { resize: "both" } }}
+                          inputProps={{ maxLength: 50 }}
                         />
                       ) : (
                         ""

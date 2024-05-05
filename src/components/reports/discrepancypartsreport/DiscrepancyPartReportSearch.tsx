@@ -162,7 +162,7 @@ const DiscrepancyPartsReportSearch = ({
                     multiline
                     maxRows={4}
                     className={"sdr-status-edit textareaAutosize w-full"}
-                    inputProps={{ maxLength: 30, style: { resize: "both" } }}
+                    inputProps={{ maxLength: 30 }}
                   />
                 </ListItem>
               </Grid>
