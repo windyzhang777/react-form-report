@@ -669,9 +669,7 @@ const DocumentGrid = ({
           <TextField
             name={`${name}Page`}
             value={values?.[`${name}Page`] || ""}
-            onChange={(e) =>
-              setFieldValue(`values.${name}Page`, removeNonAlphaNumeric(e.target.value))
-            }
+            onChange={(e) => setFieldValue(`${name}Page`, removeNonAlphaNumeric(e.target.value))}
             onBlur={handleBlur}
             error={!!touched?.[`${name}Page`] && !!errors?.[`${name}Page`]}
             helperText={!!touched?.[`${name}Page`] && errors?.[`${name}Page`]}
@@ -691,9 +689,7 @@ const DocumentGrid = ({
           <TextField
             name={`${name}Fig`}
             value={values?.[`${name}Fig`] || ""}
-            onChange={(e) =>
-              setFieldValue(`values.${name}Fig`, removeNonAlphaNumeric(e.target.value))
-            }
+            onChange={(e) => setFieldValue(`${name}Fig`, removeNonAlphaNumeric(e.target.value))}
             onBlur={handleBlur}
             error={!!touched?.[`${name}Fig`] && !!errors?.[`${name}Fig`]}
             helperText={!!touched?.[`${name}Fig`] && errors?.[`${name}Fig`]}
