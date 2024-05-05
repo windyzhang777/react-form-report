@@ -21,6 +21,7 @@ import {
 import { DATE_DISPLAY, DATE_HTML_DISPLAY, toFixed } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
 import ValidationSchema, {
+  commonSchema,
   removeNonAlphaNumeric,
   removeNonAlphabet,
   removeNonNumeric,
@@ -267,7 +268,7 @@ const ViewSnapshotData = ({
           }}
           validationSchema={object().shape({
             ...ValidationSchema,
-            LogPageNumber: string(),
+            LogPageNumber: commonSchema.upToNum(7),
             CorrectiveAction: string().required("Required field"),
           })}
         >
@@ -455,7 +456,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="SfrAdditionalDetails.OperatorDesignator"
                             value={values?.SfrAdditionalDetails?.OperatorDesignator}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "SfrAdditionalDetails.OperatorDesignator",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched?.SfrAdditionalDetails?.OperatorDesignator &&
@@ -493,7 +499,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="SfrAdditionalDetails.OperatorType"
                             value={values?.SfrAdditionalDetails?.OperatorType}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "SfrAdditionalDetails.OperatorType",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched?.SfrAdditionalDetails?.OperatorType &&
@@ -518,7 +529,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="SfrAdditionalDetails.AtaCode"
                             value={values?.SfrAdditionalDetails?.AtaCode}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "SfrAdditionalDetails.AtaCode",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched?.SfrAdditionalDetails?.AtaCode &&
@@ -846,7 +862,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="SfrAdditionalDetails.PartName"
                             value={values?.SfrAdditionalDetails?.PartName}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "SfrAdditionalDetails.PartName",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched.SfrAdditionalDetails?.PartName &&
@@ -870,7 +891,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="SfrAdditionalDetails.PartManufacturerName"
                             value={values?.SfrAdditionalDetails?.PartManufacturerName}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "SfrAdditionalDetails.PartManufacturerName",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched?.SfrAdditionalDetails?.PartManufacturerName &&
@@ -894,7 +920,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="SfrAdditionalDetails.PartNumber"
                             value={values?.SfrAdditionalDetails?.PartNumber}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "SfrAdditionalDetails.PartNumber",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched.SfrAdditionalDetails?.PartNumber &&
@@ -931,7 +962,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="PartDetails.PartSerialNumber"
                             value={values?.PartDetails?.PartSerialNumber}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "PartDetails.PartSerialNumber",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched.PartDetails?.PartSerialNumber &&
@@ -955,7 +991,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="PartDetails.PartCondition"
                             value={values?.PartDetails?.PartCondition}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "PartDetails.PartCondition",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched.PartDetails?.PartCondition &&
@@ -979,7 +1020,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="PartDetails.PartLocation"
                             value={values?.PartDetails?.PartLocation}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "PartDetails.PartLocation",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched.PartDetails?.PartLocation &&
@@ -1521,7 +1567,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="SfrAdditionalDetails.FuselageFromSta"
                             value={values?.SfrAdditionalDetails?.FuselageFromSta}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "SfrAdditionalDetails.FuselageFromSta",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched?.SfrAdditionalDetails?.FuselageFromSta &&
@@ -1545,7 +1596,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="SfrAdditionalDetails.FuselageToSta"
                             value={values?.SfrAdditionalDetails?.FuselageToSta}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "SfrAdditionalDetails.FuselageToSta",
+                                removeNonAlphaNumeric(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched?.SfrAdditionalDetails?.FuselageToSta &&
