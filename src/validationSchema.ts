@@ -15,7 +15,7 @@ export const regex = {
   RepairECRA: /^[a-zA-Z0-9]{4}-[a-zA-Z0-9]{5}/,
   Fig: /^[a-zA-Z0-9]{3}/,
   // common
-  number7D3: /^(0|[1-9]{1,7})(?:\.\d{1,3})?$/,
+  number7D3: /^(0|[1-9]\d{1,7})(?:\.\d{1,3})?$/,
   numberD3: /^(0|[1-9]\d*)(?:\.\d{1,3})?$/,
   alphaNumeric: /^[a-zA-Z0-9\s.]+$/,
   nonAlphaNumeric: /[^a-zA-Z0-9]/gi,
@@ -23,7 +23,7 @@ export const regex = {
   nonNumericDecimal: /[^0-9.]/gi,
   nonAlphabetic: /[^a-zA-Z]/gi,
   hasValue: /^[a-zA-Z0-9]+$/,
-  numOnly: /^(0|[1-9]\d*)(?:\.\d{1,3})?$/,
+  numOnly: /^([0-9]\d*)(?:\.\d{1,3})?$/,
   intOnly: /^([1-9]\d*)$/,
 };
 
