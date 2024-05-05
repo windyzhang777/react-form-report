@@ -9,7 +9,7 @@ import { ICpcpReportSearchValues, SdrEsfrRecordDetailsStateType } from "src/comm
 import { DATE_HTML_DISPLAY, joinCodes } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
 import { GetCpcpReportReq } from "src/types/GetCpcpReportReq";
-import ValidationSchema from "src/validationSchema";
+import ValidationSchema, { removeNonAlphabet, removeNonNumeric } from "src/validationSchema";
 import { object } from "yup";
 
 export interface ICpcpReportSearchProps {
@@ -200,7 +200,7 @@ const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearch
                     placeholder="All"
                     name="acNumber"
                     value={values.acNumber}
-                    onChange={handleChange}
+                    onChange={(e) => setFieldValue("acNumber", removeNonNumeric(e.target.value))}
                     onBlur={handleBlur}
                     error={!!touched.acNumber && !!errors.acNumber}
                     helperText={!!touched.acNumber && errors.acNumber}
@@ -216,7 +216,7 @@ const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearch
                     placeholder="All"
                     name="station"
                     value={values.station}
-                    onChange={handleChange}
+                    onChange={(e) => setFieldValue("station", removeNonAlphabet(e.target.value))}
                     onBlur={handleBlur}
                     error={!!touched.station && !!errors.station}
                     helperText={!!touched.station && errors.station}

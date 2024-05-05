@@ -12,7 +12,11 @@ import {
 import { DATE_HTML_DISPLAY, joinCodes } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
 import { GetDiscrepancyPartsReportReq } from "src/types/GetDiscrepancyPartsReportReq";
-import ValidationSchema from "src/validationSchema";
+import ValidationSchema, {
+  removeNonAlphaNumeric,
+  removeNonAlphabet,
+  removeNonNumeric,
+} from "src/validationSchema";
 import { object } from "yup";
 
 export interface IDiscrepancyPartsReportSearchProps {
@@ -155,7 +159,9 @@ const DiscrepancyPartsReportSearch = ({
                     placeholder="All"
                     name="partNumber"
                     value={values.partNumber}
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setFieldValue("partNumber", removeNonAlphaNumeric(e.target.value))
+                    }
                     onBlur={handleBlur}
                     error={!!touched.partNumber && !!errors.partNumber}
                     helperText={!!touched.partNumber && errors.partNumber}
@@ -251,7 +257,7 @@ const DiscrepancyPartsReportSearch = ({
                     placeholder="All"
                     name="acNumber"
                     value={values.acNumber}
-                    onChange={handleChange}
+                    onChange={(e) => setFieldValue("acNumber", removeNonNumeric(e.target.value))}
                     onBlur={handleBlur}
                     error={!!touched.acNumber && !!errors.acNumber}
                     helperText={!!touched.acNumber && errors.acNumber}
@@ -267,7 +273,7 @@ const DiscrepancyPartsReportSearch = ({
                     placeholder="All"
                     name="station"
                     value={values.station}
-                    onChange={handleChange}
+                    onChange={(e) => setFieldValue("station", removeNonAlphabet(e.target.value))}
                     onBlur={handleBlur}
                     error={!!touched.station && !!errors.station}
                     helperText={!!touched.station && errors.station}
@@ -283,7 +289,9 @@ const DiscrepancyPartsReportSearch = ({
                     placeholder="All"
                     name="ataCode"
                     value={values.ataCode}
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setFieldValue("ataCode", removeNonAlphaNumeric(e.target.value))
+                    }
                     onBlur={handleBlur}
                     error={!!touched.ataCode && !!errors.ataCode}
                     helperText={!!touched.ataCode && errors.ataCode}
