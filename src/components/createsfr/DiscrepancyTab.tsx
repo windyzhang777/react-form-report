@@ -612,7 +612,6 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
-                        inputProps={{}}
                       />
                     ) : (
                       ""
