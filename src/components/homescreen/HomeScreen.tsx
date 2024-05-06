@@ -265,6 +265,7 @@ const HomeScreen = () => {
     if (!viewSdrFlag) {
       setSelectedSdr(null);
     }
+    setLogpageNumberValue("");
   }, [viewSdrFlag, createSdrFlag]);
 
   return (
