@@ -54,7 +54,6 @@ export interface ISaveSfrValues extends CreateSfrReq {
   ATAChapter: string;
   ATASubChapter: string;
   PartNumber: string;
-  Structure: string;
   DocumentType: number[];
   SpecIdentifier1: string;
   SpecIdentifier2: string;
@@ -730,6 +729,24 @@ export const PartTimeSinceCodeOptions: OptionDocument[] = [
   },
   {
     Description: "Installed",
+    DisplayOrder: 3,
+    Id: 3,
+  },
+];
+
+export const StructureOptions: OptionDocument[] = [
+  {
+    Description: "PSE",
+    DisplayOrder: 1,
+    Id: 1,
+  },
+  {
+    Description: "Primary",
+    DisplayOrder: 2,
+    Id: 2,
+  },
+  {
+    Description: "Secondary",
     DisplayOrder: 3,
     Id: 3,
   },
