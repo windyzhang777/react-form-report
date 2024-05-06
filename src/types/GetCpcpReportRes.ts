@@ -17,13 +17,13 @@ export interface GetCpcpReportResResult {
   Fleet: null | string;
   Id: number;
   LogpageNumber: string;
-  MajorRepair: MajorRepair;
+  MajorRepair: YON;
   OperatorControlNumber: null | string;
   RepairDocNumber: null | string;
   Station: string;
 }
 
-export enum MajorRepair {
+export enum YON {
   N = "N",
   Y = "Y",
 }
