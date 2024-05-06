@@ -18,10 +18,9 @@ import {
   TransformedSdrDataType,
   UserPermission,
 } from "src/commons/types";
-import { DATE_DISPLAY, DATE_HTML_DISPLAY, toFixed } from "src/helpers";
+import { DATE_DISPLAY, DATE_HTML_DISPLAY } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
 import ValidationSchema, {
-  commonSchema,
   removeNonAlphaNumeric,
   removeNonAlphabet,
   removeNonNumeric,
@@ -99,7 +98,7 @@ const ViewSnapshotData = ({
         Manufacturer: logpageData?.FleetInfo?.ManufacturedBy || "",
         Model: logpageData?.FleetInfo?.ManufacturerPartNumber || "",
         SerialNumber: logpageData?.FleetInfo?.ManufacturerSerialNumber || "",
-        TotalTime: String(toFixed(logpageData?.FleetInfo?.TotalAircraftTime) || ""),
+        TotalTime: String(logpageData?.FleetInfo?.TotalAircraftTime || ""),
         TotalCycles: logpageData?.FleetInfo?.TotalAircraftCycles || "",
       },
       LogPageCreationDate: snapshotData?.CreatedDate || "",
@@ -202,7 +201,7 @@ const ViewSnapshotData = ({
                   <ListItem>A/C Number</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{initialValues?.AircraftDetails?.RegistryNNumber}</ListItem>
+                  <ListItem>{initialValues?.AircraftNumber}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
@@ -268,7 +267,7 @@ const ViewSnapshotData = ({
           }}
           validationSchema={object().shape({
             ...ValidationSchema,
-            LogPageNumber: commonSchema.upToNum(7),
+            LogPageNumber: ValidationSchema.LogPageNumber,
             CorrectiveAction: string().required("Required field"),
           })}
         >

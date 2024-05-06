@@ -26,7 +26,7 @@ import {
   resetCtnDataSuccess,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
-import { removeNonAlphaNumeric } from "src/validationSchema";
+import { removeNonAlphaNumeric, removeNonAlphaNumericHyphen } from "src/validationSchema";
 
 type OriginTabProps = {
   editable: boolean;
@@ -64,6 +64,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
         return !prev;
       });
     } else {
+      setOpenSelect(false);
       handleFocus(logPageNumberRef);
     }
   };
@@ -472,7 +473,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                         onChange={(e) =>
                           setFieldValue(
                             "OriginDetails.MfrSourceIdentifier",
-                            removeNonAlphaNumeric(e.target.value)
+                            removeNonAlphaNumericHyphen(e.target.value)
                           )
                         }
                         onBlur={handleBlur}
@@ -531,7 +532,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                         onChange={(e) =>
                           setFieldValue(
                             "OriginDetails.MfrSourceIdentifier",
-                            removeNonAlphaNumeric(e.target.value)
+                            removeNonAlphaNumericHyphen(e.target.value)
                           )
                         }
                         onBlur={handleBlur}
@@ -938,7 +939,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
               //   setSelectedData(data?.row?.Code);
               //   toggleSelect();
               // }}
-              getRowId={(row) => row.Code}
+              getRowId={(row) => row.Code + " " + row.Description}
               getRowClassName={(params) =>
                 params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd"
               }

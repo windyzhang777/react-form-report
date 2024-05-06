@@ -13,13 +13,7 @@ import {
   SdrEsfrRecordDetailsStateType,
   SelectedStatus,
 } from "src/commons/types";
-import {
-  DATETIME_REQUEST,
-  DATE_HTML_DISPLAY,
-  handleFocus,
-  handleScroll,
-  toFixed,
-} from "src/helpers";
+import { DATETIME_REQUEST, DATE_HTML_DISPLAY, handleFocus, handleScroll } from "src/helpers";
 import { resetLogpageDataSuccess } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
@@ -103,7 +97,7 @@ const CreateSdrData = ({
         Manufacturer: logpageData?.FleetInfo?.ManufacturedBy || "",
         Model: logpageData?.FleetInfo?.ManufacturerPartNumber || "",
         SerialNumber: logpageData?.FleetInfo?.ManufacturerSerialNumber || "",
-        TotalTime: String(toFixed(logpageData?.FleetInfo?.TotalAircraftTime) || ""),
+        TotalTime: String(logpageData?.FleetInfo?.TotalAircraftTime || ""),
         TotalCycles: logpageData?.FleetInfo?.TotalAircraftCycles || "",
       },
       LogPageCreationDate: logpageData?.FleetInfo?.Date || "",

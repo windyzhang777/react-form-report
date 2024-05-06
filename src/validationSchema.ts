@@ -3,6 +3,7 @@ import { array, date, number, object, string } from "yup";
 
 export const regex = {
   LogPageNumber: /^[0-9]{7}$/,
+  LogPageNumberPartial: /^[0-9]{1,7}$/,
   Station: /^[a-zA-Z]{1,3}$/,
   AircraftNumber: /^[0-9]{4}$/,
   AtaCode: /^[a-zA-Z0-9]{1,4}$/,
@@ -17,8 +18,11 @@ export const regex = {
   // common
   number7D3: /^(0|[1-9]\d{1,7})(?:\.\d{1,3})?$/,
   numberD3: /^(0|[1-9]\d*)(?:\.\d{1,3})?$/,
-  alphaNumeric: /^[a-zA-Z0-9\s.]+$/,
+  alphaNumeric: /^[a-zA-Z0-9]+$/,
+  alphaNumericHyphen: /^[a-zA-Z0-9-]+$/,
   nonAlphaNumeric: /[^a-zA-Z0-9]/gi,
+  nonAlphaNumericSpace: /[^a-zA-Z0-9\s]/gi,
+  nonAlphaNumericHyphen: /[^a-zA-Z0-9-]/gi,
   nonNumeric: /[^0-9]/gi,
   nonNumericDecimal: /[^0-9.]/gi,
   nonAlphabetic: /[^a-zA-Z]/gi,
@@ -28,6 +32,10 @@ export const regex = {
 };
 
 export const removeNonAlphaNumeric = (text: string) => text.replace(regex.nonAlphaNumeric, "");
+export const removeNonAlphaNumericSpace = (text: string) =>
+  text.replace(regex.nonAlphaNumericSpace, "");
+export const removeNonAlphaNumericHyphen = (text: string) =>
+  text.replace(regex.nonAlphaNumericHyphen, "");
 export const removeNonNumeric = (text: string) => text.replace(regex.nonNumeric, "");
 export const removeNonNumericDecimal = (text: string) => text.replace(regex.nonNumericDecimal, "");
 export const removeNonAlphabet = (text: string) => text.replace(regex.nonAlphabetic, "");
@@ -59,6 +67,7 @@ export const commonSchema = {
 
 export const ValidationSchema = {
   LogPageNumber: string().matches(regex.LogPageNumber, "Not a valid Logpage Number"),
+  LogPageNumberPartial: string().matches(regex.LogPageNumberPartial, errMsg.upToNum(7)),
   LogPageCreationDate: date().max(moment().endOf("day"), errMsg.noFuture),
   Station: string().matches(regex.Station, "Not a valid Station"),
   AircraftNumber: string().matches(regex.AircraftNumber, "Not a valid Aircraft Number"),
@@ -131,9 +140,9 @@ export const ValidationSchemaSFR = {
     MfrSourceId: number(),
     MfrSourceIdentifier: string().when("MfrSourceId", {
       is: (v: number) => v === 1 || v === 3,
-      then: (schema) => schema.required("Fetch logpage data first"),
+      then: (schema) => schema.required(`${errMsg.required} (fetch logpage data first)`),
       otherwise: () =>
-        string().matches(regex.alphaNumeric, errMsg.alphaNumeric).required(errMsg.required),
+        string().matches(regex.alphaNumericHyphen, errMsg.alphaNumeric).required(errMsg.required),
     }),
     MfrSourceComments: string().when("MfrSourceId", {
       is: (v: number) => v === 4,

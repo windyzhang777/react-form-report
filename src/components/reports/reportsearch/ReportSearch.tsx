@@ -8,7 +8,6 @@ import TextField from "src/commons/TextField";
 import { IReportSearchValues, ReportStatus, ReportType } from "src/commons/types";
 import { DATE_HTML_DISPLAY } from "src/helpers";
 import ValidationSchema, {
-  commonSchema,
   removeNonAlphaNumeric,
   removeNonAlphabet,
   removeNonNumeric,
@@ -58,7 +57,7 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
         }}
         validationSchema={object().shape({
           ...ValidationSchema,
-          logPageNumber: commonSchema.upToNum(7),
+          logPageNumber: ValidationSchema.LogPageNumberPartial,
           auditNumber: ValidationSchema.OperatorControlNumber,
           aircraftNumber: ValidationSchema.AircraftNumber,
           station: ValidationSchema.Station,
