@@ -114,13 +114,13 @@ export const partsReportSearchColumns = (): GridColDef<GetPartsDiscrepancyReport
       minWidth: 100,
     },
     {
-      field: "Pse",
+      field: "PSE",
       headerName: "PSE",
       sortable: false,
       minWidth: 120,
     },
     {
-      field: "EcraNumber",
+      field: "ECRANumber",
       headerName: "ECRA Number",
       sortable: false,
       minWidth: 120,
