@@ -26,7 +26,11 @@ import {
   resetCtnDataSuccess,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
-import { removeNonAlphaNumeric, removeNonAlphaNumericHyphen } from "src/validationSchema";
+import {
+  removeNonAlphaNumeric,
+  removeNonAlphaNumericHyphen,
+  removeNonNumeric,
+} from "src/validationSchema";
 
 type OriginTabProps = {
   editable: boolean;
@@ -146,9 +150,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                 <TextField
                   name="LogPageNumber"
                   value={values.LogPageNumber || ""}
-                  onChange={(e) =>
-                    setFieldValue("LogPageNumber", removeNonAlphaNumeric(e.target.value))
-                  }
+                  onChange={(e) => setFieldValue("LogPageNumber", removeNonNumeric(e.target.value))}
                   onBlur={handleBlur}
                   error={!!touched.LogPageNumber && !!errors.LogPageNumber}
                   helperText={!!touched.LogPageNumber && errors.LogPageNumber}
