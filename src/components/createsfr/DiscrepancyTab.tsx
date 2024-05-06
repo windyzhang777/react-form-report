@@ -2,10 +2,15 @@ import { Grid } from "@mui/material";
 import { useFormikContext } from "formik";
 import ListItem from "src/commons/ListItem";
 import { SimpleRadio } from "src/commons/Radio";
-import { SingleSelect } from "src/commons/Select";
+import { SimpleSingleSelect, SingleSelect } from "src/commons/Select";
 import TabPanel from "src/commons/TabPanel";
 import TextField from "src/commons/TextField";
-import { ISaveSfrValues, SdrEsfrRecordDetailsStateType, SelectedSfrTab } from "src/commons/types";
+import {
+  ISaveSfrValues,
+  SdrEsfrRecordDetailsStateType,
+  SelectedSfrTab,
+  StructureOptions,
+} from "src/commons/types";
 import { useAppSelector } from "src/redux/hooks";
 import {
   removeNonAlphaNumeric,
@@ -507,27 +512,21 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                 <ListItem>
                   {editable ? (
                     <TextField
-                      name="DiscrepancyDetails.DiscrepancyTypeComments"
-                      value={values?.DiscrepancyDetails?.DiscrepancyTypeComments || ""}
+                      name="DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails"
+                      value={
+                        values?.DiscrepancyDetails?.DiscrepancyPartDetails?.[0]?.PartDetails || ""
+                      }
                       onChange={(e) =>
                         setFieldValue(
-                          "DiscrepancyDetails.DiscrepancyTypeComments",
+                          "DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails",
                           removeNonAlphaNumeric(e.target.value)
                         )
                       }
                       onBlur={handleBlur}
-                      error={
-                        !!touched?.DiscrepancyDetails?.DiscrepancyTypeComments &&
-                        !!errors?.DiscrepancyDetails?.DiscrepancyTypeComments
-                      }
-                      helperText={
-                        !!touched?.DiscrepancyDetails?.DiscrepancyTypeComments &&
-                        errors?.DiscrepancyDetails?.DiscrepancyTypeComments
-                      }
                       multiline
                       maxRows={4}
                       className={"sdr-status-edit textareaAutosize"}
-                      inputProps={{ maxLength: 100 }}
+                      inputProps={{ maxLength: 20 }}
                     />
                   ) : (
                     ""
@@ -567,20 +566,17 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                   <ListItem>Structure</ListItem>
                   <ListItem>
                     {editable ? (
-                      <TextField
-                        name="Structure"
-                        value={values.Structure || ""}
-                        onChange={(e) => {
-                          setFieldValue("Structure", removeNonAlphaNumeric(e.target.value));
-                          setFieldValue(
-                            "DiscrepancyDetails.DiscrepancyPartDetails[0].Structure",
-                            removeNonAlphaNumeric(e.target.value)
-                          );
-                        }}
+                      <SimpleSingleSelect
+                        name="DiscrepancyDetails.DiscrepancyPartDetails[0].Structure"
+                        value={
+                          values?.DiscrepancyDetails?.DiscrepancyPartDetails?.[0]?.Structure || ""
+                        }
+                        onChange={handleChange}
                         onBlur={handleBlur}
-                        error={!!touched.Structure && !!errors.Structure}
-                        helperText={!!touched.Structure && errors.Structure}
-                        className={"sdr-status-edit"}
+                        options={StructureOptions.sort(
+                          (a, b) => a.DisplayOrder - b.DisplayOrder
+                        ).map((r) => r.Description)}
+                        id="DiscrepancyDetails.DiscrepancyPartDetails[0].Structure"
                       />
                     ) : (
                       ""
@@ -612,6 +608,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                         multiline
                         maxRows={4}
                         className={"sdr-status-edit textareaAutosize"}
+                        inputProps={{ maxLength: 100 }}
                       />
                     ) : (
                       ""

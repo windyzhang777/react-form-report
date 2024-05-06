@@ -116,6 +116,7 @@ export const useFormCreateSfrData = () => {
     setFieldValue("Structure", "");
     setFieldValue("DiscrepancyDetails.DiscrepancyPartDetails[0].PartNumber", "");
     setFieldValue("DiscrepancyDetails.DiscrepancyPartDetails[0].Structure", "");
+    setFieldValue("DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails", "");
     setFieldValue("DiscrepancyDetails.DiscrepancyPartComments", "");
   }, [values?.DiscrepancyDetails?.DiscrepancyPartDetails?.[0]?.DiscrepancyPartInformationCode]);
 

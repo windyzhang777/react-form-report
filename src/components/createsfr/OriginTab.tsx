@@ -200,7 +200,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
 
               {values?.OriginDetails?.CalDocId === 1 && (
                 <div>
-                  <ListItem required={!!values?.OriginDetails?.CalDocId}>Work Card #</ListItem>
+                  <ListItem>Work Card #</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextFieldGroup
@@ -897,7 +897,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
             )
           ) : (
             <DataGrid
-              className="!h-[400px]"
+              className="!h-[330px]"
               sx={{
                 "& .MuiDataGrid-columnHeaderCheckbox .MuiDataGrid-columnHeaderTitleContainer": {
                   display: "none",
