@@ -19,7 +19,7 @@ import {
   Sides,
   UserPermission,
 } from "src/commons/types";
-import { DATETIME_REQUEST, DATE_DISPLAY, DATE_HTML_DISPLAY, toFixed } from "src/helpers";
+import { DATETIME_REQUEST, DATE_DISPLAY, DATE_HTML_DISPLAY } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
 import "./viewSdrData.css";
 
@@ -117,7 +117,7 @@ const ViewSdrData = ({
         Manufacturer: logpageData?.FleetInfo?.ManufacturedBy || "",
         Model: logpageData?.FleetInfo?.ManufacturerPartNumber || "",
         SerialNumber: logpageData?.FleetInfo?.ManufacturerSerialNumber || "",
-        TotalTime: String(toFixed(logpageData?.FleetInfo?.TotalAircraftTime) || ""),
+        TotalTime: String(logpageData?.FleetInfo?.TotalAircraftTime || ""),
         TotalCycles: logpageData?.FleetInfo?.TotalAircraftCycles || "",
       },
       LogPageCreationDate:
@@ -229,7 +229,7 @@ const ViewSdrData = ({
                   <ListItem>A/C Number</ListItem>
                 </Grid>
                 <Grid className={"view-details-right"} item>
-                  <ListItem>{initialValues?.AircraftDetails?.RegistryNNumber}</ListItem>
+                  <ListItem>{initialValues?.AircraftNumber}</ListItem>
                 </Grid>
               </Grid>
               <Grid className={"view-details-dropdown"} container spacing={2}>
