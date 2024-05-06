@@ -1,4 +1,4 @@
-import { MajorRepair } from "src/types/GetCpcpReportRes";
+import { YON } from "src/types/GetCpcpReportRes";
 import { OptionDocument } from "src/types/GetSfrMasterDataRes";
 
 export interface GetPartsDiscrepancyReportRes {
@@ -19,11 +19,11 @@ export interface GetPartsDiscrepancyReportResResult {
   Fleet: null | string;
   Id: number;
   LogpageNumber: string;
-  MajorRepair: MajorRepair;
+  MajorRepair: YON;
   OperatorControlNumber: null | string;
   PartName: null | string;
   PartNumber: null | string;
-  PSE: MajorRepair;
+  PSE: YON;
   RepairDocNumber: null | string;
   Station: string;
 }
