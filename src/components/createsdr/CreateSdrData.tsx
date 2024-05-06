@@ -23,7 +23,12 @@ import {
 import { resetLogpageDataSuccess } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
-import ValidationSchema, { errMsg, removeNonNumericDecimal } from "src/validationSchema";
+import ValidationSchema, {
+  errMsg,
+  removeNonAlphaNumeric,
+  removeNonNumeric,
+  removeNonNumericDecimal,
+} from "src/validationSchema";
 import { object, string } from "yup";
 import "./createSdrData.css";
 
@@ -219,7 +224,9 @@ const CreateSdrData = ({
                         <TextField
                           name="LogPageNumber"
                           value={values.LogPageNumber || ""}
-                          onChange={handleChange}
+                          onChange={(e) =>
+                            setFieldValue("LogPageNumber", removeNonNumeric(e.target.value))
+                          }
                           onBlur={handleBlur}
                           error={!!touched.LogPageNumber && !!errors.LogPageNumber}
                           helperText={!!touched.LogPageNumber && errors.LogPageNumber}
@@ -798,7 +805,12 @@ const CreateSdrData = ({
                         <TextField
                           name="PartDetails.PartManufacturerSerialNumber"
                           value={values.PartDetails?.PartManufacturerSerialNumber || ""}
-                          onChange={handleChange}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "PartDetails.PartManufacturerSerialNumber",
+                              removeNonAlphaNumeric(e.target.value)
+                            )
+                          }
                           onBlur={handleBlur}
                           error={
                             !!touched.PartDetails?.PartManufacturerSerialNumber &&
@@ -821,7 +833,12 @@ const CreateSdrData = ({
                         <TextField
                           name="PartDetails.PartSerialNumber"
                           value={values.PartDetails?.PartSerialNumber || ""}
-                          onChange={handleChange}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "PartDetails.PartSerialNumber",
+                              removeNonAlphaNumeric(e.target.value)
+                            )
+                          }
                           onBlur={handleBlur}
                           error={
                             !!touched.PartDetails?.PartSerialNumber &&
@@ -844,7 +861,12 @@ const CreateSdrData = ({
                         <TextField
                           name="PartDetails.PartDescription"
                           value={values.PartDetails?.PartDescription || ""}
-                          onChange={handleChange}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "PartDetails.PartDescription",
+                              removeNonAlphaNumeric(e.target.value)
+                            )
+                          }
                           onBlur={handleBlur}
                           error={
                             !!touched.PartDetails?.PartDescription &&
@@ -880,7 +902,12 @@ const CreateSdrData = ({
                         <TextField
                           name="PartDetails.PartCondition"
                           value={values.PartDetails?.PartCondition || ""}
-                          onChange={handleChange}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "PartDetails.PartCondition",
+                              removeNonAlphaNumeric(e.target.value)
+                            )
+                          }
                           onBlur={handleBlur}
                           error={
                             !!touched.PartDetails?.PartCondition &&
@@ -903,7 +930,12 @@ const CreateSdrData = ({
                         <TextField
                           name="PartDetails.PartLocation"
                           value={values.PartDetails?.PartLocation || ""}
-                          onChange={handleChange}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "PartDetails.PartLocation",
+                              removeNonAlphaNumeric(e.target.value)
+                            )
+                          }
                           onBlur={handleBlur}
                           error={
                             !!touched.PartDetails?.PartLocation &&
