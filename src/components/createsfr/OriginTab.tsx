@@ -26,7 +26,7 @@ import {
   resetCtnDataSuccess,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
-import { removeNonAlphaNumeric } from "src/validationSchema";
+import { removeNonAlphaNumeric, removeNonAlphaNumericHyphen } from "src/validationSchema";
 
 type OriginTabProps = {
   editable: boolean;
@@ -473,7 +473,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                         onChange={(e) =>
                           setFieldValue(
                             "OriginDetails.MfrSourceIdentifier",
-                            removeNonAlphaNumeric(e.target.value)
+                            removeNonAlphaNumericHyphen(e.target.value)
                           )
                         }
                         onBlur={handleBlur}
@@ -532,7 +532,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                         onChange={(e) =>
                           setFieldValue(
                             "OriginDetails.MfrSourceIdentifier",
-                            removeNonAlphaNumeric(e.target.value)
+                            removeNonAlphaNumericHyphen(e.target.value)
                           )
                         }
                         onBlur={handleBlur}

@@ -18,9 +18,11 @@ export const regex = {
   // common
   number7D3: /^(0|[1-9]\d{1,7})(?:\.\d{1,3})?$/,
   numberD3: /^(0|[1-9]\d*)(?:\.\d{1,3})?$/,
-  alphaNumeric: /^[a-zA-Z0-9\s.]+$/,
+  alphaNumeric: /^[a-zA-Z0-9]+$/,
+  alphaNumericHyphen: /^[a-zA-Z0-9-]+$/,
   nonAlphaNumeric: /[^a-zA-Z0-9]/gi,
   nonAlphaNumericSpace: /[^a-zA-Z0-9\s]/gi,
+  nonAlphaNumericHyphen: /[^a-zA-Z0-9-]/gi,
   nonNumeric: /[^0-9]/gi,
   nonNumericDecimal: /[^0-9.]/gi,
   nonAlphabetic: /[^a-zA-Z]/gi,
@@ -32,6 +34,8 @@ export const regex = {
 export const removeNonAlphaNumeric = (text: string) => text.replace(regex.nonAlphaNumeric, "");
 export const removeNonAlphaNumericSpace = (text: string) =>
   text.replace(regex.nonAlphaNumericSpace, "");
+export const removeNonAlphaNumericHyphen = (text: string) =>
+  text.replace(regex.nonAlphaNumericHyphen, "");
 export const removeNonNumeric = (text: string) => text.replace(regex.nonNumeric, "");
 export const removeNonNumericDecimal = (text: string) => text.replace(regex.nonNumericDecimal, "");
 export const removeNonAlphabet = (text: string) => text.replace(regex.nonAlphabetic, "");
@@ -138,7 +142,7 @@ export const ValidationSchemaSFR = {
       is: (v: number) => v === 1 || v === 3,
       then: (schema) => schema.required(`${errMsg.required} (fetch logpage data first)`),
       otherwise: () =>
-        string().matches(regex.alphaNumeric, errMsg.alphaNumeric).required(errMsg.required),
+        string().matches(regex.alphaNumericHyphen, errMsg.alphaNumeric).required(errMsg.required),
     }),
     MfrSourceComments: string().when("MfrSourceId", {
       is: (v: number) => v === 4,
