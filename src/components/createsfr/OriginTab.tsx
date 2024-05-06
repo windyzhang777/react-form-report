@@ -200,7 +200,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
 
               {values?.OriginDetails?.CalDocId === 1 && (
                 <div>
-                  <ListItem required={!!values?.OriginDetails?.CalDocId}>Work Card #</ListItem>
+                  <ListItem>Work Card #</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextFieldGroup
