@@ -938,7 +938,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
               //   setSelectedData(data?.row?.Code);
               //   toggleSelect();
               // }}
-              getRowId={(row) => row.Code}
+              getRowId={(row) => row.Code + " " + row.Description}
               getRowClassName={(params) =>
                 params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd"
               }
