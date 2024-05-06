@@ -64,6 +64,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
         return !prev;
       });
     } else {
+      setOpenSelect(false);
       handleFocus(logPageNumberRef);
     }
   };

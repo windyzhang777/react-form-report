@@ -136,7 +136,7 @@ export const ValidationSchemaSFR = {
     MfrSourceId: number(),
     MfrSourceIdentifier: string().when("MfrSourceId", {
       is: (v: number) => v === 1 || v === 3,
-      then: (schema) => schema.required("Fetch logpage data first"),
+      then: (schema) => schema.required(`${errMsg.required} (fetch logpage data first)`),
       otherwise: () =>
         string().matches(regex.alphaNumeric, errMsg.alphaNumeric).required(errMsg.required),
     }),
