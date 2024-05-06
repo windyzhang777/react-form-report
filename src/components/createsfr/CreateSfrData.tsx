@@ -56,7 +56,7 @@ const CreateSfrData = ({
       LogPageCreatedBy: "",
       ModifiedDate: moment().format(DATETIME_REQUEST),
       CreatedBy: profileData?.EmployeeId || "",
-      ModifiedBy: "",
+      ModifiedBy: profileData?.EmployeeId || "",
       AirCraftNumber: logpageData?.FleetInfo?.TailNumber || "",
       OriginDetails: {
         IsScheduledInspection: true,
