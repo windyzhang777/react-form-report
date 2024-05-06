@@ -184,7 +184,7 @@ const CreateSfrData = ({
       CreatedbyLastName: profileData?.LastName || "",
       ModifiedbyFirstName: "",
       ModifiedbyLastName: "",
-      FleetCode: logpageData?.FleetInfo?.FleetCode || "",
+      FleetCode: logpageData?.FleetInfo?.SceptreCode || "",
       AtaCode: logpageData?.FleetInfo?.ATACode || "",
 
       searchDescription: "",
