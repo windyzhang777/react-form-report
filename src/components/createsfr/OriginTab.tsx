@@ -897,7 +897,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
             )
           ) : (
             <DataGrid
-              className="!h-[400px]"
+              className="!h-[330px]"
               sx={{
                 "& .MuiDataGrid-columnHeaderCheckbox .MuiDataGrid-columnHeaderTitleContainer": {
                   display: "none",
