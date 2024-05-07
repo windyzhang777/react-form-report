@@ -17,7 +17,6 @@ import {
   StabDamageProximityOptions,
   SurfaceOptions,
   WingDamageProximityOptions,
-  ZoneOptions,
 } from "src/commons/types";
 import { useFormCreateSfrData } from "src/components/createsfr/useFormCreateSfrData";
 import { useAppSelector } from "src/redux/hooks";
@@ -167,14 +166,16 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                 <ListItem>Side</ListItem>
                 <ListItem>
                   {editable ? (
-                    <SingleSelect
+                    <SimpleSingleSelect
                       name="LocationDetails.Side"
                       value={values?.LocationDetails?.Side || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={!!touched?.LocationDetails?.Side && !!errors?.LocationDetails?.Side}
                       helperText={!!touched?.LocationDetails?.Side && errors?.LocationDetails?.Side}
-                      options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
+                      options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder).map(
+                        (o) => o.Description
+                      )}
                       id="LocationDetails.Side"
                     />
                   ) : (
@@ -202,7 +203,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                 <ListItem>Surface</ListItem>
                 <ListItem>
                   {editable ? (
-                    <SingleSelect
+                    <SimpleSingleSelect
                       name="LocationDetails.Surface"
                       value={values?.LocationDetails?.Surface || ""}
                       onChange={handleChange}
@@ -213,7 +214,9 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       helperText={
                         !!touched?.LocationDetails?.Surface && errors?.LocationDetails?.Surface
                       }
-                      options={SurfaceOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
+                      options={SurfaceOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder).map(
+                        (o) => o.Description
+                      )}
                       id="LocationDetails.Surface"
                     />
                   ) : (
@@ -304,21 +307,21 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   <ListItem>From BL</ListItem>
                   <ListItem>
                     {editable ? (
-                      <SingleSelect
-                        name="LocationDetails.FromBLLength"
-                        value={values?.LocationDetails?.FromBLLength || ""}
+                      <SimpleSingleSelect
+                        name="LocationDetails.FromBL"
+                        value={values?.LocationDetails?.FromBL || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
-                          !!touched?.LocationDetails?.FromBLLength &&
-                          !!errors?.LocationDetails?.FromBLLength
+                          !!touched?.LocationDetails?.FromBL && !!errors?.LocationDetails?.FromBL
                         }
                         helperText={
-                          !!touched?.LocationDetails?.FromBLLength &&
-                          errors?.LocationDetails?.FromBLLength
+                          !!touched?.LocationDetails?.FromBL && errors?.LocationDetails?.FromBL
                         }
-                        options={BLOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                        id="LocationDetails.FromBLLength"
+                        options={BLOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder).map(
+                          (o) => o.Description
+                        )}
+                        id="LocationDetails.FromBL"
                       />
                     ) : (
                       ""
@@ -327,20 +330,22 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="LocationDetails.FromBL"
-                        value={values.LocationDetails?.FromBL || ""}
+                        name="LocationDetails.FromBLLength"
+                        value={values.LocationDetails?.FromBLLength || ""}
                         onChange={(e) =>
                           setFieldValue(
-                            "LocationDetails.FromBL",
+                            "LocationDetails.FromBLLength",
                             removeNonAlphaNumeric(e.target.value)
                           )
                         }
                         onBlur={handleBlur}
                         error={
-                          !!touched.LocationDetails?.FromBL && !!errors.LocationDetails?.FromBL
+                          !!touched.LocationDetails?.FromBLLength &&
+                          !!errors.LocationDetails?.FromBLLength
                         }
                         helperText={
-                          !!touched.LocationDetails?.FromBL && errors.LocationDetails?.FromBL
+                          !!touched.LocationDetails?.FromBLLength &&
+                          errors.LocationDetails?.FromBLLength
                         }
                         className={"sdr-status-edit"}
                         inputProps={{ maxLength: 10 }}
@@ -355,21 +360,19 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   <ListItem>To BL</ListItem>
                   <ListItem>
                     {editable ? (
-                      <SingleSelect
-                        name="LocationDetails.ToBLLength"
-                        value={values?.LocationDetails?.ToBLLength || ""}
+                      <SimpleSingleSelect
+                        name="LocationDetails.ToBL"
+                        value={values?.LocationDetails?.ToBL || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        error={
-                          !!touched?.LocationDetails?.ToBLLength &&
-                          !!errors?.LocationDetails?.ToBLLength
-                        }
+                        error={!!touched?.LocationDetails?.ToBL && !!errors?.LocationDetails?.ToBL}
                         helperText={
-                          !!touched?.LocationDetails?.ToBLLength &&
-                          errors?.LocationDetails?.ToBLLength
+                          !!touched?.LocationDetails?.ToBL && errors?.LocationDetails?.ToBL
                         }
-                        options={BLOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                        id="LocationDetails.ToBLLength"
+                        options={BLOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder).map(
+                          (o) => o.Description
+                        )}
+                        id="LocationDetails.ToBL"
                       />
                     ) : (
                       ""
@@ -378,18 +381,22 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="LocationDetails.ToBL"
-                        value={values?.LocationDetails?.ToBL || ""}
+                        name="LocationDetails.ToBLLength"
+                        value={values?.LocationDetails?.ToBLLength || ""}
                         onChange={(e) =>
                           setFieldValue(
-                            "LocationDetails.ToBL",
+                            "LocationDetails.ToBLLength",
                             removeNonAlphaNumeric(e.target.value)
                           )
                         }
                         onBlur={handleBlur}
-                        error={!!touched?.LocationDetails?.ToBL && !!errors?.LocationDetails?.ToBL}
+                        error={
+                          !!touched?.LocationDetails?.ToBLLength &&
+                          !!errors?.LocationDetails?.ToBLLength
+                        }
                         helperText={
-                          !!touched?.LocationDetails?.ToBL && errors?.LocationDetails?.ToBL
+                          !!touched?.LocationDetails?.ToBLLength &&
+                          errors?.LocationDetails?.ToBLLength
                         }
                         className={"sdr-status-edit"}
                         inputProps={{ maxLength: 10 }}
@@ -541,27 +548,6 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   <ListItem>From STR/Long</ListItem>
                   <ListItem>
                     {editable ? (
-                      <SingleSelect
-                        name="LocationDetails.FromSide"
-                        value={values?.LocationDetails?.FromSide || ""}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={
-                          !!touched?.LocationDetails?.FromSide &&
-                          !!errors?.LocationDetails?.FromSide
-                        }
-                        helperText={
-                          !!touched?.LocationDetails?.FromSide && errors?.LocationDetails?.FromSide
-                        }
-                        options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                        id="LocationDetails.FromSide"
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                  <ListItem>
-                    {editable ? (
                       <SimpleSingleSelect
                         name="LocationDetails.FromStr"
                         value={values?.LocationDetails?.FromStr || ""}
@@ -580,29 +566,33 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       ""
                     )}
                   </ListItem>
-                </div>
-                <div>
-                  <ListItem>To STR/Long</ListItem>
                   <ListItem>
                     {editable ? (
-                      <SingleSelect
-                        name="LocationDetails.ToSide"
-                        value={values?.LocationDetails?.ToSide || ""}
+                      <SimpleSingleSelect
+                        name="LocationDetails.FromSide"
+                        value={values?.LocationDetails?.FromSide || ""}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={
-                          !!touched?.LocationDetails?.ToSide && !!errors?.LocationDetails?.ToSide
+                          !!touched?.LocationDetails?.FromSide &&
+                          !!errors?.LocationDetails?.FromSide
                         }
                         helperText={
-                          !!touched?.LocationDetails?.ToSide && errors?.LocationDetails?.ToSide
+                          !!touched?.LocationDetails?.FromSide && errors?.LocationDetails?.FromSide
                         }
-                        options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
-                        id="LocationDetails.ToSide"
+                        options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder).map(
+                          (o) => o.Description
+                        )}
+                        id="LocationDetails.FromSide"
                       />
                     ) : (
                       ""
                     )}
                   </ListItem>
+                </div>
+                <div>
+                  <ListItem>To STR/Long</ListItem>
+
                   <ListItem>
                     {editable ? (
                       <SimpleSingleSelect
@@ -623,6 +613,28 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       ""
                     )}
                   </ListItem>
+                  <ListItem>
+                    {editable ? (
+                      <SimpleSingleSelect
+                        name="LocationDetails.ToSide"
+                        value={values?.LocationDetails?.ToSide || ""}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        error={
+                          !!touched?.LocationDetails?.ToSide && !!errors?.LocationDetails?.ToSide
+                        }
+                        helperText={
+                          !!touched?.LocationDetails?.ToSide && errors?.LocationDetails?.ToSide
+                        }
+                        options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder).map(
+                          (o) => o.Description
+                        )}
+                        id="LocationDetails.ToSide"
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </ListItem>
                 </div>
               </>
             )}
@@ -634,7 +646,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   <ListItem>Elevator Tab</ListItem>
                   <ListItem>
                     {editable ? (
-                      <SingleSelect
+                      <SimpleSingleSelect
                         name="LocationDetails.ElevatorTab"
                         value={values?.LocationDetails?.ElevatorTab || ""}
                         onChange={handleChange}
@@ -647,7 +659,9 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                           !!touched?.LocationDetails?.ElevatorTab &&
                           errors?.LocationDetails?.ElevatorTab
                         }
-                        options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
+                        options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder).map(
+                              (o) => o.Description
+                            )}
                         id="LocationDetails.ElevatorTab"
                       />
                     ) : (
@@ -659,7 +673,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   <ListItem>Fuselage</ListItem>
                   <ListItem>
                     {editable ? (
-                      <SingleSelect
+                      <SimpleSingleSelect
                         name="LocationDetails.Fuselage"
                         value={values?.LocationDetails?.Fuselage || ""}
                         onChange={handleChange}
@@ -671,7 +685,9 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         helperText={
                           !!touched?.LocationDetails?.Fuselage && errors?.LocationDetails?.Fuselage
                         }
-                        options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
+                        options={Sides.sort((a, b) => a.DisplayOrder - b.DisplayOrder).map(
+                          (o) => o.Description
+                        )}
                         id="LocationDetails.Fuselage"
                       />
                     ) : (
@@ -753,7 +769,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                 <ListItem>Slat #</ListItem>
                 <ListItem>
                   {editable ? (
-                    <SingleSelect
+                    <SimpleSingleSelect
                       name="LocationDetails.LocationType"
                       value={values?.LocationDetails?.LocationType || ""}
                       onChange={handleChange}
@@ -766,7 +782,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         !!touched?.LocationDetails?.LocationType &&
                         errors?.LocationDetails?.LocationType
                       }
-                      options={ZoneOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
+                      options={Array.from({ length: 14 }, (_, i) => `${i + 1}`)}
                       id="LocationDetails.LocationType"
                     />
                   ) : (
@@ -782,7 +798,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                 <ListItem>Spoiler #</ListItem>
                 <ListItem>
                   {editable ? (
-                    <SingleSelect
+                    <SimpleSingleSelect
                       name="LocationDetails.LocationType"
                       value={values?.LocationDetails?.LocationType || ""}
                       onChange={handleChange}
@@ -795,7 +811,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         !!touched?.LocationDetails?.LocationType &&
                         errors?.LocationDetails?.LocationType
                       }
-                      options={ZoneOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
+                      options={Array.from({ length: 14 }, (_, i) => `${i + 1}`)}
                       id="LocationDetails.LocationType"
                     />
                   ) : (
@@ -811,7 +827,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                 <ListItem>Specifics #</ListItem>
                 <ListItem>
                   {editable ? (
-                    <SingleSelect
+                    <SimpleSingleSelect
                       name="LocationDetails.Specifics"
                       value={values?.LocationDetails?.Specifics || ""}
                       onChange={handleChange}
@@ -823,7 +839,9 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       helperText={
                         !!touched?.LocationDetails?.Specifics && errors?.LocationDetails?.Specifics
                       }
-                      options={SpecificsOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
+                      options={SpecificsOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder).map(
+                        (o) => o.Description
+                      )}
                       id="LocationDetails.Specifics"
                     />
                   ) : (
@@ -839,7 +857,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                 <ListItem>Other</ListItem>
                 <ListItem>
                   {editable ? (
-                    <SingleSelect
+                    <SimpleSingleSelect
                       name="LocationDetails.Other"
                       value={values?.LocationDetails?.Other || ""}
                       onChange={handleChange}
@@ -848,7 +866,9 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                       helperText={
                         !!touched?.LocationDetails?.Other && errors?.LocationDetails?.Other
                       }
-                      options={OtherOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder)}
+                      options={OtherOptions.sort((a, b) => a.DisplayOrder - b.DisplayOrder).map(
+                        (o) => o.Description
+                      )}
                       id="LocationDetails.Other"
                     />
                   ) : (
