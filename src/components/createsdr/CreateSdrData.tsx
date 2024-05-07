@@ -143,7 +143,7 @@ const CreateSdrData = ({
       IsMajorRepair: false,
       IsSdrReportable: false,
     }),
-    [detailsData, logpageData, profileData]
+    [detailsData, logpageData, logpageNumberValue, profileData]
   );
 
   const onClickCancle = () => {
@@ -151,10 +151,8 @@ const CreateSdrData = ({
   };
 
   useEffect(() => {
-    return () => {
-      setLogpageNumberValue("");
-      dispatch(resetLogpageDataSuccess());
-    };
+    setLogpageNumberValue("");
+    dispatch(resetLogpageDataSuccess());
   }, []);
 
   useEffect(() => {

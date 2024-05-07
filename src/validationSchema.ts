@@ -194,6 +194,11 @@ export const ValidationSchemaSFR = {
     CrackDepth: commonSchema.numberD3,
     NumberOfCracks: commonSchema.intOnly,
     DiscrepancyTypeComments: commonSchema.upTo(100),
+    DiscrepancyPartDetails: array().of(
+      object({
+        PartNumber: commonSchema.upTo(20),
+      })
+    ),
   }),
   LocationDetails: object().shape({
     DefectLocationId: number().min(1, errMsg.required).required(errMsg.required),

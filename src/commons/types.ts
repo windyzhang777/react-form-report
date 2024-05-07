@@ -53,7 +53,6 @@ export interface ISaveSfrValues extends CreateSfrReq {
   searchDescription: string;
   ATAChapter: string;
   ATASubChapter: string;
-  PartNumber: string;
   DocumentType: number[];
   SpecIdentifier1: string;
   SpecIdentifier2: string;

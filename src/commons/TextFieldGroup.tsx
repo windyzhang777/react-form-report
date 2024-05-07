@@ -1,6 +1,5 @@
 import { FormHelperText } from "@mui/material";
-import { FormikErrors, FormikTouched, useFormikContext } from "formik";
-import { get } from "lodash";
+import { FormikErrors, FormikTouched, getIn, useFormikContext } from "formik";
 import { ChangeEventHandler, FocusEventHandler, Fragment } from "react";
 import { FlexColumn, FlexRow } from "src/commons/Box";
 import TextField, { ICommonTextFieldProps } from "src/commons/TextField";
@@ -36,9 +35,15 @@ const TextFieldGroup = ({
 
   const error = Array.from({ length: count }, (_, i) => i + 1).some(
     (i) =>
-      touched?.[`${name}${i}`] && (errors?.[`${name}${i}`] || (path && errors && get(errors, path)))
+      touched?.[`${name}${i}`] &&
+      (errors?.[`${name}${i}`] || (path && errors && getIn(errors, path)))
   );
-  const helperText = path && errors && get(errors, path);
+  const helperText =
+    path &&
+    errors &&
+    `${getIn(errors, path)}: ${Array.from({ length: count }, (_, i) => i + 1)
+      .map((i) => "x".repeat(maxAllowed?.[i - 1]))
+      .join("-")}`;
 
   return (
     <FlexColumn>
@@ -57,7 +62,7 @@ const TextFieldGroup = ({
                 values?.[`${name}${i}`].length < maxAllowed?.[i - 1] &&
                 path &&
                 errors &&
-                get(errors, path)
+                getIn(errors, path)
               }
               inputProps={{
                 maxLength: maxAllowed?.[i - 1] || "unset",

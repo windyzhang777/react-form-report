@@ -104,7 +104,7 @@ const CreateSfrData = ({
         AdditionalLocationDetails: "",
       },
       RepairDetails: {
-        IsDeferred: true,
+        IsDeferred: false,
         IsMajorRepair: false,
         IsSdrReportable: true,
         DamageStructureStatus: "",
@@ -190,7 +190,6 @@ const CreateSfrData = ({
       searchDescription: "",
       ATAChapter: "",
       ATASubChapter: "",
-      PartNumber: "",
       DocumentType: [],
       SpecIdentifier1: "",
       SpecIdentifier2: "",
@@ -245,7 +244,7 @@ const CreateSfrData = ({
       RepairECRA1: "",
       RepairECRA2: "",
     }),
-    [logpageData, profileData]
+    [logpageData, logpageNumberValue, profileData]
   );
 
   const handleTabChange = (event: SyntheticEvent, tab: number) => {
@@ -257,10 +256,8 @@ const CreateSfrData = ({
   };
 
   useEffect(() => {
-    return () => {
-      setLogpageNumberValue("");
-      dispatch(resetLogpageDataSuccess());
-    };
+    setLogpageNumberValue("");
+    dispatch(resetLogpageDataSuccess());
   }, []);
 
   return (

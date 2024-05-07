@@ -445,7 +445,7 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                             value={values?.RepairDetails?.Rev || ""}
                             onChange={(e) =>
                               setFieldValue(
-                                "values.RepairDetails.Rev",
+                                "RepairDetails.Rev",
                                 removeNonAlphaNumeric(e.target.value)
                               )
                             }
@@ -474,7 +474,7 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                           value={values?.RepairDetails?.Comments || ""}
                           onChange={(e) =>
                             setFieldValue(
-                              "RepairDetails.Commentsber",
+                              "RepairDetails.Comments",
                               removeNonAlphaNumeric(e.target.value)
                             )
                           }

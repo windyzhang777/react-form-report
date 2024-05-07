@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import { useFormikContext } from "formik";
+import { getIn, useFormikContext } from "formik";
 import ListItem from "src/commons/ListItem";
 import { SimpleRadio } from "src/commons/Radio";
 import { SimpleSingleSelect, SingleSelect } from "src/commons/Select";
@@ -39,7 +39,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
       >
         <Grid container>
           <Grid item xs={6} className="relative">
-            <ListItem>Exceed Manufacturer/FAA Limits</ListItem>
+            <ListItem className="whitespace-nowrap">Exceed Manufacturer/FAA Limits</ListItem>
             <ListItem className="!absolute !px-0 left-0 top-[20px]">
               {editable ? (
                 <SimpleRadio
@@ -67,7 +67,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
             </ListItem>
           </Grid>
           <Grid item xs={6} className="relative">
-            <ListItem>Endangers Safe Operations of Aircraft</ListItem>
+            <ListItem className="whitespace-nowrap">Endangers Safe Operations of Aircraft</ListItem>
             <ListItem className="!absolute !px-0 left-0 top-[20px]">
               {editable ? (
                 <SimpleRadio
@@ -260,7 +260,9 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                   </ListItem>
                 </div>
                 <div className="relative">
-                  <ListItem>Multiple Cracks in Same Location</ListItem>
+                  <ListItem className="whitespace-nowrap">
+                    Multiple Cracks in Same Location
+                  </ListItem>
                   <ListItem className="!absolute !px-0 left-0 top-[20px]">
                     {editable ? (
                       <SimpleRadio
@@ -472,23 +474,33 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                   <SingleSelect
                     name="DiscrepancyDetails.DiscrepancyPartDetails[0].DiscrepancyPartInformationCode"
                     value={
-                      values?.DiscrepancyDetails?.DiscrepancyPartDetails?.[0]
-                        ?.DiscrepancyPartInformationCode || ""
+                      getIn(
+                        values,
+                        "DiscrepancyDetails.DiscrepancyPartDetails[0].DiscrepancyPartInformationCode"
+                      ) || ""
                     }
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    // error={
-                    //   !!touched?.DiscrepancyDetails?.DiscrepancyPartDetails?.[0]
-                    //     ?.DiscrepancyPartInformationCode &&
-                    //   !!errors?.DiscrepancyDetails?.DiscrepancyPartDetails?.[0]
-                    //     ?.DiscrepancyPartInformationCode
-                    // }
-                    // helperText={
-                    //   !!touched?.DiscrepancyDetails?.DiscrepancyPartDetails?.[0]
-                    //     ?.DiscrepancyPartInformationCode &&
-                    //   errors?.DiscrepancyDetails?.DiscrepancyPartDetails?.[0]
-                    //     ?.DiscrepancyPartInformationCode
-                    // }
+                    error={
+                      !!getIn(
+                        touched,
+                        "DiscrepancyDetails.DiscrepancyPartDetails[0].DiscrepancyPartInformationCode"
+                      ) &&
+                      !!getIn(
+                        errors,
+                        "DiscrepancyDetails.DiscrepancyPartDetails[0].DiscrepancyPartInformationCode"
+                      )
+                    }
+                    helperText={
+                      !!getIn(
+                        touched,
+                        "DiscrepancyDetails.DiscrepancyPartDetails[0].DiscrepancyPartInformationCode"
+                      ) &&
+                      getIn(
+                        errors,
+                        "DiscrepancyDetails.DiscrepancyPartDetails[0].DiscrepancyPartInformationCode"
+                      )
+                    }
                     options={
                       masterData?.DiscrepancyParts &&
                       [...masterData.DiscrepancyParts].sort(
@@ -514,7 +526,8 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                     <TextField
                       name="DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails"
                       value={
-                        values?.DiscrepancyDetails?.DiscrepancyPartDetails?.[0]?.PartDetails || ""
+                        getIn(values, "DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails") ||
+                        ""
                       }
                       onChange={(e) =>
                         setFieldValue(
@@ -523,6 +536,20 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                         )
                       }
                       onBlur={handleBlur}
+                      error={
+                        !!getIn(
+                          touched,
+                          "DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails"
+                        ) &&
+                        !!getIn(errors, "DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails")
+                      }
+                      helperText={
+                        !!getIn(
+                          touched,
+                          "DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails"
+                        ) &&
+                        getIn(errors, "DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails")
+                      }
                       multiline
                       maxRows={4}
                       className={"sdr-status-edit textareaAutosize"}
@@ -543,18 +570,34 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="PartNumber"
-                        value={values.PartNumber || ""}
+                        name="DiscrepancyDetails.DiscrepancyPartDetails[0].PartNumber"
+                        value={
+                          getIn(
+                            values,
+                            "DiscrepancyDetails.DiscrepancyPartDetails[0].PartNumber"
+                          ) || ""
+                        }
                         onChange={(e) => {
-                          setFieldValue("PartNumber", removeNonNumeric(e.target.value));
                           setFieldValue(
                             "DiscrepancyDetails.DiscrepancyPartDetails[0].PartNumber",
                             removeNonNumeric(e.target.value)
                           );
                         }}
                         onBlur={handleBlur}
-                        error={!!touched.PartNumber && !!errors.PartNumber}
-                        helperText={!!touched.PartNumber && errors.PartNumber}
+                        error={
+                          !!getIn(
+                            touched,
+                            "DiscrepancyDetails.DiscrepancyPartDetails[0].PartNumber"
+                          ) &&
+                          !!getIn(errors, "DiscrepancyDetails.DiscrepancyPartDetails[0].PartNumber")
+                        }
+                        helperText={
+                          !!getIn(
+                            touched,
+                            "DiscrepancyDetails.DiscrepancyPartDetails[0].PartNumber"
+                          ) &&
+                          getIn(errors, "DiscrepancyDetails.DiscrepancyPartDetails[0].PartNumber")
+                        }
                         className={"sdr-status-edit"}
                       />
                     ) : (
@@ -569,10 +612,25 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                       <SimpleSingleSelect
                         name="DiscrepancyDetails.DiscrepancyPartDetails[0].Structure"
                         value={
-                          values?.DiscrepancyDetails?.DiscrepancyPartDetails?.[0]?.Structure || ""
+                          getIn(values, "DiscrepancyDetails.DiscrepancyPartDetails[0].Structure") ||
+                          ""
                         }
                         onChange={handleChange}
                         onBlur={handleBlur}
+                        error={
+                          !!getIn(
+                            touched,
+                            "DiscrepancyDetails.DiscrepancyPartDetails[0].Structure"
+                          ) &&
+                          !!getIn(errors, "DiscrepancyDetails.DiscrepancyPartDetails[0].Structure")
+                        }
+                        helperText={
+                          !!getIn(
+                            touched,
+                            "DiscrepancyDetails.DiscrepancyPartDetails[0].Structure"
+                          ) &&
+                          getIn(errors, "DiscrepancyDetails.DiscrepancyPartDetails[0].Structure")
+                        }
                         options={StructureOptions.sort(
                           (a, b) => a.DisplayOrder - b.DisplayOrder
                         ).map((r) => r.Description)}
