@@ -161,10 +161,10 @@ const CommonDataGrid = ({
             }
             shouldCloseMenu
           >
-            <div onClick={() => handleCreateSDR("SDR")} style={{ width: "100%" }}>
+            <div onClick={() => handleCreateSDR("SDR")} className="w-full px-3 py-2">
               SDR
             </div>
-            <div onClick={() => handleCreateSDR("SFR")} style={{ width: "100%" }}>
+            <div onClick={() => handleCreateSDR("SFR")} className="w-full px-3 py-2">
               SFR
             </div>
           </Menu>

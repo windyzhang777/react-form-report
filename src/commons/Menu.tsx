@@ -137,6 +137,9 @@ const CommonMenu = ({
             paddingTop: 0,
             paddingBottom: 0,
           },
+          "& .MuiMenuItem-root": {
+            padding: "0 !important",
+          },
         }}
       >
         {shouldCloseMenu
