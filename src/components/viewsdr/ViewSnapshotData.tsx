@@ -1633,7 +1633,7 @@ const ViewSnapshotData = ({
                     <Grid item xs={4}>
                       <ListItem>
                         {editable ? (
-                          <SingleSelect
+                          <SimpleSingleSelect
                             name="SfrAdditionalDetails.CorrisionLevel"
                             value={values?.SfrAdditionalDetails?.CorrisionLevel || ""}
                             onChange={handleChange}
@@ -1648,15 +1648,15 @@ const ViewSnapshotData = ({
                             }
                             options={
                               masterData?.CorrosionLevels &&
-                              [...masterData.CorrosionLevels].sort(
-                                (a, b) => a.DisplayOrder - b.DisplayOrder
-                              )
+                              [...masterData.CorrosionLevels]
+                                .sort((a, b) => a.DisplayOrder - b.DisplayOrder)
+                                .map((o) => o.Description)
                             }
                             id="SfrAdditionalDetails.CorrisionLevel"
                           />
                         ) : (
                           masterData?.CorrosionLevels.find(
-                            (c) => "" + c.Id === values?.SfrAdditionalDetails?.CorrisionLevel
+                            (c) => c.Description === values?.SfrAdditionalDetails?.CorrisionLevel
                           )?.Description || "--"
                         )}
                       </ListItem>
