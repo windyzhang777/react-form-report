@@ -112,8 +112,6 @@ export const useFormCreateSfrData = () => {
   }, [values?.DiscrepancyDetails?.AreMultipleCracksInTheSameLocation]);
 
   useEffect(() => {
-    setFieldValue("PartNumber", "");
-    setFieldValue("Structure", "");
     setFieldValue("DiscrepancyDetails.DiscrepancyPartDetails[0].PartNumber", "");
     setFieldValue("DiscrepancyDetails.DiscrepancyPartDetails[0].Structure", "");
     setFieldValue("DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails", "");

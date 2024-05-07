@@ -190,7 +190,6 @@ const CreateSfrData = ({
       searchDescription: "",
       ATAChapter: "",
       ATASubChapter: "",
-      PartNumber: "",
       DocumentType: [],
       SpecIdentifier1: "",
       SpecIdentifier2: "",
