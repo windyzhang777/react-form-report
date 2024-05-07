@@ -138,12 +138,13 @@ export const ValidationSchema = {
 export const ValidationSchemaSFR = {
   OriginDetails: object().shape({
     MfrSourceId: number(),
-    MfrSourceIdentifier: string().when("MfrSourceId", {
-      is: (v: number) => v === 1 || v === 3,
-      then: (schema) => schema.required(`${errMsg.required} (fetch logpage data first)`),
-      otherwise: () =>
-        string().matches(regex.alphaNumericHyphen, errMsg.alphaNumeric).required(errMsg.required),
-    }),
+    MfrSourceIdentifier: string().when("MfrSourceId", ([MfrSourceId], schema) =>
+      !MfrSourceId || MfrSourceId === 6
+        ? schema
+        : MfrSourceId === 1 || MfrSourceId === 3
+        ? schema.required(`${errMsg.required} (fetch logpage data first)`)
+        : schema.matches(regex.alphaNumericHyphen, errMsg.alphaNumeric).required(errMsg.required)
+    ),
     MfrSourceComments: string().when("MfrSourceId", {
       is: (v: number) => v === 4,
       then: () => commonSchema.upTo(200),
