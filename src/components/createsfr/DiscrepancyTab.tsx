@@ -39,7 +39,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
       >
         <Grid container>
           <Grid item xs={6} className="relative">
-            <ListItem>Exceed Manufacturer/FAA Limits</ListItem>
+            <ListItem className="whitespace-nowrap">Exceed Manufacturer/FAA Limits</ListItem>
             <ListItem className="!absolute !px-0 left-0 top-[20px]">
               {editable ? (
                 <SimpleRadio
@@ -67,7 +67,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
             </ListItem>
           </Grid>
           <Grid item xs={6} className="relative">
-            <ListItem>Endangers Safe Operations of Aircraft</ListItem>
+            <ListItem className="whitespace-nowrap">Endangers Safe Operations of Aircraft</ListItem>
             <ListItem className="!absolute !px-0 left-0 top-[20px]">
               {editable ? (
                 <SimpleRadio
@@ -260,7 +260,9 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                   </ListItem>
                 </div>
                 <div className="relative">
-                  <ListItem>Multiple Cracks in Same Location</ListItem>
+                  <ListItem className="whitespace-nowrap">
+                    Multiple Cracks in Same Location
+                  </ListItem>
                   <ListItem className="!absolute !px-0 left-0 top-[20px]">
                     {editable ? (
                       <SimpleRadio
