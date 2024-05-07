@@ -104,7 +104,7 @@ const CreateSfrData = ({
         AdditionalLocationDetails: "",
       },
       RepairDetails: {
-        IsDeferred: true,
+        IsDeferred: false,
         IsMajorRepair: false,
         IsSdrReportable: true,
         DamageStructureStatus: "",
