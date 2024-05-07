@@ -866,12 +866,12 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
           </Grid>
         )}
       </TabPanel>
-      {openSelectCtn && (
+      {openSelectCtn && values?.OriginDetails?.MfrSourceId && (
         <Modal
           name={`select-${selectedMFRSource}`}
           onClose={toggleSelect}
           open={true}
-          className="max-h-[80%] !w-[60%]"
+          className="max-h-full !w-[60%]"
         >
           <Typography
             id={`select-${selectedMFRSource}-modal-title`}
@@ -899,7 +899,8 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
             )
           ) : (
             <DataGrid
-              className="!h-[330px]"
+              autoPageSize
+              className="!h-[40vh]"
               sx={{
                 "& .MuiDataGrid-columnHeaderCheckbox .MuiDataGrid-columnHeaderTitleContainer": {
                   display: "none",
