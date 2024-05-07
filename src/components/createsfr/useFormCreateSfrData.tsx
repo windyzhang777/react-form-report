@@ -130,6 +130,8 @@ export const useFormCreateSfrData = () => {
     setFieldValue("LocationDetails.ToBL", "");
     setFieldValue("LocationDetails.StaTypeId", 0);
     setFieldValue("LocationDetails.DamageProximityId", 0);
+    setFieldValue("LocationDetails.FromSta", "");
+    setFieldValue("LocationDetails.ToSta", "");
     setFieldValue("LocationDetails.FromStr", "");
     setFieldValue("LocationDetails.FromSide", "");
     setFieldValue("LocationDetails.ToStr", "");
