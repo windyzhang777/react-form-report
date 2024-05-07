@@ -594,7 +594,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
               {/* Specify */}
               {values?.OriginDetails?.MfrSourceId === 5 && (
                 <div>
-                  <ListItem>Specify</ListItem>
+                  <ListItem required>Specify</ListItem>
                   <ListItem>
                     {editable ? (
                       <TextField
