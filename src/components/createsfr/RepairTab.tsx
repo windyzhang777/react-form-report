@@ -243,39 +243,6 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
             <Grid container>
               <Grid item xs={6} className="flex !flex-col gap-4">
                 <div>
-                  <ListItem required={sdrRequired}>Nature of Condition</ListItem>
-                  <ListItem>
-                    {editable ? (
-                      <MultipleSelect
-                        name="SdrDetails.NatureOfReportIds"
-                        value={values?.SdrDetails?.NatureOfReportIds || []}
-                        onChange={(values) => {
-                          setFieldValue("SdrDetails.NatureOfReportIds", values);
-                        }}
-                        onBlur={handleBlur}
-                        error={
-                          !!touched?.SdrDetails?.NatureOfReportIds &&
-                          !!errors?.SdrDetails?.NatureOfReportIds
-                        }
-                        helperText={
-                          !!touched?.SdrDetails?.NatureOfReportIds &&
-                          errors?.SdrDetails?.NatureOfReportIds
-                        }
-                        options={
-                          masterData?.NatureofReports &&
-                          [...masterData.NatureofReports].sort(
-                            (a, b) => a.DisplayOrder - b.DisplayOrder
-                          )
-                        }
-                        id="SdrDetails.NatureOfReportIds"
-                        maxAllowed={3}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </ListItem>
-                </div>
-                <div>
                   <ListItem required={sdrRequired}>Precautionary Procedure</ListItem>
                   <ListItem>
                     {editable ? (
@@ -308,8 +275,6 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                     )}
                   </ListItem>
                 </div>
-              </Grid>
-              <Grid item xs={6} className="flex !flex-col gap-4">
                 <div>
                   <ListItem required={sdrRequired}>Stage of Operation</ListItem>
                   <ListItem>
@@ -326,6 +291,41 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                           [...masterData.Stage].sort((a, b) => a.DisplayOrder - b.DisplayOrder)
                         }
                         id="SdrDetails.StageId"
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </ListItem>
+                </div>
+              </Grid>
+              <Grid item xs={6} className="flex !flex-col gap-4">
+                <div>
+                  <ListItem required={sdrRequired}>Nature of Condition</ListItem>
+                  <ListItem>
+                    {editable ? (
+                      <MultipleSelect
+                        name="SdrDetails.NatureOfReportIds"
+                        value={values?.SdrDetails?.NatureOfReportIds || []}
+                        onChange={(values) => {
+                          setFieldValue("SdrDetails.NatureOfReportIds", values);
+                        }}
+                        onBlur={handleBlur}
+                        error={
+                          !!touched?.SdrDetails?.NatureOfReportIds &&
+                          !!errors?.SdrDetails?.NatureOfReportIds
+                        }
+                        helperText={
+                          !!touched?.SdrDetails?.NatureOfReportIds &&
+                          errors?.SdrDetails?.NatureOfReportIds
+                        }
+                        options={
+                          masterData?.NatureofReports &&
+                          [...masterData.NatureofReports].sort(
+                            (a, b) => a.DisplayOrder - b.DisplayOrder
+                          )
+                        }
+                        id="SdrDetails.NatureOfReportIds"
+                        maxAllowed={3}
                       />
                     ) : (
                       ""

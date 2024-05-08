@@ -1655,9 +1655,7 @@ const ViewSnapshotData = ({
                             id="SfrAdditionalDetails.CorrisionLevel"
                           />
                         ) : (
-                          masterData?.CorrosionLevels.find(
-                            (c) => c.Description === values?.SfrAdditionalDetails?.CorrisionLevel
-                          )?.Description || "--"
+                          values?.SfrAdditionalDetails?.CorrisionLevel || "--"
                         )}
                       </ListItem>
                     </Grid>

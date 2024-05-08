@@ -71,44 +71,67 @@ const ViewSdrData = ({
         PartModelNumber: "",
         FuselageFromSta:
           detailsData?.LocationDetails?.DefectLocationId === 8
-            ? detailsData?.LocationDetails?.FromSta
+            ? detailsData?.LocationDetails?.FromSta || ""
             : "",
         FuselageToSta:
           detailsData?.LocationDetails?.DefectLocationId === 8
-            ? detailsData?.LocationDetails?.ToSta
+            ? detailsData?.LocationDetails?.ToSta || ""
             : "",
-        CorrisionLevel: detailsData?.DiscrepancyDetails?.CorrosionLevelId
-          ? "" + detailsData.DiscrepancyDetails.CorrosionLevelId
-          : "",
-        CrackLength: detailsData?.DiscrepancyDetails?.CrackLength
-          ? "" + detailsData.DiscrepancyDetails.CrackLength
-          : "",
-        NumberOfCracks: detailsData?.DiscrepancyDetails?.NumberOfCracks ?? 0,
+        CorrisionLevel:
+          detailsData?.DiscrepancyDetails?.DiscrepancyTypeId === 4
+            ? "" + detailsData.DiscrepancyDetails?.CorrosionLevelId || ""
+            : "",
+        CrackLength:
+          detailsData?.DiscrepancyDetails?.DiscrepancyTypeId === 5
+            ? detailsData.DiscrepancyDetails?.CrackLength || ""
+            : "",
+        NumberOfCracks: detailsData?.DiscrepancyDetails?.NumberOfCracks || "",
         WaterlineFrom: "",
         WaterlineTo: "",
-        StringerFrom: "",
-        StringerFromSide: "",
-        StringerTo: "",
+        StringerFrom:
+          detailsData?.LocationDetails?.DefectLocationId === 8
+            ? detailsData.LocationDetails?.FromStr || ""
+            : "",
+        StringerFromSide:
+          detailsData?.LocationDetails?.DefectLocationId === 8
+            ? detailsData.LocationDetails?.FromSide || ""
+            : "",
+        StringerTo:
+          detailsData?.LocationDetails?.DefectLocationId === 8
+            ? detailsData.LocationDetails?.ToStr || ""
+            : "",
         StringerToSide: "",
-        ButtlineFrom: "",
-        ButtlineFromSide: "",
-        ButtlineTo: "",
-        ButtlineToSide: "",
+        ButtlineFrom:
+          detailsData?.LocationDetails?.DefectLocationId === 4
+            ? detailsData?.LocationDetails?.FromBLLength || ""
+            : "",
+        ButtlineFromSide:
+          detailsData?.LocationDetails?.DefectLocationId === 4
+            ? detailsData?.LocationDetails?.FromBL || ""
+            : "",
+        ButtlineTo:
+          detailsData?.LocationDetails?.DefectLocationId === 4
+            ? detailsData?.LocationDetails?.ToBLLength || ""
+            : "",
+        ButtlineToSide:
+          detailsData?.LocationDetails?.DefectLocationId === 4
+            ? detailsData?.LocationDetails?.ToBL || ""
+            : "",
         WingStationFrom:
           detailsData?.LocationDetails?.DefectLocationId === 19
-            ? detailsData?.LocationDetails?.FromSta
+            ? detailsData?.LocationDetails?.FromSta || ""
             : "",
         WingStationFromSide:
           detailsData?.LocationDetails?.DefectLocationId === 19
-            ? detailsData?.LocationDetails?.FromSide
+            ? detailsData?.LocationDetails?.Side || ""
             : "",
         WingStationTo:
           detailsData?.LocationDetails?.DefectLocationId === 19
-            ? detailsData?.LocationDetails?.ToSta
+            ? detailsData?.LocationDetails?.ToSta || ""
             : "",
         WingStationToSide:
           detailsData?.LocationDetails?.DefectLocationId === 19
-            ? detailsData?.LocationDetails?.ToSide
+            ? detailsData?.LocationDetails?.Side || ""
             : "",
         StructuralOther: detailsData?.DiscrepancyDetails?.DiscrepancyTypeComments || "",
       },
@@ -1591,7 +1614,7 @@ const ViewSdrData = ({
                         {editable ? (
                           <TextField
                             name="SfrAdditionalDetails.NumberOfCracks"
-                            value={values?.SfrAdditionalDetails?.NumberOfCracks ?? ""}
+                            value={values?.SfrAdditionalDetails?.NumberOfCracks}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
@@ -1605,7 +1628,7 @@ const ViewSdrData = ({
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values?.SfrAdditionalDetails?.NumberOfCracks ?? "--"
+                          values?.SfrAdditionalDetails?.NumberOfCracks || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1733,10 +1756,7 @@ const ViewSdrData = ({
                             id="SfrAdditionalDetails.StringerFromSide"
                           />
                         ) : (
-                          Sides.find(
-                            (option) =>
-                              "" + option.Id === values.SfrAdditionalDetails?.StringerFromSide
-                          )?.Description || "--"
+                          values?.SfrAdditionalDetails?.StringerFromSide || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1792,10 +1812,7 @@ const ViewSdrData = ({
                             id="SfrAdditionalDetails.StringerToSide"
                           />
                         ) : (
-                          Sides.find(
-                            (option) =>
-                              "" + option.Id === values.SfrAdditionalDetails?.StringerToSide
-                          )?.Description || "--"
+                          values?.SfrAdditionalDetails?.StringerToSide || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1862,10 +1879,7 @@ const ViewSdrData = ({
                             id="SfrAdditionalDetails.ButtlineFromSide"
                           />
                         ) : (
-                          Sides.find(
-                            (option) =>
-                              "" + option.Id === values.SfrAdditionalDetails?.ButtlineFromSide
-                          )?.Description || "--"
+                          values?.SfrAdditionalDetails?.ButtlineFromSide || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1921,10 +1935,7 @@ const ViewSdrData = ({
                             id="SfrAdditionalDetails.ButtlineToSide"
                           />
                         ) : (
-                          Sides.find(
-                            (option) =>
-                              "" + option.Id === values.SfrAdditionalDetails?.ButtlineToSide
-                          )?.Description || "--"
+                          values?.SfrAdditionalDetails?.ButtlineToSide || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1991,10 +2002,7 @@ const ViewSdrData = ({
                             id="SfrAdditionalDetails.WingStationFromSide"
                           />
                         ) : (
-                          Sides.find(
-                            (option) =>
-                              "" + option.Id === values.SfrAdditionalDetails?.WingStationFromSide
-                          )?.Description || "--"
+                          values?.SfrAdditionalDetails?.WingStationFromSide || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -2050,10 +2058,7 @@ const ViewSdrData = ({
                             id="SfrAdditionalDetails.WingStationToSide"
                           />
                         ) : (
-                          Sides.find(
-                            (option) =>
-                              "" + option.Id === values.SfrAdditionalDetails?.WingStationToSide
-                          )?.Description || "--"
+                          values?.SfrAdditionalDetails?.WingStationToSide || "--"
                         )}
                       </ListItem>
                     </Grid>
