@@ -8,6 +8,7 @@ import { GetCtnResResult } from "src/types/GetCtnRes";
 import { GetDiscrepancyPartsReportReq } from "src/types/GetDiscrepancyPartsReportReq";
 import { GetEsfrReportReq } from "src/types/GetEsfrReportReq";
 import { GetEsfrReportResResult } from "src/types/GetEsfrReportRes";
+import { GetLocationStaDataResResult } from "src/types/GetLocationStaDataRes";
 import { GetPartsDiscrepancyReportResResult } from "src/types/GetPartsDiscrepancyReportRes";
 import { Employee, GetProfileResResult } from "src/types/GetProfilerRes";
 import { GetSDREsfrRecordDetailsResResult } from "src/types/GetSdrEsfrRecordDetailsRes";
@@ -189,6 +190,8 @@ export enum SdrEsfrRecordDetailsActionType {
   FETCH_APPROVED_SDR_FAILURE = "FETCH_APPROVED_SDR_FAILURE",
   FETCH_SFR_MASTER_DATA_SUCCESS = "FETCH_SFR_MASTER_DATA_SUCCESS",
   FETCH_SFR_MASTER_DATA_FAILURE = "FETCH_SFR_MASTER_DATA_FAILURE",
+  FETCH_LOCATION_STA_DATA_SUCCESS = "FETCH_LOCATION_STA_DATA_SUCCESS",
+  FETCH_LOCATION_STA_DATA_FAILURE = "FETCH_LOCATION_STA_DATA_FAILURE",
   FETCH_LOGPAGE_DATA_SUCCESS = "FETCH_LOGPAGE_DATA_SUCCESS",
   FETCH_LOGPAGE_DATA_FAILURE = "FETCH_LOGPAGE_DATA_FAILURE",
   FETCH_CTN_DATA_SUCCESS = "FETCH_CTN_DATA_SUCCESS",
@@ -271,6 +274,18 @@ export interface SfrMasterDataFuncType {
   message?: string;
 }
 
+export interface LocationStaDataFuncType {
+  type: SdrEsfrRecordDetailsActionType;
+  data?: GetLocationStaDataResResult;
+  message?: string;
+}
+
+export interface locationStaDataFuncType {
+  type: SdrEsfrRecordDetailsActionType;
+  data?: GetLocationStaDataResResult;
+  message?: string;
+}
+
 export interface CtnDataFuncType {
   type: SdrEsfrRecordDetailsActionType;
   data?: GetCtnResResult;
@@ -323,6 +338,7 @@ export interface SdrEsfrRecordDetailsReducerAction {
     | GetSDREsfrRecordDetailsResResult
     | GetApprovedSDRResResult
     | GetSfrMasterDataResResult
+    | GetLocationStaDataResResult
     | ViewLogpageResResult
     | GetCtnResResult;
   message: string;
@@ -364,6 +380,7 @@ export type SdrEsfrRecordDetailsStateType = {
   detailsData: GetSDREsfrRecordDetailsResResult | null;
   snapshotData: GetApprovedSDRResResult | null;
   masterData: GetSfrMasterDataResResult | null;
+  locationStaData: GetLocationStaDataResResult | null;
   logpageData: ViewLogpageResResult | null;
   ctnData: GetCtnResResult | null;
   error: string;
@@ -422,9 +439,10 @@ export interface EnvironmentConfig {
   URL_UPSERT_SDR_SNAPSHOT: string;
   URL_GET_ESFR_REPORT: string;
   URL_GET_CPCP_REPORT: string;
+  URL_GET_PARTS_REPORT: string;
   URL_GET_CTN: string;
   URL_GET_SID: string;
-  URL_GET_PARTS_REPORT: string;
+  URL_GET_LOCATION_STA_DATA: string;
 }
 
 export type EnvTypes = "localhost" | "development" | "qa" | "stage" | "production";

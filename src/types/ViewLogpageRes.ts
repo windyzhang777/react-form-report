@@ -37,6 +37,9 @@ export interface MasterData {
   StaTypes: Fuselagestation[];
   Stringer: Fuselagestation[];
   Zones: Fuselagestation[];
+  LEFlaps: Fuselagestation[];
+  Slats: Fuselagestation[];
+  Spoilers: Fuselagestation[];
 }
 
 export interface Fuselagestation {
