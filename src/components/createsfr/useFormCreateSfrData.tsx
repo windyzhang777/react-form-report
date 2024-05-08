@@ -26,31 +26,25 @@ export const useFormCreateSfrData = () => {
   ]);
 
   useEffect(() => {
-    setFieldValue("OriginDetails.DetectionMethodId", "");
     setFieldValue("OriginDetails.MfrSourceComments", "");
     setFieldValue("OriginDetails.DetectionMethodComments", "");
     setFieldValue("OriginDetails.UnscheduledInspectionTypeComments", "");
     setFieldValue("OriginDetails.UnscheduledInspectionTypeId", "");
     setFieldValue("OriginDetails.CalDocId", 1);
     setFieldValue("OriginDetails.MfrSourceId", 0);
+    setFieldValue("OriginDetails.MfrSourceId", 0);
     setFieldTouched("OriginDetails.MfrSourceIdentifier", false);
     setFieldError("OriginDetails.MfrSourceIdentifier", "");
-    setFieldTouched("OriginDetails.CalDocIdentifier", false);
-    setFieldError("OriginDetails.CalDocIdentifier", "");
+    setFieldValue("OriginDetails.SpecIdentifier", "");
+    setFieldTouched("OriginDetails.SpecIdentifier", false);
+    setFieldError("OriginDetails.SpecIdentifier", "");
+    setFieldValue("SpecIdentifier1", "");
+    setFieldValue("SpecIdentifier2", "");
+    setFieldValue("SpecIdentifier3", "");
+    setFieldValue("SpecIdentifier4", "");
+    setFieldValue("OriginDetails.Op", "");
+    setFieldValue("OriginDetails.DetectionMethodId", "");
   }, [values?.OriginDetails?.IsScheduledInspection]);
-
-  useEffect(() => {
-    setFieldValue("OriginDetails.MfrSourceIdentifier", "");
-    setFieldTouched("OriginDetails.MfrSourceIdentifier", false);
-    setFieldError("OriginDetails.MfrSourceIdentifier", "");
-    setFieldValue("OriginDetails.MfrSourceComments", "");
-    setFieldTouched("OriginDetails.MfrSourceComments", false);
-    setFieldError("OriginDetails.MfrSourceComments", "");
-  }, [values?.OriginDetails?.MfrSourceId]);
-
-  useEffect(() => {
-    setFieldValue("OriginDetails.UnscheduledInspectionTypeComments", "");
-  }, [values?.OriginDetails?.UnscheduledInspectionTypeId]);
 
   useEffect(() => {
     setFieldValue("OriginDetails.CalDocIdentifier", "");
@@ -67,6 +61,8 @@ export const useFormCreateSfrData = () => {
       setFieldValue("CalDocIdentifier3", "1");
       setFieldValue("OriginDetails.CalDocIdentifier", "1");
     }
+    setFieldValue("OriginDetails.Rev", "");
+    setFieldValue("OriginDetails.Op", "");
   }, [values?.OriginDetails?.CalDocId]);
 
   useEffect(() => {
@@ -85,6 +81,19 @@ export const useFormCreateSfrData = () => {
     values?.CalDocIdentifier3,
     values?.CalDocIdentifier4,
   ]);
+
+  useEffect(() => {
+    setFieldValue("OriginDetails.MfrSourceIdentifier", "");
+    setFieldTouched("OriginDetails.MfrSourceIdentifier", false);
+    setFieldError("OriginDetails.MfrSourceIdentifier", "");
+    setFieldValue("OriginDetails.MfrSourceComments", "");
+    setFieldTouched("OriginDetails.MfrSourceComments", false);
+    setFieldError("OriginDetails.MfrSourceComments", "");
+  }, [values?.OriginDetails?.MfrSourceId]);
+
+  useEffect(() => {
+    setFieldValue("OriginDetails.UnscheduledInspectionTypeComments", "");
+  }, [values?.OriginDetails?.UnscheduledInspectionTypeId]);
 
   // Discrepancy Tab
   useEffect(() => {
@@ -128,6 +137,7 @@ export const useFormCreateSfrData = () => {
     setFieldValue("LocationDetails.FromBL", "");
     setFieldValue("LocationDetails.ToBLLength", 0);
     setFieldValue("LocationDetails.ToBL", "");
+    setFieldValue("LocationDetails.StaType", "");
     setFieldValue("LocationDetails.StaTypeId", 0);
     setFieldValue("LocationDetails.DamageProximityId", 0);
     setFieldValue("LocationDetails.FromSta", "");
@@ -143,7 +153,13 @@ export const useFormCreateSfrData = () => {
     setFieldValue("LocationDetails.Other", "");
     setFieldValue("LocationDetails.AdditionalLocationDetails", "");
     setFieldValue("LocationDetails.SpecificsLocation", "");
+    setFieldValue("LocationDetails.DefectLocationIdentifier", "");
   }, [values?.LocationDetails?.DefectLocationId]);
+
+  useEffect(() => {
+    setFieldValue("LocationDetails.FromStr", "");
+    setFieldValue("LocationDetails.ToStr", "");
+  }, [values?.LocationDetails?.DamageProximityId]);
 
   // Repair Tab
   useEffect(() => {

@@ -7,9 +7,11 @@ import {
   SdrEsfrRecordDetailsStateType,
   SfrMasterDataFuncType,
   ViewLogPageDetailsFuncType,
+  locationStaDataFuncType,
 } from "src/commons/types";
 import { GetApprovedSDRResResult } from "src/types/GetApprovedSdrRes";
 import { GetCtnResResult } from "src/types/GetCtnRes";
+import { GetLocationStaDataResResult } from "src/types/GetLocationStaDataRes";
 import { GetSDREsfrRecordDetailsResResult } from "src/types/GetSdrEsfrRecordDetailsRes";
 import { GetSfrMasterDataResResult } from "src/types/GetSfrMasterDataRes";
 import { ViewLogpageResResult } from "src/types/ViewLogpageRes";
@@ -21,6 +23,7 @@ const initialState: SdrEsfrRecordDetailsStateType = {
   detailsData: null,
   snapshotData: null,
   masterData: null,
+  locationStaData: null,
   logpageData: null,
   ctnData: null,
   error: "",
@@ -60,6 +63,14 @@ const fetchSfrMasterDataSuccess = (data: GetSfrMasterDataResResult) => {
 
 const fetchSfrMasterDataFailure = (message: string) => {
   return { type: SdrEsfrRecordDetailsActionType.FETCH_SFR_MASTER_DATA_FAILURE, message };
+};
+
+const fetchLocationStaDataSuccess = (data: GetLocationStaDataResResult) => {
+  return { type: SdrEsfrRecordDetailsActionType.FETCH_LOCATION_STA_DATA_SUCCESS, data };
+};
+
+const fetchLocationStaDataFailure = (message: string) => {
+  return { type: SdrEsfrRecordDetailsActionType.FETCH_LOCATION_STA_DATA_FAILURE, message };
 };
 
 const fetchLogpageDataSuccess = (data: ViewLogpageResResult) => {
@@ -145,6 +156,22 @@ export const sdrEsfrRecordDetailsReducer = (
         loading: false,
         masterData: null,
         error: `Fail to get Master Data (${action.message})`,
+      };
+    }
+    case SdrEsfrRecordDetailsActionType.FETCH_LOCATION_STA_DATA_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        locationStaData: action.data,
+        error: "",
+      };
+    }
+    case SdrEsfrRecordDetailsActionType.FETCH_LOCATION_STA_DATA_FAILURE: {
+      return {
+        ...state,
+        loading: false,
+        locationStaData: null,
+        error: `Fail to get Location Sta Data (${action.message})`,
       };
     }
     case SdrEsfrRecordDetailsActionType.FETCH_CTN_DATA_SUCCESS: {
@@ -265,11 +292,27 @@ export const getSfrMasterData = () => {
   };
 };
 
-export const getCtnData = (fleetCode: string) => {
+export const getLocationStaData = (SceptreCode: string, DefectLocationId: number) => {
+  return function (dispatch: Dispatch<locationStaDataFuncType>) {
+    dispatch(initFetch());
+    axiosInstance
+      .post(`${config.apiBaseAddress}${config.URL_GET_LOCATION_STA_DATA}`, {
+        FleetCode: SceptreCode,
+        DefectLocationId,
+      })
+      .then((res) => {
+        const locationStaData = res?.data?.Result;
+        dispatch(fetchLocationStaDataSuccess(locationStaData));
+      })
+      .catch((error) => dispatch(fetchLocationStaDataFailure(error.message)));
+  };
+};
+
+export const getCtnData = (SceptreCode: string) => {
   return function (dispatch: Dispatch<CtnDataFuncType>) {
     dispatch(initFetch());
     axiosInstance
-      .post(`${config.apiBaseAddress}${config.URL_GET_CTN}`, { fleetCode })
+      .post(`${config.apiBaseAddress}${config.URL_GET_CTN}`, { FleetCode: SceptreCode })
       .then((res) => {
         const ctnData = res?.data?.Result;
         dispatch(fetchCtnDataSuccess(ctnData));
@@ -278,11 +321,11 @@ export const getCtnData = (fleetCode: string) => {
   };
 };
 
-export const getSidData = (fleetCode: string) => {
+export const getSidData = (SceptreCode: string) => {
   return function (dispatch: Dispatch<CtnDataFuncType>) {
     dispatch(initFetch());
     axiosInstance
-      .post(`${config.apiBaseAddress}${config.URL_GET_SID}`, { fleetCode })
+      .post(`${config.apiBaseAddress}${config.URL_GET_SID}`, { FleetCode: SceptreCode })
       .then((res) => {
         const ctnData = res?.data?.Result;
         dispatch(fetchCtnDataSuccess(ctnData));

@@ -36,9 +36,9 @@ export interface DiscrepancyDetails {
   CorrosionCauseComments: string;
   AreMultipleCracksInTheSameLocation: boolean;
   NumberOfCracks: number;
-  CrackLength: number | string;
-  CrackWidth: number | string;
-  CrackDepth: number | string;
+  CrackLength: string;
+  CrackWidth: string;
+  CrackDepth: string;
   DiscrepancyTypeComments: string;
   IsSafeOperationEndangered: boolean;
   DiscrepancyPartComments: string;

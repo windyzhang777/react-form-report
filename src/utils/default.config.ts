@@ -19,6 +19,7 @@ const defaultConfig = {
   URL_GET_PARTS_REPORT: "/api/Elb/GetPartsDiscrepancyReport",
   URL_GET_CTN: "/api/Elb/GetCtn",
   URL_GET_SID: "/api/Elb/GetSid",
+  URL_GET_LOCATION_STA_DATA: "/api/Elb/GetLocationStaData",
 };
 
 export default defaultConfig;

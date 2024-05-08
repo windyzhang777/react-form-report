@@ -28,7 +28,7 @@ const CommonRadio = ({
         name={`${name}-radio-buttons-group`}
         onChange={(e) => onChange(e.target.value)}
         row
-        value={value ? value : options[0]}
+        value={value}
         {...props}
       >
         {options.map((option) => (
