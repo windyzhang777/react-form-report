@@ -48,10 +48,10 @@ export interface DiscrepancyDetails {
   CrackDepth: number | null;
   CrackLength: number | null;
   CrackWidth: number | null;
-  DiscrepancyPartComments: null;
+  DiscrepancyPartComments: null | string;
   DiscrepancyPartDetails: DiscrepancyPartDetail[];
   DiscrepancyTypeComments: null;
-  DiscrepancyTypeId: number;
+  DiscrepancyTypeId: number | null;
   IsManufacturingLimitExceeded: boolean;
   IsSafeOperationEndangered: boolean;
   NumberOfCracks: number | null;
@@ -93,29 +93,29 @@ export interface LocationDetails {
   Comments: null;
   CoordinateLocationDetails: string;
   DamageProximityId: number | null;
-  DefectLocationId: number;
-  DefectLocationIdentifier: string;
+  DefectLocationId: number | null;
+  DefectLocationIdentifier: null | string;
   ElevatorTab: null | string;
-  FromBL: null;
+  FromBL: null | string;
   FromBLLength: number | null;
-  FromSide: string;
-  FromSta: string;
-  FromStr: string;
+  FromSide: null | string;
+  FromSta: null | string;
+  FromStr: null | string;
   Fuselage: null | string;
   LocationType: null;
   Other: null;
-  Side: string;
-  Specifics: null;
+  Side: null | string;
+  Specifics: null | string;
   SpecificsLocation: null;
   StaType: null;
   StaTypeId: number | null;
   Surface: null | string;
-  ToBL: null;
+  ToBL: null | string;
   ToBLLength: number | null;
-  ToSide: string;
-  ToSta: string;
-  ToStr: string;
-  ZoneId: number;
+  ToSide: null | string;
+  ToSta: null | string;
+  ToStr: null | string;
+  ZoneId: number | null;
 }
 
 export interface OriginDetails {
@@ -138,19 +138,19 @@ export interface OriginDetails {
 export interface RepairDetails {
   Comments: string;
   DamageStructureStatus: string;
-  DipCode: null;
-  EcraCode: string;
+  DipCode: null | string;
+  EcraCode: null | string;
   IsDeferred: boolean;
   IsEcra: boolean;
   IsMajorRepair: boolean;
   IsOverWeight: boolean;
   IsRepairOrRework: boolean;
   IsSdrReportable: boolean;
-  ManHoursRequired: number;
-  MaterialsUtilized: string;
+  ManHoursRequired: number | null;
+  MaterialsUtilized: string | null;
   RepairType: string;
   RepairTypes: RepairType[];
-  Rev: string;
+  Rev: string | null;
 }
 
 export interface RepairType {
@@ -193,14 +193,14 @@ export interface SDRDetails {
 }
 
 export interface PartDetails {
-  PartCondition: string;
-  PartDescription: string;
-  PartLocation: string;
-  PartManufacturerSerialNumber: string;
-  PartSerialNumber: string;
+  PartCondition: string | null;
+  PartDescription: string | null;
+  PartLocation: string | null;
+  PartManufacturerSerialNumber: string | null;
+  PartSerialNumber: string | null;
   PartTrackingNumber: null;
-  PartCycleSince: null;
-  PartTimeSince: null;
-  PartTotalCycles: null;
-  PartTotalTime: null;
+  PartCycleSince: string | null;
+  PartTimeSince: string | null;
+  PartTotalCycles: string | null;
+  PartTotalTime: string | null;
 }
