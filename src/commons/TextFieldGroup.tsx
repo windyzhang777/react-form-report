@@ -62,7 +62,7 @@ const TextFieldGroup = ({
                 values?.[`${name}${i}`].length < maxAllowed?.[i - 1] &&
                 path &&
                 errors &&
-                getIn(errors, path)
+                !!getIn(errors, path)
               }
               inputProps={{
                 maxLength: maxAllowed?.[i - 1] || "unset",

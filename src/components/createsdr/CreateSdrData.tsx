@@ -214,6 +214,7 @@ const CreateSdrData = ({
                     <ListItem>
                       {editable ? (
                         <TextField
+                          autoFocus
                           name="LogPageNumber"
                           value={values.LogPageNumber || ""}
                           onChange={(e) =>

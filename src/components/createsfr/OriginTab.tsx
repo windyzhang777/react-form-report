@@ -148,6 +148,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
             <ListItem>
               {editable ? (
                 <TextField
+                  autoFocus
                   name="LogPageNumber"
                   value={values.LogPageNumber || ""}
                   onChange={(e) => setFieldValue("LogPageNumber", removeNonNumeric(e.target.value))}
@@ -457,6 +458,11 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                           errors?.OriginDetails?.MfrSourceIdentifier
                         }
                         className={"sdr-status-edit"}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            toggleSelect();
+                          }
+                        }}
                       />
                     ) : (
                       ""
@@ -516,6 +522,11 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                           errors?.OriginDetails?.MfrSourceIdentifier
                         }
                         className={"sdr-status-edit"}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            toggleSelect();
+                          }
+                        }}
                       />
                     ) : (
                       ""
@@ -798,7 +809,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
             <Grid item xs={6} className="flex !flex-col gap-6">
               {/* Detection Method */}
               <div>
-                <ListItem>Detection Method</ListItem>
+                <ListItem required>Detection Method</ListItem>
                 <ListItem>
                   {editable ? (
                     <SingleSelect

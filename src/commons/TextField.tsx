@@ -8,6 +8,7 @@ import {
 } from "react";
 
 export interface ICommonTextFieldProps {
+  autoFocus?: boolean;
   className?: string;
   disabled?: boolean;
   error?: boolean;
