@@ -524,31 +524,22 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                 <ListItem>
                   {editable ? (
                     <TextField
-                      name="DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails"
-                      value={
-                        getIn(values, "DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails") ||
-                        ""
-                      }
+                      name="DiscrepancyDetails.DiscrepancyPartComments"
+                      value={values?.DiscrepancyDetails?.DiscrepancyPartComments || ""}
                       onChange={(e) =>
                         setFieldValue(
-                          "DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails",
+                          "DiscrepancyDetails.DiscrepancyPartComments",
                           removeNonAlphaNumeric(e.target.value)
                         )
                       }
                       onBlur={handleBlur}
                       error={
-                        !!getIn(
-                          touched,
-                          "DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails"
-                        ) &&
-                        !!getIn(errors, "DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails")
+                        !!touched?.DiscrepancyDetails?.DiscrepancyPartComments &&
+                        !!errors?.DiscrepancyDetails?.DiscrepancyPartComments
                       }
                       helperText={
-                        !!getIn(
-                          touched,
-                          "DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails"
-                        ) &&
-                        getIn(errors, "DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails")
+                        !!touched?.DiscrepancyDetails?.DiscrepancyPartComments &&
+                        errors?.DiscrepancyDetails?.DiscrepancyPartComments
                       }
                       multiline
                       maxRows={4}
@@ -646,22 +637,36 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="DiscrepancyDetails.DiscrepancyPartComments"
-                        value={values?.DiscrepancyDetails?.DiscrepancyPartComments || ""}
+                        name="DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails"
+                        value={
+                          getIn(
+                            values,
+                            "DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails"
+                          ) || ""
+                        }
                         onChange={(e) =>
                           setFieldValue(
-                            "DiscrepancyDetails.DiscrepancyPartComments",
+                            "DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails",
                             removeNonAlphaNumeric(e.target.value)
                           )
                         }
                         onBlur={handleBlur}
                         error={
-                          !!touched?.DiscrepancyDetails?.DiscrepancyPartComments &&
-                          !!errors?.DiscrepancyDetails?.DiscrepancyPartComments
+                          !!getIn(
+                            touched,
+                            "DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails"
+                          ) &&
+                          !!getIn(
+                            errors,
+                            "DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails"
+                          )
                         }
                         helperText={
-                          !!touched?.DiscrepancyDetails?.DiscrepancyPartComments &&
-                          errors?.DiscrepancyDetails?.DiscrepancyPartComments
+                          !!getIn(
+                            touched,
+                            "DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails"
+                          ) &&
+                          getIn(errors, "DiscrepancyDetails.DiscrepancyPartDetails[0].PartDetails")
                         }
                         multiline
                         maxRows={4}

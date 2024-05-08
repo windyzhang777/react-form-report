@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import { useFormikContext } from "formik";
-import { useMemo } from "react";
+import { useEffect } from "react";
 import ListItem from "src/commons/ListItem";
 import { SimpleSingleSelect, SingleSelect } from "src/commons/Select";
 import TabPanel from "src/commons/TabPanel";
@@ -9,17 +9,15 @@ import {
   BLOptions,
   ISaveSfrValues,
   OtherOptions,
-  RudderDamageProximityOptions,
   SdrEsfrRecordDetailsStateType,
   SelectedSfrTab,
   Sides,
   SpecificsOptions,
-  StabDamageProximityOptions,
   SurfaceOptions,
-  WingDamageProximityOptions,
 } from "src/commons/types";
 import { useFormCreateSfrData } from "src/components/createsfr/useFormCreateSfrData";
-import { useAppSelector } from "src/redux/hooks";
+import { getLocationStaData } from "src/redux/ducks/getSdrEsfrRecordDetails";
+import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { removeNonAlphaNumeric } from "src/validationSchema";
 
 type LocationTabProps = {
@@ -28,26 +26,40 @@ type LocationTabProps = {
 };
 
 export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
-  const { masterData, logpageData }: SdrEsfrRecordDetailsStateType = useAppSelector(
-    (state) => state.sdrEsfrRecordDetails
-  );
+  const dispatch = useAppDispatch();
+  const { masterData, locationStaData, logpageData }: SdrEsfrRecordDetailsStateType =
+    useAppSelector((state) => state.sdrEsfrRecordDetails);
   const { errors, handleBlur, handleChange, setFieldValue, touched } =
     useFormikContext<ISaveSfrValues>();
   const { values } = useFormCreateSfrData();
-  const leFlapOptions = useMemo(() => {
-    const fleetCode = logpageData?.FleetInfo?.FleetCode;
-    switch (true) {
-      case /^737-[3,5,6,7,8,9]00$/.test(fleetCode as string):
-      case /^(03|24|57|67|58|59)$/.test(fleetCode as string):
-        return ["1", "2", "3", "4"];
-      case /^767-[2,4]00$/.test(fleetCode as string):
-      case /^777-200$/.test(fleetCode as string):
-      case /^(20|62|64|25)$/.test(fleetCode as string):
-        return ["1", "2"];
-      default:
-        return ["1"];
+  const { DamageProximities, Types } = locationStaData?.StaDataResponse || {};
+
+  useEffect(() => {
+    if (
+      logpageData &&
+      (values?.LocationDetails?.DefectLocationId === 6 ||
+        values?.LocationDetails?.DefectLocationId === 9 ||
+        values?.LocationDetails?.DefectLocationId === 18 ||
+        values?.LocationDetails?.DefectLocationId === 19 ||
+        values?.LocationDetails?.DefectLocationId === 21)
+    ) {
+      dispatch(
+        getLocationStaData(
+          logpageData.FleetInfo.SceptreCode,
+          values.LocationDetails.DefectLocationId
+        )
+      );
     }
-  }, [logpageData]);
+  }, [logpageData, values?.LocationDetails?.DefectLocationId]);
+
+  useEffect(() => {
+    setFieldValue(
+      "LocationDetails.StaTypeId",
+      (Types &&
+        [...Types].find((type) => type.Description === values?.LocationDetails?.StaType)?.Id) ||
+        0
+    );
+  }, [values?.LocationDetails?.StaType]);
 
   return (
     <>
@@ -419,25 +431,24 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                 <ListItem>Type</ListItem>
                 <ListItem>
                   {editable ? (
-                    <SingleSelect
-                      name="LocationDetails.StaTypeId"
-                      value={values?.LocationDetails?.StaTypeId || ""}
+                    <SimpleSingleSelect
+                      name="LocationDetails.StaType"
+                      value={values?.LocationDetails?.StaType || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={
-                        !!touched?.LocationDetails?.StaTypeId &&
-                        !!errors?.LocationDetails?.StaTypeId
+                        !!touched?.LocationDetails?.StaType && !!errors?.LocationDetails?.StaType
                       }
                       helperText={
-                        !!touched?.LocationDetails?.StaTypeId && errors?.LocationDetails?.StaTypeId
+                        !!touched?.LocationDetails?.StaType && errors?.LocationDetails?.StaType
                       }
                       options={
-                        logpageData?.MasterData?.StaTypes &&
-                        [...logpageData.MasterData.StaTypes].sort(
-                          (a, b) => a.DisplayOrder - b.DisplayOrder
-                        )
+                        Types &&
+                        [...Types]
+                          .sort((a, b) => a.DisplayOrder - b.DisplayOrder)
+                          .map((o) => o.Description)
                       }
-                      id="LocationDetails.StaTypeId"
+                      id="LocationDetails.StaType"
                     />
                   ) : (
                     ""
@@ -448,6 +459,9 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
 
             {/* DamageProximity Rudder */}
             {(values?.LocationDetails?.DefectLocationId === 6 ||
+              values?.LocationDetails?.DefectLocationId === 9 ||
+              values?.LocationDetails?.DefectLocationId === 18 ||
+              values?.LocationDetails?.DefectLocationId === 19 ||
               values?.LocationDetails?.DefectLocationId === 21) && (
               <div>
                 <ListItem>Damage in Proximity of or at</ListItem>
@@ -466,72 +480,10 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                         !!touched?.LocationDetails?.DamageProximityId &&
                         errors?.LocationDetails?.DamageProximityId
                       }
-                      options={RudderDamageProximityOptions.sort(
-                        (a, b) => a.DisplayOrder - b.DisplayOrder
-                      )}
-                      id="LocationDetails.DamageProximityId"
-                    />
-                  ) : (
-                    ""
-                  )}
-                </ListItem>
-              </div>
-            )}
-
-            {/* DamageProximity Stab */}
-            {(values?.LocationDetails?.DefectLocationId === 9 ||
-              values?.LocationDetails?.DefectLocationId === 18) && (
-              <div>
-                <ListItem>Damage in Proximity of or at</ListItem>
-                <ListItem>
-                  {editable ? (
-                    <SingleSelect
-                      name="LocationDetails.DamageProximityId"
-                      value={values?.LocationDetails?.DamageProximityId || ""}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={
-                        !!touched?.LocationDetails?.DamageProximityId &&
-                        !!errors?.LocationDetails?.DamageProximityId
+                      options={
+                        DamageProximities &&
+                        [...DamageProximities].sort((a, b) => a.DisplayOrder - b.DisplayOrder)
                       }
-                      helperText={
-                        !!touched?.LocationDetails?.DamageProximityId &&
-                        errors?.LocationDetails?.DamageProximityId
-                      }
-                      options={StabDamageProximityOptions.sort(
-                        (a, b) => a.DisplayOrder - b.DisplayOrder
-                      )}
-                      id="LocationDetails.DamageProximityId"
-                    />
-                  ) : (
-                    ""
-                  )}
-                </ListItem>
-              </div>
-            )}
-
-            {/* DamageProximity Wing */}
-            {values?.LocationDetails?.DefectLocationId === 19 && (
-              <div>
-                <ListItem>Damage in Proximity of or at</ListItem>
-                <ListItem>
-                  {editable ? (
-                    <SingleSelect
-                      name="LocationDetails.DamageProximityId"
-                      value={values?.LocationDetails?.DamageProximityId || ""}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={
-                        !!touched?.LocationDetails?.DamageProximityId &&
-                        !!errors?.LocationDetails?.DamageProximityId
-                      }
-                      helperText={
-                        !!touched?.LocationDetails?.DamageProximityId &&
-                        errors?.LocationDetails?.DamageProximityId
-                      }
-                      options={WingDamageProximityOptions.sort(
-                        (a, b) => a.DisplayOrder - b.DisplayOrder
-                      )}
                       id="LocationDetails.DamageProximityId"
                     />
                   ) : (
@@ -705,20 +657,25 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                 <ListItem>
                   {editable ? (
                     <SimpleSingleSelect
-                      name="LocationDetails.LocationType"
-                      value={values?.LocationDetails?.LocationType || ""}
+                      name="LocationDetails.DefectLocationIdentifier"
+                      value={values?.LocationDetails?.DefectLocationIdentifier || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={
-                        !!touched?.LocationDetails?.LocationType &&
-                        !!errors?.LocationDetails?.LocationType
+                        !!touched?.LocationDetails?.DefectLocationIdentifier &&
+                        !!errors?.LocationDetails?.DefectLocationIdentifier
                       }
                       helperText={
-                        !!touched?.LocationDetails?.LocationType &&
-                        errors?.LocationDetails?.LocationType
+                        !!touched?.LocationDetails?.DefectLocationIdentifier &&
+                        errors?.LocationDetails?.DefectLocationIdentifier
                       }
-                      options={leFlapOptions}
-                      id="LocationDetails.LocationType"
+                      options={
+                        logpageData?.MasterData?.LEFlaps &&
+                        [...logpageData.MasterData.LEFlaps]
+                          .sort((a, b) => a.DisplayOrder - b.DisplayOrder)
+                          .map((o) => o.Description)
+                      }
+                      id="LocationDetails.DefectLocationIdentifier"
                     />
                   ) : (
                     ""
@@ -734,22 +691,22 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                 <ListItem>
                   {editable ? (
                     <TextField
-                      name="LocationDetails.LocationType"
-                      value={values?.LocationDetails?.LocationType || ""}
+                      name="LocationDetails.DefectLocationIdentifier"
+                      value={values?.LocationDetails?.DefectLocationIdentifier || ""}
                       onChange={(e) =>
                         setFieldValue(
-                          "LocationDetails.LocationType",
+                          "LocationDetails.DefectLocationIdentifier",
                           removeNonAlphaNumeric(e.target.value)
                         )
                       }
                       onBlur={handleBlur}
                       error={
-                        !!touched?.LocationDetails?.LocationType &&
-                        !!errors?.LocationDetails?.LocationType
+                        !!touched?.LocationDetails?.DefectLocationIdentifier &&
+                        !!errors?.LocationDetails?.DefectLocationIdentifier
                       }
                       helperText={
-                        !!touched?.LocationDetails?.LocationType &&
-                        errors?.LocationDetails?.LocationType
+                        !!touched?.LocationDetails?.DefectLocationIdentifier &&
+                        errors?.LocationDetails?.DefectLocationIdentifier
                       }
                       multiline
                       maxRows={4}
@@ -770,20 +727,25 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                 <ListItem>
                   {editable ? (
                     <SimpleSingleSelect
-                      name="LocationDetails.LocationType"
-                      value={values?.LocationDetails?.LocationType || ""}
+                      name="LocationDetails.DefectLocationIdentifier"
+                      value={values?.LocationDetails?.DefectLocationIdentifier || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={
-                        !!touched?.LocationDetails?.LocationType &&
-                        !!errors?.LocationDetails?.LocationType
+                        !!touched?.LocationDetails?.DefectLocationIdentifier &&
+                        !!errors?.LocationDetails?.DefectLocationIdentifier
                       }
                       helperText={
-                        !!touched?.LocationDetails?.LocationType &&
-                        errors?.LocationDetails?.LocationType
+                        !!touched?.LocationDetails?.DefectLocationIdentifier &&
+                        errors?.LocationDetails?.DefectLocationIdentifier
                       }
-                      options={Array.from({ length: 14 }, (_, i) => `${i + 1}`)}
-                      id="LocationDetails.LocationType"
+                      options={
+                        logpageData?.MasterData?.Slats &&
+                        [...logpageData.MasterData.Slats]
+                          .sort((a, b) => a.DisplayOrder - b.DisplayOrder)
+                          .map((o) => o.Description)
+                      }
+                      id="LocationDetails.DefectLocationIdentifier"
                     />
                   ) : (
                     ""
@@ -799,20 +761,25 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                 <ListItem>
                   {editable ? (
                     <SimpleSingleSelect
-                      name="LocationDetails.LocationType"
-                      value={values?.LocationDetails?.LocationType || ""}
+                      name="LocationDetails.DefectLocationIdentifier"
+                      value={values?.LocationDetails?.DefectLocationIdentifier || ""}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       error={
-                        !!touched?.LocationDetails?.LocationType &&
-                        !!errors?.LocationDetails?.LocationType
+                        !!touched?.LocationDetails?.DefectLocationIdentifier &&
+                        !!errors?.LocationDetails?.DefectLocationIdentifier
                       }
                       helperText={
-                        !!touched?.LocationDetails?.LocationType &&
-                        errors?.LocationDetails?.LocationType
+                        !!touched?.LocationDetails?.DefectLocationIdentifier &&
+                        errors?.LocationDetails?.DefectLocationIdentifier
                       }
-                      options={Array.from({ length: 14 }, (_, i) => `${i + 1}`)}
-                      id="LocationDetails.LocationType"
+                      options={
+                        logpageData?.MasterData?.Spoilers &&
+                        [...logpageData.MasterData.Spoilers]
+                          .sort((a, b) => a.DisplayOrder - b.DisplayOrder)
+                          .map((o) => o.Description)
+                      }
+                      id="LocationDetails.DefectLocationIdentifier"
                     />
                   ) : (
                     ""
@@ -824,7 +791,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
             {/* Specifics */}
             {values?.LocationDetails?.DefectLocationId === 17 && (
               <div>
-                <ListItem>Specifics #</ListItem>
+                <ListItem>Specifics</ListItem>
                 <ListItem>
                   {editable ? (
                     <SimpleSingleSelect

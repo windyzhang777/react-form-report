@@ -609,22 +609,22 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
                   <ListItem>
                     {editable ? (
                       <TextField
-                        name="OriginDetails.MfrSourceComments"
-                        value={values?.OriginDetails?.MfrSourceComments || ""}
+                        name="OriginDetails.MfrSourceIdentifier"
+                        value={values?.OriginDetails?.MfrSourceIdentifier || ""}
                         onChange={(e) =>
                           setFieldValue(
-                            "OriginDetails.MfrSourceComments",
+                            "OriginDetails.MfrSourceIdentifier",
                             removeNonAlphaNumeric(e.target.value)
                           )
                         }
                         onBlur={handleBlur}
                         error={
-                          !!touched?.OriginDetails?.MfrSourceComments &&
-                          !!errors?.OriginDetails?.MfrSourceComments
+                          !!touched?.OriginDetails?.MfrSourceIdentifier &&
+                          !!errors?.OriginDetails?.MfrSourceIdentifier
                         }
                         helperText={
-                          !!touched?.OriginDetails?.MfrSourceComments &&
-                          errors?.OriginDetails?.MfrSourceComments
+                          !!touched?.OriginDetails?.MfrSourceIdentifier &&
+                          errors?.OriginDetails?.MfrSourceIdentifier
                         }
                         multiline
                         maxRows={4}
