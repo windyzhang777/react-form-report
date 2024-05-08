@@ -692,7 +692,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                   {editable ? (
                     <TextField
                       name="LocationDetails.DefectLocationIdentifier"
-                      value={values?.LocationDetails?.DefectLocationIdentifier || ""}
+                      value={values?.LocationDetails?.DefectLocationIdentifier}
                       onChange={(e) =>
                         setFieldValue(
                           "LocationDetails.DefectLocationIdentifier",
