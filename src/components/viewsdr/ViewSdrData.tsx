@@ -85,7 +85,7 @@ const ViewSdrData = ({
           detailsData?.DiscrepancyDetails?.DiscrepancyTypeId === 5
             ? detailsData.DiscrepancyDetails?.CrackLength || ""
             : "",
-        NumberOfCracks: detailsData?.DiscrepancyDetails?.NumberOfCracks || "",
+        NumberOfCracks: detailsData?.DiscrepancyDetails?.NumberOfCracks ?? 0,
         WaterlineFrom: "",
         WaterlineTo: "",
         StringerFrom:
@@ -100,21 +100,28 @@ const ViewSdrData = ({
           detailsData?.LocationDetails?.DefectLocationId === 8
             ? detailsData.LocationDetails?.ToStr || ""
             : "",
-        StringerToSide: "",
+        StringerToSide:
+          detailsData?.LocationDetails?.DefectLocationId === 8
+            ? detailsData.LocationDetails?.ToSide || ""
+            : "",
         ButtlineFrom:
-          detailsData?.LocationDetails?.DefectLocationId === 4
+          detailsData?.LocationDetails?.DefectLocationId === 4 ||
+          detailsData?.LocationDetails?.DefectLocationId === 5
             ? detailsData?.LocationDetails?.FromBLLength || ""
             : "",
         ButtlineFromSide:
-          detailsData?.LocationDetails?.DefectLocationId === 4
+          detailsData?.LocationDetails?.DefectLocationId === 4 ||
+          detailsData?.LocationDetails?.DefectLocationId === 5
             ? detailsData?.LocationDetails?.FromBL || ""
             : "",
         ButtlineTo:
-          detailsData?.LocationDetails?.DefectLocationId === 4
+          detailsData?.LocationDetails?.DefectLocationId === 4 ||
+          detailsData?.LocationDetails?.DefectLocationId === 5
             ? detailsData?.LocationDetails?.ToBLLength || ""
             : "",
         ButtlineToSide:
-          detailsData?.LocationDetails?.DefectLocationId === 4
+          detailsData?.LocationDetails?.DefectLocationId === 4 ||
+          detailsData?.LocationDetails?.DefectLocationId === 5
             ? detailsData?.LocationDetails?.ToBL || ""
             : "",
         WingStationFrom:
