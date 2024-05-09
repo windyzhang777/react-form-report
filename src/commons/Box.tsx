@@ -46,7 +46,7 @@ export const InfoBox = ({ children, ...props }: IInfoBoxProps) => (
   </FlexRow>
 );
 
-export const WarningBox = ({ children }: IInfoBoxProps) => (
+export const WarningBox = ({ children, ...props }: IInfoBoxProps) => (
   <FlexRow
     sx={{
       width: "fit-content",
@@ -57,13 +57,14 @@ export const WarningBox = ({ children }: IInfoBoxProps) => (
       borderLeftWidth: "4px",
       borderRadius: "4px",
     }}
+    {...props}
   >
     <img src={AlertIcon} alt="Alert" title="Alert" style={{ display: "inline" }} />
     <FlexCenter>{children}</FlexCenter>
   </FlexRow>
 );
 
-export const ErrorBox = ({ children }: IInfoBoxProps) => (
+export const ErrorBox = ({ children, ...props }: IInfoBoxProps) => (
   <FlexRow
     sx={{
       width: "fit-content",
@@ -74,6 +75,7 @@ export const ErrorBox = ({ children }: IInfoBoxProps) => (
       borderLeftWidth: "4px",
       borderRadius: "4px",
     }}
+    {...props}
   >
     <img src={AlertRedIcon} alt="Alert" title="Alert" style={{ display: "inline" }} />
     <FlexCenter>{children}</FlexCenter>

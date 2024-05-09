@@ -122,6 +122,7 @@ export interface ISingleSelectProps extends ICommonSelectProps {
   defaultValue?: string;
   onChange: (event: SelectChangeEvent<number | string>) => void;
   options: OptionDocument[] | undefined;
+  selectionMarkRed?: number;
   value: string | number;
 }
 
@@ -131,6 +132,7 @@ export const SingleSelect = ({
   helperText,
   id,
   options,
+  selectionMarkRed,
   value,
   ...props
 }: ISingleSelectProps) => (
@@ -149,7 +151,6 @@ export const SingleSelect = ({
         </InputLabel>
       )}
       <Select
-        {...props}
         displayEmpty
         id={id && id + "-single-select"}
         MenuProps={MenuProps}
@@ -157,6 +158,12 @@ export const SingleSelect = ({
           options?.find((option) => option.Id == selected)?.Description || defaultValue
         }
         value={value}
+        sx={{
+          "& .MuiSelect-select": {
+            color: value === selectionMarkRed ? "#D50032" : "inherit",
+          },
+        }}
+        {...props}
       >
         {defaultValue && (
           <MenuItem key={defaultValue} value="">

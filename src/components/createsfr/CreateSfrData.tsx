@@ -105,7 +105,7 @@ const CreateSfrData = ({
       },
       RepairDetails: {
         IsDeferred: false,
-        IsMajorRepair: false,
+        IsMajorRepair: true,
         IsSdrReportable: true,
         DamageStructureStatus: "",
         IsOverWeight: false,

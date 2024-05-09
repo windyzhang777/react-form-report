@@ -1,5 +1,6 @@
 import { Grid } from "@mui/material";
 import { getIn, useFormikContext } from "formik";
+import { WarningBox } from "src/commons/Box";
 import ListItem from "src/commons/ListItem";
 import { SimpleRadio } from "src/commons/Radio";
 import { SimpleSingleSelect, SingleSelect } from "src/commons/Select";
@@ -38,6 +39,15 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
         className="sdr-status-grid overflow-y-auto"
       >
         <Grid container>
+          {values?.DiscrepancyDetails?.DiscrepancyTypeId === 4 &&
+            values?.DiscrepancyDetails?.CorrosionLevelId === 3 && (
+              <Grid item xs={12} className="!mb-3">
+                <WarningBox className="!h-auto !items-start !gap-3">
+                  Note: You must verify level 3 corrosion with QC Supervisor/Manager and or
+                  Structures Engineering. This action is a must and mandatory.
+                </WarningBox>
+              </Grid>
+            )}
           <Grid item xs={6} className="relative">
             <ListItem className="whitespace-nowrap">Exceed Manufacturer/FAA Limits</ListItem>
             <ListItem className="!absolute !px-0 left-0 top-[20px]">
@@ -221,6 +231,40 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                     )}
                   </ListItem>
                 </div>
+                {values?.DiscrepancyDetails?.CorrosionCauseId === 8 && (
+                  <div>
+                    <ListItem>Specify</ListItem>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="DiscrepancyDetails.DiscrepancyTypeComments"
+                          value={values?.DiscrepancyDetails?.DiscrepancyTypeComments || ""}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "DiscrepancyDetails.DiscrepancyTypeComments",
+                              removeNonAlphaNumeric(e.target.value)
+                            )
+                          }
+                          onBlur={handleBlur}
+                          error={
+                            !!touched?.DiscrepancyDetails?.DiscrepancyTypeComments &&
+                            !!errors?.DiscrepancyDetails?.DiscrepancyTypeComments
+                          }
+                          helperText={
+                            !!touched?.DiscrepancyDetails?.DiscrepancyTypeComments &&
+                            errors?.DiscrepancyDetails?.DiscrepancyTypeComments
+                          }
+                          multiline
+                          maxRows={4}
+                          className={"sdr-status-edit textareaAutosize"}
+                          inputProps={{ maxLength: 100 }}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </ListItem>
+                  </div>
+                )}
               </>
             )}
 

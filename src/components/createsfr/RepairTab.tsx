@@ -100,7 +100,10 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
           <Grid container>
             <Grid item xs={6} className="flex !flex-col gap-4">
               <div className="relative">
-                <ListItem className="whitespace-nowrap">{`Was this repair a "Major Repair"?`}</ListItem>
+                <ListItem
+                  className="whitespace-nowrap"
+                  disabled
+                >{`Was this repair a "Major Repair"?`}</ListItem>
                 <ListItem className="!absolute !px-0 left-0 top-[20px]">
                   {editable ? (
                     <SimpleRadio
@@ -118,6 +121,7 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                         errors?.RepairDetails?.IsMajorRepair
                       }
                       className={"sdr-status-edit gap-5"}
+                      disabled
                     />
                   ) : (
                     ""
@@ -187,7 +191,6 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                   {editable ? (
                     <SimpleRadio
                       name="RepairDetails.IsSdrReportable"
-                      disabled
                       value={values?.RepairDetails?.IsSdrReportable}
                       onChange={(value) => {
                         setFieldValue("RepairDetails.IsSdrReportable", value === "true");
@@ -201,6 +204,7 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                         errors?.RepairDetails?.IsSdrReportable
                       }
                       className={"sdr-status-edit gap-5"}
+                      disabled
                     />
                   ) : (
                     ""
