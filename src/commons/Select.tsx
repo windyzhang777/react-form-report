@@ -183,6 +183,11 @@ export const SingleSelect = ({
                 value={option.Id}
                 control={<Radio className="!py-1 !pr-1" checked={option.Id === value} />}
                 label={option.Description}
+                sx={{
+                  "& .MuiFormControlLabel-label": {
+                    color: option.Id === selectionMarkRed ? "#D50032" : "inherit",
+                  },
+                }}
               />
             </MenuItem>
           ))

@@ -165,6 +165,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
                           )
                         }
                         id="DiscrepancyDetails.CorrosionLevelId"
+                        selectionMarkRed={3}
                       />
                     ) : (
                       ""
