@@ -79,7 +79,9 @@ const ViewSdrData = ({
             : "",
         CorrisionLevel:
           detailsData?.DiscrepancyDetails?.DiscrepancyTypeId === 4
-            ? "" + detailsData.DiscrepancyDetails?.CorrosionLevelId || ""
+            ? masterData?.CorrosionLevels.find(
+                (o) => o.Id === detailsData.DiscrepancyDetails?.CorrosionLevelId
+              )?.Description || ""
             : "",
         CrackLength:
           detailsData?.DiscrepancyDetails?.DiscrepancyTypeId === 5
@@ -1550,7 +1552,7 @@ const ViewSdrData = ({
                     <Grid item xs={12}>
                       <ListItem>
                         {editable ? (
-                          <SingleSelect
+                          <SimpleSingleSelect
                             name="SfrAdditionalDetails.CorrisionLevel"
                             value={values?.SfrAdditionalDetails?.CorrisionLevel || ""}
                             onChange={handleChange}
@@ -1565,16 +1567,14 @@ const ViewSdrData = ({
                             }
                             options={
                               masterData?.CorrosionLevels &&
-                              [...masterData.CorrosionLevels].sort(
-                                (a, b) => a.DisplayOrder - b.DisplayOrder
-                              )
+                              [...masterData.CorrosionLevels]
+                                .sort((a, b) => a.DisplayOrder - b.DisplayOrder)
+                                .map((o) => o.Description)
                             }
                             id="SfrAdditionalDetails.CorrisionLevel"
                           />
                         ) : (
-                          masterData?.CorrosionLevels.find(
-                            (c) => "" + c.Id === values?.SfrAdditionalDetails?.CorrisionLevel
-                          )?.Description || "--"
+                          values?.SfrAdditionalDetails?.CorrisionLevel || "--"
                         )}
                       </ListItem>
                     </Grid>
