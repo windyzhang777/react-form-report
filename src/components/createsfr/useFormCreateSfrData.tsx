@@ -112,6 +112,13 @@ export const useFormCreateSfrData = () => {
     setFieldValue("DiscrepancyDetails.AreMultipleCracksInTheSameLocation", false);
     setFieldValue("DiscrepancyDetails.NumberOfCracks", 0);
     setFieldValue("DiscrepancyDetails.DiscrepancyTypeComments", "");
+    if (
+      values?.DiscrepancyDetails?.DiscrepancyTypeId === 4 ||
+      values?.DiscrepancyDetails?.DiscrepancyTypeId === 6
+    ) {
+      setFieldValue("DiscrepancyDetails.CorrosionLevelId", 2);
+      setFieldValue("DiscrepancyDetails.CorrosionExtentId", 1);
+    }
   }, [values?.DiscrepancyDetails?.DiscrepancyTypeId]);
 
   useEffect(() => {
