@@ -303,7 +303,7 @@ const ViewSnapshotData = ({
                       <ListItem disabled={editable}>Log Page Number</ListItem>
                     </Grid>
                     <Grid item xs={4}>
-                      <ListItem>Station</ListItem>
+                      <ListItem disabled={editable}>Station</ListItem>
                     </Grid>
                   </Grid>
                   <Grid className={"sdr-status-description"} container spacing={3}>
@@ -371,6 +371,7 @@ const ViewSnapshotData = ({
                             helperText={!!touched?.Station && errors?.Station}
                             className={"sdr-status-edit"}
                             inputProps={{ maxLength: 3 }}
+                            disabled
                           />
                         ) : (
                           values?.Station
@@ -380,10 +381,10 @@ const ViewSnapshotData = ({
                   </Grid>
                   <Grid className={"sdr-status-item"} container spacing={3}>
                     <Grid item xs={4}>
-                      <ListItem>Submitter Designator</ListItem>
+                      <ListItem disabled={editable}>Submitter Designator</ListItem>
                     </Grid>
                     <Grid item xs={4}>
-                      <ListItem>Submitter Type</ListItem>
+                      <ListItem disabled={editable}>Submitter Type</ListItem>
                     </Grid>
                     <Grid item xs={4}>
                       <ListItem disabled={editable}>Operator Designator</ListItem>
@@ -413,6 +414,7 @@ const ViewSnapshotData = ({
                             }
                             className={"sdr-status-edit"}
                             inputProps={{ maxLength: 4 }}
+                            disabled
                           />
                         ) : (
                           values?.SfrAdditionalDetails?.SubmitterDesignator
@@ -443,6 +445,7 @@ const ViewSnapshotData = ({
                             className={"sdr-status-edit"}
                             placeholder="x"
                             inputProps={{ maxLength: 1 }}
+                            disabled
                           />
                         ) : (
                           values?.SfrAdditionalDetails?.SubmitterType
@@ -482,7 +485,7 @@ const ViewSnapshotData = ({
                   </Grid>
                   <Grid className={"sdr-status-item"} container spacing={3}>
                     <Grid item xs={4}>
-                      <ListItem>Operator Type</ListItem>
+                      <ListItem disabled={editable}>Operator Type</ListItem>
                     </Grid>
                     <Grid item xs={4}>
                       <ListItem disabled={editable}>ATA Code</ListItem>
@@ -516,6 +519,7 @@ const ViewSnapshotData = ({
                             className={"sdr-status-edit"}
                             placeholder="x"
                             inputProps={{ maxLength: 1 }}
+                            disabled
                           />
                         ) : (
                           values?.SfrAdditionalDetails?.OperatorType
