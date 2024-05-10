@@ -88,6 +88,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
   };
 
   useEffect(() => {
+    setOpenSelect(false);
     setSelectionModel([]);
     dispatch(resetCtnDataSuccess());
   }, [values?.OriginDetails?.MfrSourceId]);
@@ -924,7 +925,6 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
             )
           ) : (
             <DataGrid
-              autoPageSize
               className="!h-[40vh]"
               sx={{
                 "& .MuiDataGrid-columnHeaderCheckbox .MuiDataGrid-columnHeaderTitleContainer": {
