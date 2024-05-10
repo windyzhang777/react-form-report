@@ -142,7 +142,7 @@ export const ValidationSchemaSFR = {
       !MfrSourceId || MfrSourceId === 6
         ? schema
         : MfrSourceId === 1 || MfrSourceId === 3
-        ? schema.required(`${errMsg.required} (fetch logpage data first)`)
+        ? schema.required(errMsg.required)
         : schema.matches(regex.alphaNumericHyphen, errMsg.alphaNumeric).required(errMsg.required)
     ),
     MfrSourceComments: string().when("MfrSourceId", {
