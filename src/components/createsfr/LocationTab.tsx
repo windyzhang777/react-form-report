@@ -18,7 +18,7 @@ import {
 import { useFormCreateSfrData } from "src/components/createsfr/useFormCreateSfrData";
 import { getLocationStaData } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
-import { removeNonAlphaNumeric } from "src/validationSchema";
+import { removeNonAlphaNumeric, removeNonAlphaNumericSpace } from "src/validationSchema";
 
 type LocationTabProps = {
   editable: boolean;
@@ -106,7 +106,7 @@ export const LocationTab = ({ editable, tabIndex }: LocationTabProps) => {
                     onChange={(e) =>
                       setFieldValue(
                         "LocationDetails.CoordinateLocationDetails",
-                        removeNonAlphaNumeric(e.target.value)
+                        removeNonAlphaNumericSpace(e.target.value)
                       )
                     }
                     onBlur={handleBlur}
