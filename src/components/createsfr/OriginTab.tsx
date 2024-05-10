@@ -44,8 +44,15 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
   const { masterData, ctnData, logpageData }: SdrEsfrRecordDetailsStateType = useAppSelector(
     (state) => state.sdrEsfrRecordDetails
   );
-  const { errors, handleBlur, handleChange, setFieldValue, touched } =
-    useFormikContext<ISaveSfrValues>();
+  const {
+    errors,
+    handleBlur,
+    handleChange,
+    setFieldError,
+    setFieldTouched,
+    setFieldValue,
+    touched,
+  } = useFormikContext<ISaveSfrValues>();
   const { values } = useFormCreateSfrData();
   const [openSelectCtn, setOpenSelect] = useState<boolean>(false);
   const [selectionModel, setSelectionModel] = useState<GridRowSelectionModel>([]);
@@ -71,6 +78,13 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
       setOpenSelect(false);
       handleFocus(logPageNumberRef);
     }
+  };
+
+  const handleSelectCtn = () => {
+    setFieldValue("OriginDetails.MfrSourceIdentifier", selectionModel[0]);
+    setFieldTouched("OriginDetails.MfrSourceIdentifier", false);
+    setFieldError("OriginDetails.MfrSourceIdentifier", "");
+    toggleSelect();
   };
 
   useEffect(() => {
@@ -977,10 +991,7 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
             primaryLabel="Select"
             secondaryLabel="Cancel"
             primaryDisabled={!selectionModel?.[0]}
-            primaryOnClick={() => {
-              setFieldValue("OriginDetails.MfrSourceIdentifier", selectionModel[0]);
-              toggleSelect();
-            }}
+            primaryOnClick={handleSelectCtn}
             secondaryOnClick={toggleSelect}
           />
         </Modal>
