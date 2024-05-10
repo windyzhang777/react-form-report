@@ -565,7 +565,7 @@ export const DiscrepancyTab = ({ editable, tabIndex }: DiscrepancyTabProps) => {
             {values?.DiscrepancyDetails?.DiscrepancyPartDetails?.[0]
               ?.DiscrepancyPartInformationCode === 28 && (
               <div>
-                <ListItem>Specify</ListItem>
+                <ListItem required>Specify</ListItem>
                 <ListItem>
                   {editable ? (
                     <TextField

@@ -276,7 +276,17 @@ const CreateSfrData = ({
         }}
         validationSchema={object().shape({
           ...ValidationSchemaSFR,
-          LogPageNumber: ValidationSchema.LogPageNumber.required(errMsg.required),
+          LogPageNumber: ValidationSchema.LogPageNumber.required(errMsg.required).test(
+            (value, { createError }) => {
+              return !logpageData
+                ? createError({ message: "Fetch Log Page Data" })
+                : logpageNumberValue && value !== logpageNumberValue
+                ? createError({
+                    message: "Re-fetch Log Page Data",
+                  })
+                : true;
+            }
+          ),
           SdrDetails: object().shape({
             PrecautionaryProcedureIds: sdrRequired
               ? ValidationSchema.PrecautionaryProcedureIds

@@ -197,8 +197,15 @@ export const ValidationSchemaSFR = {
     DiscrepancyPartDetails: array().of(
       object({
         PartNumber: commonSchema.upTo(20),
+        DiscrepancyPartInformationCode: number(),
       })
     ),
+    DiscrepancyPartComments: commonSchema.upTo(20).test((value, { createError, parent }) => {
+      if (!value && parent.DiscrepancyPartDetails[0].DiscrepancyPartInformationCode === 28) {
+        return createError({ message: errMsg.required });
+      }
+      return true;
+    }),
   }),
   LocationDetails: object().shape({
     DefectLocationId: number().min(1, errMsg.required).required(errMsg.required),
