@@ -7,7 +7,7 @@ import {
   UserPermission,
 } from "src/commons/types";
 import { getUserPermission } from "src/helpers";
-import { GetProfileResResult } from "src/types/GetProfilerRes";
+import { EsfrUserPolicy, GetProfileResResult } from "src/types/GetProfilerRes";
 import axiosInstance from "src/utils/axiosInstance";
 import config from "src/utils/env.config";
 
@@ -67,12 +67,15 @@ export const getProfile = (empID: string) => {
         const userProfileResult = res?.data?.Result;
         if (userProfileResult) {
           const { EmployeeId, Station, FirstName, LastName, JobRole } = userProfileResult.Employee;
+          const policyName = userProfileResult.EsfrUserPolicies.find(
+            (p: EsfrUserPolicy) => p.AppName === "ESFR"
+          )?.PolicyName;
           if (EmployeeId !== null) {
             sessionStorage.setItem("id", EmployeeId);
             sessionStorage.setItem("station", Station);
             sessionStorage.setItem("fname", FirstName);
             sessionStorage.setItem("lname", LastName);
-            sessionStorage.setItem("jobRole", JobRole);
+            sessionStorage.setItem("jobRole", policyName || JobRole);
             sessionStorage.setItem("isBase", userProfileResult.IsBaseFlow);
           }
           dispatch(fetchSuccess(userProfileResult));
