@@ -8,12 +8,29 @@ import {
 } from "src/commons/types";
 import { GetAllEsfrRecordsResResult, LogpageStatus, Status } from "src/types/GetAllEsfrRecordsRes";
 import { EsfrUserPolicy } from "src/types/GetProfilerRes";
+import config from "src/utils/env.config";
 
 export const DATETIME_REQUEST = "YYYY-MM-DDTHH:mm:ss";
 export const DATETIME_REFRESH = "MM/DD/YYYY@HH:mm";
 export const DATETIME_DISPLAY = "MM/DD/YYYY HH:mm:ss";
 export const DATE_DISPLAY = "MM/DD/YYYY";
 export const DATE_HTML_DISPLAY = "YYYY-MM-DD";
+
+export const openLogPage = (logpageNumber: string) => {
+  let width = window.innerWidth;
+  let url = `${config.webTechApiBaseUrl}${config.URL_LOGPAGE_SEARCH}?logPageNumber=${logpageNumber}`;
+  window.open(
+    url,
+    "_blank",
+    "width=" +
+      (width - 450) / 2 +
+      ",height=" +
+      (window.innerHeight - 320) +
+      ",left=" +
+      (width / 2 - 50) +
+      ",top=450"
+  );
+};
 
 export const handleScroll = (ref: RefObject<any> | null) => {
   if (ref?.current) {
