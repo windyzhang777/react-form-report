@@ -219,8 +219,8 @@ export const useFormCreateSfrData = () => {
       setFieldValue("CMMFig", "");
     }
     if (!values.DocumentType.includes(4)) {
-      setFieldValue("RepairECRA1", "");
-      setFieldValue("RepairECRA2", "");
+      setFieldValue("EcraCode1", "");
+      setFieldValue("EcraCode2", "");
       setFieldValue("RepairDetails.Rev", "");
     }
     if (!values.DocumentType.includes(5)) {
@@ -232,10 +232,10 @@ export const useFormCreateSfrData = () => {
 
   useEffect(() => {
     setFieldValue(
-      "RepairDetails.RepairECRA",
-      formatCodes([values.RepairECRA1, values.RepairECRA2])
+      "RepairDetails.EcraCode",
+      formatCodes([values.EcraCode1, values.EcraCode2])
     );
-  }, [values.RepairECRA1, values.RepairECRA2]);
+  }, [values.EcraCode1, values.EcraCode2]);
 
   useEffect(() => {
     setFieldValue("SRM1", formatCodes([values.SRM11, values.SRM12, values.SRM13]));

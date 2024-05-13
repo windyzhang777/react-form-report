@@ -241,8 +241,8 @@ const CreateSfrData = ({
       CMM33: "",
       CMMPage: "",
       CMMFig: "",
-      RepairECRA1: "",
-      RepairECRA2: "",
+      EcraCode1: "",
+      EcraCode2: "",
     }),
     [logpageData, logpageNumberValue, profileData]
   );
