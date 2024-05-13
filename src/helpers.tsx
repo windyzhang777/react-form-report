@@ -157,7 +157,7 @@ export const getUserPermission = (EsfrUserPolicies: EsfrUserPolicy[]): UserPermi
     IsTomC: UserPermission.CRU,
     IsEngineering: UserPermission.R,
     IsRecords: UserPermission.R,
-    IsQualityControl: UserPermission.R,
+    IsQualityControl: UserPermission.CRU,
   };
   const permission = EsfrUserPolicies.reduce(
     (acc, cur) => (dict[cur.PolicyName] > acc ? dict[cur.PolicyName] : acc),
