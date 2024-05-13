@@ -43,7 +43,7 @@ export const useFormCreateSfrData = () => {
     setFieldValue("SpecIdentifier3", "");
     setFieldValue("SpecIdentifier4", "");
     setFieldValue("OriginDetails.Op", "");
-    setFieldValue("OriginDetails.DetectionMethodId", "");
+    setFieldValue("OriginDetails.DetectionMethodId", 0);
   }, [values?.OriginDetails?.IsScheduledInspection]);
 
   useEffect(() => {
@@ -231,10 +231,7 @@ export const useFormCreateSfrData = () => {
   }, [values.DocumentType]);
 
   useEffect(() => {
-    setFieldValue(
-      "RepairDetails.EcraCode",
-      formatCodes([values.EcraCode1, values.EcraCode2])
-    );
+    setFieldValue("RepairDetails.EcraCode", formatCodes([values.EcraCode1, values.EcraCode2]));
   }, [values.EcraCode1, values.EcraCode2]);
 
   useEffect(() => {

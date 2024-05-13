@@ -13,6 +13,7 @@ import {
   SdrEsfrRecordDetailsStateType,
   SelectedStatus,
 } from "src/commons/types";
+import { UseFormContext } from "src/components/createsdr/UseFormContext";
 import { DATETIME_REQUEST, DATE_HTML_DISPLAY, handleFocus, handleScroll } from "src/helpers";
 import { resetLogpageDataSuccess } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
@@ -32,6 +33,7 @@ export interface ICreateSdrDataProps {
   handleUpsertSdrSnapshot: (a: ISaveSdrValues) => void;
   logpageNumberValue: string;
   setCreateSdrFlag: Dispatch<SetStateAction<string>>;
+  setFormTouched: Dispatch<SetStateAction<boolean>>;
   setLogpageNumberValue: Dispatch<SetStateAction<string>>;
 }
 
@@ -41,6 +43,7 @@ const CreateSdrData = ({
   handleUpsertSdrSnapshot,
   logpageNumberValue,
   setCreateSdrFlag,
+  setFormTouched,
   setLogpageNumberValue,
 }: ICreateSdrDataProps) => {
   const editable = true;
@@ -153,6 +156,9 @@ const CreateSdrData = ({
   useEffect(() => {
     setLogpageNumberValue("");
     dispatch(resetLogpageDataSuccess());
+    return () => {
+      setFormTouched(false);
+    };
   }, []);
 
   useEffect(() => {
@@ -202,6 +208,7 @@ const CreateSdrData = ({
           values,
         }) => (
           <form onSubmit={handleSubmit} className="overflow-hidden mb-[4rem]">
+            <UseFormContext setFormTouched={setFormTouched} />
             <div id="create-sdr-details" className="h-full overflow-y-auto">
               {/* Major Equipment Identity */}
               <Box
