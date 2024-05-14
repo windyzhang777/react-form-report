@@ -116,14 +116,11 @@ const DiscrepancyPartsReportSearchScreen = () => {
               partsReport.length > 0 ? (
                 <CommonDataGrid
                   columns={partsReportSearchColumns()}
-                  handleExtractSdrRecords={() => {}}
                   isReport={true}
                   sdrData={partsReport}
                   selectedSdr={selectedSdr}
-                  setCreateSdrFlag={() => {}}
                   setSelectedSdr={setSelectedSdr}
                   setViewSdrFlag={setViewSdrFlag}
-                  viewSdrFlag={viewSdrFlag}
                 />
               ) : (
                 <WarningBox>No records found for the search criteria</WarningBox>

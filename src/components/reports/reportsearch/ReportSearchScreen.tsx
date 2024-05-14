@@ -119,14 +119,11 @@ const ReportSearchScreen = () => {
               esfrReport.length > 0 ? (
                 <CommonDataGrid
                   columns={eSfrReportSearchColumns()}
-                  handleExtractSdrRecords={() => {}}
                   isReport={true}
                   sdrData={esfrReport}
                   selectedSdr={selectedSdr}
-                  setCreateSdrFlag={() => {}}
                   setSelectedSdr={setSelectedSdr}
                   setViewSdrFlag={setViewSdrFlag}
-                  viewSdrFlag={viewSdrFlag}
                 />
               ) : (
                 <WarningBox>No records found for the search criteria</WarningBox>
