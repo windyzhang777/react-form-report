@@ -152,8 +152,7 @@ const ViewSdrData = ({
         TotalTime: String(logpageData?.FleetInfo?.TotalAircraftTime || ""),
         TotalCycles: logpageData?.FleetInfo?.TotalAircraftCycles || "",
       },
-      LogPageCreationDate:
-        (isSdr ? detailsData?.SdrDetails?.CreatedDate : detailsData?.CreatedDate) || "",
+      LogPageCreationDate: detailsData?.SdrDetails?.LogPageCreationDate || "",
       Station: detailsData?.Station || logpageData?.FleetInfo?.Station || "",
       LogPageNumber: detailsData?.LogPageNumber || selectedSdr?.LogpageNumber || "",
       AircraftNumber: logpageData?.FleetInfo?.TailNumber || "",
