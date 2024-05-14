@@ -341,6 +341,7 @@ const ViewSfrData = ({
               ] = `${profileData?.FirstName} ${profileData?.LastName}`;
               payload["SdrDetails"]["ModifiedbyFirstName"] = `${profileData?.FirstName}`;
               payload["SdrDetails"]["ModifiedbyLastName"] = `${profileData?.LastName}`;
+              payload["ModifiedBy"] = `${profileData?.EmployeeId}`;
               payload["ModifiedbyFirstName"] = `${profileData?.FirstName}`;
               payload["ModifiedbyLastName"] = `${profileData?.LastName}`;
               handleUpsertSfrSnapshot(
