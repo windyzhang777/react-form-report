@@ -68,6 +68,9 @@ const HomeScreen = () => {
   const [editable, setEditable] = useState<boolean>(false);
   const [openConfirmSaved, setOpenConfirmSaved] = useState<boolean>(false);
   const [filters, setFilters] = useState<LogpageStatus[]>([]);
+  const [formTouched, setFormTouched] = useState<boolean>(false);
+  const [confirmCloseCreate, setConfirmCloseCreate] = useState<boolean>(false);
+  const [selectedTab, setSelectedTab] = useState<number>(0);
   const isSdr = useMemo(() => selectedSdr?.Type === Type.SDR, [selectedSdr]);
   const sdrData = useMemo(() => {
     switch (tabIndex) {
@@ -90,6 +93,34 @@ const HomeScreen = () => {
     }
   };
 
+  const toggleCreateSDR = (type: string) => {
+    if (!createSdrFlag) {
+      setSelectedSdr(null);
+      setViewSdrFlag(false);
+    }
+    setLogpageNumberValue("");
+    setFormTouched(false);
+    setCreateSdrFlag(type);
+  };
+
+  const toggleConfirmCloseCreate = () => {
+    setConfirmCloseCreate(false);
+    setCreateSdrFlag("");
+    if (selectedSdr) {
+      setViewSdrFlag(true);
+    } else {
+      setTabIndex(selectedTab);
+      handleFilterInit(selectedTab);
+      setViewSdrFlag(false);
+      setSelectedSdr(null);
+    }
+  };
+
+  const toggleCancelCloseCreate = () => {
+    setConfirmCloseCreate(false);
+    setSelectedTab(tabIndex);
+  };
+
   const handleFilterInit = (tab: number = tabIndex) => {
     if (tab === SelectedTab.Open) {
       const stored = window.localStorage.getItem("sdr_filter");
@@ -103,11 +134,24 @@ const HomeScreen = () => {
     }
   };
 
-  const handleTabChange = (event: SyntheticEvent, tab: number) => {
-    setTabIndex(tab);
-    handleFilterInit(tab);
-    setViewSdrFlag(false);
-    setSelectedSdr(null);
+  const toggleTabChange = (event: SyntheticEvent, tab: number) => {
+    setSelectedTab(tab);
+    if (createSdrFlag) {
+      if (formTouched) {
+        setConfirmCloseCreate && setConfirmCloseCreate(true);
+      } else {
+        toggleCreateSDR && toggleCreateSDR("");
+        setTabIndex(tab);
+        handleFilterInit(tab);
+        setViewSdrFlag(false);
+        setSelectedSdr(null);
+      }
+    } else {
+      setTabIndex(tab);
+      handleFilterInit(tab);
+      setViewSdrFlag(false);
+      setSelectedSdr(null);
+    }
   };
 
   const handleFetchLogpageData = (logpageNumber: string) => {
@@ -223,7 +267,7 @@ const HomeScreen = () => {
       });
   };
 
-  const handleConfirmFileSaved = () => {
+  const toggleConfirmFileSaved = () => {
     setOpenConfirmSaved(false);
     setTimeout(() => {
       resetSdrs();
@@ -242,16 +286,18 @@ const HomeScreen = () => {
   useEffect(() => {
     setEditable(false);
     if (selectedSdr) {
-      if (selectedSdr.StatusId === SelectedStatus.Approved && selectedSdr.OperatorControlNumber) {
-        dispatch(getApprovedSdr(selectedSdr.LogpageNumber, selectedSdr.OperatorControlNumber));
-      } else {
-        dispatch(getSdrEsfrRecordDetails(selectedSdr.LogpageNumber));
+      if (!createSdrFlag) {
+        if (selectedSdr.StatusId === SelectedStatus.Approved && selectedSdr.OperatorControlNumber) {
+          dispatch(getApprovedSdr(selectedSdr.LogpageNumber, selectedSdr.OperatorControlNumber));
+        } else {
+          dispatch(getSdrEsfrRecordDetails(selectedSdr.LogpageNumber));
+        }
       }
     } else {
       dispatch(resetEsfrRecordDetailData());
       dispatch(resetLogpageDataSuccess());
     }
-  }, [selectedSdr]);
+  }, [createSdrFlag, selectedSdr]);
 
   useEffect(() => {
     resetSdrs();
@@ -262,10 +308,9 @@ const HomeScreen = () => {
   }, []);
 
   useEffect(() => {
-    if (!viewSdrFlag) {
+    if (!viewSdrFlag && !createSdrFlag) {
       setSelectedSdr(null);
     }
-    setLogpageNumberValue("");
   }, [viewSdrFlag, createSdrFlag]);
 
   return (
@@ -276,7 +321,7 @@ const HomeScreen = () => {
           <Tabs
             className="bottom-divider"
             value={tabIndex}
-            onChange={handleTabChange}
+            onChange={toggleTabChange}
             aria-label="homeScreenSdrTabs"
           >
             <Tab
@@ -304,14 +349,15 @@ const HomeScreen = () => {
               <CommonDataGrid
                 columns={allEsfrRecordsColumns(filters, setFilters, tabIndex === SelectedTab.Open)}
                 createSdrFlag={createSdrFlag}
+                formTouched={formTouched}
                 handleExtractSdrRecords={handleExtractSdrRecords}
                 sdrData={sdrData}
                 selectedSdr={selectedSdr}
-                setCreateSdrFlag={setCreateSdrFlag}
+                setConfirmCloseCreate={setConfirmCloseCreate}
                 setSelectedSdr={setSelectedSdr}
                 setViewSdrFlag={setViewSdrFlag}
                 tabIndex={tabIndex}
-                viewSdrFlag={viewSdrFlag}
+                toggleCreateSDR={toggleCreateSDR}
               />
             )}
           </TabPanel>
@@ -324,6 +370,7 @@ const HomeScreen = () => {
               handleUpsertSdrSnapshot={handleUpsertSdrSnapshot}
               logpageNumberValue={logpageNumberValue}
               setCreateSdrFlag={setCreateSdrFlag}
+              setFormTouched={setFormTouched}
               setLogpageNumberValue={setLogpageNumberValue}
             />
           ) : createSdrFlag === Type.SFR ? (
@@ -333,6 +380,7 @@ const HomeScreen = () => {
               handleFetchLogpageData={handleFetchLogpageData}
               logpageNumberValue={logpageNumberValue}
               setCreateSdrFlag={setCreateSdrFlag}
+              setFormTouched={setFormTouched}
               setLogpageNumberValue={setLogpageNumberValue}
             />
           ) : null}
@@ -395,13 +443,34 @@ const HomeScreen = () => {
           <ButtonGroup
             className="justify-end"
             primaryLabel="Continue"
-            primaryOnClick={handleConfirmFileSaved}
+            primaryOnClick={toggleConfirmFileSaved}
             secondaryLabel="Save"
             secondaryOnClick={() => {
               if (fileData) {
                 saveTextAsFileAsync(fileData.SdrRecords?.join("\n"), fileData.FileName);
               }
             }}
+          />
+        </Modal>
+      )}
+      {confirmCloseCreate && (
+        <Modal
+          name="confirm-extract"
+          onClose={() => setConfirmCloseCreate(false)}
+          open={confirmCloseCreate}
+        >
+          <Typography id="confirm-extract-modal-title" variant="h6" mb={2} fontWeight={600}>
+            United Airlines
+          </Typography>
+          <Typography id="confirm-extract-modal-description" variant="body1" mb={6}>
+            You have unsaved changes in SDR. Your changes will be lost. Do you still want to exit?
+          </Typography>
+          <ButtonGroup
+            className="justify-end"
+            primaryLabel="Proceed"
+            secondaryLabel="Cancel"
+            primaryOnClick={toggleConfirmCloseCreate}
+            secondaryOnClick={toggleCancelCloseCreate}
           />
         </Modal>
       )}

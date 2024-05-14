@@ -427,8 +427,8 @@ export const RepairTab = ({ editable, tabIndex, sdrRequired, setSdrRequired }: R
                           <TextFieldGroup
                             count={2}
                             maxAllowed={[4, 5]}
-                            name="RepairECRA"
-                            path="RepairDetails.RepairECRA"
+                            name="EcraCode"
+                            path="RepairDetails.EcraCode"
                             values={values}
                             onChange={handleChange}
                             onBlur={handleBlur}

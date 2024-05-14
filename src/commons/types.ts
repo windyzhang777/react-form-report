@@ -105,8 +105,8 @@ export interface ISaveSfrValues extends CreateSfrReq {
   CMM33: string;
   CMMPage: string;
   CMMFig: string;
-  RepairECRA1: string;
-  RepairECRA2: string;
+  EcraCode1: string;
+  EcraCode2: string;
 }
 
 export interface IReportSearchValues extends GetEsfrReportReq {}

@@ -13,7 +13,7 @@ export const regex = {
   DIP: /^[a-zA-Z0-9]{7}/,
   Spec: /^[a-zA-Z0-9]{4}-[a-zA-Z0-9]{2}-[a-zA-Z0-9]{1}-[a-zA-Z0-9]{4}/,
   AMM: /^[a-zA-Z0-9]{2}-[a-zA-Z0-9]{2}-[a-zA-Z0-9]{2}/,
-  RepairECRA: /^[a-zA-Z0-9]{4}-[a-zA-Z0-9]{5}/,
+  EcraCode: /^[a-zA-Z0-9]{4}-[a-zA-Z0-9]{5}/,
   Fig: /^[a-zA-Z0-9]{3}/,
   // common
   number7D3: /^(0|[1-9]\d{1,7})(?:\.\d{1,3})?$/,

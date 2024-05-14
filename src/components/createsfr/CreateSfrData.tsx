@@ -17,6 +17,7 @@ import { CreateSfrReq } from "src/types/CreateSfrReq";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
 import ValidationSchema, { ValidationSchemaSFR, errMsg } from "src/validationSchema";
 import { array, number, object } from "yup";
+import { UseFormContext } from "../createsdr/UseFormContext";
 import "./createSfrData.css";
 
 export interface ICreateSfrDataProps {
@@ -25,6 +26,7 @@ export interface ICreateSfrDataProps {
   handleFetchLogpageData: (a: string) => void;
   logpageNumberValue: string;
   setCreateSdrFlag: Dispatch<SetStateAction<string>>;
+  setFormTouched: Dispatch<SetStateAction<boolean>>;
   setLogpageNumberValue: Dispatch<SetStateAction<string>>;
 }
 
@@ -34,6 +36,7 @@ const CreateSfrData = ({
   handleFetchLogpageData,
   logpageNumberValue,
   setCreateSdrFlag,
+  setFormTouched,
   setLogpageNumberValue,
 }: ICreateSfrDataProps) => {
   const editable = true;
@@ -62,7 +65,7 @@ const CreateSfrData = ({
         IsScheduledInspection: true,
         CalDocId: 1,
         InspectionType: 0,
-        CalDocIdentifier: "",
+        CalDocIdentifier: "1",
         SpecIdentifier: "",
         MfrSourceComments: "",
         DetectionMethodId: 0,
@@ -118,7 +121,11 @@ const CreateSfrData = ({
         DipCode: "",
         IsRepairOrRework: false,
         RepairType: "",
-        RepairTypes: [{ Code: "", Page: "", Fig: "" }],
+        RepairTypes: [
+          { Code: "", Page: "", Fig: "" },
+          { Code: "", Page: "", Fig: "" },
+          { Code: "", Page: "", Fig: "" },
+        ],
       },
       DiscrepancyDetails: {
         IsManufacturingLimitExceeded: true,
@@ -241,13 +248,13 @@ const CreateSfrData = ({
       CMM33: "",
       CMMPage: "",
       CMMFig: "",
-      RepairECRA1: "",
-      RepairECRA2: "",
+      EcraCode1: "",
+      EcraCode2: "",
     }),
     [logpageData, logpageNumberValue, profileData]
   );
 
-  const handleTabChange = (event: SyntheticEvent, tab: number) => {
+  const toggleTabChange = (event: SyntheticEvent, tab: number) => {
     setTabIndex(tab);
   };
 
@@ -258,6 +265,9 @@ const CreateSfrData = ({
   useEffect(() => {
     setLogpageNumberValue("");
     dispatch(resetLogpageDataSuccess());
+    return () => {
+      setFormTouched(false);
+    };
   }, []);
 
   return (
@@ -299,12 +309,13 @@ const CreateSfrData = ({
       >
         {({ errors, handleSubmit, isSubmitting, touched }) => (
           <form onSubmit={handleSubmit} className="overflow-hidden mb-[4rem] grow">
+            <UseFormContext setFormTouched={setFormTouched} />
             <div id="create-sdr-details" className="h-full overflow-y-auto">
               <FlexColumn className="h-full w-full flex !flex-col">
                 <Tabs
                   className="bottom-divider"
                   value={tabIndex}
-                  onChange={handleTabChange}
+                  onChange={toggleTabChange}
                   aria-label="createSfrTabs"
                 >
                   <Tab

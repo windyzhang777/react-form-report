@@ -25,29 +25,31 @@ import "./commondatagrid.css";
 export interface CommonDataGridProps {
   columns: any;
   createSdrFlag?: string;
-  handleExtractSdrRecords: (a: number[]) => void;
+  formTouched?: boolean;
+  handleExtractSdrRecords?: (a: number[]) => void;
   isReport?: boolean;
   sdrData: IDataGridSdrValue[];
   selectedSdr: any;
-  setCreateSdrFlag: Dispatch<SetStateAction<string>>;
+  setConfirmCloseCreate?: Dispatch<SetStateAction<boolean>>;
   setSelectedSdr: Dispatch<SetStateAction<any>>;
   setViewSdrFlag: Dispatch<SetStateAction<boolean>>;
   tabIndex?: number;
-  viewSdrFlag: boolean;
+  toggleCreateSDR?: (a: string) => void;
 }
 
 const CommonDataGrid = ({
   columns,
   createSdrFlag,
+  formTouched,
   handleExtractSdrRecords,
   isReport = false,
   sdrData,
   selectedSdr,
-  setCreateSdrFlag,
+  setConfirmCloseCreate,
   setSelectedSdr,
   setViewSdrFlag,
   tabIndex,
-  viewSdrFlag,
+  toggleCreateSDR,
 }: CommonDataGridProps) => {
   const apiRef = useGridApiRef();
   const { auth } = useAppSelector((state) => state.profile);
@@ -60,21 +62,19 @@ const CommonDataGrid = ({
   const [confirmExtract, setConfirmExtract] = useState<boolean>(false);
   const showCheckbox = useMemo(() => tabIndex === SelectedTab.Approved, [tabIndex]);
 
-  const handleCreateSDR = (type: string) => {
-    setViewSdrFlag(false);
-    setCreateSdrFlag(type);
-  };
-
   const handleConfirmExtract = () => {
     setConfirmExtract(false);
-    handleExtractSdrRecords(selectedSdrsToExtract.map((s) => +(s as string).split("-")[0]));
+    handleExtractSdrRecords &&
+      handleExtractSdrRecords(selectedSdrsToExtract.map((s) => +(s as string).split("-")[0]));
   };
 
   useEffect(() => {
-    apiRef?.current?.setPage(0);
-    return () => {
-      apiRef?.current?.setPage(0);
-    };
+    if (apiRef?.current) {
+      apiRef.current?.setPage(0);
+      return () => {
+        apiRef.current?.setPage(0);
+      };
+    }
   }, [tabIndex]);
 
   return (
@@ -86,7 +86,7 @@ const CommonDataGrid = ({
         autoPageSize={isReport ? false : true}
         // loading={loading}
         disableColumnMenu
-        columns={columns as GridColDef<GridValidRowModel>[]}
+        columns={(columns as GridColDef<GridValidRowModel>[]) || []}
         rows={sdrData}
         getRowId={(row) => `${row?.Id}-${isReport ? row?.ReportType : row?.Type}`}
         checkboxSelection={showCheckbox}
@@ -111,9 +111,16 @@ const CommonDataGrid = ({
         disableRowSelectionOnClick
         onCellClick={(data: GridCellParams) => {
           setViewSdrFlag(false);
-          if (data.field !== "__check__" && !createSdrFlag) {
-            setViewSdrFlag(true);
+          if (data.field !== "__check__") {
             setSelectedSdr(data?.row);
+            if (createSdrFlag) {
+              if (formTouched) {
+                setConfirmCloseCreate && setConfirmCloseCreate(true);
+              } else {
+                toggleCreateSDR && toggleCreateSDR("");
+              }
+            }
+            setViewSdrFlag(true);
           }
         }}
         slots={{
@@ -161,10 +168,16 @@ const CommonDataGrid = ({
             }
             shouldCloseMenu
           >
-            <div onClick={() => handleCreateSDR("SDR")} className="w-full px-3 py-2">
+            <div
+              onClick={() => toggleCreateSDR && toggleCreateSDR("SDR")}
+              className="w-full px-3 py-2"
+            >
               SDR
             </div>
-            <div onClick={() => handleCreateSDR("SFR")} className="w-full px-3 py-2">
+            <div
+              onClick={() => toggleCreateSDR && toggleCreateSDR("SFR")}
+              className="w-full px-3 py-2"
+            >
               SFR
             </div>
           </Menu>

@@ -43,7 +43,7 @@ export const useFormCreateSfrData = () => {
     setFieldValue("SpecIdentifier3", "");
     setFieldValue("SpecIdentifier4", "");
     setFieldValue("OriginDetails.Op", "");
-    setFieldValue("OriginDetails.DetectionMethodId", "");
+    setFieldValue("OriginDetails.DetectionMethodId", 0);
   }, [values?.OriginDetails?.IsScheduledInspection]);
 
   useEffect(() => {
@@ -219,8 +219,8 @@ export const useFormCreateSfrData = () => {
       setFieldValue("CMMFig", "");
     }
     if (!values.DocumentType.includes(4)) {
-      setFieldValue("RepairECRA1", "");
-      setFieldValue("RepairECRA2", "");
+      setFieldValue("EcraCode1", "");
+      setFieldValue("EcraCode2", "");
       setFieldValue("RepairDetails.Rev", "");
     }
     if (!values.DocumentType.includes(5)) {
@@ -231,11 +231,8 @@ export const useFormCreateSfrData = () => {
   }, [values.DocumentType]);
 
   useEffect(() => {
-    setFieldValue(
-      "RepairDetails.RepairECRA",
-      formatCodes([values.RepairECRA1, values.RepairECRA2])
-    );
-  }, [values.RepairECRA1, values.RepairECRA2]);
+    setFieldValue("RepairDetails.EcraCode", formatCodes([values.EcraCode1, values.EcraCode2]));
+  }, [values.EcraCode1, values.EcraCode2]);
 
   useEffect(() => {
     setFieldValue("SRM1", formatCodes([values.SRM11, values.SRM12, values.SRM13]));
