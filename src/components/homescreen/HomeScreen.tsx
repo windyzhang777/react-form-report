@@ -224,7 +224,7 @@ const HomeScreen = () => {
       })
       .catch(() => {
         setOpenSnackbar(-1);
-        setSnackbarMessage(`Fail to Approve SDR`);
+        setSnackbarMessage(`Fail to Approve SFR`);
       })
       .finally(() => {
         setIsLoading(false);
