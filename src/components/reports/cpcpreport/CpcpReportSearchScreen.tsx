@@ -73,7 +73,7 @@ const CpcpReportSearchScreen = () => {
 
   useEffect(() => {
     if (selectedSdr) {
-      dispatch(getSdrEsfrRecordDetails(selectedSdr.LogpageNumber));
+      dispatch(getSdrEsfrRecordDetails(selectedSdr));
     } else {
       dispatch(resetEsfrRecordDetailData());
       dispatch(resetLogpageDataSuccess());

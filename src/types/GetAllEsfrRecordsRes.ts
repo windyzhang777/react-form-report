@@ -16,6 +16,7 @@ export interface GetAllEsfrRecordsResResult {
   CreatedDate: string;
   Id: number;
   IsOlderThan72Hours: boolean;
+  LogpageCreationDate: string;
   LogpageNumber: string;
   LogpageStatus: LogpageStatus | null;
   OperatorControlNumber: null | string;
