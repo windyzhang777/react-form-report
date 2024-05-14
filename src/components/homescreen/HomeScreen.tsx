@@ -41,6 +41,7 @@ import { CreateSfrReq } from "src/types/CreateSfrReq";
 import { LogpageStatus, Type } from "src/types/GetAllEsfrRecordsRes";
 import axiosInstance from "src/utils/axiosInstance";
 import config from "src/utils/env.config";
+import ViewSfrData from "../viewsdr/ViewSfrData";
 import "./homescreen.css";
 
 const HomeScreen = () => {
@@ -189,6 +190,41 @@ const HomeScreen = () => {
       .catch(() => {
         setOpenSnackbar(-1);
         setSnackbarMessage(`Fail to ${actionType} SDR`);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const handleUpsertSfrSnapshot = (
+    values: any,
+    status: SelectedStatus = SelectedStatus.Approved
+  ) => {
+    setIsLoading(true);
+    axiosInstance
+      .post(`${config.apiBaseAddress}${config.URL_UPSERT_SFR_SNAPSHOT}`, values)
+      .then((res) => {
+        if (res?.data?.Result?.IsSuccess) {
+          setOpenSnackbar(1);
+          setSnackbarMessage(
+            `Approve SFR successful${
+              status === SelectedStatus.ApprovedWithFollowUp ? " with flagged for follow-up" : ""
+            }`
+          );
+          setCreateSdrFlag("");
+          setViewSdrFlag(false);
+          setSelectedSdr(null);
+          setTimeout(() => {
+            resetSdrs();
+          }, 500);
+        } else {
+          setOpenSnackbar(-1);
+          setSnackbarMessage(`Fail to Approve SFR`);
+        }
+      })
+      .catch(() => {
+        setOpenSnackbar(-1);
+        setSnackbarMessage(`Fail to Approve SFR`);
       })
       .finally(() => {
         setIsLoading(false);
@@ -394,10 +430,19 @@ const HomeScreen = () => {
                 setEditable={setEditable}
                 setViewSdrFlag={setViewSdrFlag}
               />
-            ) : (
+            ) : selectedSdr?.Type === Type.SDR ? (
               <ViewSdrData
                 editable={editable}
                 handleUpsertSdrSnapshot={handleUpsertSdrSnapshot}
+                isSdr={isSdr}
+                selectedSdr={selectedSdr}
+                setViewSdrFlag={setViewSdrFlag}
+                tabIndex={tabIndex}
+              />
+            ) : (
+              <ViewSfrData
+                editable={editable}
+                handleUpsertSfrSnapshot={handleUpsertSfrSnapshot}
                 isSdr={isSdr}
                 selectedSdr={selectedSdr}
                 setViewSdrFlag={setViewSdrFlag}

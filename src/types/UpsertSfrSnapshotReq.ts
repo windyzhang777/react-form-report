@@ -1,12 +1,4 @@
-export interface GetSDREsfrRecordDetailsRes {
-  Timestamp: string;
-  ResponseTime: number;
-  Errors: any[];
-  ErrorCode: null;
-  Result: GetSDREsfrRecordDetailsResResult;
-}
-
-export interface GetSDREsfrRecordDetailsResResult {
+export interface UpsertSfrSnapshotReq {
   AirCraftNumber: string | null;
   AtaCode: string | null;
   CreatedBy: string | null;
@@ -15,7 +7,6 @@ export interface GetSDREsfrRecordDetailsResResult {
   CreatedDate: string | null;
   DiscrepancyDetails: DiscrepancyDetails;
   FleetCode: string | null;
-  FleetInfo: FleetInfo;
   IsSfrCompleted: boolean;
   IsSfrDowngraded: boolean;
   LocationDetails: LocationDetails;
@@ -26,14 +17,11 @@ export interface GetSDREsfrRecordDetailsResResult {
   ModifiedbyFirstName: string | null;
   ModifiedbyLastName: string | null;
   ModifiedDate: string | null;
-  OperatorControlNumber: string | null;
   OriginDetails: OriginDetails;
   RepairDetails: RepairDetails;
   SdrDetails: SDRDetails;
-  SfrActivity: null;
-  SfrId: number;
+  SfrActivity: SfrActivity;
   Station: string | null;
-  Status: string;
   StatusId: number;
   Type: string | null;
 }
@@ -47,50 +35,27 @@ export interface DiscrepancyDetails {
   CrackDepth: number | null;
   CrackLength: number | null;
   CrackWidth: number | null;
-  DiscrepancyPartComments: null;
+  DiscrepancyPartComments: string | null;
   DiscrepancyPartDetails: DiscrepancyPartDetail[];
-  DiscrepancyTypeComments: null;
-  DiscrepancyTypeId: number | null;
+  DiscrepancyTypeComments: string | null;
+  DiscrepancyTypeId: number | string | null;
   IsManufacturingLimitExceeded: boolean;
   IsSafeOperationEndangered: boolean;
   NumberOfCracks: number | null;
 }
 
 export interface DiscrepancyPartDetail {
-  AtaCode: string;
+  AtaCode: string | null;
   DiscrepancyPartInformationCode: number | null;
   PartDetails: string | null;
   PartNumber: string | null;
   Structure: string | null;
 }
 
-export interface FleetInfo {
-  ATACode: string;
-  CorrectiveActions: string;
-  Date: string;
-  FleetCode: string;
-  FlightNumber: string;
-  LicenseNumber: string;
-  ManufacturedBy: ManufacturedBy;
-  ManufacturerPartNumber: string;
-  ManufacturerSerialNumber: string;
-  SceptreCode: string;
-  Station: string;
-  TailNumber: string;
-  TotalAircraftCycles: number;
-  TotalAircraftTime: number;
-}
-
-export enum ManufacturedBy {
-  Airbus = "AIRBUS",
-  Bac = "BAC",
-  Boeing = "BOEING",
-}
-
 export interface LocationDetails {
-  AdditionalLocationDetails: null;
-  Comments: null;
-  CoordinateLocationDetails: string;
+  AdditionalLocationDetails: string | null;
+  Comments: string | null;
+  CoordinateLocationDetails: string | null;
   DamageProximityId: number | null;
   DefectLocationId: number | null;
   DefectLocationIdentifier: string | null;
@@ -108,8 +73,8 @@ export interface LocationDetails {
   SpecificsLocation: string | null;
   StaType: string | null;
   StaTypeId: number | null;
-  Surface: null;
-  ToBL: null;
+  Surface: string | null;
+  ToBL: string | null;
   ToBLLength: number | null;
   ToSide: string | null;
   ToSta: string | null;
@@ -118,27 +83,27 @@ export interface LocationDetails {
 }
 
 export interface OriginDetails {
-  CalDocId: number;
+  CalDocId: number | null;
   CalDocIdentifier: string | null;
   DetectionMethodComments: string | null;
   DetectionMethodId: number | null;
-  InspectionType: null;
+  InspectionType: number | null;
   IsScheduledInspection: boolean;
-  MfrSourceComments: null;
+  MfrSourceComments: string | null;
   MfrSourceId: number | null;
-  MfrSourceIdentifier: null;
-  Op: null;
-  Rev: null;
+  MfrSourceIdentifier: string | null;
+  Op: string | null;
+  Rev: string | null;
   SpecIdentifier: string | null;
-  UnscheduledInspectionTypeComments: null;
-  UnscheduledInspectionTypeId: number | null;
+  UnscheduledInspectionTypeComments: string | null;
+  UnscheduledInspectionTypeId: string | number;
 }
 
 export interface RepairDetails {
-  Comments: string;
-  DamageStructureStatus: string;
-  DipCode: null;
-  EcraCode: string;
+  Comments: string | null;
+  DamageStructureStatus: string | null;
+  DipCode: string | null;
+  EcraCode: string | null;
   IsDeferred: boolean;
   IsEcra: boolean;
   IsMajorRepair: boolean;
@@ -146,49 +111,43 @@ export interface RepairDetails {
   IsRepairOrRework: boolean;
   IsSdrReportable: boolean;
   ManHoursRequired: number | null;
-  MaterialsUtilized: string;
+  MaterialsUtilized: string | null;
   RepairType: string | null;
   RepairTypes: RepairType[];
-  Rev: string;
+  Rev: string | null;
 }
 
 export interface RepairType {
-  Code: string;
-  Fig: string;
-  Page: string;
+  Code: string | null;
+  Fig: string | null;
+  Page: string | null;
 }
 
 export interface SDRDetails {
   AircraftNumber: string | null;
-  CorrectiveAction: string;
-  CreatedBy: string;
-  CreatedbyFirstName: string;
-  CreatedbyLastName: string;
-  createdDate: string;
-  CreatedDate: string;
+  CorrectiveAction: string | null;
+  CreatedbyFirstName: string | null;
+  CreatedbyLastName: string | null;
+  CreatedDate: string | null;
   EmployeeId: string | null;
   EmployeeName: string | null;
-  FleetInfo: null;
   HowDiscoveredId: number | null;
   IsExtracted: boolean;
   IsMajorRepair: boolean;
   IsSdrCompleted: boolean;
   IsSdrDowngraded: boolean;
   IsSdrReportable: boolean;
-  LogPageCreationDate: string;
-  LogPageNumber: string;
-  ModifiedbyFirstName: string;
-  ModifiedbyLastName: string;
+  LogPageCreationDate: string | null;
+  LogPageNumber: string | null;
+  ModifiedbyFirstName: string | null;
+  ModifiedbyLastName: string | null;
   NatureOfReportIds: number[];
-  OperatorControlNumber: null;
+  OperatorControlNumber: string | null;
   PartDetails: PartDetails;
   PrecautionaryProcedureIds: number[];
-  sdrNumber: string;
   StageId: number | null;
-  Station: string;
-  Status: string;
-  StatusId: number;
-  submittedDate: string;
+  Station: string | null;
+  StatusId: number | null;
 }
 
 export interface PartDetails {
@@ -201,5 +160,12 @@ export interface PartDetails {
   PartTimeSince: string | null;
   PartTotalCycles: string | null;
   PartTotalTime: string | null;
-  PartTrackingNumber: null;
+  PartTrackingNumber: string | null;
+}
+
+export interface SfrActivity {
+  Comments: string | null;
+  CreatedDate: string | null;
+  EmployeeId: string | null;
+  EmployeeName: string | null;
 }

@@ -136,6 +136,11 @@ export interface ISaveSdrValues extends UpsertSDRSnapshotReq {
   FlightNumber: string;
 }
 
+export interface IApproveSfrValues extends UpsertSDRSnapshotReq, GetSDREsfrRecordDetailsResResult {
+  ComponentDetails: IComponentDetails & AdditionalPartValues;
+  FlightNumber: string;
+}
+
 export interface IEditSdrValues extends UpsertSDRSnapshotReq {
   LocationDetails: ILocationDetails;
   ComponentDetails: IComponentDetails & AdditionalPartValues;
@@ -437,6 +442,7 @@ export interface EnvironmentConfig {
   URL_UPDATE_SNAPSHOT_SDR_EXTRACTION_STATUS: string;
   URL_INSERT_SNAPSHOT_SDR_FILENAME: string;
   URL_UPSERT_SDR_SNAPSHOT: string;
+  URL_UPSERT_SFR_SNAPSHOT: string;
   URL_GET_ESFR_REPORT: string;
   URL_GET_CPCP_REPORT: string;
   URL_GET_PARTS_REPORT: string;
@@ -450,14 +456,6 @@ export type EnvTypes = "localhost" | "development" | "qa" | "stage" | "productio
 export type AppConfig = {
   [key in keyof typeof config.REACT_APP_ENVIRONMENT]: EnvironmentConfig;
 };
-
-export const InspectionType = new Map<number, string>([
-  [1, "Pre-Flight/Walk Around"],
-  [2, "Line MX Discovery"],
-  [3, "Special Inspection"],
-  [4, "Accident Investigation"],
-  [5, "OTHER"],
-]);
 
 export const Sides: OptionDocument[] = [
   {
@@ -518,85 +516,6 @@ export const SpecificsOptions: OptionDocument[] = [
     Description: "Outboard",
     DisplayOrder: 2,
     Id: 2,
-  },
-];
-
-export const RudderDamageProximityOptions: OptionDocument[] = [
-  {
-    Description: "LE",
-    DisplayOrder: 1,
-    Id: 1,
-  },
-  {
-    Description: "TE",
-    DisplayOrder: 2,
-    Id: 2,
-  },
-  {
-    Description: "Middle",
-    DisplayOrder: 3,
-    Id: 3,
-  },
-];
-
-export const StabDamageProximityOptions: OptionDocument[] = [
-  {
-    Description: "Front Spar",
-    DisplayOrder: 1,
-    Id: 1,
-  },
-  {
-    Description: "LE",
-    DisplayOrder: 2,
-    Id: 2,
-  },
-  {
-    Description: "Rear Spar",
-    DisplayOrder: 3,
-    Id: 3,
-  },
-  {
-    Description: "STR",
-    DisplayOrder: 4,
-    Id: 4,
-  },
-  {
-    Description: "TE",
-    DisplayOrder: 5,
-    Id: 5,
-  },
-];
-
-export const WingDamageProximityOptions: OptionDocument[] = [
-  {
-    Description: "Front Spar",
-    DisplayOrder: 1,
-    Id: 1,
-  },
-  {
-    Description: "LE",
-    DisplayOrder: 2,
-    Id: 2,
-  },
-  {
-    Description: "Rear Spar",
-    DisplayOrder: 3,
-    Id: 3,
-  },
-  {
-    Description: "STR",
-    DisplayOrder: 4,
-    Id: 4,
-  },
-  {
-    Description: "TE",
-    DisplayOrder: 5,
-    Id: 5,
-  },
-  {
-    Description: "Middle",
-    DisplayOrder: 6,
-    Id: 6,
   },
 ];
 
@@ -722,14 +641,6 @@ export const DocumentTypeOptions: OptionDocument[] = [
     Description: "Other",
     DisplayOrder: 5,
     Id: 5,
-  },
-];
-
-export const ZoneOptions: OptionDocument[] = [
-  {
-    Description: "1",
-    DisplayOrder: 1,
-    Id: 1,
   },
 ];
 

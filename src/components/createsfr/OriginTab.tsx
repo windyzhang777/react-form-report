@@ -915,7 +915,9 @@ export const OriginTab = ({ editable, tabIndex, handleFetchLogpageData }: Origin
             onBlur={handleBlur}
             className="w-full !mb-4"
           />
-          <InfoBox className="!w-full mb-4">{selectedMFRSource}s for B737</InfoBox>
+          <InfoBox className="!w-full mb-4">
+            {`${selectedMFRSource}s for ${logpageData?.FleetInfo?.FleetCode}`}
+          </InfoBox>
 
           {!(ctnData && ctnData.FleetMasterResponse?.length > 0) ? (
             touched?.searchDescription ? (

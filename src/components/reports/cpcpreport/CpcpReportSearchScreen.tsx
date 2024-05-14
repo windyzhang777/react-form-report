@@ -109,14 +109,11 @@ const CpcpReportSearchScreen = () => {
               cpcpReport.length > 0 ? (
                 <CommonDataGrid
                   columns={cpcpReportSearchColumns()}
-                  handleExtractSdrRecords={() => {}}
                   isReport={true}
                   sdrData={cpcpReport}
                   selectedSdr={selectedSdr}
-                  setCreateSdrFlag={() => {}}
                   setSelectedSdr={setSelectedSdr}
                   setViewSdrFlag={setViewSdrFlag}
-                  viewSdrFlag={viewSdrFlag}
                 />
               ) : (
                 <WarningBox>No records found for the search criteria</WarningBox>

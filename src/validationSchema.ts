@@ -286,9 +286,9 @@ export const ValidationSchemaSFR = {
     Comments: commonSchema.upTo(100),
     MaterialsUtilized: commonSchema.upTo(200),
     ManHoursRequired: commonSchema.upTo(4),
-    RepairECRA: string().test("textGroup", errMsg.notValidValue, (value) => {
+    EcraCode: string().test("textGroup", errMsg.notValidValue, (value) => {
       if (!value) return true;
-      return regex.RepairECRA.test(value);
+      return regex.EcraCode.test(value);
     }),
   }),
 };
