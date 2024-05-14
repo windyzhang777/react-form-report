@@ -174,12 +174,14 @@ const CommonDataGrid = ({
             >
               SDR
             </div>
-            <div
-              onClick={() => toggleCreateSDR && toggleCreateSDR("SFR")}
-              className="w-full px-3 py-2"
-            >
-              SFR
-            </div>
+            {false && (
+              <div
+                onClick={() => toggleCreateSDR && toggleCreateSDR("SFR")}
+                className="w-full px-3 py-2"
+              >
+                SFR
+              </div>
+            )}
           </Menu>
         </FlexRow>
       )}
