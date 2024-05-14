@@ -1,13 +1,14 @@
 import moment from "moment";
 import { RefObject } from "react";
 import {
+  IApproveSfrValues,
   ISaveSfrValues,
   SelectedStatus,
   TransformedSdrDataType,
   UserPermission,
 } from "src/commons/types";
 import { GetAllEsfrRecordsResResult, LogpageStatus, Status } from "src/types/GetAllEsfrRecordsRes";
-import { EsfrUserPolicy } from "src/types/GetProfilerRes";
+import { UserPolicy } from "src/types/GetProfilerRes";
 import config from "src/utils/env.config";
 
 export const DATETIME_REQUEST = "YYYY-MM-DDTHH:mm:ss";
@@ -85,6 +86,11 @@ export const transformCreateSfrValues = (values: ISaveSfrValues) => {
   return rest;
 };
 
+export const transformUpsertSfrValues = (values: IApproveSfrValues) => {
+  let { Type, StatusId, LogPageNumber, Station, CreatedDate, LogPageCreatedDate, LogPageCreatedBy, ModifiedDate, CreatedBy, ModifiedBy, AirCraftNumber, OriginDetails, LocationDetails, RepairDetails, DiscrepancyDetails, SfrActivity, SdrDetails, CreatedbyFirstName, CreatedbyLastName, ModifiedbyFirstName, ModifiedbyLastName, FleetCode, AtaCode, IsSfrDowngraded, IsMajorRepair, IsSfrCompleted, ...rest} = values;
+  return rest;
+};
+
 export const formatCodes = (arr: string[]) => {
   if (!arr) return "";
   let res = "";
@@ -151,7 +157,7 @@ export const saveTextAsFileAsync = async (textToWrite: string, fileNameToSaveAs:
   }
 };
 
-export const getUserPermission = (EsfrUserPolicies: EsfrUserPolicy[]): UserPermission => {
+export const getUserPermission = (EsfrUserPolicies: UserPolicy[]): UserPermission => {
   const dict: { [key: string]: UserPermission } = {
     IsReliability: UserPermission.CRU,
     IsTomC: UserPermission.CRU,
