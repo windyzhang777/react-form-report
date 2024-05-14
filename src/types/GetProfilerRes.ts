@@ -16,7 +16,7 @@ export interface GetProfileResResult {
   Employee: Employee;
   EmployeeMenuActions: number[];
   ErrorMessage: null;
-  EsfrUserPolicies: EsfrUserPolicy[];
+  EsfrUserPolicies: UserPolicy[];
   IsASCMFeatureEnabled: boolean;
   IsBaseFlow: boolean;
   IsEtaWebEnabled: boolean;
@@ -28,8 +28,8 @@ export interface GetProfileResResult {
   IsSelfUpgradable: boolean;
   IsWmsStation: boolean;
   ShowCrewFunction: boolean;
-  TcmPushNotificationBanner: Banner;
-  UnitedTechBanner: Banner;
+  TechOpsSecurityUserPolicies: UserPolicy[];
+  UnitedTechBanner: UnitedTechBanner;
   UserActions: { [key: string]: boolean };
 }
 
@@ -73,13 +73,13 @@ export interface Employee {
   UpgradeType: string;
 }
 
-export interface EsfrUserPolicy {
+export interface UserPolicy {
   AppName: string;
   EmployeeId: string;
   PolicyName: string;
 }
 
-export interface Banner {
-  Body: null;
-  Header: null;
+export interface UnitedTechBanner {
+  Body: string;
+  Header: string;
 }
