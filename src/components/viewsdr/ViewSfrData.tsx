@@ -341,6 +341,8 @@ const ViewSfrData = ({
               ] = `${profileData?.FirstName} ${profileData?.LastName}`;
               payload["SdrDetails"]["ModifiedbyFirstName"] = `${profileData?.FirstName}`;
               payload["SdrDetails"]["ModifiedbyLastName"] = `${profileData?.LastName}`;
+              payload["ModifiedbyFirstName"] = `${profileData?.FirstName}`;
+              payload["ModifiedbyLastName"] = `${profileData?.LastName}`;
               handleUpsertSfrSnapshot(
                 transformUpsertSfrValues({ ...values, ...payload }),
                 followUpFlag ? SelectedStatus.ApprovedWithFollowUp : SelectedStatus.Approved

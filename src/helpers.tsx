@@ -87,7 +87,7 @@ export const transformCreateSfrValues = (values: ISaveSfrValues) => {
 };
 
 export const transformUpsertSfrValues = (values: IApproveSfrValues) => {
-  let { Type, StatusId, LogPageNumber, Station, CreatedDate, LogPageCreatedDate, LogPageCreatedBy, ModifiedDate, CreatedBy, ModifiedBy, AirCraftNumber, OriginDetails, LocationDetails, RepairDetails, DiscrepancyDetails, SfrActivity, SdrDetails, CreatedbyFirstName, CreatedbyLastName, ModifiedbyFirstName, ModifiedbyLastName, FleetCode, AtaCode, IsSfrDowngraded, IsMajorRepair, IsSfrCompleted, ...rest} = values;
+  let { SdrId, SnapshotId, SfrAdditionalDetails, AircraftDetails, LogPageCreationDate, AircraftNumber, PrecautionaryProcedureIds, NatureOfReportIds, StageId, HowDiscoveredId, EmployeeId, EmployeeName, PartDetails, CorrectiveAction, OperatorControlNumber, IsExtracted, IsSdrDowngraded, IsMajorRepair, IsSdrCompleted, IsSdrReportable, ...rest} = values;
   return rest;
 };
 

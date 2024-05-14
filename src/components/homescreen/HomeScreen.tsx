@@ -200,7 +200,6 @@ const HomeScreen = () => {
     values: any,
     status: SelectedStatus = SelectedStatus.Approved
   ) => {
-    const actionType = status === SelectedStatus.Approved ? "Update" : "Approve";
     setIsLoading(true);
     axiosInstance
       .post(`${config.apiBaseAddress}${config.URL_UPSERT_SFR_SNAPSHOT}`, values)
@@ -208,7 +207,7 @@ const HomeScreen = () => {
         if (res?.data?.Result?.IsSuccess) {
           setOpenSnackbar(1);
           setSnackbarMessage(
-            `${actionType} SFR successful${
+            `Approve SFR successful${
               status === SelectedStatus.ApprovedWithFollowUp ? " with flagged for follow-up" : ""
             }`
           );
@@ -220,12 +219,12 @@ const HomeScreen = () => {
           }, 500);
         } else {
           setOpenSnackbar(-1);
-          setSnackbarMessage(`Fail to ${actionType} SFR`);
+          setSnackbarMessage(`Fail to Approve SFR`);
         }
       })
       .catch(() => {
         setOpenSnackbar(-1);
-        setSnackbarMessage(`Fail to ${actionType} SDR`);
+        setSnackbarMessage(`Fail to Approve SDR`);
       })
       .finally(() => {
         setIsLoading(false);
