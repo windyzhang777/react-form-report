@@ -25,10 +25,10 @@ export interface UpsertSDRSnapshotReq {
   CorrectiveAction: string | null;
   OperatorControlNumber: string | null;
   IsExtracted: boolean;
-  IsSdrDowngraded?: boolean;
+  IsSdrDowngraded: boolean;
   IsMajorRepair: boolean;
-  IsSdrCompleted?: boolean;
-  IsSdrReportable?: boolean;
+  IsSdrCompleted: boolean;
+  IsSdrReportable: boolean;
 }
 
 export interface AircraftDetails {

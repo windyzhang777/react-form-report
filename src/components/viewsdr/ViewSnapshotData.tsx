@@ -154,6 +154,8 @@ const ViewSnapshotData = ({
       FlightNumber: logpageData?.FleetInfo?.FlightNumber || "",
       IsMajorRepair: snapshotData?.IsMajorRepair || false,
       IsSdrReportable: snapshotData?.IsSdrReportable || false,
+      IsSdrDowngraded: snapshotData?.IsSdrDowngraded || false,
+      IsSdrCompleted: snapshotData?.IsSdrCompleted || false,
     }),
     [snapshotData, logpageData, isSdr, profileData, selectedSdr]
   );
