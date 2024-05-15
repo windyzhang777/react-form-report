@@ -221,7 +221,20 @@ const ViewSdrData = ({
           <FlexRow>
             Service Difficulty Report - #{selectedSdr?.Id}
             {isReport && (
-              <IconButton id="print-details-btn" onClick={() => printAsPage("view-sdr")}>
+              <IconButton
+                id="print-details-btn"
+                onClick={() =>
+                  printAsPage([
+                    `${initialValues?.AircraftNumber}`,
+                    `${initialValues?.AircraftDetails?.Manufacturer}`,
+                    `${initialValues?.AircraftDetails?.Model}`,
+                    `${initialValues?.AircraftDetails?.SerialNumber}`,
+                    `${initialValues?.AircraftDetails?.TotalTime}`,
+                    `${initialValues?.AircraftDetails?.TotalCycles}`,
+                    `${initialValues?.FlightNumber}`,
+                  ])
+                }
+              >
                 <PrintIcon />
               </IconButton>
             )}

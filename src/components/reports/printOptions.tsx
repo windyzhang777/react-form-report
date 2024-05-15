@@ -6,7 +6,9 @@ export const reportCSS = `
 /*! CSS Used from: Embedded */
 .view-details-text{color:#6244bb;cursor:pointer;}
 .view-sdr{margin-top:0px!important;margin-bottom:1px;padding:30px 20px 0!important;}
-.sdr-status-description{font-weight:600;margin-bottom:20px;display:flex;gap:20px;}.sdr-status-description>div{width:30%;}.sdr-status-item{display:flex;gap:20px;}.sdr-status-item>div{width:30%;}
+li{list-style:none;}
+.view-details-dropdown{display:flex;gap:20px;}.view-details-dropdown>div{width:50%;}
+.sdr-status-description{font-weight:600;margin-bottom:20px;display:flex;gap:20px;}.sdr-status-description>div{width:30%;}.sdr-status-description.CorrectiveAction>div{width:100%;}.sdr-status-item{display:flex;gap:20px;}.sdr-status-item>div{width:30%;}.sdr-status-item.CorrectiveAction>div{width:100%;}
 /*! CSS Used from: Embedded */
 *,::before,::after{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb;}
 ::before,::after{--tw-content:'';}
@@ -20,7 +22,7 @@ svg{display:block;vertical-align:middle;}
 .relative{position:relative;}
 .mb-\\[4rem\\]{margin-bottom:4rem;}
 .h-full{height:100%;}
-.max-h-\\[210vh\\]{height:300vh;max-height:300vh;}
+.max-h-\\[210vh\\]{height:400vh;max-height:400vh;}
 .overflow-hidden{overflow:auto;}
 .overflow-y-auto{overflow-y:auto;}
 *{box-sizing:border-box;}
@@ -141,4 +143,15 @@ svg{display:block;vertical-align:middle;}
 .css-1mzbljf-MuiGrid-root>.MuiGrid-item{padding-left:8px;}
 /*! CSS Used from: Embedded */
 .css-1mzbljf-MuiGrid-root .MuiGrid-item{padding-top:0;padding-left:0;}
+`;
+
+export const transformACInfo = (values: string[]) => `
+<div class="MuiList-root MuiList-padding MuiMenu-list css-r8u8y9" role="menu" tabindex="-1" aria-labelledby="arrow-menu-button" style="margin-bottom:20px;width:400px !important;"><div class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 view-details-dropdown css-f40lml" tabindex="0"><div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 view-details-left css-176a2z1"><li class="MuiListItem-root MuiListItem-gutters MuiListItem-padding undefined undefined css-gec4ia">A/C Number</li></div><div class="MuiGrid-root MuiGrid-item view-details-right css-9vj2r2"><li class="MuiListItem-root MuiListItem-gutters MuiListItem-padding undefined undefined css-gec4ia style="font-weight:600;">${values[0]}
+</li></div></div><div class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 view-details-dropdown css-f40lml"><div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 view-details-left css-176a2z1"><li class="MuiListItem-root MuiListItem-gutters MuiListItem-padding undefined undefined css-gec4ia">A/C Manufacturer</li></div><div class="MuiGrid-root MuiGrid-item view-details-right css-9vj2r2"><li class="MuiListItem-root MuiListItem-gutters MuiListItem-padding undefined undefined css-gec4ia style="font-weight:600;">${values[1]}
+</li></div></div><div class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 view-details-dropdown css-f40lml"><div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 view-details-left css-176a2z1"><li class="MuiListItem-root MuiListItem-gutters MuiListItem-padding undefined undefined css-gec4ia">A/C Model</li></div><div class="MuiGrid-root MuiGrid-item view-details-right css-9vj2r2"><li class="MuiListItem-root MuiListItem-gutters MuiListItem-padding undefined undefined css-gec4ia style="font-weight:600;">${values[2]}
+</li></div></div><div class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 view-details-dropdown css-f40lml"><div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 view-details-left css-176a2z1"><li class="MuiListItem-root MuiListItem-gutters MuiListItem-padding undefined undefined css-gec4ia">A/C Serial Number</li></div><div class="MuiGrid-root MuiGrid-item view-details-right css-9vj2r2"><li class="MuiListItem-root MuiListItem-gutters MuiListItem-padding undefined undefined css-gec4ia style="font-weight:600;">${values[3]}
+</li></div></div><div class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 view-details-dropdown css-f40lml"><div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 view-details-left css-176a2z1"><li class="MuiListItem-root MuiListItem-gutters MuiListItem-padding undefined undefined css-gec4ia">A/C Total Time</li></div><div class="MuiGrid-root MuiGrid-item view-details-right css-9vj2r2"><li class="MuiListItem-root MuiListItem-gutters MuiListItem-padding undefined undefined css-gec4ia style="font-weight:600;">${values[4]}
+</li></div></div><div class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 view-details-dropdown css-f40lml"><div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 view-details-left css-176a2z1"><li class="MuiListItem-root MuiListItem-gutters MuiListItem-padding undefined undefined css-gec4ia">A/C Total Cycles</li></div><div class="MuiGrid-root MuiGrid-item view-details-right css-9vj2r2"><li class="MuiListItem-root MuiListItem-gutters MuiListItem-padding undefined undefined css-gec4ia style="font-weight:600;">${values[5]}
+</li></div></div><div class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 view-details-dropdown css-f40lml"><div class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 view-details-left css-176a2z1"><li class="MuiListItem-root MuiListItem-gutters MuiListItem-padding undefined undefined css-gec4ia">Flight #</li></div><div class="MuiGrid-root MuiGrid-item view-details-right css-9vj2r2"><li class="MuiListItem-root MuiListItem-gutters MuiListItem-padding undefined undefined css-gec4ia style="font-weight:600;">${values[6]}
+</li></div></div></div>
 `;
