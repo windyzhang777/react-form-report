@@ -46,7 +46,7 @@ const profileReducer = (state: ProfileStateType = initialState, action: ProfileR
         ...state,
         loading: false,
         profileData: action.data.Employee,
-        auth: getUserPermission(action.data.EsfrUserPolicies),
+        auth: getUserPermission(action.data.TechOpsSecurityUserPolicies),
         error: "",
       };
     }

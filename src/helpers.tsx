@@ -158,7 +158,7 @@ export const saveTextAsFileAsync = async (textToWrite: string, fileNameToSaveAs:
   }
 };
 
-export const getUserPermission = (EsfrUserPolicies: UserPolicy[]): UserPermission => {
+export const getUserPermission = (UserPolicies: UserPolicy[]): UserPermission => {
   const dict: { [key: string]: UserPermission } = {
     IsReliability: UserPermission.CRU,
     IsTomC: UserPermission.CRU,
@@ -166,7 +166,7 @@ export const getUserPermission = (EsfrUserPolicies: UserPolicy[]): UserPermissio
     IsRecords: UserPermission.R,
     IsQualityControl: UserPermission.CRU,
   };
-  const permission = EsfrUserPolicies.reduce(
+  const permission = UserPolicies.reduce(
     (acc, cur) => (dict[cur.PolicyName] > acc ? dict[cur.PolicyName] : acc),
     UserPermission.Invalid
   );
