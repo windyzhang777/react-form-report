@@ -434,7 +434,6 @@ const HomeScreen = () => {
               <ViewSdrData
                 editable={editable}
                 handleUpsertSdrSnapshot={handleUpsertSdrSnapshot}
-                isSdr={isSdr}
                 selectedSdr={selectedSdr}
                 setViewSdrFlag={setViewSdrFlag}
                 tabIndex={tabIndex}
