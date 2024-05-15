@@ -28,7 +28,7 @@ export interface UpsertSDRSnapshotReq {
   IsSdrDowngraded?: boolean;
   IsMajorRepair: boolean;
   IsSdrCompleted?: boolean;
-  IsSdrReportable?: boolean;
+  IsSdrReportable: boolean;
 }
 
 export interface AircraftDetails {

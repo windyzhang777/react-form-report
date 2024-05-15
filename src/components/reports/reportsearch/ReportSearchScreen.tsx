@@ -22,7 +22,6 @@ import {
   resetLogpageDataSuccess,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
-import { Type } from "src/types/GetAllEsfrRecordsRes";
 
 export interface ISearchScreenProps {}
 
@@ -138,7 +137,6 @@ const ReportSearchScreen = () => {
             <ViewSdrData
               editable={false}
               handleUpsertSdrSnapshot={() => {}}
-              isSdr={selectedSdr.ReportType === Type.SDR}
               selectedSdr={selectedSdr}
               setViewSdrFlag={setViewSdrFlag}
               tabIndex={3}

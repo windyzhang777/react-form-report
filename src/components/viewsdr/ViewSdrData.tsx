@@ -27,7 +27,6 @@ import "./viewSdrData.css";
 export interface IViewSdrDataProps {
   editable: boolean;
   handleUpsertSdrSnapshot: (a: IEditSdrValues, b: SelectedStatus) => void;
-  isSdr: boolean;
   selectedSdr: IViewSdrResult;
   setViewSdrFlag: Dispatch<SetStateAction<boolean>>;
   tabIndex: number;
@@ -36,7 +35,6 @@ export interface IViewSdrDataProps {
 const ViewSdrData = ({
   editable,
   handleUpsertSdrSnapshot,
-  isSdr,
   selectedSdr,
   setViewSdrFlag,
   tabIndex,
@@ -204,16 +202,10 @@ const ViewSdrData = ({
         CoordinateLocationDetails: detailsData?.LocationDetails?.CoordinateLocationDetails || "",
       },
       FlightNumber: logpageData?.FleetInfo?.FlightNumber || "",
-      IsMajorRepair:
-        (isSdr
-          ? detailsData?.SdrDetails?.IsMajorRepair
-          : detailsData?.RepairDetails?.IsMajorRepair) || false,
-      IsSdrReportable:
-        (isSdr
-          ? detailsData?.SdrDetails?.IsSdrReportable
-          : detailsData?.RepairDetails?.IsSdrReportable) || false,
+      IsMajorRepair: detailsData?.SdrDetails?.IsMajorRepair || false,
+      IsSdrReportable: detailsData?.SdrDetails?.IsSdrReportable || false,
     }),
-    [detailsData, followUpFlag, isSdr, logpageData, profileData, selectedSdr]
+    [detailsData, followUpFlag, logpageData, profileData, selectedSdr]
   );
 
   useEffect(() => {
@@ -225,9 +217,22 @@ const ViewSdrData = ({
       <FlexColumn id="view-sdr" className={"view-sdr h-full relative"}>
         <FlexBetween className={"subpage-title bottom-divider"} sx={{ pt: "1px" }}>
           <FlexRow>
-            {isSdr ? "Service Difficulty" : "Significant Findings"} Report - #{selectedSdr?.Id}
+            Service Difficulty Report - #{selectedSdr?.Id}
             {isReport && (
-              <IconButton id="print-details-btn" onClick={() => printAsPage("view-sdr")}>
+              <IconButton
+                id="print-details-btn"
+                onClick={() =>
+                  printAsPage([
+                    `${initialValues?.AircraftNumber}`,
+                    `${initialValues?.AircraftDetails?.Manufacturer}`,
+                    `${initialValues?.AircraftDetails?.Model}`,
+                    `${initialValues?.AircraftDetails?.SerialNumber}`,
+                    `${initialValues?.AircraftDetails?.TotalTime}`,
+                    `${initialValues?.AircraftDetails?.TotalCycles}`,
+                    `${initialValues?.FlightNumber}`,
+                  ])
+                }
+              >
                 <PrintIcon />
               </IconButton>
             )}
@@ -721,12 +726,12 @@ const ViewSdrData = ({
                       </ListItem>
                     </Grid>
                   </Grid>
-                  <Grid className={"sdr-status-item"} container spacing={1}>
+                  <Grid className={"sdr-status-item CorrectiveAction"} container spacing={1}>
                     <Grid item xs={12}>
                       <ListItem>Discrepancy/Corrective Action Summary</ListItem>
                     </Grid>
                   </Grid>
-                  <Grid className={"sdr-status-description"} container spacing={1}>
+                  <Grid className={"sdr-status-description CorrectiveAction"} container spacing={1}>
                     <Grid item xs={12}>
                       <ListItem>
                         {editable ? (

@@ -24,7 +24,6 @@ import "./viewSdrData.css";
 export interface IViewSfrDataProps {
   editable: boolean;
   handleUpsertSfrSnapshot: (a: any, b: SelectedStatus) => void;
-  isSdr: boolean;
   selectedSdr: IViewSdrResult;
   setViewSdrFlag: Dispatch<SetStateAction<boolean>>;
   tabIndex: number;
@@ -33,7 +32,6 @@ export interface IViewSfrDataProps {
 const ViewSfrData = ({
   editable,
   handleUpsertSfrSnapshot,
-  isSdr,
   selectedSdr,
   setViewSdrFlag,
   tabIndex,
@@ -150,8 +148,7 @@ const ViewSfrData = ({
         TotalTime: String(logpageData?.FleetInfo?.TotalAircraftTime || ""),
         TotalCycles: logpageData?.FleetInfo?.TotalAircraftCycles || "",
       },
-      LogPageCreationDate:
-        (isSdr ? detailsData?.SdrDetails?.CreatedDate : detailsData?.CreatedDate) || "",
+      LogPageCreationDate: detailsData?.CreatedDate || "",
       Station: detailsData?.Station || logpageData?.FleetInfo?.Station || "",
       LogPageNumber: detailsData?.LogPageNumber || selectedSdr?.LogpageNumber || "",
       AircraftNumber: logpageData?.FleetInfo?.TailNumber || "",
@@ -202,16 +199,10 @@ const ViewSfrData = ({
         CoordinateLocationDetails: detailsData?.LocationDetails?.CoordinateLocationDetails || "",
       },
       FlightNumber: logpageData?.FleetInfo?.FlightNumber || "",
-      IsMajorRepair:
-        (isSdr
-          ? detailsData?.SdrDetails?.IsMajorRepair
-          : detailsData?.RepairDetails?.IsMajorRepair) || false,
-      IsSdrReportable:
-        (isSdr
-          ? detailsData?.SdrDetails?.IsSdrReportable
-          : detailsData?.RepairDetails?.IsSdrReportable) || false,
+      IsMajorRepair: detailsData?.RepairDetails?.IsMajorRepair || false,
+      IsSdrReportable: detailsData?.RepairDetails?.IsSdrReportable || false,
     }),
-    [detailsData, followUpFlag, isSdr, logpageData, profileData, selectedSdr]
+    [detailsData, followUpFlag, logpageData, profileData, selectedSdr]
   );
 
   useEffect(() => {
@@ -222,9 +213,7 @@ const ViewSfrData = ({
     <>
       <FlexColumn className={"view-sdr h-full relative"}>
         <FlexBetween className={"subpage-title bottom-divider"} sx={{ pt: "1px" }}>
-          <p>
-            {isSdr ? "Service Difficulty" : "Significant Findings"} Report - #{selectedSdr?.Id}
-          </p>
+          <p>Significant Findings Report - #{selectedSdr?.Id}</p>
           <IconButton
             onClick={() => {
               setViewSdrFlag(false);
