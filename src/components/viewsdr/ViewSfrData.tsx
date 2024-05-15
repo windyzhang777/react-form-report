@@ -201,8 +201,6 @@ const ViewSfrData = ({
       FlightNumber: logpageData?.FleetInfo?.FlightNumber || "",
       IsMajorRepair: detailsData?.RepairDetails?.IsMajorRepair || false,
       IsSdrReportable: detailsData?.RepairDetails?.IsSdrReportable || false,
-      IsSdrDowngraded: detailsData?.SdrDetails?.IsSdrDowngraded || false,
-      IsSdrCompleted: detailsData?.SdrDetails?.IsSdrCompleted || false,
     }),
     [detailsData, followUpFlag, logpageData, profileData, selectedSdr]
   );
