@@ -6,7 +6,7 @@ export const reportCSS = `
 /*! CSS Used from: Embedded */
 .view-details-text{color:#6244bb;cursor:pointer;}
 .view-sdr{margin-top:0px!important;margin-bottom:1px;padding:30px 20px 0!important;}
-.sdr-status-description{font-weight:600;margin-bottom:20px}
+.sdr-status-description{font-weight:600;margin-bottom:20px;display:flex;gap:20px;}.sdr-status-description>div{width:30%;}.sdr-status-item{display:flex;gap:20px;}.sdr-status-item>div{width:30%;}
 /*! CSS Used from: Embedded */
 *,::before,::after{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb;}
 ::before,::after{--tw-content:'';}
