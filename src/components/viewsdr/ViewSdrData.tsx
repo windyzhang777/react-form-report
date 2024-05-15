@@ -1,4 +1,5 @@
 import CloseIcon from "@mui/icons-material/Close";
+import PrintIcon from "@mui/icons-material/Print";
 import { Box, Checkbox, Grid, IconButton } from "@mui/material";
 import { Formik } from "formik";
 import moment from "moment";
@@ -221,11 +222,16 @@ const ViewSdrData = ({
 
   return (
     <>
-      <FlexColumn className={"view-sdr h-full relative"}>
+      <FlexColumn id="view-sdr" className={"view-sdr h-full relative"}>
         <FlexBetween className={"subpage-title bottom-divider"} sx={{ pt: "1px" }}>
-          <p>
+          <FlexRow>
             {isSdr ? "Service Difficulty" : "Significant Findings"} Report - #{selectedSdr?.Id}
-          </p>
+            {isReport && (
+              <IconButton id="print-details-btn" onClick={() => printAsPage("view-sdr")}>
+                <PrintIcon />
+              </IconButton>
+            )}
+          </FlexRow>
           <IconButton
             onClick={() => {
               setViewSdrFlag(false);
