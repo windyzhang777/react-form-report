@@ -2,6 +2,7 @@ import axios from "axios";
 import { Dispatch } from "redux";
 import {
   CtnDataFuncType,
+  IViewSdrResult,
   SdrEsfrRecordDetailsActionType,
   SdrEsfrRecordDetailsReducerAction,
   SdrEsfrRecordDetailsStateType,
@@ -196,7 +197,7 @@ export const sdrEsfrRecordDetailsReducer = (
   }
 };
 
-export const getSdrEsfrRecordDetails = (logpageNumber: string) => {
+export const getSdrEsfrRecordDetails = (selectedSdr: IViewSdrResult) => {
   return function (dispatch: Dispatch<any>) {
     dispatch(resetEsfrRecordDetailData());
     dispatch(resetLogpageDataSuccess());
@@ -204,10 +205,10 @@ export const getSdrEsfrRecordDetails = (logpageNumber: string) => {
     axios
       .all([
         axiosInstance.get(
-          `${config.apiBaseAddress}${config.URL_GET_SDR_ESFR_RECORD_DETAILS}?logpageNumber=${logpageNumber}`
+          `${config.apiBaseAddress}${config.URL_GET_SDR_ESFR_RECORD_DETAILS}?logpageNumber=${selectedSdr?.LogpageNumber}&station=${selectedSdr?.Station}&aircraftNumber=${selectedSdr?.AircraftNumber}&logpageCreationDate=${selectedSdr?.LogpageCreationDate}`
         ),
         axiosInstance.get(
-          `${config.apiBaseAddress}${config.URL_VIEW_LOGPAGE}?logpageNumber=${logpageNumber}`
+          `${config.apiBaseAddress}${config.URL_VIEW_LOGPAGE}?logpageNumber=${selectedSdr?.LogpageNumber}`
         ),
       ])
       .then(

@@ -326,7 +326,7 @@ const HomeScreen = () => {
         if (selectedSdr.StatusId === SelectedStatus.Approved && selectedSdr.OperatorControlNumber) {
           dispatch(getApprovedSdr(selectedSdr.LogpageNumber, selectedSdr.OperatorControlNumber));
         } else {
-          dispatch(getSdrEsfrRecordDetails(selectedSdr.LogpageNumber));
+          dispatch(getSdrEsfrRecordDetails(selectedSdr));
         }
       }
     } else {

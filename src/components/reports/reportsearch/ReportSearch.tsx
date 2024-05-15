@@ -9,6 +9,7 @@ import { IReportSearchValues, ReportStatus, ReportType } from "src/commons/types
 import { DATE_HTML_DISPLAY } from "src/helpers";
 import ValidationSchema, {
   removeNonAlphaNumeric,
+  removeNonAlphaNumericSpace,
   removeNonAlphabet,
   removeNonNumeric,
 } from "src/validationSchema";
@@ -281,7 +282,7 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
                     name="keyword"
                     value={values.keyword}
                     onChange={(e) =>
-                      setFieldValue("keyword", removeNonAlphaNumeric(e.target.value))
+                      setFieldValue("keyword", removeNonAlphaNumericSpace(e.target.value))
                     }
                     onBlur={handleBlur}
                     error={!!touched.keyword && !!errors.keyword}
