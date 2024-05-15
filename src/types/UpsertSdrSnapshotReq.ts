@@ -16,6 +16,7 @@ export interface UpsertSDRSnapshotReq {
   EmployeeId: string | null;
   EmployeeName: string | null;
   PartDetails: PartDetails;
+  createdBy?: string | null;
   CreatedbyFirstName: string | null;
   CreatedbyLastName: string | null;
   ModifiedbyFirstName: string | null;

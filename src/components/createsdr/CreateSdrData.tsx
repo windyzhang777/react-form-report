@@ -129,6 +129,7 @@ const CreateSdrData = ({
         PartTimeSince: "",
         PartCycleSince: "",
       },
+      createdBy: `${profileData?.EmployeeId}`,
       CreatedbyFirstName: profileData?.FirstName || "",
       CreatedbyLastName: profileData?.LastName || "",
       ModifiedbyFirstName: profileData?.FirstName || "",
