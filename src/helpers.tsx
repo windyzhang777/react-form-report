@@ -7,6 +7,7 @@ import {
   TransformedSdrDataType,
   UserPermission,
 } from "src/commons/types";
+import { reportCSS } from "src/components/reports/printOptions";
 import { GetAllEsfrRecordsResResult, LogpageStatus, Status } from "src/types/GetAllEsfrRecordsRes";
 import { UserPolicy } from "src/types/GetProfilerRes";
 import config from "src/utils/env.config";
@@ -200,4 +201,21 @@ export const toFixed = (a: number | string | undefined, maxAllowedDecimal: numbe
 
 export const trimMultipleSelected = (arr: string | string[]) => {
   return Array.isArray(arr) ? (arr.length ? (arr.indexOf("") > -1 ? [] : arr) : arr) : arr;
+};
+
+export const printAsPage = (elementId: string) => {
+  const content = document.getElementById(elementId)?.innerHTML;
+  const a = window.open("", "", "height=1000, width=1000");
+  if (content && a) {
+    a.document.write(`
+    <html><head><style>
+    ${reportCSS}
+    </style></head>
+    `);
+    a.document.write("<body>");
+    a.document.write(content);
+    a.document.write("</body></html>");
+    a.document.close();
+    a.print();
+  }
 };
