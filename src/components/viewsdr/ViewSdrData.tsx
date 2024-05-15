@@ -20,7 +20,7 @@ import {
   Sides,
   UserPermission,
 } from "src/commons/types";
-import { DATETIME_REQUEST, DATE_DISPLAY, DATE_HTML_DISPLAY } from "src/helpers";
+import { DATETIME_REQUEST, DATE_DISPLAY, DATE_HTML_DISPLAY, printAsPage } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
 import "./viewSdrData.css";
 
