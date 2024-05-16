@@ -26,11 +26,7 @@ const Header = ({ resetApp }: IHeaderProps) => {
   }, [window.location]);
 
   const redirectToAdmin = () => {
-    if (config.REACT_APP_ENVIRONMENT === "production") {
-      window.open("https://amts.ual.com/mx", "_self");
-    } else {
-      window.open("http://amts-oqa.ual.com/mx/", "_self");
-    }
+    window.open(config.REACT_APP_REDIRECT_URI, "_self");
   };
 
   const refreshData = () => {
