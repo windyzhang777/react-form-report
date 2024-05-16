@@ -15,11 +15,13 @@ export interface GetEsfrReportResResult {
   ApprovedByLastName: null | string;
   DateReported: string;
   Id: number;
+  LogpageCreationDate: string;
   LogpageNumber: string;
   OperatorControlNumber: null | string;
   ReportedByFirstName: string;
   ReportedById: string;
   ReportedByLastName: string;
   ReportType: Type;
+  Station: string;
   Status: Status;
 }

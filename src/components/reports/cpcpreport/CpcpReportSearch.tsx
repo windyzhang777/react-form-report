@@ -57,7 +57,6 @@ const CpcpReportSearch = ({ handleSearchReport, viewSdrFlag }: ICpcpReportSearch
           }, 500);
         }}
         validationSchema={object().shape({
-          ...ValidationSchema,
           acNumber: ValidationSchema.AircraftNumber,
           station: ValidationSchema.Station,
         })}

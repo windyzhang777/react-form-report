@@ -11,11 +11,11 @@ import { MultipleSelect, SimpleSingleSelect, SingleSelect } from "src/commons/Se
 import TextField from "src/commons/TextField";
 import {
   IEditSdrValues,
+  IViewSdrResult,
   PartTimeSinceCodeOptions,
   SdrEsfrRecordDetailsStateType,
   SelectedStatus,
   Sides,
-  TransformedSdrDataType,
   UserPermission,
 } from "src/commons/types";
 import { DATE_DISPLAY, DATE_HTML_DISPLAY } from "src/helpers";
@@ -31,10 +31,10 @@ import "./viewSdrData.css";
 
 export interface IViewSnapshotDataProps {
   editable: boolean;
-  handleUpsertSdrSnapshot: (a: IEditSdrValues) => void;
-  isSdr: boolean;
-  selectedSdr: TransformedSdrDataType;
-  setEditable: Dispatch<SetStateAction<boolean>>;
+  handleUpsertSdrSnapshot?: (a: IEditSdrValues) => void;
+  isSdr?: boolean;
+  selectedSdr: IViewSdrResult;
+  setEditable?: Dispatch<SetStateAction<boolean>>;
   setViewSdrFlag: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -159,7 +159,7 @@ const ViewSnapshotData = ({
   );
 
   const onClickEdit = () => {
-    setEditable(!editable);
+    setEditable && setEditable(!editable);
   };
 
   return (
@@ -260,7 +260,7 @@ const ViewSnapshotData = ({
           initialValues={initialValues}
           enableReinitialize
           onSubmit={(values, { setSubmitting }) => {
-            handleUpsertSdrSnapshot(values);
+            handleUpsertSdrSnapshot && handleUpsertSdrSnapshot(values);
             setTimeout(() => {
               setSubmitting(false);
             }, 500);

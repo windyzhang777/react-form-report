@@ -16,6 +16,7 @@ export interface GetCpcpReportResResult {
   DateCreated: string;
   Fleet: null | string;
   Id: number;
+  LogpageCreationDate: string;
   LogpageNumber: string;
   MajorRepair: YON;
   OperatorControlNumber: null | string;
