@@ -220,7 +220,7 @@ export const printAsPage = (acInfo: string[], logInfo: string[]) => {
     ${reportCSS}
     </style></head>
     `);
-    a.document.write("<body>");
+    a.document.write("<body><div class='print'>");
     a.document.write(transformLogo(ESFRLogo));
     a.document.write(content.innerHTML);
     const button = a.document.getElementById("view-details-arrow-menu-button");
@@ -231,7 +231,7 @@ export const printAsPage = (acInfo: string[], logInfo: string[]) => {
     if (signature) {
       signature.innerHTML += transformLogInfo(logInfo);
     }
-    a.document.write("</body></html>");
+    a.document.write("</div></body></html>");
     a.document.close();
     a.print();
   }
