@@ -23,7 +23,7 @@ svg{display:block;vertical-align:middle;}
 .relative{position:relative;}
 .mb-\\[4rem\\]{margin-bottom:4rem;}
 .h-full{height:100%;}
-.max-h-\\[210vh\\]{height:400vh;max-height:400vh;}
+.max-h-\\[210vh\\]{height:210vh;max-height:400vh;}
 .overflow-hidden{overflow:auto;}
 .overflow-y-auto{overflow-y:auto;}
 *{box-sizing:border-box;}
