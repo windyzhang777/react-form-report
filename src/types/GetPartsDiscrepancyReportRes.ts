@@ -18,6 +18,7 @@ export interface GetPartsDiscrepancyReportResResult {
   ECRANumber: string;
   Fleet: null | string;
   Id: number;
+  LogpageCreationDate: string;
   LogpageNumber: string;
   MajorRepair: YON;
   OperatorControlNumber: null | string;

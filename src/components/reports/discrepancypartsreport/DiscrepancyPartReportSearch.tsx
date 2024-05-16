@@ -70,7 +70,6 @@ const DiscrepancyPartsReportSearch = ({
           }, 500);
         }}
         validationSchema={object().shape({
-          ...ValidationSchema,
           acNumber: ValidationSchema.AircraftNumber,
           station: ValidationSchema.Station,
           ataCode: ValidationSchema.AtaCode,

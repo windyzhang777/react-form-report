@@ -57,7 +57,6 @@ const ReportSearch = ({ handleSearchReport, viewSdrFlag }: IReportSearchProps) =
           }, 500);
         }}
         validationSchema={object().shape({
-          ...ValidationSchema,
           logPageNumber: ValidationSchema.LogPageNumberPartial,
           auditNumber: ValidationSchema.OperatorControlNumber,
           aircraftNumber: ValidationSchema.AircraftNumber,

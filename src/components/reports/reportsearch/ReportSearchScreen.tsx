@@ -14,14 +14,17 @@ import CommonDataGrid from "src/components/commondatagrid/commondatagrid";
 import { eSfrReportSearchColumns } from "src/components/commondatagrid/esfrReportSearchColumns";
 import ReportSearch from "src/components/reports/reportsearch/ReportSearch";
 import ViewSdrData from "src/components/viewsdr/ViewSdrData";
+import ViewSnapshotData from "src/components/viewsdr/ViewSnapshotData";
 import { getEsfrReport, resetEsfrReportSuccess } from "src/redux/ducks/getEsfrReport";
 import {
+  getApprovedSdr,
   getSdrEsfrRecordDetails,
   getSfrMasterData,
   resetEsfrRecordDetailData,
   resetLogpageDataSuccess,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
+import { Status } from "src/types/GetAllEsfrRecordsRes";
 
 export interface ISearchScreenProps {}
 
@@ -76,7 +79,14 @@ const ReportSearchScreen = () => {
 
   useEffect(() => {
     if (selectedSdr) {
-      dispatch(getSdrEsfrRecordDetails(selectedSdr));
+      if (
+        (selectedSdr.Status === Status.Approved || selectedSdr.Status === Status.SentToFAA) &&
+        selectedSdr.OperatorControlNumber
+      ) {
+        dispatch(getApprovedSdr(selectedSdr.LogpageNumber, selectedSdr.OperatorControlNumber));
+      } else {
+        dispatch(getSdrEsfrRecordDetails(selectedSdr));
+      }
     } else {
       dispatch(resetEsfrRecordDetailData());
       dispatch(resetLogpageDataSuccess());
@@ -134,13 +144,20 @@ const ReportSearchScreen = () => {
         </Grid>
         {viewSdrFlag && selectedSdr && (
           <Grid item md={6} xs={12}>
-            <ViewSdrData
-              editable={false}
-              handleUpsertSdrSnapshot={() => {}}
-              selectedSdr={selectedSdr}
-              setViewSdrFlag={setViewSdrFlag}
-              tabIndex={3}
-            />
+            {selectedSdr.Status === Status.Approved || selectedSdr.Status === Status.SentToFAA ? (
+              <ViewSnapshotData
+                editable={false}
+                selectedSdr={selectedSdr}
+                setViewSdrFlag={setViewSdrFlag}
+              />
+            ) : (
+              <ViewSdrData
+                editable={false}
+                selectedSdr={selectedSdr}
+                setViewSdrFlag={setViewSdrFlag}
+                tabIndex={3}
+              />
+            )}
           </Grid>
         )}
       </Grid>

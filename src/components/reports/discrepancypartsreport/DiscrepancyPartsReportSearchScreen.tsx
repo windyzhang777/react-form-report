@@ -133,7 +133,6 @@ const DiscrepancyPartsReportSearchScreen = () => {
           <Grid item md={6} xs={12}>
             <ViewSdrData
               editable={false}
-              handleUpsertSdrSnapshot={() => {}}
               selectedSdr={selectedSdr}
               setViewSdrFlag={setViewSdrFlag}
               tabIndex={3}
