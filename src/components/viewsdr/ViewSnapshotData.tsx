@@ -1,9 +1,10 @@
 import CloseIcon from "@mui/icons-material/Close";
+import PrintIcon from "@mui/icons-material/Print";
 import { Grid, IconButton } from "@mui/material";
 import { Formik } from "formik";
 import moment from "moment";
 import { Dispatch, SetStateAction, useMemo } from "react";
-import { FlexBetween, FlexColumn } from "src/commons/Box";
+import { FlexBetween, FlexColumn, FlexRow } from "src/commons/Box";
 import ButtonGroup from "src/commons/ButtonGroup";
 import ListItem from "src/commons/ListItem";
 import { ArrowMenu } from "src/commons/Menu";
@@ -18,8 +19,9 @@ import {
   Sides,
   UserPermission,
 } from "src/commons/types";
-import { DATE_DISPLAY, DATE_HTML_DISPLAY } from "src/helpers";
+import { DATETIME_DISPLAY, DATE_DISPLAY, DATE_HTML_DISPLAY, printAsPage } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
+import { Type } from "src/types/GetAllEsfrRecordsRes";
 import ValidationSchema, {
   removeNonAlphaNumeric,
   removeNonAlphabet,
@@ -36,6 +38,7 @@ export interface IViewSnapshotDataProps {
   selectedSdr: IViewSdrResult;
   setEditable?: Dispatch<SetStateAction<boolean>>;
   setViewSdrFlag: Dispatch<SetStateAction<boolean>>;
+  tabIndex?: number;
 }
 
 const ViewSnapshotData = ({
@@ -45,11 +48,13 @@ const ViewSnapshotData = ({
   selectedSdr,
   setEditable,
   setViewSdrFlag,
+  tabIndex,
 }: IViewSnapshotDataProps) => {
   const { profileData, auth } = useAppSelector((state) => state.profile);
   const { snapshotData, masterData, logpageData }: SdrEsfrRecordDetailsStateType = useAppSelector(
     (state) => state.sdrEsfrRecordDetails
   );
+  const isReport: boolean = useMemo(() => (tabIndex ? true : false), [tabIndex]);
 
   const initialValues: IEditSdrValues = useMemo(
     () => ({
@@ -164,9 +169,41 @@ const ViewSnapshotData = ({
 
   return (
     <>
-      <FlexColumn className={"view-sdr h-full relative"}>
+      <FlexColumn id="print-sdr" className={"view-sdr h-full relative"}>
         <FlexBetween className={"subpage-title bottom-divider"} sx={{ pt: "1px" }}>
-          <p>Service Difficulty Report - #{selectedSdr?.Id}</p>
+          <FlexRow>
+            {`${
+              selectedSdr?.ReportType === Type.SDR ? "Service Difficulty" : "Significant Findings"
+            }
+            Report - #${selectedSdr?.Id}`}
+            {isReport && (
+              <IconButton
+                id="print-details-btn"
+                onClick={() =>
+                  printAsPage(
+                    [
+                      `${initialValues?.AircraftNumber}`,
+                      `${initialValues?.AircraftDetails?.Manufacturer}`,
+                      `${initialValues?.AircraftDetails?.Model}`,
+                      `${initialValues?.AircraftDetails?.SerialNumber}`,
+                      `${initialValues?.AircraftDetails?.TotalTime}`,
+                      `${initialValues?.AircraftDetails?.TotalCycles}`,
+                      `${initialValues?.FlightNumber}`,
+                    ],
+                    [
+                      `${snapshotData?.CreatedbyFirstName || ""} ${
+                        snapshotData?.CreatedbyLastName || ""
+                      }`,
+                      `${snapshotData?.CreatedBy || snapshotData?.EmployeeId || ""}`,
+                      `${moment(snapshotData?.CreatedDate).format(DATETIME_DISPLAY) || ""}`,
+                    ]
+                  )
+                }
+              >
+                <PrintIcon />
+              </IconButton>
+            )}
+          </FlexRow>
           <IconButton
             onClick={() => {
               setViewSdrFlag(false);
@@ -282,8 +319,14 @@ const ViewSnapshotData = ({
             touched,
             values,
           }) => (
-            <form onSubmit={handleSubmit} className="overflow-hidden mb-[4rem]">
-              <div id="view-sdr-details" className="h-full overflow-y-auto">
+            <form
+              onSubmit={handleSubmit}
+              className={`overflow-hidden mb-[4rem] ${isReport && "max-h-[210vh]"}`}
+            >
+              <div
+                id={`view-${isReport ? "report" : "snapshot"}-details`}
+                className="h-full overflow-y-auto"
+              >
                 {/* Problem Description */}
                 <Grid
                   className={"sdr-status-grid"}
@@ -690,12 +733,12 @@ const ViewSnapshotData = ({
                       </ListItem>
                     </Grid>
                   </Grid>
-                  <Grid className={"sdr-status-item"} container spacing={1}>
+                  <Grid className={"sdr-status-item CorrectiveAction"} container spacing={1}>
                     <Grid item xs={12}>
                       <ListItem required={editable}>Discrepancy/Corrective Action Summary</ListItem>
                     </Grid>
                   </Grid>
-                  <Grid className={"sdr-status-description"} container spacing={1}>
+                  <Grid className={"sdr-status-description CorrectiveAction"} container spacing={1}>
                     <Grid item xs={12}>
                       <ListItem>
                         {editable ? (
@@ -2264,7 +2307,9 @@ const ViewSnapshotData = ({
                 </Grid>
               </div>
 
-              {auth === UserPermission.CRU && (
+              <div id="signature" />
+
+              {auth === UserPermission.CRU && !tabIndex && (
                 <ButtonGroup
                   className="bottom-button justify-end"
                   primaryDisabled={isSubmitting}

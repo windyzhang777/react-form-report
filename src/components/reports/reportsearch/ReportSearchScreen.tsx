@@ -149,6 +149,7 @@ const ReportSearchScreen = () => {
                 editable={false}
                 selectedSdr={selectedSdr}
                 setViewSdrFlag={setViewSdrFlag}
+                tabIndex={3}
               />
             ) : (
               <ViewSdrData

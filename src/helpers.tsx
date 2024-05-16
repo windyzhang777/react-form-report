@@ -210,7 +210,7 @@ export const trimMultipleSelected = (arr: string | string[]) => {
 };
 
 export const printAsPage = (acInfo: string[], logInfo: string[]) => {
-  const content = document.getElementById("view-sdr");
+  const content = document.getElementById("print-sdr");
   let menu = document.createElement("div");
   menu.innerHTML = transformACInfo(acInfo);
   const a = window.open("", "", "height=1000, width=1000");

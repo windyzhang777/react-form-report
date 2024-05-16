@@ -22,6 +22,7 @@ import {
 } from "src/commons/types";
 import { DATETIME_DISPLAY, DATE_DISPLAY, DATE_HTML_DISPLAY, printAsPage } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
+import { Type } from "src/types/GetAllEsfrRecordsRes";
 import "./viewSdrData.css";
 
 export interface IViewSdrDataProps {
@@ -214,10 +215,13 @@ const ViewSdrData = ({
 
   return (
     <>
-      <FlexColumn id="view-sdr" className={"view-sdr h-full relative"}>
+      <FlexColumn id="print-sdr" className={"view-sdr h-full relative"}>
         <FlexBetween className={"subpage-title bottom-divider"} sx={{ pt: "1px" }}>
           <FlexRow>
-            Service Difficulty Report - #{selectedSdr?.Id}
+            {`${
+              selectedSdr?.ReportType === Type.SDR ? "Service Difficulty" : "Significant Findings"
+            }
+            Report - #${selectedSdr?.Id}`}
             {isReport && (
               <IconButton
                 id="print-details-btn"
