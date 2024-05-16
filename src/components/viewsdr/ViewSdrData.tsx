@@ -20,7 +20,13 @@ import {
   Sides,
   UserPermission,
 } from "src/commons/types";
-import { DATETIME_REQUEST, DATE_DISPLAY, DATE_HTML_DISPLAY, printAsPage } from "src/helpers";
+import {
+  DATETIME_DISPLAY,
+  DATETIME_REQUEST,
+  DATE_DISPLAY,
+  DATE_HTML_DISPLAY,
+  printAsPage,
+} from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
 import "./viewSdrData.css";
 
@@ -233,9 +239,15 @@ const ViewSdrData = ({
                       `${initialValues?.FlightNumber}`,
                     ],
                     [
-                      `${initialValues?.EmployeeName}`,
-                      `${initialValues?.EmployeeId}`,
-                      `${initialValues?.CreatedDate}`,
+                      `${detailsData?.CreatedbyFirstName || ""} ${
+                        detailsData?.CreatedbyLastName || ""
+                      }`,
+                      `${detailsData?.SdrDetails?.EmployeeId || ""}`,
+                      `${
+                        detailsData?.CreatedDate
+                          ? moment(detailsData?.CreatedDate).format(DATETIME_DISPLAY)
+                          : ""
+                      }`,
                     ]
                   )
                 }
@@ -252,7 +264,12 @@ const ViewSdrData = ({
             <CloseIcon />
           </IconButton>
         </FlexBetween>
-        <Grid container spacing={2} sx={{ marginTop: "10px", color: "#666666", fontWeight: 400 }}>
+        <Grid
+          className={"sdr-status-item"}
+          container
+          spacing={2}
+          sx={{ marginTop: "10px", color: "#666666", fontWeight: 400 }}
+        >
           <Grid item xs={4}>
             <ListItem>Operator Control Number</ListItem>
           </Grid>
@@ -260,7 +277,7 @@ const ViewSdrData = ({
             <ListItem>A/C Information</ListItem>
           </Grid>
         </Grid>
-        <Grid container spacing={2} pb={2}>
+        <Grid className={"sdr-status-description"} container spacing={2} pb={2}>
           <Grid item xs={4}>
             <ListItem>{initialValues?.OperatorControlNumber}</ListItem>
           </Grid>
