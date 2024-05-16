@@ -20,19 +20,13 @@ import {
   Sides,
   UserPermission,
 } from "src/commons/types";
-import {
-  DATETIME_DISPLAY,
-  DATETIME_REQUEST,
-  DATE_DISPLAY,
-  DATE_HTML_DISPLAY,
-  printAsPage,
-} from "src/helpers";
+import { DATETIME_DISPLAY, DATE_DISPLAY, DATE_HTML_DISPLAY, printAsPage } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
 import "./viewSdrData.css";
 
 export interface IViewSdrDataProps {
   editable: boolean;
-  handleUpsertSdrSnapshot: (a: IEditSdrValues, b: SelectedStatus) => void;
+  handleUpsertSdrSnapshot?: (a: IEditSdrValues, b: SelectedStatus) => void;
   selectedSdr: IViewSdrResult;
   setViewSdrFlag: Dispatch<SetStateAction<boolean>>;
   tabIndex: number;
@@ -185,7 +179,7 @@ const ViewSdrData = ({
       CreatedbyLastName: detailsData?.CreatedbyLastName || "",
       ModifiedbyFirstName: `${profileData?.FirstName}`,
       ModifiedbyLastName: `${profileData?.LastName}`,
-      CreatedDate: moment(detailsData?.CreatedDate).format(DATETIME_REQUEST) || "",
+      CreatedDate: detailsData?.CreatedDate || "",
       CorrectiveAction: detailsData?.FleetInfo?.CorrectiveActions || "",
       OperatorControlNumber:
         detailsData?.OperatorControlNumber || detailsData?.SdrDetails?.OperatorControlNumber || "",
@@ -239,14 +233,18 @@ const ViewSdrData = ({
                       `${initialValues?.FlightNumber}`,
                     ],
                     [
-                      `${detailsData?.CreatedbyFirstName || ""} ${
-                        detailsData?.CreatedbyLastName || ""
-                      }`,
-                      `${detailsData?.SdrDetails?.EmployeeId || ""}`,
                       `${
-                        detailsData?.CreatedDate
-                          ? moment(detailsData?.CreatedDate).format(DATETIME_DISPLAY)
-                          : ""
+                        detailsData?.SdrDetails?.CreatedbyFirstName ||
+                        detailsData?.CreatedbyFirstName ||
+                        ""
+                      } ${
+                        detailsData?.SdrDetails?.CreatedbyLastName ||
+                        detailsData?.CreatedbyLastName ||
+                        ""
+                      }`,
+                      `${detailsData?.CreatedBy || detailsData?.SdrDetails?.CreatedBy || ""}`,
+                      `${
+                        moment(detailsData?.SdrDetails?.CreatedDate).format(DATETIME_DISPLAY) || ""
                       }`,
                     ]
                   )
@@ -354,10 +352,11 @@ const ViewSdrData = ({
           initialValues={initialValues}
           enableReinitialize
           onSubmit={(values, { setSubmitting }) => {
-            handleUpsertSdrSnapshot(
-              values,
-              followUpFlag ? SelectedStatus.ApprovedWithFollowUp : SelectedStatus.Approved
-            );
+            handleUpsertSdrSnapshot &&
+              handleUpsertSdrSnapshot(
+                values,
+                followUpFlag ? SelectedStatus.ApprovedWithFollowUp : SelectedStatus.Approved
+              );
             setTimeout(() => {
               setSubmitting(false);
             }, 500);
@@ -416,25 +415,23 @@ const ViewSdrData = ({
                             //     </InputAdornment>
                             //   ),
                             // }}
-                            name="LogPageCreationDate"
-                            value={moment(values.LogPageCreationDate).format(DATE_HTML_DISPLAY)}
+                            name="CreatedDate"
+                            value={moment(values.CreatedDate).format(DATE_HTML_DISPLAY)}
                             onChange={(e) => {
                               setFieldValue(
-                                "LogPageCreationDate",
+                                "CreatedDate",
                                 moment(e.target.value).isValid()
                                   ? moment(e.target.value).format(DATE_HTML_DISPLAY)
                                   : ""
                               );
                             }}
                             onBlur={handleBlur}
-                            error={!!touched?.LogPageCreationDate && !!errors?.LogPageCreationDate}
-                            helperText={
-                              !!touched?.LogPageCreationDate && errors?.LogPageCreationDate
-                            }
+                            error={!!touched?.CreatedDate && !!errors?.CreatedDate}
+                            helperText={!!touched?.CreatedDate && errors?.CreatedDate}
                             className={"sdr-status-edit"}
                           />
-                        ) : moment(values?.LogPageCreationDate).isValid() ? (
-                          moment(values?.LogPageCreationDate).format(DATE_DISPLAY)
+                        ) : moment(values?.CreatedDate).isValid() ? (
+                          moment(values?.CreatedDate).format(DATE_DISPLAY)
                         ) : (
                           ""
                         )}
