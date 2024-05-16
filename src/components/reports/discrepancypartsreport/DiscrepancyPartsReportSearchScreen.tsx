@@ -48,6 +48,7 @@ const DiscrepancyPartsReportSearchScreen = () => {
   const [selectedSdr, setSelectedSdr] = useState<IViewSdrResult | null>(null);
 
   const handleSearchReport = (values: GetDiscrepancyPartsReportReq) => {
+    setViewSdrFlag(false);
     if (values) {
       dispatch(getPartsReport(values));
     }
@@ -133,7 +134,6 @@ const DiscrepancyPartsReportSearchScreen = () => {
           <Grid item md={6} xs={12}>
             <ViewSdrData
               editable={false}
-              handleUpsertSdrSnapshot={() => {}}
               selectedSdr={selectedSdr}
               setViewSdrFlag={setViewSdrFlag}
               tabIndex={3}

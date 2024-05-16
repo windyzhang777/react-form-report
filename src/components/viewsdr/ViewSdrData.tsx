@@ -20,13 +20,14 @@ import {
   Sides,
   UserPermission,
 } from "src/commons/types";
-import { DATETIME_REQUEST, DATE_DISPLAY, DATE_HTML_DISPLAY, printAsPage } from "src/helpers";
+import { DATETIME_DISPLAY, DATE_DISPLAY, DATE_HTML_DISPLAY, printAsPage } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
+import { Type } from "src/types/GetAllEsfrRecordsRes";
 import "./viewSdrData.css";
 
 export interface IViewSdrDataProps {
   editable: boolean;
-  handleUpsertSdrSnapshot: (a: IEditSdrValues, b: SelectedStatus) => void;
+  handleUpsertSdrSnapshot?: (a: IEditSdrValues, b: SelectedStatus) => void;
   selectedSdr: IViewSdrResult;
   setViewSdrFlag: Dispatch<SetStateAction<boolean>>;
   tabIndex: number;
@@ -179,7 +180,7 @@ const ViewSdrData = ({
       CreatedbyLastName: detailsData?.CreatedbyLastName || "",
       ModifiedbyFirstName: `${profileData?.FirstName}`,
       ModifiedbyLastName: `${profileData?.LastName}`,
-      CreatedDate: moment(detailsData?.CreatedDate).format(DATETIME_REQUEST) || "",
+      CreatedDate: detailsData?.SdrDetails?.CreatedDate || detailsData?.CreatedDate || "",
       CorrectiveAction: detailsData?.FleetInfo?.CorrectiveActions || "",
       OperatorControlNumber:
         detailsData?.OperatorControlNumber || detailsData?.SdrDetails?.OperatorControlNumber || "",
@@ -214,23 +215,43 @@ const ViewSdrData = ({
 
   return (
     <>
-      <FlexColumn id="view-sdr" className={"view-sdr h-full relative"}>
+      <FlexColumn id="print-sdr" className={"view-sdr h-full relative"}>
         <FlexBetween className={"subpage-title bottom-divider"} sx={{ pt: "1px" }}>
           <FlexRow>
-            Service Difficulty Report - #{selectedSdr?.Id}
+            {`${
+              selectedSdr?.ReportType === Type.SDR ? "Service Difficulty" : "Significant Findings"
+            }
+            Report - #${selectedSdr?.Id}`}
             {isReport && (
               <IconButton
                 id="print-details-btn"
                 onClick={() =>
-                  printAsPage([
-                    `${initialValues?.AircraftNumber}`,
-                    `${initialValues?.AircraftDetails?.Manufacturer}`,
-                    `${initialValues?.AircraftDetails?.Model}`,
-                    `${initialValues?.AircraftDetails?.SerialNumber}`,
-                    `${initialValues?.AircraftDetails?.TotalTime}`,
-                    `${initialValues?.AircraftDetails?.TotalCycles}`,
-                    `${initialValues?.FlightNumber}`,
-                  ])
+                  printAsPage(
+                    [
+                      `${initialValues?.AircraftNumber}`,
+                      `${initialValues?.AircraftDetails?.Manufacturer}`,
+                      `${initialValues?.AircraftDetails?.Model}`,
+                      `${initialValues?.AircraftDetails?.SerialNumber}`,
+                      `${initialValues?.AircraftDetails?.TotalTime}`,
+                      `${initialValues?.AircraftDetails?.TotalCycles}`,
+                      `${initialValues?.FlightNumber}`,
+                    ],
+                    [
+                      `${
+                        detailsData?.SdrDetails?.CreatedbyFirstName ||
+                        detailsData?.CreatedbyFirstName ||
+                        ""
+                      } ${
+                        detailsData?.SdrDetails?.CreatedbyLastName ||
+                        detailsData?.CreatedbyLastName ||
+                        ""
+                      }`,
+                      `${detailsData?.CreatedBy || detailsData?.SdrDetails?.CreatedBy || ""}`,
+                      `${
+                        moment(detailsData?.SdrDetails?.CreatedDate).format(DATETIME_DISPLAY) || ""
+                      }`,
+                    ]
+                  )
                 }
               >
                 <PrintIcon />
@@ -245,7 +266,12 @@ const ViewSdrData = ({
             <CloseIcon />
           </IconButton>
         </FlexBetween>
-        <Grid container spacing={2} sx={{ marginTop: "10px", color: "#666666", fontWeight: 400 }}>
+        <Grid
+          className={"sdr-status-item"}
+          container
+          spacing={2}
+          sx={{ marginTop: "10px", color: "#666666", fontWeight: 400 }}
+        >
           <Grid item xs={4}>
             <ListItem>Operator Control Number</ListItem>
           </Grid>
@@ -253,7 +279,7 @@ const ViewSdrData = ({
             <ListItem>A/C Information</ListItem>
           </Grid>
         </Grid>
-        <Grid container spacing={2} pb={2}>
+        <Grid className={"sdr-status-description"} container spacing={2} pb={2}>
           <Grid item xs={4}>
             <ListItem>{initialValues?.OperatorControlNumber}</ListItem>
           </Grid>
@@ -330,10 +356,11 @@ const ViewSdrData = ({
           initialValues={initialValues}
           enableReinitialize
           onSubmit={(values, { setSubmitting }) => {
-            handleUpsertSdrSnapshot(
-              values,
-              followUpFlag ? SelectedStatus.ApprovedWithFollowUp : SelectedStatus.Approved
-            );
+            handleUpsertSdrSnapshot &&
+              handleUpsertSdrSnapshot(
+                values,
+                followUpFlag ? SelectedStatus.ApprovedWithFollowUp : SelectedStatus.Approved
+              );
             setTimeout(() => {
               setSubmitting(false);
             }, 500);
@@ -392,25 +419,23 @@ const ViewSdrData = ({
                             //     </InputAdornment>
                             //   ),
                             // }}
-                            name="LogPageCreationDate"
-                            value={moment(values.LogPageCreationDate).format(DATE_HTML_DISPLAY)}
+                            name="CreatedDate"
+                            value={moment(values.CreatedDate).format(DATE_HTML_DISPLAY)}
                             onChange={(e) => {
                               setFieldValue(
-                                "LogPageCreationDate",
+                                "CreatedDate",
                                 moment(e.target.value).isValid()
                                   ? moment(e.target.value).format(DATE_HTML_DISPLAY)
                                   : ""
                               );
                             }}
                             onBlur={handleBlur}
-                            error={!!touched?.LogPageCreationDate && !!errors?.LogPageCreationDate}
-                            helperText={
-                              !!touched?.LogPageCreationDate && errors?.LogPageCreationDate
-                            }
+                            error={!!touched?.CreatedDate && !!errors?.CreatedDate}
+                            helperText={!!touched?.CreatedDate && errors?.CreatedDate}
                             className={"sdr-status-edit"}
                           />
-                        ) : moment(values?.LogPageCreationDate).isValid() ? (
-                          moment(values?.LogPageCreationDate).format(DATE_DISPLAY)
+                        ) : moment(values?.CreatedDate).isValid() ? (
+                          moment(values?.CreatedDate).format(DATE_DISPLAY)
                         ) : (
                           ""
                         )}
@@ -2111,6 +2136,8 @@ const ViewSdrData = ({
                     </Grid>
                   </Grid>
                 </Grid>
+
+                <div id="signature" />
 
                 {auth === UserPermission.CRU && tabIndex < SelectedTab.Approved && (
                   <Box

@@ -44,6 +44,7 @@ const CpcpReportSearchScreen = () => {
   const [selectedSdr, setSelectedSdr] = useState<IViewSdrResult | null>(null);
 
   const handleSearchReport = (values: GetCpcpReportReq) => {
+    setViewSdrFlag(false);
     if (values) {
       dispatch(getCpcpReport(values));
     }
@@ -126,7 +127,6 @@ const CpcpReportSearchScreen = () => {
           <Grid item md={6} xs={12}>
             <ViewSdrData
               editable={false}
-              handleUpsertSdrSnapshot={() => {}}
               selectedSdr={selectedSdr}
               setViewSdrFlag={setViewSdrFlag}
               tabIndex={3}

@@ -7,13 +7,19 @@ import {
   TransformedSdrDataType,
   UserPermission,
 } from "src/commons/types";
-import { reportCSS, transformACInfo } from "src/components/reports/printOptions";
+import {
+  reportCSS,
+  transformACInfo,
+  transformLogInfo,
+  transformLogo,
+} from "src/components/reports/printOptions";
+import ESFRLogo from "src/icons/logo-esfr.png";
 import { GetAllEsfrRecordsResResult, LogpageStatus, Status } from "src/types/GetAllEsfrRecordsRes";
 import { UserPolicy } from "src/types/GetProfilerRes";
 import config from "src/utils/env.config";
 
 export const DATETIME_REQUEST = "YYYY-MM-DDTHH:mm:ss";
-export const DATETIME_REFRESH = "MM/DD/YYYY@HH:mm";
+export const DATETIME_REFRESH = "MM/DD/YYYY HH:mm";
 export const DATETIME_DISPLAY = "MM/DD/YYYY HH:mm:ss";
 export const DATE_DISPLAY = "MM/DD/YYYY";
 export const DATE_HTML_DISPLAY = "YYYY-MM-DD";
@@ -203,8 +209,8 @@ export const trimMultipleSelected = (arr: string | string[]) => {
   return Array.isArray(arr) ? (arr.length ? (arr.indexOf("") > -1 ? [] : arr) : arr) : arr;
 };
 
-export const printAsPage = (acInfo: string[]) => {
-  const content = document.getElementById("view-sdr");
+export const printAsPage = (acInfo: string[], logInfo: string[]) => {
+  const content = document.getElementById("print-sdr");
   let menu = document.createElement("div");
   menu.innerHTML = transformACInfo(acInfo);
   const a = window.open("", "", "height=1000, width=1000");
@@ -214,13 +220,18 @@ export const printAsPage = (acInfo: string[]) => {
     ${reportCSS}
     </style></head>
     `);
-    a.document.write("<body>");
+    a.document.write("<body><div class='print'>");
+    a.document.write(transformLogo(ESFRLogo));
     a.document.write(content.innerHTML);
     const button = a.document.getElementById("view-details-arrow-menu-button");
     if (button && button.parentNode) {
       button.parentNode.replaceChild(menu, button);
     }
-    a.document.write("</body></html>");
+    const signature = a.document.getElementById("signature");
+    if (signature) {
+      signature.innerHTML += transformLogInfo(logInfo);
+    }
+    a.document.write("</div></body></html>");
     a.document.close();
     a.print();
   }
