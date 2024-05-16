@@ -212,7 +212,12 @@ const ViewSnapshotData = ({
             <CloseIcon />
           </IconButton>
         </FlexBetween>
-        <Grid container spacing={2} sx={{ marginTop: "10px", color: "#666666", fontWeight: 400 }}>
+        <Grid
+          className={"sdr-status-item"}
+          container
+          spacing={2}
+          sx={{ marginTop: "10px", color: "#666666", fontWeight: 400 }}
+        >
           <Grid item xs={4}>
             <ListItem>Operator Control Number</ListItem>
           </Grid>
@@ -220,7 +225,7 @@ const ViewSnapshotData = ({
             <ListItem>A/C Information</ListItem>
           </Grid>
         </Grid>
-        <Grid container spacing={2} pb={2}>
+        <Grid className={"sdr-status-description"} container spacing={2} pb={2}>
           <Grid item xs={4}>
             <ListItem>{initialValues?.OperatorControlNumber}</ListItem>
           </Grid>
@@ -2305,9 +2310,9 @@ const ViewSnapshotData = ({
                     </Grid>
                   </Grid>
                 </Grid>
-              </div>
 
-              <div id="signature" />
+                <div id="signature" />
+              </div>
 
               {auth === UserPermission.CRU && !tabIndex && (
                 <ButtonGroup
