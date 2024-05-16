@@ -179,7 +179,7 @@ const ViewSdrData = ({
       CreatedbyLastName: detailsData?.CreatedbyLastName || "",
       ModifiedbyFirstName: `${profileData?.FirstName}`,
       ModifiedbyLastName: `${profileData?.LastName}`,
-      CreatedDate: detailsData?.CreatedDate || "",
+      CreatedDate: detailsData?.SdrDetails?.CreatedDate || detailsData?.CreatedDate || "",
       CorrectiveAction: detailsData?.FleetInfo?.CorrectiveActions || "",
       OperatorControlNumber:
         detailsData?.OperatorControlNumber || detailsData?.SdrDetails?.OperatorControlNumber || "",
