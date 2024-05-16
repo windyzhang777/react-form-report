@@ -81,7 +81,7 @@ const CommonDataGrid = ({
     <>
       <DataGrid
         apiRef={apiRef}
-        className={`${isReport && "!h-[140vh]"}`}
+        className={`${isReport && "!h-[230vh]"}`}
         initialState={{ pagination: { paginationModel: { page: 0, pageSize: 20 } } }}
         autoPageSize={isReport ? false : true}
         // loading={loading}

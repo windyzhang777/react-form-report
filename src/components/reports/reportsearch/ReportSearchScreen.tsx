@@ -48,6 +48,7 @@ const ReportSearchScreen = () => {
   const [selectedSdr, setSelectedSdr] = useState<IViewSdrResult | null>(null);
 
   const handleSearchReport = (values: IReportSearchValues) => {
+    setViewSdrFlag(false);
     if (values) {
       dispatch(getEsfrReport(values));
     }

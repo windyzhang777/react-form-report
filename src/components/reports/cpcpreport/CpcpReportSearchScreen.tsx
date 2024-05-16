@@ -44,6 +44,7 @@ const CpcpReportSearchScreen = () => {
   const [selectedSdr, setSelectedSdr] = useState<IViewSdrResult | null>(null);
 
   const handleSearchReport = (values: GetCpcpReportReq) => {
+    setViewSdrFlag(false);
     if (values) {
       dispatch(getCpcpReport(values));
     }

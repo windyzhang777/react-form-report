@@ -48,6 +48,7 @@ const DiscrepancyPartsReportSearchScreen = () => {
   const [selectedSdr, setSelectedSdr] = useState<IViewSdrResult | null>(null);
 
   const handleSearchReport = (values: GetDiscrepancyPartsReportReq) => {
+    setViewSdrFlag(false);
     if (values) {
       dispatch(getPartsReport(values));
     }
