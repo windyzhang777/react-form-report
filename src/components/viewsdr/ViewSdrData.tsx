@@ -222,15 +222,22 @@ const ViewSdrData = ({
               <IconButton
                 id="print-details-btn"
                 onClick={() =>
-                  printAsPage([
-                    `${initialValues?.AircraftNumber}`,
-                    `${initialValues?.AircraftDetails?.Manufacturer}`,
-                    `${initialValues?.AircraftDetails?.Model}`,
-                    `${initialValues?.AircraftDetails?.SerialNumber}`,
-                    `${initialValues?.AircraftDetails?.TotalTime}`,
-                    `${initialValues?.AircraftDetails?.TotalCycles}`,
-                    `${initialValues?.FlightNumber}`,
-                  ])
+                  printAsPage(
+                    [
+                      `${initialValues?.AircraftNumber}`,
+                      `${initialValues?.AircraftDetails?.Manufacturer}`,
+                      `${initialValues?.AircraftDetails?.Model}`,
+                      `${initialValues?.AircraftDetails?.SerialNumber}`,
+                      `${initialValues?.AircraftDetails?.TotalTime}`,
+                      `${initialValues?.AircraftDetails?.TotalCycles}`,
+                      `${initialValues?.FlightNumber}`,
+                    ],
+                    [
+                      `${initialValues?.EmployeeName}`,
+                      `${initialValues?.EmployeeId}`,
+                      `${initialValues?.CreatedDate}`,
+                    ]
+                  )
                 }
               >
                 <PrintIcon />
@@ -2111,6 +2118,8 @@ const ViewSdrData = ({
                     </Grid>
                   </Grid>
                 </Grid>
+
+                <div id="signature" />
 
                 {auth === UserPermission.CRU && tabIndex < SelectedTab.Approved && (
                   <Box
