@@ -10,6 +10,7 @@ export interface GetApprovedSDRResResult {
   AircraftDetails: AircraftDetails;
   AircraftNumber: string;
   CorrectiveAction: string;
+  CreatedBy: string | null;
   CreatedbyFirstName: string;
   CreatedbyLastName: string;
   CreatedDate: string;
