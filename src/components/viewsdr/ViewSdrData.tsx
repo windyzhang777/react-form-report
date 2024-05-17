@@ -428,7 +428,7 @@ const ViewSdrData = ({
         <Formik
           initialValues={initialValues}
           enableReinitialize
-          onSubmit={async (values, { setSubmitting }) => {
+          onSubmit={(values, { setSubmitting }) => {
             handleSubmit(values);
             setTimeout(() => {
               setSubmitting(false);
