@@ -41,7 +41,6 @@ import { CreateSfrReq } from "src/types/CreateSfrReq";
 import { LogpageStatus, Type } from "src/types/GetAllEsfrRecordsRes";
 import axiosInstance from "src/utils/axiosInstance";
 import config from "src/utils/env.config";
-import ViewSfrData from "../viewsdr/ViewSfrData";
 import "./homescreen.css";
 
 const HomeScreen = () => {
@@ -440,17 +439,10 @@ const HomeScreen = () => {
                 setEditable={setEditable}
                 setViewSdrFlag={setViewSdrFlag}
               />
-            ) : selectedSdr?.Type === Type.SDR ? (
+            ) : (
               <ViewSdrData
                 editable={editable}
                 handleUpsertSdrSnapshot={handleUpsertSdrSnapshot}
-                selectedSdr={selectedSdr}
-                setViewSdrFlag={setViewSdrFlag}
-                tabIndex={tabIndex}
-              />
-            ) : (
-              <ViewSfrData
-                editable={editable}
                 handleUpsertSfrSnapshot={handleUpsertSfrSnapshot}
                 selectedSdr={selectedSdr}
                 setViewSdrFlag={setViewSdrFlag}
