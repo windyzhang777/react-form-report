@@ -37,7 +37,7 @@ const ViewSfrData = ({
   tabIndex,
 }: IViewSfrDataProps) => {
   const { profileData, auth } = useAppSelector((state) => state.profile);
-  const { detailsData, logpageData, masterData }: SdrEsfrRecordDetailsStateType = useAppSelector(
+  const { detailsData, masterData }: SdrEsfrRecordDetailsStateType = useAppSelector(
     (state) => state.sdrEsfrRecordDetails
   );
   const [followUpFlag, setFollowUpFlag] = useState<boolean>(
@@ -56,15 +56,16 @@ const ViewSfrData = ({
         SubmitterDesignator: "CALA",
         SubmitterType: "A",
         OperatorDesignator: "CALA",
-        OperatorType: "G",
+        OperatorType: "A",
         FAAReceivingRegionCode: "GL",
         ReceivingDistrictOffice: "33",
-        PartName: detailsData?.SdrDetails?.PartDetails?.PartDescription || "",
-        PartManufacturerName: "",
+        PartName: detailsData?.SdrDetails?.PartDetails?.PartName || "",
+        PartManufacturerName: detailsData?.SdrDetails?.PartDetails?.PartManufacturerName || "",
         PartNumber: detailsData?.SdrDetails?.PartDetails?.PartManufacturerSerialNumber || "",
-        ComponentName: "",
-        ComponentManufacturerName: "",
-        PartModelNumber: "",
+        ComponentName: detailsData?.SdrDetails?.ComponentDetails?.ComponentName || "",
+        ComponentManufacturerName:
+          detailsData?.SdrDetails?.ComponentDetails?.ManufacturerName || "",
+        PartModelNumber: detailsData?.SdrDetails?.ComponentDetails?.ModelNumber || "",
         FuselageFromSta:
           detailsData?.LocationDetails?.DefectLocationId === 8
             ? detailsData?.LocationDetails?.FromSta || ""
@@ -147,17 +148,26 @@ const ViewSfrData = ({
         StructuralOther: detailsData?.DiscrepancyDetails?.DiscrepancyTypeComments || "",
       },
       AircraftDetails: {
-        RegistryNNumber: logpageData?.FleetInfo?.LicenseNumber || "",
-        Manufacturer: logpageData?.FleetInfo?.ManufacturedBy || "",
-        Model: logpageData?.FleetInfo?.ManufacturerPartNumber || "",
-        SerialNumber: logpageData?.FleetInfo?.ManufacturerSerialNumber || "",
-        TotalTime: String(logpageData?.FleetInfo?.TotalAircraftTime || ""),
-        TotalCycles: logpageData?.FleetInfo?.TotalAircraftCycles || "",
+        RegistryNNumber: detailsData?.FleetInfo?.LicenseNumber || "",
+        Manufacturer: detailsData?.FleetInfo?.ManufacturedBy || "",
+        Model: detailsData?.FleetInfo?.ManufacturerPartNumber || "",
+        SerialNumber: detailsData?.FleetInfo?.ManufacturerSerialNumber || "",
+        TotalTime: String(detailsData?.FleetInfo?.TotalAircraftTime || ""),
+        TotalCycles: detailsData?.FleetInfo?.TotalAircraftCycles || "",
       },
-      LogPageCreationDate: detailsData?.CreatedDate || "",
-      Station: detailsData?.Station || logpageData?.FleetInfo?.Station || "",
+      EngineDetails: {
+        EngineManufacturerName:
+          detailsData?.SdrDetails?.EngineDetails?.EngineManufacturerName || "",
+        EngineModel: detailsData?.SdrDetails?.EngineDetails?.EngineModel || "",
+        EngineSerialNumber: detailsData?.SdrDetails?.EngineDetails?.EngineSerialNumber || "",
+        EngineTotalCycles: detailsData?.SdrDetails?.EngineDetails?.EngineTotalCycles || "",
+        EngineTotalTime: detailsData?.SdrDetails?.EngineDetails?.EngineTotalTime || "",
+      },
+      LogPageCreationDate:
+        detailsData?.LogPageCreatedDate || detailsData?.SdrDetails?.LogPageCreationDate || "",
+      Station: detailsData?.Station || "",
       LogPageNumber: detailsData?.LogPageNumber || selectedSdr?.LogpageNumber || "",
-      AircraftNumber: logpageData?.FleetInfo?.TailNumber || "",
+      AircraftNumber: detailsData?.FleetInfo?.TailNumber || "",
       PrecautionaryProcedureIds: detailsData?.SdrDetails?.PrecautionaryProcedureIds || [],
       NatureOfReportIds: detailsData?.SdrDetails?.NatureOfReportIds || [],
       StageId: detailsData?.SdrDetails?.StageId || 0,
@@ -177,6 +187,11 @@ const ViewSfrData = ({
         PartTotalCycles: detailsData?.SdrDetails?.PartDetails?.PartTotalCycles || "",
         PartTimeSince: detailsData?.SdrDetails?.PartDetails?.PartTimeSince || "",
         PartCycleSince: detailsData?.SdrDetails?.PartDetails?.PartCycleSince || "",
+        PartManufacturerName: detailsData?.SdrDetails?.PartDetails?.PartManufacturerName || "",
+        PartManufacturerPartNumber:
+          detailsData?.SdrDetails?.PartDetails?.PartManufacturerPartNumber || "",
+        PartName: detailsData?.SdrDetails?.PartDetails?.PartName || "",
+        PartType: detailsData?.SdrDetails?.PartDetails?.PartType || "",
       },
       CreatedbyFirstName: detailsData?.CreatedbyFirstName || "",
       CreatedbyLastName: detailsData?.CreatedbyLastName || "",
@@ -186,29 +201,30 @@ const ViewSfrData = ({
       CorrectiveAction: detailsData?.FleetInfo?.CorrectiveActions || "",
       OperatorControlNumber:
         detailsData?.OperatorControlNumber || detailsData?.SdrDetails?.OperatorControlNumber || "",
-      IsExtracted: false,
+      IsExtracted: detailsData?.SdrDetails?.IsExtracted || false,
       ComponentDetails: {
-        ComponentName: "",
-        ComponentManufacturerName: "",
-        ComponentPartNumber: "",
-        ComponentPartSerialNumber: "",
-        ComponentPartModelNumber: "",
-        ComponentLocation: "",
-        PartTotalTime: "",
-        PartTotalCycles: "",
-        PartTimeSince: "",
-        PartTimeSinceCode: "",
+        ComponentName: detailsData?.SdrDetails?.ComponentDetails?.ComponentName || "",
+        ManufacturerName: detailsData?.SdrDetails?.ComponentDetails?.ManufacturerName || "",
+        PartNumber: detailsData?.SdrDetails?.ComponentDetails?.PartNumber || "",
+        SerialNumber: detailsData?.SdrDetails?.ComponentDetails?.SerialNumber || "",
+        ModelNumber: detailsData?.SdrDetails?.ComponentDetails?.ModelNumber || "",
+        ComponentLocation: detailsData?.SdrDetails?.ComponentDetails?.ComponentLocation || "",
+        ComponentTotalTime: detailsData?.SdrDetails?.ComponentDetails?.ComponentTotalTime || "",
+        ComponentTotalCycles: detailsData?.SdrDetails?.ComponentDetails?.ComponentTotalCycles || "",
+        ComponentTimeSince: detailsData?.SdrDetails?.ComponentDetails?.ComponentTimeSince || "",
+        ComponentTimeSinceCode:
+          detailsData?.SdrDetails?.ComponentDetails?.ComponentTimeSinceCode || "",
       },
       LocationDetails: {
         ZoneId: detailsData?.LocationDetails?.ZoneId || 0,
         DefectLocationIdentifier: "",
         CoordinateLocationDetails: detailsData?.LocationDetails?.CoordinateLocationDetails || "",
       },
-      FlightNumber: logpageData?.FleetInfo?.FlightNumber || "",
+      FlightNumber: detailsData?.FleetInfo?.FlightNumber || "",
       IsMajorRepair: detailsData?.RepairDetails?.IsMajorRepair || false,
       IsSdrReportable: detailsData?.RepairDetails?.IsSdrReportable || false,
     }),
-    [detailsData, followUpFlag, logpageData, profileData, selectedSdr]
+    [detailsData, followUpFlag, profileData, selectedSdr]
   );
 
   useEffect(() => {
@@ -653,12 +669,10 @@ const ViewSfrData = ({
                       <ListItem>{values?.ComponentDetails.ComponentName || "--"}</ListItem>
                     </Grid>
                     <Grid item xs={4}>
-                      <ListItem>
-                        {values?.ComponentDetails?.ComponentManufacturerName || "--"}
-                      </ListItem>
+                      <ListItem>{values?.ComponentDetails?.ManufacturerName || "--"}</ListItem>
                     </Grid>
                     <Grid item xs={4}>
-                      <ListItem>{values?.ComponentDetails?.ComponentPartNumber || "--"}</ListItem>
+                      <ListItem>{values?.ComponentDetails?.PartNumber || "--"}</ListItem>
                     </Grid>
                   </Grid>
                   <Grid className={"sdr-status-item"} container spacing={3}>
@@ -680,14 +694,10 @@ const ViewSfrData = ({
                   </Grid>
                   <Grid className={"sdr-status-description"} container spacing={3}>
                     <Grid item xs={4}>
-                      <ListItem>
-                        {values?.ComponentDetails?.ComponentPartSerialNumber || "--"}
-                      </ListItem>
+                      <ListItem>{values?.ComponentDetails?.SerialNumber || "--"}</ListItem>
                     </Grid>
                     <Grid item xs={4}>
-                      <ListItem>
-                        {values?.ComponentDetails?.ComponentPartModelNumber || "--"}
-                      </ListItem>
+                      <ListItem>{values?.ComponentDetails?.ModelNumber || "--"}</ListItem>
                     </Grid>
                     <Grid item xs={4}>
                       <ListItem>{values?.ComponentDetails?.ComponentLocation || "--"}</ListItem>
@@ -712,13 +722,13 @@ const ViewSfrData = ({
                   </Grid>
                   <Grid className={"sdr-status-description"} container spacing={3}>
                     <Grid item xs={4}>
-                      <ListItem>{values?.ComponentDetails?.PartTotalTime || "--"}</ListItem>
+                      <ListItem>{values?.ComponentDetails?.ComponentTotalTime || "--"}</ListItem>
                     </Grid>
                     <Grid item xs={4}>
-                      <ListItem>{values?.ComponentDetails?.PartTotalCycles || "--"}</ListItem>
+                      <ListItem>{values?.ComponentDetails?.ComponentTotalCycles || "--"}</ListItem>
                     </Grid>
                     <Grid item xs={4}>
-                      <ListItem>{values?.ComponentDetails?.PartTimeSince || "--"}</ListItem>
+                      <ListItem>{values?.ComponentDetails?.ComponentTimeSince || "--"}</ListItem>
                     </Grid>
                   </Grid>
                   <Grid className={"sdr-status-item"} container spacing={3}>
@@ -730,7 +740,9 @@ const ViewSfrData = ({
                   </Grid>
                   <Grid className={"sdr-status-description"} container spacing={3}>
                     <Grid item xs={4}>
-                      <ListItem>{values?.ComponentDetails?.PartTimeSinceCode || "--"}</ListItem>
+                      <ListItem>
+                        {values?.ComponentDetails?.ComponentTimeSinceCode || "--"}
+                      </ListItem>
                     </Grid>
                   </Grid>
                 </Grid>

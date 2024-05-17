@@ -1,3 +1,5 @@
+import { ComponentDetails, EngineDetails, PartDetails } from "src/types/GetSdrEsfrRecordDetailsRes";
+
 export interface UpsertSDRSnapshotReq {
   SdrId: number;
   SnapshotId: string | number;
@@ -16,7 +18,7 @@ export interface UpsertSDRSnapshotReq {
   EmployeeId: string | null;
   EmployeeName: string | null;
   PartDetails: PartDetails;
-  createdBy?: string | null;
+  CreatedBy: string | null;
   CreatedbyFirstName: string | null;
   CreatedbyLastName: string | null;
   ModifiedbyFirstName: string | null;
@@ -29,6 +31,8 @@ export interface UpsertSDRSnapshotReq {
   IsMajorRepair: boolean;
   IsSdrCompleted?: boolean;
   IsSdrReportable: boolean;
+  EngineDetails: EngineDetails;
+  ComponentDetails: ComponentDetails;
 }
 
 export interface AircraftDetails {
@@ -38,19 +42,6 @@ export interface AircraftDetails {
   SerialNumber: string | null;
   TotalTime: string | number;
   TotalCycles: string | number;
-}
-
-export interface PartDetails {
-  PartTrackingNumber: string | null;
-  PartManufacturerSerialNumber: string | null;
-  PartSerialNumber: string | null;
-  PartLocation: string | null;
-  PartCondition: string | null;
-  PartDescription: string | null;
-  PartTotalTime: string | null;
-  PartTotalCycles: string | null;
-  PartTimeSince: string | null;
-  PartCycleSince: string | null;
 }
 
 export interface SfrAdditionalDetails {

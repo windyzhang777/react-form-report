@@ -116,7 +116,7 @@ export const sdrEsfrRecordDetailsReducer = (
       };
     }
     case SdrEsfrRecordDetailsActionType.FETCH_ESFR_DETAIL_SUCCESS: {
-      return { ...state, detailsData: action.data, error: "" };
+      return { ...state, loading: false, detailsData: action.data, error: "" };
     }
     case SdrEsfrRecordDetailsActionType.FETCH_ESFR_DETAIL_FAILURE: {
       return {
@@ -202,27 +202,14 @@ export const getSdrEsfrRecordDetails = (selectedSdr: IViewSdrResult) => {
     dispatch(resetEsfrRecordDetailData());
     dispatch(resetLogpageDataSuccess());
     dispatch(initFetch());
-    axios
-      .all([
-        axiosInstance.get(
-          `${config.apiBaseAddress}${config.URL_GET_SDR_ESFR_RECORD_DETAILS}?logpageNumber=${selectedSdr?.LogpageNumber}&station=${selectedSdr?.Station}&aircraftNumber=${selectedSdr?.AircraftNumber}&logpageCreationDate=${selectedSdr?.LogpageCreationDate}`
-        ),
-        axiosInstance.get(
-          `${config.apiBaseAddress}${config.URL_VIEW_LOGPAGE}?logpageNumber=${selectedSdr?.LogpageNumber}`
-        ),
-      ])
-      .then(
-        axios.spread((...res) => {
-          const esfrRecordDetail = res?.[0]?.data?.Result;
-          dispatch(fetchSuccess(esfrRecordDetail));
-          const logpageData = res?.[1]?.data?.Result;
-          if (logpageData.MasterData) {
-            dispatch(fetchLogpageDataSuccess(logpageData));
-          } else {
-            dispatch(fetchLogpageDataFailure("Invalid Logpage Number"));
-          }
-        })
+    axiosInstance
+      .get(
+        `${config.apiBaseAddress}${config.URL_GET_SDR_ESFR_RECORD_DETAILS}?logpageNumber=${selectedSdr?.LogpageNumber}&station=${selectedSdr?.Station}&aircraftNumber=${selectedSdr?.AircraftNumber}&logpageCreationDate=${selectedSdr?.LogpageCreationDate}`
       )
+      .then((res) => {
+        const esfrRecordDetail = res?.data?.Result;
+        dispatch(fetchSuccess(esfrRecordDetail));
+      })
       .catch((error) => dispatch(fetchFailure(error.message)))
       .finally(() => dispatch(setDetailsLoaderOff()));
   };

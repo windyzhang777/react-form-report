@@ -1,3 +1,5 @@
+import { ComponentDetails, EngineDetails, PartDetails } from "src/types/GetSdrEsfrRecordDetailsRes";
+
 export interface GetApprovedSDRRes {
   Timestamp: string;
   ResponseTime: number;
@@ -9,6 +11,7 @@ export interface GetApprovedSDRRes {
 export interface GetApprovedSDRResResult {
   AircraftDetails: AircraftDetails;
   AircraftNumber: string;
+  ComponentDetails: ComponentDetails;
   CorrectiveAction: string;
   CreatedBy: string | null;
   CreatedbyFirstName: string;
@@ -16,7 +19,8 @@ export interface GetApprovedSDRResResult {
   CreatedDate: string;
   EmployeeId: string | null;
   EmployeeName: string | null;
-  HowDiscoveredId: number;
+  EngineDetails: EngineDetails;
+  HowDiscoveredId: number | null;
   IsExtracted: boolean;
   LogPageCreationDate: string;
   LogPageNumber: string;
@@ -26,16 +30,16 @@ export interface GetApprovedSDRResResult {
   OperatorControlNumber: string;
   PartCondition: string;
   PartDescription: string;
-  PartDetails: null;
+  PartDetails: PartDetails;
   PartLocation: string;
   PartManufacturerSerialNumber: string;
   PartSerialNumber: string;
-  PartTrackingNumber: string;
+  PartTrackingNumber: string | null;
   PrecautionaryProcedureIds: number[];
   SdrId: number;
   SfrDetails: SfrDetails;
   SnapshotId: number;
-  StageId: number;
+  StageId: number | null;
   Station: string;
   Status: string;
   StatusId: number;
@@ -64,28 +68,28 @@ export interface SfrDetails {
   ButtlineFromSide: string;
   ButtlineTo: string;
   ButtlineToSide: string;
-  ComponentManufacturerName: string;
-  ComponentName: string;
+  ComponentManufacturerName: string | null;
+  ComponentName: string | null;
   CorrisionLevel: string;
   CrackLength: string | null;
-  FAAReceivingRegionCode: string;
+  FAAReceivingRegionCode: string | null;
   FuselageFromSta: string;
   FuselageToSta: string;
-  NumberOfCracks: number;
+  NumberOfCracks: number | null;
   OperatorDesignator: string;
   OperatorType: string;
-  PartManufacturerName: string;
-  PartModelNumber: string;
-  PartName: string;
-  PartNumber: string;
+  PartManufacturerName: string | null;
+  PartModelNumber: string | null;
+  PartName: string | null;
+  PartNumber: string | null;
   ReceivingDistrictOffice: string;
   SnapshotId: string;
   StringerFrom: string;
   StringerFromSide: string;
   StringerTo: string;
   StringerToSide: string;
-  StructuralOther: string;
-  SubmitterDesignator: string;
+  StructuralOther: string | null;
+  SubmitterDesignator: string | null;
   SubmitterType: string;
   WaterlineFrom: string;
   WaterlineTo: string;
