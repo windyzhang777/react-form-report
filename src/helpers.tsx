@@ -111,6 +111,10 @@ export const formatCodes = (arr: string[]) => {
   return res.slice(1);
 };
 
+export const formatFullName = (a: string | null | undefined, b: string | null | undefined) => {
+  return a ? (b ? a + " " + b : a) : b ? b : "";
+};
+
 export const joinCodes = (arr: string[]) => {
   if (!arr) return "";
   let res = "";

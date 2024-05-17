@@ -160,6 +160,7 @@ export interface RepairType {
 
 export interface SDRDetails {
   AircraftNumber: string | null;
+  ComponentDetails: ComponentDetails;
   CorrectiveAction: string;
   CreatedBy: string;
   CreatedbyFirstName: string;
@@ -168,6 +169,7 @@ export interface SDRDetails {
   CreatedDate: string;
   EmployeeId: string | null;
   EmployeeName: string | null;
+  EngineDetails: EngineDetails;
   FleetInfo: null;
   HowDiscoveredId: number | null;
   IsExtracted: boolean;
@@ -191,15 +193,39 @@ export interface SDRDetails {
   submittedDate: string;
 }
 
+export interface ComponentDetails {
+  ComponentLocation: string | null;
+  ComponentName: string | null;
+  ComponentTimeSince: string | null;
+  ComponentTimeSinceCode: string | null;
+  ComponentTotalCycles: string | null;
+  ComponentTotalTime: string | null;
+  ManufacturerName: string | null;
+  ModelNumber: string | null;
+  PartNumber: string | null;
+  SerialNumber: string | null;
+}
+export interface EngineDetails {
+  EngineManufacturerName: string | null;
+  EngineModel: string | null;
+  EngineSerialNumber: string | null;
+  EngineTotalCycles: string | null;
+  EngineTotalTime: string | null;
+}
+
 export interface PartDetails {
   PartCondition: string | null;
   PartCycleSince: string | null;
   PartDescription: string | null;
   PartLocation: string | null;
+  PartManufacturerName: string | null;
+  PartManufacturerPartNumber: string | null;
   PartManufacturerSerialNumber: string | null;
+  PartName: string | null;
   PartSerialNumber: string | null;
   PartTimeSince: string | null;
   PartTotalCycles: string | null;
   PartTotalTime: string | null;
-  PartTrackingNumber: null;
+  PartTrackingNumber: string | null;
+  PartType: string | null;
 }

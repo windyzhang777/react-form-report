@@ -41,7 +41,7 @@ const ViewSdrData = ({
   tabIndex,
 }: IViewSdrDataProps) => {
   const { profileData, auth } = useAppSelector((state) => state.profile);
-  const { detailsData, logpageData, masterData }: SdrEsfrRecordDetailsStateType = useAppSelector(
+  const { detailsData, masterData }: SdrEsfrRecordDetailsStateType = useAppSelector(
     (state) => state.sdrEsfrRecordDetails
   );
   const [followUpFlag, setFollowUpFlag] = useState<boolean>(
@@ -51,7 +51,7 @@ const ViewSdrData = ({
 
   const initialValues: IEditSdrValues = useMemo(
     () => ({
-      SdrId: detailsData?.SdrDetails?.sdrNumber ? +detailsData.SdrDetails.sdrNumber : 0,
+      SdrId: detailsData?.SdrDetails?.sdrNumber ? +detailsData.SdrDetails?.sdrNumber : 0,
       SnapshotId: "",
       Type: selectedSdr?.Type || selectedSdr?.ReportType || "",
       SfrAdditionalDetails: {
@@ -60,15 +60,16 @@ const ViewSdrData = ({
         SubmitterDesignator: "CALA",
         SubmitterType: "A",
         OperatorDesignator: "CALA",
-        OperatorType: "G",
+        OperatorType: "A",
         FAAReceivingRegionCode: "GL",
         ReceivingDistrictOffice: "33",
-        PartName: detailsData?.SdrDetails?.PartDetails?.PartDescription || "",
-        PartManufacturerName: "",
+        PartName: detailsData?.SdrDetails?.PartDetails?.PartName || "",
+        PartManufacturerName: detailsData?.SdrDetails?.PartDetails?.PartManufacturerName || "",
         PartNumber: detailsData?.SdrDetails?.PartDetails?.PartManufacturerSerialNumber || "",
-        ComponentName: "",
-        ComponentManufacturerName: "",
-        PartModelNumber: "",
+        ComponentName: detailsData?.SdrDetails?.ComponentDetails?.ComponentName || "",
+        ComponentManufacturerName:
+          detailsData?.SdrDetails?.ComponentDetails?.ManufacturerName || "",
+        PartModelNumber: detailsData?.SdrDetails?.ComponentDetails?.ModelNumber || "",
         FuselageFromSta:
           detailsData?.LocationDetails?.DefectLocationId === 8
             ? detailsData?.LocationDetails?.FromSta || ""
@@ -78,16 +79,22 @@ const ViewSdrData = ({
             ? detailsData?.LocationDetails?.ToSta || ""
             : "",
         CorrisionLevel:
-          detailsData?.DiscrepancyDetails?.DiscrepancyTypeId === 4
+          detailsData?.DiscrepancyDetails?.DiscrepancyTypeId === 4 ||
+          detailsData?.DiscrepancyDetails?.DiscrepancyTypeId === 6
             ? masterData?.CorrosionLevels.find(
                 (o) => o.Id === detailsData.DiscrepancyDetails?.CorrosionLevelId
               )?.Description || ""
             : "",
         CrackLength:
-          detailsData?.DiscrepancyDetails?.DiscrepancyTypeId === 5
+          detailsData?.DiscrepancyDetails?.DiscrepancyTypeId === 5 ||
+          detailsData?.DiscrepancyDetails?.DiscrepancyTypeId === 6
             ? detailsData.DiscrepancyDetails?.CrackLength || ""
             : "",
-        NumberOfCracks: detailsData?.DiscrepancyDetails?.NumberOfCracks ?? 0,
+        NumberOfCracks:
+          detailsData?.DiscrepancyDetails?.DiscrepancyTypeId === 5 ||
+          detailsData?.DiscrepancyDetails?.DiscrepancyTypeId === 6
+            ? detailsData?.DiscrepancyDetails?.NumberOfCracks ?? 0
+            : "",
         WaterlineFrom: "",
         WaterlineTo: "",
         StringerFrom:
@@ -145,17 +152,26 @@ const ViewSdrData = ({
         StructuralOther: detailsData?.DiscrepancyDetails?.DiscrepancyTypeComments || "",
       },
       AircraftDetails: {
-        RegistryNNumber: logpageData?.FleetInfo?.LicenseNumber || "",
-        Manufacturer: logpageData?.FleetInfo?.ManufacturedBy || "",
-        Model: logpageData?.FleetInfo?.ManufacturerPartNumber || "",
-        SerialNumber: logpageData?.FleetInfo?.ManufacturerSerialNumber || "",
-        TotalTime: String(logpageData?.FleetInfo?.TotalAircraftTime || ""),
-        TotalCycles: logpageData?.FleetInfo?.TotalAircraftCycles || "",
+        RegistryNNumber: detailsData?.FleetInfo?.LicenseNumber || "",
+        Manufacturer: detailsData?.FleetInfo?.ManufacturedBy || "",
+        Model: detailsData?.FleetInfo?.ManufacturerPartNumber || "",
+        SerialNumber: detailsData?.FleetInfo?.ManufacturerSerialNumber || "",
+        TotalTime: String(detailsData?.FleetInfo?.TotalAircraftTime || ""),
+        TotalCycles: detailsData?.FleetInfo?.TotalAircraftCycles || "",
       },
-      LogPageCreationDate: detailsData?.SdrDetails?.LogPageCreationDate || "",
-      Station: detailsData?.Station || logpageData?.FleetInfo?.Station || "",
+      EngineDetails: {
+        EngineManufacturerName:
+          detailsData?.SdrDetails?.EngineDetails?.EngineManufacturerName || "",
+        EngineModel: detailsData?.SdrDetails?.EngineDetails?.EngineModel || "",
+        EngineSerialNumber: detailsData?.SdrDetails?.EngineDetails?.EngineSerialNumber || "",
+        EngineTotalCycles: detailsData?.SdrDetails?.EngineDetails?.EngineTotalCycles || "",
+        EngineTotalTime: detailsData?.SdrDetails?.EngineDetails?.EngineTotalTime || "",
+      },
+      LogPageCreationDate:
+        detailsData?.SdrDetails?.LogPageCreationDate || detailsData?.LogPageCreatedDate || "",
+      Station: detailsData?.Station || "",
       LogPageNumber: detailsData?.LogPageNumber || selectedSdr?.LogpageNumber || "",
-      AircraftNumber: logpageData?.FleetInfo?.TailNumber || "",
+      AircraftNumber: detailsData?.FleetInfo?.TailNumber || "",
       PrecautionaryProcedureIds: detailsData?.SdrDetails?.PrecautionaryProcedureIds || [],
       NatureOfReportIds: detailsData?.SdrDetails?.NatureOfReportIds || [],
       StageId: detailsData?.SdrDetails?.StageId || 0,
@@ -175,7 +191,13 @@ const ViewSdrData = ({
         PartTotalCycles: detailsData?.SdrDetails?.PartDetails?.PartTotalCycles || "",
         PartTimeSince: detailsData?.SdrDetails?.PartDetails?.PartTimeSince || "",
         PartCycleSince: detailsData?.SdrDetails?.PartDetails?.PartCycleSince || "",
+        PartManufacturerName: detailsData?.SdrDetails?.PartDetails?.PartManufacturerName || "",
+        PartManufacturerPartNumber:
+          detailsData?.SdrDetails?.PartDetails?.PartManufacturerPartNumber || "",
+        PartName: detailsData?.SdrDetails?.PartDetails?.PartName || "",
+        PartType: detailsData?.SdrDetails?.PartDetails?.PartType || "",
       },
+      CreatedBy: detailsData?.CreatedBy || "",
       CreatedbyFirstName: detailsData?.CreatedbyFirstName || "",
       CreatedbyLastName: detailsData?.CreatedbyLastName || "",
       ModifiedbyFirstName: `${profileData?.FirstName}`,
@@ -184,29 +206,30 @@ const ViewSdrData = ({
       CorrectiveAction: detailsData?.FleetInfo?.CorrectiveActions || "",
       OperatorControlNumber:
         detailsData?.OperatorControlNumber || detailsData?.SdrDetails?.OperatorControlNumber || "",
-      IsExtracted: false,
+      IsExtracted: detailsData?.SdrDetails?.IsExtracted || false,
       ComponentDetails: {
-        ComponentName: "",
-        ComponentManufacturerName: "",
-        ComponentPartNumber: "",
-        ComponentPartSerialNumber: "",
-        ComponentPartModelNumber: "",
-        ComponentLocation: "",
-        PartTotalTime: "",
-        PartTotalCycles: "",
-        PartTimeSince: "",
-        PartTimeSinceCode: "",
+        ComponentName: detailsData?.SdrDetails?.ComponentDetails?.ComponentName || "",
+        ManufacturerName: detailsData?.SdrDetails?.ComponentDetails?.ManufacturerName || "",
+        PartNumber: detailsData?.SdrDetails?.ComponentDetails?.PartNumber || "",
+        SerialNumber: detailsData?.SdrDetails?.ComponentDetails?.SerialNumber || "",
+        ModelNumber: detailsData?.SdrDetails?.ComponentDetails?.ModelNumber || "",
+        ComponentLocation: detailsData?.SdrDetails?.ComponentDetails?.ComponentLocation || "",
+        ComponentTotalTime: detailsData?.SdrDetails?.ComponentDetails?.ComponentTotalTime || "",
+        ComponentTotalCycles: detailsData?.SdrDetails?.ComponentDetails?.ComponentTotalCycles || "",
+        ComponentTimeSince: detailsData?.SdrDetails?.ComponentDetails?.ComponentTimeSince || "",
+        ComponentTimeSinceCode:
+          detailsData?.SdrDetails?.ComponentDetails?.ComponentTimeSinceCode || "",
       },
       LocationDetails: {
         ZoneId: detailsData?.LocationDetails?.ZoneId || 0,
         DefectLocationIdentifier: "",
         CoordinateLocationDetails: detailsData?.LocationDetails?.CoordinateLocationDetails || "",
       },
-      FlightNumber: logpageData?.FleetInfo?.FlightNumber || "",
+      FlightNumber: detailsData?.FleetInfo?.FlightNumber || "",
       IsMajorRepair: detailsData?.SdrDetails?.IsMajorRepair || false,
       IsSdrReportable: detailsData?.SdrDetails?.IsSdrReportable || false,
     }),
-    [detailsData, followUpFlag, logpageData, profileData, selectedSdr]
+    [detailsData, followUpFlag, profileData, selectedSdr]
   );
 
   useEffect(() => {
@@ -1239,22 +1262,22 @@ const ViewSdrData = ({
                       <ListItem>
                         {editable ? (
                           <TextField
-                            name="ComponentDetails.ComponentManufacturerName"
-                            value={values?.ComponentDetails?.ComponentManufacturerName}
+                            name="ComponentDetails.ManufacturerName"
+                            value={values?.ComponentDetails?.ManufacturerName}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
-                              !!touched.ComponentDetails?.ComponentManufacturerName &&
-                              !!errors.ComponentDetails?.ComponentManufacturerName
+                              !!touched.ComponentDetails?.ManufacturerName &&
+                              !!errors.ComponentDetails?.ManufacturerName
                             }
                             helperText={
-                              !!touched.ComponentDetails?.ComponentManufacturerName &&
-                              errors.ComponentDetails?.ComponentManufacturerName
+                              !!touched.ComponentDetails?.ManufacturerName &&
+                              errors.ComponentDetails?.ManufacturerName
                             }
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values?.ComponentDetails?.ComponentManufacturerName || "--"
+                          values?.ComponentDetails?.ManufacturerName || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1262,22 +1285,22 @@ const ViewSdrData = ({
                       <ListItem>
                         {editable ? (
                           <TextField
-                            name="ComponentDetails.ComponentPartNumber"
-                            value={values?.ComponentDetails?.ComponentPartNumber}
+                            name="ComponentDetails.PartNumber"
+                            value={values?.ComponentDetails?.PartNumber}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
-                              !!touched.ComponentDetails?.ComponentPartNumber &&
-                              !!errors.ComponentDetails?.ComponentPartNumber
+                              !!touched.ComponentDetails?.PartNumber &&
+                              !!errors.ComponentDetails?.PartNumber
                             }
                             helperText={
-                              !!touched.ComponentDetails?.ComponentPartNumber &&
-                              errors.ComponentDetails?.ComponentPartNumber
+                              !!touched.ComponentDetails?.PartNumber &&
+                              errors.ComponentDetails?.PartNumber
                             }
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values?.ComponentDetails?.ComponentPartNumber || "--"
+                          values?.ComponentDetails?.PartNumber || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1304,22 +1327,22 @@ const ViewSdrData = ({
                       <ListItem>
                         {editable ? (
                           <TextField
-                            name="ComponentDetails.ComponentPartSerialNumber"
-                            value={values?.ComponentDetails?.ComponentPartSerialNumber}
+                            name="ComponentDetails.SerialNumber"
+                            value={values?.ComponentDetails?.SerialNumber}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
-                              !!touched.ComponentDetails?.ComponentPartSerialNumber &&
-                              !!errors.ComponentDetails?.ComponentPartSerialNumber
+                              !!touched.ComponentDetails?.SerialNumber &&
+                              !!errors.ComponentDetails?.SerialNumber
                             }
                             helperText={
-                              !!touched.ComponentDetails?.ComponentPartSerialNumber &&
-                              errors.ComponentDetails?.ComponentPartSerialNumber
+                              !!touched.ComponentDetails?.SerialNumber &&
+                              errors.ComponentDetails?.SerialNumber
                             }
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values?.ComponentDetails?.ComponentPartSerialNumber || "--"
+                          values?.ComponentDetails?.SerialNumber || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1327,22 +1350,22 @@ const ViewSdrData = ({
                       <ListItem>
                         {editable ? (
                           <TextField
-                            name="ComponentDetails.ComponentPartModelNumber"
-                            value={values?.ComponentDetails?.ComponentPartModelNumber}
+                            name="ComponentDetails.ModelNumber"
+                            value={values?.ComponentDetails?.ModelNumber}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
-                              !!touched.ComponentDetails?.ComponentPartModelNumber &&
-                              !!errors.ComponentDetails?.ComponentPartModelNumber
+                              !!touched.ComponentDetails?.ModelNumber &&
+                              !!errors.ComponentDetails?.ModelNumber
                             }
                             helperText={
-                              !!touched.ComponentDetails?.ComponentPartModelNumber &&
-                              errors.ComponentDetails?.ComponentPartModelNumber
+                              !!touched.ComponentDetails?.ModelNumber &&
+                              errors.ComponentDetails?.ModelNumber
                             }
                             className={"sdr-status-edit"}
                           />
                         ) : (
-                          values?.ComponentDetails?.ComponentPartModelNumber || "--"
+                          values?.ComponentDetails?.ModelNumber || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1392,24 +1415,24 @@ const ViewSdrData = ({
                       <ListItem>
                         {editable ? (
                           <TextField
-                            name="ComponentDetails.PartTotalTime"
+                            name="ComponentDetails.ComponentTotalTime"
                             type="number"
-                            value={values?.ComponentDetails?.PartTotalTime}
+                            value={values?.ComponentDetails?.ComponentTotalTime}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
-                              !!touched.ComponentDetails?.PartTotalTime &&
-                              !!errors.ComponentDetails?.PartTotalTime
+                              !!touched.ComponentDetails?.ComponentTotalTime &&
+                              !!errors.ComponentDetails?.ComponentTotalTime
                             }
                             helperText={
-                              !!touched.ComponentDetails?.PartTotalTime &&
-                              errors.ComponentDetails?.PartTotalTime
+                              !!touched.ComponentDetails?.ComponentTotalTime &&
+                              errors.ComponentDetails?.ComponentTotalTime
                             }
                             className={"sdr-status-edit"}
                             placeholder="Up to 3 decimals"
                           />
                         ) : (
-                          values?.ComponentDetails?.PartTotalTime || "--"
+                          values?.ComponentDetails?.ComponentTotalTime || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1417,24 +1440,24 @@ const ViewSdrData = ({
                       <ListItem>
                         {editable ? (
                           <TextField
-                            name="ComponentDetails.PartTotalCycles"
+                            name="ComponentDetails.ComponentTotalCycles"
                             type="number"
-                            value={values?.ComponentDetails?.PartTotalCycles}
+                            value={values?.ComponentDetails?.ComponentTotalCycles}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
-                              !!touched.ComponentDetails?.PartTotalCycles &&
-                              !!errors.ComponentDetails?.PartTotalCycles
+                              !!touched.ComponentDetails?.ComponentTotalCycles &&
+                              !!errors.ComponentDetails?.ComponentTotalCycles
                             }
                             helperText={
-                              !!touched.ComponentDetails?.PartTotalCycles &&
-                              errors.ComponentDetails?.PartTotalCycles
+                              !!touched.ComponentDetails?.ComponentTotalCycles &&
+                              errors.ComponentDetails?.ComponentTotalCycles
                             }
                             className={"sdr-status-edit"}
                             placeholder="Up to 3 decimals"
                           />
                         ) : (
-                          values?.ComponentDetails?.PartTotalCycles || "--"
+                          values?.ComponentDetails?.ComponentTotalCycles || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1442,24 +1465,24 @@ const ViewSdrData = ({
                       <ListItem>
                         {editable ? (
                           <TextField
-                            name="ComponentDetails.PartTimeSince"
+                            name="ComponentDetails.ComponentTimeSince"
                             type="number"
-                            value={values?.ComponentDetails?.PartTimeSince}
+                            value={values?.ComponentDetails?.ComponentTimeSince}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
-                              !!touched.ComponentDetails?.PartTimeSince &&
-                              !!errors.ComponentDetails?.PartTimeSince
+                              !!touched.ComponentDetails?.ComponentTimeSince &&
+                              !!errors.ComponentDetails?.ComponentTimeSince
                             }
                             helperText={
-                              !!touched.ComponentDetails?.PartTimeSince &&
-                              errors.ComponentDetails?.PartTimeSince
+                              !!touched.ComponentDetails?.ComponentTimeSince &&
+                              errors.ComponentDetails?.ComponentTimeSince
                             }
                             className={"sdr-status-edit"}
                             placeholder="Up to 3 decimals"
                           />
                         ) : (
-                          values?.ComponentDetails?.PartTimeSince || "--"
+                          values?.ComponentDetails?.ComponentTimeSince || "--"
                         )}
                       </ListItem>
                     </Grid>
@@ -1476,25 +1499,25 @@ const ViewSdrData = ({
                       <ListItem>
                         {editable ? (
                           <SimpleSingleSelect
-                            name="ComponentDetails.PartTimeSinceCode"
-                            value={values?.ComponentDetails?.PartTimeSinceCode || ""}
+                            name="ComponentDetails.ComponentTimeSinceCode"
+                            value={values?.ComponentDetails?.ComponentTimeSinceCode || ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={
-                              !!touched?.ComponentDetails?.PartTimeSinceCode &&
-                              !!errors?.ComponentDetails?.PartTimeSinceCode
+                              !!touched?.ComponentDetails?.ComponentTimeSinceCode &&
+                              !!errors?.ComponentDetails?.ComponentTimeSinceCode
                             }
                             helperText={
-                              !!touched?.ComponentDetails?.PartTimeSinceCode &&
-                              errors?.ComponentDetails?.PartTimeSinceCode
+                              !!touched?.ComponentDetails?.ComponentTimeSinceCode &&
+                              errors?.ComponentDetails?.ComponentTimeSinceCode
                             }
                             options={PartTimeSinceCodeOptions.sort(
                               (a, b) => a.DisplayOrder - b.DisplayOrder
                             ).map((r) => r.Description)}
-                            id="ComponentDetails.PartTimeSinceCode"
+                            id="ComponentDetails.ComponentTimeSinceCode"
                           />
                         ) : (
-                          values?.ComponentDetails?.PartTimeSinceCode || "--"
+                          values?.ComponentDetails?.ComponentTimeSinceCode || "--"
                         )}
                       </ListItem>
                     </Grid>

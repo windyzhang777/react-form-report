@@ -4,10 +4,6 @@ export interface ViewLogpageRes {
   Errors: any[];
   ErrorCode: null;
   Result: ViewLogpageResResult;
-  TailNumber?: string;
-  LogpageNumber?: string;
-  Station?: string;
-  WorkloadRequest?: WorkloadRequest;
 }
 
 export interface ViewLogpageResResult {
@@ -46,35 +42,4 @@ export interface Fuselagestation {
   Description: string;
   DisplayOrder: number;
   Id: number;
-}
-
-export interface WorkloadRequest {
-  TailNumber: string;
-  Station: string;
-  FlightNumber: string;
-  NextFlightNumber: string;
-  ArrivalDate: string;
-  ScheduledArrivalDate: string;
-  BestArrivalDate: string;
-  EstimatedDepartureDate: string;
-  EstimatedArrivalDate: string;
-  DepartureDate: string;
-  NextScheduledDepDate: string;
-  IsThruFlight: boolean;
-  IsEtops: boolean;
-  LocalDate: string;
-  EmployeeId: string;
-  IsModernized: boolean;
-  IsVisitSchedule: boolean;
-  ShiftNumber: number;
-  IsLineAircraft: boolean;
-  LineStation: string;
-  BaseStation: string;
-  IsEtaskV3: boolean;
-  IsSetUpStandaAlone: boolean;
-  IsBaseCrew: boolean;
-  ActualInductionDate: string;
-  PlannedETRDate: string;
-  IsInducted: boolean;
-  IsLastSevenDaysSearch: boolean;
 }

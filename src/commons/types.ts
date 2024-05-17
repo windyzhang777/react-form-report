@@ -1,7 +1,7 @@
 import { CreateSfrReq } from "src/types/CreateSfrReq";
 import { ExtractSDRRecordsResResult } from "src/types/ExtractSdrRecordsRes";
 import { GetAllEsfrRecordsResResult, Status } from "src/types/GetAllEsfrRecordsRes";
-import { AircraftDetails, GetApprovedSDRResResult } from "src/types/GetApprovedSdrRes";
+import { GetApprovedSDRResResult } from "src/types/GetApprovedSdrRes";
 import { GetCpcpReportReq } from "src/types/GetCpcpReportReq";
 import { GetCpcpReportResResult } from "src/types/GetCpcpReportRes";
 import { GetCtnResResult } from "src/types/GetCtnRes";
@@ -131,36 +131,17 @@ export interface IViewSearchSdrResult
     GetPartsDiscrepancyReportResResult {}
 
 export interface ISaveSdrValues extends UpsertSDRSnapshotReq {
-  Powerplant: Omit<AircraftDetails, "RegistryNNumber">;
   AtaCode: string;
   FlightNumber: string;
 }
 
 export interface IApproveSfrValues extends UpsertSDRSnapshotReq, GetSDREsfrRecordDetailsResResult {
-  ComponentDetails: IComponentDetails & AdditionalPartValues;
   FlightNumber: string;
 }
 
 export interface IEditSdrValues extends UpsertSDRSnapshotReq {
   LocationDetails: ILocationDetails;
-  ComponentDetails: IComponentDetails & AdditionalPartValues;
   FlightNumber: string;
-}
-
-export interface AdditionalPartValues {
-  PartTotalTime: string;
-  PartTotalCycles: string;
-  PartTimeSince: string;
-  PartTimeSinceCode: string;
-}
-
-export interface IComponentDetails {
-  ComponentName: string;
-  ComponentManufacturerName: string;
-  ComponentPartNumber: string;
-  ComponentPartSerialNumber: string;
-  ComponentPartModelNumber: string;
-  ComponentLocation: string;
 }
 
 export interface ILocationDetails {

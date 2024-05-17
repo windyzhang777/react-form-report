@@ -14,13 +14,15 @@ import {
   SelectedStatus,
 } from "src/commons/types";
 import { UseFormContext } from "src/components/createsdr/UseFormContext";
-import { DATETIME_REQUEST, DATE_HTML_DISPLAY, handleFocus, handleScroll } from "src/helpers";
+import { DATE_HTML_DISPLAY, formatFullName, handleFocus, handleScroll } from "src/helpers";
 import { resetLogpageDataSuccess } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
 import ValidationSchema, {
+  commonSchema,
   errMsg,
   removeNonAlphaNumeric,
+  removeNonAlphabet,
   removeNonNumeric,
   removeNonNumericDecimal,
 } from "src/validationSchema";
@@ -31,6 +33,7 @@ export interface ICreateSdrDataProps {
   createSdrFlag: string;
   handleFetchLogpageData: (a: string) => void;
   handleUpsertSdrSnapshot: (a: ISaveSdrValues) => void;
+  hasLogpageNumberExist: boolean;
   logpageNumberValue: string;
   setCreateSdrFlag: Dispatch<SetStateAction<string>>;
   setFormTouched: Dispatch<SetStateAction<boolean>>;
@@ -41,6 +44,7 @@ const CreateSdrData = ({
   createSdrFlag,
   handleFetchLogpageData,
   handleUpsertSdrSnapshot,
+  hasLogpageNumberExist,
   logpageNumberValue,
   setCreateSdrFlag,
   setFormTouched,
@@ -103,9 +107,16 @@ const CreateSdrData = ({
         TotalTime: String(logpageData?.FleetInfo?.TotalAircraftTime || ""),
         TotalCycles: logpageData?.FleetInfo?.TotalAircraftCycles || "",
       },
+      EngineDetails: {
+        EngineManufacturerName: "",
+        EngineModel: "",
+        EngineSerialNumber: "",
+        EngineTotalCycles: "",
+        EngineTotalTime: "",
+      },
       LogPageCreationDate: logpageData?.FleetInfo?.Date || "",
       OperatorControlNumber: "",
-      CreatedDate: moment().format(DATETIME_REQUEST),
+      CreatedDate: "",
       IsExtracted: false,
       Station: logpageData?.FleetInfo?.Station || "",
       AircraftNumber: logpageData?.FleetInfo?.TailNumber || "",
@@ -115,37 +126,55 @@ const CreateSdrData = ({
       StageId: 0,
       StatusId: SelectedStatus.Approved,
       HowDiscoveredId: 0,
-      EmployeeId: `${profileData?.EmployeeId}`,
-      EmployeeName: `${profileData?.FirstName} ${profileData?.LastName}`,
+      EmployeeId: profileData?.EmployeeId || "",
+      EmployeeName: formatFullName(profileData?.FirstName, profileData?.LastName),
       PartDetails: {
-        PartTrackingNumber: "",
-        PartManufacturerSerialNumber: "",
-        PartSerialNumber: "",
-        PartLocation: "",
         PartCondition: "",
-        PartDescription: "",
-        PartTotalTime: "",
-        PartTotalCycles: "",
-        PartTimeSince: "",
         PartCycleSince: "",
+        PartDescription: "",
+        PartLocation: "",
+        PartManufacturerName: "",
+        PartManufacturerPartNumber: "",
+        PartManufacturerSerialNumber: "",
+        PartName: "",
+        PartSerialNumber: "",
+        PartTimeSince: "",
+        PartTotalCycles: "",
+        PartTotalTime: "",
+        PartTrackingNumber: "",
+        PartType: "",
       },
-      createdBy: `${profileData?.EmployeeId}`,
+      CreatedBy: profileData?.EmployeeId || "",
       CreatedbyFirstName: profileData?.FirstName || "",
       CreatedbyLastName: profileData?.LastName || "",
       ModifiedbyFirstName: profileData?.FirstName || "",
       ModifiedbyLastName: profileData?.LastName || "",
-      Powerplant: {
+      Engine: {
         Manufacturer: "",
         Model: "",
         SerialNumber: "",
         TotalTime: "",
         TotalCycles: "",
       },
+      ComponentDetails: {
+        ComponentName: "",
+        ManufacturerName: "",
+        PartNumber: "",
+        SerialNumber: "",
+        ModelNumber: "",
+        ComponentLocation: "",
+        ComponentTotalTime: "",
+        ComponentTotalCycles: "",
+        ComponentTimeSince: "",
+        ComponentTimeSinceCode: "",
+      },
       AtaCode: logpageData?.FleetInfo?.ATACode || "",
       FlightNumber: logpageData?.FleetInfo?.FlightNumber || "",
       CorrectiveAction: logpageData?.FleetInfo?.CorrectiveActions || "",
       IsMajorRepair: false,
       IsSdrReportable: false,
+      IsSdrDowngraded: false,
+      IsSdrCompleted: false,
     }),
     [detailsData, logpageData, logpageNumberValue, profileData]
   );
@@ -165,7 +194,7 @@ const CreateSdrData = ({
   useEffect(() => {
     handleScroll(logPageNumberRef);
     handleFocus(logPageNumberRef);
-  }, [logPageNumberRef]);
+  }, [logPageNumberRef, logpageNumberValue]);
 
   return (
     <FlexColumn className={"create-sdr h-full relative"}>
@@ -191,9 +220,20 @@ const CreateSdrData = ({
                 ? createError({
                     message: "Re-fetch Log Page Data",
                   })
+                : hasLogpageNumberExist
+                ? createError({ message: "Logpage Number Exists" })
                 : true;
             }
           ),
+          PartDetails: object().shape({
+            PartManufacturerSerialNumber: string().required(errMsg.required),
+            PartManufacturerName: string().required(errMsg.required),
+            PartCondition: string().required(errMsg.required),
+            PartLocation: string().required(errMsg.required),
+            PartTotalTime: commonSchema.number8D3,
+            PartTotalCycles: commonSchema.number8D3,
+            PartTimeSince: commonSchema.number8D3,
+          }),
           AircraftNumber: string(),
           SfrAdditionalDetails: object().nullable(),
         })}
@@ -291,6 +331,14 @@ const CreateSdrData = ({
                           value={values.AircraftDetails?.Manufacturer || ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
+                          error={
+                            !!touched?.AircraftDetails?.Manufacturer &&
+                            !!errors?.AircraftDetails?.Manufacturer
+                          }
+                          helperText={
+                            !!touched?.AircraftDetails?.Manufacturer &&
+                            errors?.AircraftDetails?.Manufacturer
+                          }
                           className={"sdr-status-edit"}
                         />
                       ) : (
@@ -307,6 +355,12 @@ const CreateSdrData = ({
                           value={values.AircraftDetails?.Model || ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
+                          error={
+                            !!touched?.AircraftDetails?.Model && !!errors?.AircraftDetails?.Model
+                          }
+                          helperText={
+                            !!touched?.AircraftDetails?.Model && errors?.AircraftDetails?.Model
+                          }
                           className={"sdr-status-edit"}
                         />
                       ) : (
@@ -323,6 +377,14 @@ const CreateSdrData = ({
                           value={values.AircraftDetails?.SerialNumber || ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
+                          error={
+                            !!touched?.AircraftDetails?.SerialNumber &&
+                            !!errors?.AircraftDetails?.SerialNumber
+                          }
+                          helperText={
+                            !!touched?.AircraftDetails?.SerialNumber &&
+                            errors?.AircraftDetails?.SerialNumber
+                          }
                           className={"sdr-status-edit"}
                         />
                       ) : (
@@ -349,6 +411,14 @@ const CreateSdrData = ({
                           value={values.AircraftDetails?.TotalTime || ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
+                          error={
+                            !!touched?.AircraftDetails?.TotalTime &&
+                            !!errors?.AircraftDetails?.TotalTime
+                          }
+                          helperText={
+                            !!touched?.AircraftDetails?.TotalTime &&
+                            errors?.AircraftDetails?.TotalTime
+                          }
                           className={"sdr-status-edit"}
                         />
                       ) : (
@@ -365,6 +435,14 @@ const CreateSdrData = ({
                           value={values.AircraftDetails?.TotalCycles || ""}
                           onChange={handleChange}
                           onBlur={handleBlur}
+                          error={
+                            !!touched?.AircraftDetails?.TotalCycles &&
+                            !!errors?.AircraftDetails?.TotalCycles
+                          }
+                          helperText={
+                            !!touched?.AircraftDetails?.TotalCycles &&
+                            errors?.AircraftDetails?.TotalCycles
+                          }
                           className={"sdr-status-edit"}
                         />
                       ) : (
@@ -375,18 +453,18 @@ const CreateSdrData = ({
                 </Grid>
                 <Grid className={"sdr-status-section-title"} container spacing={3}>
                   <Grid item xs={12}>
-                    <ListItem>Powerplant</ListItem>
+                    <ListItem>Engine</ListItem>
                   </Grid>
                 </Grid>
                 <Grid className={"sdr-status-item"} container spacing={3}>
                   <Grid item xs={4}>
-                    <ListItem disabled>Manufacturer</ListItem>
+                    <ListItem>Manufacturer</ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                    <ListItem disabled>Model/Series</ListItem>
+                    <ListItem>Model/Series</ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                    <ListItem disabled>Serial Number</ListItem>
+                    <ListItem>Serial Number</ListItem>
                   </Grid>
                 </Grid>
                 <Grid className={"sdr-status-description"} container spacing={3}>
@@ -394,12 +472,25 @@ const CreateSdrData = ({
                     <ListItem>
                       {editable ? (
                         <TextField
-                          name="Powerplant.Manufacturer"
-                          disabled
-                          value={values.Powerplant?.Manufacturer || ""}
-                          onChange={handleChange}
+                          name="EngineDetails.EngineManufacturerName"
+                          value={values?.EngineDetails?.EngineManufacturerName || ""}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "EngineDetails.EngineManufacturerName",
+                              removeNonAlphaNumeric(e.target.value)
+                            )
+                          }
                           onBlur={handleBlur}
+                          error={
+                            !!touched?.EngineDetails?.EngineManufacturerName &&
+                            !!errors?.EngineDetails?.EngineManufacturerName
+                          }
+                          helperText={
+                            !!touched?.EngineDetails?.EngineManufacturerName &&
+                            errors?.EngineDetails?.EngineManufacturerName
+                          }
                           className={"sdr-status-edit"}
+                          inputProps={{ maxLength: 15 }}
                         />
                       ) : (
                         ""
@@ -410,12 +501,25 @@ const CreateSdrData = ({
                     <ListItem>
                       {editable ? (
                         <TextField
-                          name="Powerplant.Model"
-                          disabled
-                          value={values.Powerplant?.Model || ""}
-                          onChange={handleChange}
+                          name="EngineDetails.EngineModel"
+                          value={values?.EngineDetails?.EngineModel || ""}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "EngineDetails.EngineModel",
+                              removeNonAlphaNumeric(e.target.value)
+                            )
+                          }
                           onBlur={handleBlur}
+                          error={
+                            !!touched?.EngineDetails?.EngineModel &&
+                            !!errors?.EngineDetails?.EngineModel
+                          }
+                          helperText={
+                            !!touched?.EngineDetails?.EngineModel &&
+                            errors?.EngineDetails?.EngineModel
+                          }
                           className={"sdr-status-edit"}
+                          inputProps={{ maxLength: 20 }}
                         />
                       ) : (
                         ""
@@ -426,12 +530,25 @@ const CreateSdrData = ({
                     <ListItem>
                       {editable ? (
                         <TextField
-                          name="Powerplant.SerialNumber"
-                          disabled
-                          value={values.Powerplant?.SerialNumber || ""}
-                          onChange={handleChange}
+                          name="EngineDetails.EngineSerialNumber"
+                          value={values?.EngineDetails?.EngineSerialNumber || ""}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "EngineDetails.EngineSerialNumber",
+                              removeNonAlphaNumeric(e.target.value)
+                            )
+                          }
                           onBlur={handleBlur}
+                          error={
+                            !!touched?.EngineDetails?.EngineSerialNumber &&
+                            !!errors?.EngineDetails?.EngineSerialNumber
+                          }
+                          helperText={
+                            !!touched?.EngineDetails?.EngineSerialNumber &&
+                            errors?.EngineDetails?.EngineSerialNumber
+                          }
                           className={"sdr-status-edit"}
+                          inputProps={{ maxLength: 12 }}
                         />
                       ) : (
                         ""
@@ -441,10 +558,10 @@ const CreateSdrData = ({
                 </Grid>
                 <Grid className={"sdr-status-item"} container spacing={3}>
                   <Grid item xs={4}>
-                    <ListItem disabled>Total Time</ListItem>
+                    <ListItem>Total Time</ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                    <ListItem disabled>Total Cycles</ListItem>
+                    <ListItem>Total Cycles</ListItem>
                   </Grid>
                 </Grid>
                 <Grid className={"sdr-status-description"} container spacing={3}>
@@ -452,12 +569,25 @@ const CreateSdrData = ({
                     <ListItem>
                       {editable ? (
                         <TextField
-                          name="Powerplant.TotalTime"
-                          disabled
-                          value={values.Powerplant?.TotalTime || ""}
-                          onChange={handleChange}
+                          name="EngineDetails.EngineTotalTime"
+                          value={values?.EngineDetails?.EngineTotalTime || ""}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "EngineDetails.EngineTotalTime",
+                              removeNonNumericDecimal(e.target.value)
+                            )
+                          }
                           onBlur={handleBlur}
+                          error={
+                            !!touched?.EngineDetails?.EngineTotalTime &&
+                            !!errors?.EngineDetails?.EngineTotalTime
+                          }
+                          helperText={
+                            !!touched?.EngineDetails?.EngineTotalTime &&
+                            errors?.EngineDetails?.EngineTotalTime
+                          }
                           className={"sdr-status-edit"}
+                          placeholder="Up to 3 decimals"
                         />
                       ) : (
                         ""
@@ -468,11 +598,23 @@ const CreateSdrData = ({
                     <ListItem>
                       {editable ? (
                         <TextField
-                          name="Powerplant.TotalCycles"
-                          disabled
-                          value={values.Powerplant?.TotalCycles || ""}
-                          onChange={handleChange}
+                          name="EngineDetails.EngineTotalCycles"
+                          value={values?.EngineDetails?.EngineTotalCycles || ""}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "EngineDetails.EngineTotalCycles",
+                              removeNonNumeric(e.target.value)
+                            )
+                          }
                           onBlur={handleBlur}
+                          error={
+                            !!touched?.EngineDetails?.EngineTotalCycles &&
+                            !!errors?.EngineDetails?.EngineTotalCycles
+                          }
+                          helperText={
+                            !!touched?.EngineDetails?.EngineTotalCycles &&
+                            errors?.EngineDetails?.EngineTotalCycles
+                          }
                           className={"sdr-status-edit"}
                         />
                       ) : (
@@ -511,19 +653,19 @@ const CreateSdrData = ({
                       {editable ? (
                         <TextField
                           type="date"
-                          name="LogPageCreationDate"
-                          value={moment(values.LogPageCreationDate).format(DATE_HTML_DISPLAY)}
+                          name="CreatedDate"
+                          value={moment(values.CreatedDate).format(DATE_HTML_DISPLAY)}
                           onChange={(e) => {
                             setFieldValue(
-                              "LogPageCreationDate",
+                              "CreatedDate",
                               moment(e.target.value).isValid()
                                 ? moment(e.target.value).format(DATE_HTML_DISPLAY)
                                 : ""
                             );
                           }}
                           onBlur={handleBlur}
-                          error={!!touched.LogPageCreationDate && !!errors.LogPageCreationDate}
-                          helperText={!!touched.LogPageCreationDate && errors.LogPageCreationDate}
+                          error={!!touched.CreatedDate && !!errors.CreatedDate}
+                          helperText={!!touched.CreatedDate && errors.CreatedDate}
                           className={"sdr-status-edit"}
                         />
                       ) : (
@@ -800,13 +942,13 @@ const CreateSdrData = ({
                 <Box className={"sdr-status-title"}>Specific Part Causing Problem</Box>
                 <Grid className={"sdr-status-item"} container spacing={3}>
                   <Grid item xs={4}>
-                    <ListItem>MFG Part Number</ListItem>
+                    <ListItem required>MFG Part Number</ListItem>
                   </Grid>
                   <Grid item xs={4}>
                     <ListItem>MFG Serial Number</ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                    <ListItem>Keyword Description</ListItem>
+                    <ListItem required>Part Name</ListItem>
                   </Grid>
                 </Grid>
                 <Grid className={"sdr-status-description"} container spacing={3}>
@@ -860,6 +1002,7 @@ const CreateSdrData = ({
                             errors.PartDetails?.PartSerialNumber
                           }
                           className={"sdr-status-edit"}
+                          inputProps={{ maxLength: 12 }}
                         />
                       ) : (
                         ""
@@ -870,22 +1013,19 @@ const CreateSdrData = ({
                     <ListItem>
                       {editable ? (
                         <TextField
-                          name="PartDetails.PartDescription"
-                          value={values.PartDetails?.PartDescription || ""}
-                          onChange={(e) =>
+                          name="PartDetails.PartName"
+                          value={values.PartDetails?.PartName || ""}
+                          onChange={(e) => {
                             setFieldValue(
-                              "PartDetails.PartDescription",
+                              "PartDetails.PartName",
                               removeNonAlphaNumeric(e.target.value)
-                            )
-                          }
+                            );
+                            setFieldValue("PartName", removeNonAlphaNumeric(e.target.value));
+                          }}
                           onBlur={handleBlur}
-                          error={
-                            !!touched.PartDetails?.PartDescription &&
-                            !!errors.PartDetails?.PartDescription
-                          }
+                          error={!!touched.PartDetails?.PartName && !!errors.PartDetails?.PartName}
                           helperText={
-                            !!touched.PartDetails?.PartDescription &&
-                            errors.PartDetails?.PartDescription
+                            !!touched.PartDetails?.PartName && errors.PartDetails?.PartName
                           }
                           className={"sdr-status-edit"}
                         />
@@ -897,16 +1037,44 @@ const CreateSdrData = ({
                 </Grid>
                 <Grid className={"sdr-status-item"} container spacing={3}>
                   <Grid item xs={4}>
-                    <ListItem>Part Condition</ListItem>
+                    <ListItem required>{"Manufacturer's Name"}</ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                    <ListItem>Part Location</ListItem>
+                    <ListItem required>Part Condition</ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                    <ListItem>Part Total Time (hours)</ListItem>
+                    <ListItem required>Part Location</ListItem>
                   </Grid>
                 </Grid>
                 <Grid className={"sdr-status-description"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="PartDetails.PartManufacturerName"
+                          value={values?.PartDetails?.PartManufacturerName}
+                          onChange={(e) => {
+                            setFieldValue(
+                              "PartDetails.PartManufacturerName",
+                              removeNonAlphabet(e.target.value)
+                            );
+                          }}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.PartDetails?.PartManufacturerName &&
+                            !!errors.PartDetails?.PartManufacturerName
+                          }
+                          helperText={
+                            !!touched.PartDetails?.PartManufacturerName &&
+                            errors.PartDetails?.PartManufacturerName
+                          }
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        values?.PartDetails?.PartManufacturerName || "--"
+                      )}
+                    </ListItem>
+                  </Grid>
                   <Grid item xs={4}>
                     <ListItem>
                       {editable ? (
@@ -962,6 +1130,19 @@ const CreateSdrData = ({
                       )}
                     </ListItem>
                   </Grid>
+                </Grid>
+                <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>Part Total Time (hours)</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>Part Total Cycles</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>Part Time Since Code</ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-description"} container spacing={3}>
                   <Grid item xs={4}>
                     <ListItem>
                       {editable ? (
@@ -991,19 +1172,6 @@ const CreateSdrData = ({
                       )}
                     </ListItem>
                   </Grid>
-                </Grid>
-                <Grid className={"sdr-status-item"} container spacing={3}>
-                  <Grid item xs={4}>
-                    <ListItem>Part Total Cycles</ListItem>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <ListItem>Part Time Since (hours)</ListItem>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <ListItem>Part Time Since Code</ListItem>
-                  </Grid>
-                </Grid>
-                <Grid className={"sdr-status-description"} container spacing={3}>
                   <Grid item xs={4}>
                     <ListItem>
                       {editable ? (
@@ -1036,6 +1204,39 @@ const CreateSdrData = ({
                   <Grid item xs={4}>
                     <ListItem>
                       {editable ? (
+                        <SimpleSingleSelect
+                          name="PartDetails.PartCycleSince"
+                          value={values?.PartDetails?.PartCycleSince || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched?.PartDetails?.PartCycleSince &&
+                            !!errors?.PartDetails?.PartCycleSince
+                          }
+                          helperText={
+                            !!touched?.PartDetails?.PartCycleSince &&
+                            errors?.PartDetails?.PartCycleSince
+                          }
+                          options={PartTimeSinceCodeOptions.sort(
+                            (a, b) => a.DisplayOrder - b.DisplayOrder
+                          ).map((r) => r.Description)}
+                          id="PartDetails.PartCycleSince"
+                        />
+                      ) : (
+                        values?.PartDetails?.PartCycleSince
+                      )}
+                    </ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>Part Time Since (hours)</ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-description"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
                         <TextField
                           name="PartDetails.PartTimeSince"
                           value={values?.PartDetails?.PartTimeSince}
@@ -1062,34 +1263,365 @@ const CreateSdrData = ({
                       )}
                     </ListItem>
                   </Grid>
+                </Grid>
+              </Box>
+
+              {/* Component/Assembly That Includes Defective Part */}
+              <Grid
+                className={"sdr-status-grid"}
+                sx={{
+                  borderLeft: 1,
+                  borderRight: 1,
+                  borderBottom: 1,
+                  borderColor: "#E6E6E6",
+                }}
+              >
+                <Grid className={"sdr-status-title"}>
+                  Component/Assembly That Includes Defective Part
+                </Grid>
+                <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>Component Name</ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem required={!!values.ComponentDetails.ComponentName}>
+                      {"Manufacturer's Name"}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem required={!!values.ComponentDetails.ComponentName}>
+                      Manufacturer Part Number
+                    </ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-description"} container spacing={3}>
                   <Grid item xs={4}>
                     <ListItem>
                       {editable ? (
-                        <SimpleSingleSelect
-                          name="PartDetails.PartCycleSince"
-                          value={values?.PartDetails?.PartCycleSince || ""}
-                          onChange={handleChange}
+                        <TextField
+                          name="ComponentDetails.ComponentName"
+                          value={values?.ComponentDetails?.ComponentName}
+                          onChange={(e) => {
+                            setFieldValue(
+                              "ComponentDetails.ComponentName",
+                              removeNonAlphaNumeric(e.target.value)
+                            );
+                          }}
                           onBlur={handleBlur}
                           error={
-                            !!touched?.PartDetails?.PartCycleSince &&
-                            !!errors?.PartDetails?.PartCycleSince
+                            !!touched.ComponentDetails?.ComponentName &&
+                            !!errors.ComponentDetails?.ComponentName
                           }
                           helperText={
-                            !!touched?.PartDetails?.PartCycleSince &&
-                            errors?.PartDetails?.PartCycleSince
+                            !!touched.ComponentDetails?.ComponentName &&
+                            errors.ComponentDetails?.ComponentName
                           }
-                          options={PartTimeSinceCodeOptions.sort(
-                            (a, b) => a.DisplayOrder - b.DisplayOrder
-                          ).map((r) => r.Description)}
-                          id="PartDetails.PartCycleSince"
+                          className={"sdr-status-edit"}
                         />
                       ) : (
-                        values?.PartDetails?.PartCycleSince
+                        values?.ComponentDetails.ComponentName || "--"
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="ComponentDetails.ManufacturerName"
+                          value={values?.ComponentDetails?.ManufacturerName}
+                          onChange={(e) => {
+                            setFieldValue(
+                              "ComponentDetails.ManufacturerName",
+                              removeNonAlphaNumeric(e.target.value)
+                            );
+                          }}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.ComponentDetails?.ManufacturerName &&
+                            !!errors.ComponentDetails?.ManufacturerName
+                          }
+                          helperText={
+                            !!touched.ComponentDetails?.ManufacturerName &&
+                            errors.ComponentDetails?.ManufacturerName
+                          }
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        values?.ComponentDetails?.ManufacturerName || "--"
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="ComponentDetails.PartNumber"
+                          value={values?.ComponentDetails?.PartNumber}
+                          onChange={(e) => {
+                            setFieldValue(
+                              "ComponentDetails.PartNumber",
+                              removeNonAlphaNumeric(e.target.value)
+                            );
+                          }}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.ComponentDetails?.PartNumber &&
+                            !!errors.ComponentDetails?.PartNumber
+                          }
+                          helperText={
+                            !!touched.ComponentDetails?.PartNumber &&
+                            errors.ComponentDetails?.PartNumber
+                          }
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        values?.ComponentDetails?.PartNumber || "--"
                       )}
                     </ListItem>
                   </Grid>
                 </Grid>
-              </Box>
+                <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem required={!!values.ComponentDetails.ComponentName}>
+                      Manufacturer Serial Number
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem required={!!values.ComponentDetails.ComponentName}>
+                      Manufacturer Model Number
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem required={!!values.ComponentDetails.ComponentName}>Location</ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-description"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="ComponentDetails.SerialNumber"
+                          value={values?.ComponentDetails?.SerialNumber}
+                          onChange={(e) => {
+                            setFieldValue(
+                              "ComponentDetails.SerialNumber",
+                              removeNonAlphaNumeric(e.target.value)
+                            );
+                          }}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.ComponentDetails?.SerialNumber &&
+                            !!errors.ComponentDetails?.SerialNumber
+                          }
+                          helperText={
+                            !!touched.ComponentDetails?.SerialNumber &&
+                            errors.ComponentDetails?.SerialNumber
+                          }
+                          className={"sdr-status-edit"}
+                        />
+                      ) : (
+                        values?.ComponentDetails?.SerialNumber || "--"
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="ComponentDetails.ModelNumber"
+                          value={values?.ComponentDetails?.ModelNumber}
+                          onChange={(e) => {
+                            setFieldValue(
+                              "ComponentDetails.ModelNumber",
+                              removeNonAlphaNumeric(e.target.value)
+                            );
+                          }}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.ComponentDetails?.ModelNumber &&
+                            !!errors.ComponentDetails?.ModelNumber
+                          }
+                          helperText={
+                            !!touched.ComponentDetails?.ModelNumber &&
+                            errors.ComponentDetails?.ModelNumber
+                          }
+                          className={"sdr-status-edit"}
+                          inputProps={{ maxLength: 20 }}
+                        />
+                      ) : (
+                        values?.ComponentDetails?.ModelNumber || "--"
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="ComponentDetails.ComponentLocation"
+                          value={values?.ComponentDetails?.ComponentLocation}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.ComponentDetails?.ComponentLocation &&
+                            !!errors.ComponentDetails?.ComponentLocation
+                          }
+                          helperText={
+                            !!touched.ComponentDetails?.ComponentLocation &&
+                            errors.ComponentDetails?.ComponentLocation
+                          }
+                          multiline
+                          maxRows={4}
+                          className={"sdr-status-edit textareaAutosize"}
+                          inputProps={{ maxLength: 50 }}
+                        />
+                      ) : (
+                        values?.ComponentDetails?.ComponentLocation || "--"
+                      )}
+                    </ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem required={!!values.ComponentDetails.ComponentName}>
+                      Part Total Time (hours)
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem required={!!values.ComponentDetails.ComponentName}>
+                      Part Total Cycles
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem required={!!values.ComponentDetails.ComponentName}>
+                      Part Time Since Code
+                    </ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-description"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="ComponentDetails.ComponentTotalTime"
+                          value={values?.ComponentDetails?.ComponentTotalTime}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "ComponentDetails.ComponentTotalTime",
+                              removeNonNumericDecimal(e.target.value)
+                            )
+                          }
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.ComponentDetails?.ComponentTotalTime &&
+                            !!errors.ComponentDetails?.ComponentTotalTime
+                          }
+                          helperText={
+                            !!touched.ComponentDetails?.ComponentTotalTime &&
+                            errors.ComponentDetails?.ComponentTotalTime
+                          }
+                          className={"sdr-status-edit"}
+                          placeholder="Up to 3 decimals"
+                        />
+                      ) : (
+                        values?.ComponentDetails?.ComponentTotalTime || "--"
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="ComponentDetails.ComponentTotalCycles"
+                          value={values?.ComponentDetails?.ComponentTotalCycles}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "ComponentDetails.ComponentTotalCycles",
+                              removeNonNumericDecimal(e.target.value)
+                            )
+                          }
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.ComponentDetails?.ComponentTotalCycles &&
+                            !!errors.ComponentDetails?.ComponentTotalCycles
+                          }
+                          helperText={
+                            !!touched.ComponentDetails?.ComponentTotalCycles &&
+                            errors.ComponentDetails?.ComponentTotalCycles
+                          }
+                          className={"sdr-status-edit"}
+                          placeholder="Up to 3 decimals"
+                        />
+                      ) : (
+                        values?.ComponentDetails?.ComponentTotalCycles || "--"
+                      )}
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <SimpleSingleSelect
+                          name="ComponentDetails.ComponentTimeSinceCode"
+                          value={values?.ComponentDetails?.ComponentTimeSinceCode || ""}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={
+                            !!touched?.ComponentDetails?.ComponentTimeSinceCode &&
+                            !!errors?.ComponentDetails?.ComponentTimeSinceCode
+                          }
+                          helperText={
+                            !!touched?.ComponentDetails?.ComponentTimeSinceCode &&
+                            errors?.ComponentDetails?.ComponentTimeSinceCode
+                          }
+                          options={PartTimeSinceCodeOptions.sort(
+                            (a, b) => a.DisplayOrder - b.DisplayOrder
+                          ).map((r) => r.Description)}
+                          id="ComponentDetails.ComponentTimeSinceCode"
+                        />
+                      ) : (
+                        values?.ComponentDetails?.ComponentTimeSinceCode || "--"
+                      )}
+                    </ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-item"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem required={!!values.ComponentDetails.ComponentName}>
+                      Part Time Since (hours)
+                    </ListItem>
+                  </Grid>
+                </Grid>
+                <Grid className={"sdr-status-description"} container spacing={3}>
+                  <Grid item xs={4}>
+                    <ListItem>
+                      {editable ? (
+                        <TextField
+                          name="ComponentDetails.ComponentTimeSince"
+                          value={values?.ComponentDetails?.ComponentTimeSince}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "ComponentDetails.ComponentTimeSince",
+                              removeNonNumericDecimal(e.target.value)
+                            )
+                          }
+                          onBlur={handleBlur}
+                          error={
+                            !!touched.ComponentDetails?.ComponentTimeSince &&
+                            !!errors.ComponentDetails?.ComponentTimeSince
+                          }
+                          helperText={
+                            !!touched.ComponentDetails?.ComponentTimeSince &&
+                            errors.ComponentDetails?.ComponentTimeSince
+                          }
+                          className={"sdr-status-edit"}
+                          placeholder="Up to 3 decimals"
+                        />
+                      ) : (
+                        values?.ComponentDetails?.ComponentTimeSince || "--"
+                      )}
+                    </ListItem>
+                  </Grid>
+                </Grid>
+              </Grid>
             </div>
 
             <ButtonGroup

@@ -30,11 +30,11 @@ export enum LogpageStatus {
   Carry = "CARRY",
   Cleared = "Cleared",
   Defer = "DEFER",
-  OpenD = "OPEN-D",
-  OpenIP = "OPEN-IP",
   OpenO = "OPEN-O",
-  OpenTa = "OPEN-TA",
-  OpenTp = "OPEN-TP",
+  OpenTP = "Open-TP",
+  OpenTA = "Open-TA",
+  OpenIA = "Open-IA",
+  OpenIR = "Open-IR",
   Voided = "Voided",
 }
 
