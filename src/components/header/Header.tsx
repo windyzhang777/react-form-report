@@ -6,7 +6,7 @@ import { FlexColumn } from "src/commons/Box";
 import ButtonGroup from "src/commons/ButtonGroup";
 import RouterLink from "src/commons/Link";
 import Menu from "src/commons/Menu";
-import { DATETIME_REFRESH } from "src/helpers";
+import { DATETIME_REFRESH, clearLocalStorage } from "src/helpers";
 import RefreshIcon from "src/icons/Refresh.png";
 import ProfileIcon from "src/icons/Traveler.png";
 import UnitedLogo from "src/icons/logo-united.svg";
@@ -34,11 +34,17 @@ const Header = ({ resetApp }: IHeaderProps) => {
     setLastRefreshed(moment().format(DATETIME_REFRESH));
   };
 
-  const onLogoutClick = () => {
-    const logoutURL = config.REACT_APP_LOGOUT_URL;
-    window.open(logoutURL, "_self");
+  const handleLogout = () => {
     sessionStorage.clear();
+    clearLocalStorage();
+    window.location.href = config.REACT_APP_LOGOUT_URL;
   };
+
+  const handleSiteFeedback = () =>
+    window.open(
+      `${process.env.REACT_APP_URL_AMT_BASE}/app-feedback?empid=${sessionStorage?.id}&appid=esfrweb&appversion=1&firstname=${sessionStorage?.fname}&lastname=${sessionStorage?.lname}&employeestation=${sessionStorage?.station}&email=${sessionStorage?.email}`,
+      "_blank"
+    );
 
   return (
     <AppBar position={"static"} sx={{ maxHeight: "10vh" }}>
@@ -113,13 +119,8 @@ const Header = ({ resetApp }: IHeaderProps) => {
             className="pt-0"
             primaryLabel="Logout"
             secondaryLabel="Site Feedback"
-            primaryOnClick={onLogoutClick}
-            secondaryOnClick={() =>
-              window.open(
-                `${process.env.REACT_APP_URL_AMT_BASE}/app-feedback?empid=${sessionStorage?.id}&appid=esfrweb&appversion=1&firstname=${sessionStorage?.fname}&lastname=${sessionStorage?.lname}&employeestation=${sessionStorage?.station}&email=${sessionStorage?.email}`,
-                "_blank"
-              )
-            }
+            primaryOnClick={handleLogout}
+            secondaryOnClick={handleSiteFeedback}
           />
         </Menu>
       </Toolbar>
