@@ -129,6 +129,7 @@ const ViewSnapshotData = ({
         PartTimeSince: snapshotData?.PartTimeSince || "",
         PartCycleSince: snapshotData?.PartCycleSince || "",
       },
+      CreatedBy: profileData?.EmployeeId || "",
       CreatedbyFirstName:
         (isSdr ? snapshotData?.CreatedbyFirstName : snapshotData?.CreatedbyFirstName) || "",
       CreatedbyLastName:
