@@ -134,7 +134,7 @@ export const ValidationSchema = {
     PartTimeSince: commonSchema.number8D3,
   }),
   SfrAdditionalDetails: object().shape({
-    NumberOfCracks: commonSchema.intOnly,
+    NumberOfCracks: commonSchema.upTo255,
     CrackLength: commonSchema.number8D3,
     OperatorType: string().trim().matches(regex.hasValue, errMsg.notValidNum),
     SubmitterType: string().trim().matches(regex.hasValue, errMsg.notValidValue),
@@ -198,7 +198,7 @@ export const ValidationSchemaSFR = {
     CrackLength: commonSchema.numberD3,
     CrackWidth: commonSchema.numberD3,
     CrackDepth: commonSchema.numberD3,
-    NumberOfCracks: commonSchema.intOnly,
+    NumberOfCracks: commonSchema.upTo255,
     DiscrepancyTypeComments: commonSchema.upTo(100),
     DiscrepancyPartDetails: array().of(
       object({
