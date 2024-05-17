@@ -89,11 +89,10 @@ const HomeScreen = () => {
       newSdrData?.length &&
       flaggedSdrData?.length &&
       [...newSdrData, ...flaggedSdrData].find((sdr) => sdr.LogpageNumber === logpageNumberValue)
-        ? true
+        ? false
         : false,
     [newSdrData, flaggedSdrData, logpageNumberValue]
   );
-  console.log("hasLogpageNumberExist :", hasLogpageNumberExist);
 
   const resetSdrs = () => {
     setViewSdrFlag(false);
