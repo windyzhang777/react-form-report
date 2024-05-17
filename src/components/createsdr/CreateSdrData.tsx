@@ -14,7 +14,7 @@ import {
   SelectedStatus,
 } from "src/commons/types";
 import { UseFormContext } from "src/components/createsdr/UseFormContext";
-import { DATETIME_REQUEST, DATE_HTML_DISPLAY, handleFocus, handleScroll } from "src/helpers";
+import { DATE_HTML_DISPLAY, handleFocus, handleScroll } from "src/helpers";
 import { resetLogpageDataSuccess } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
@@ -105,7 +105,7 @@ const CreateSdrData = ({
       },
       LogPageCreationDate: logpageData?.FleetInfo?.Date || "",
       OperatorControlNumber: "",
-      CreatedDate: moment().format(DATETIME_REQUEST),
+      CreatedDate: "",
       IsExtracted: false,
       Station: logpageData?.FleetInfo?.Station || "",
       AircraftNumber: logpageData?.FleetInfo?.TailNumber || "",
@@ -511,19 +511,19 @@ const CreateSdrData = ({
                       {editable ? (
                         <TextField
                           type="date"
-                          name="LogPageCreationDate"
-                          value={moment(values.LogPageCreationDate).format(DATE_HTML_DISPLAY)}
+                          name="CreatedDate"
+                          value={moment(values.CreatedDate).format(DATE_HTML_DISPLAY)}
                           onChange={(e) => {
                             setFieldValue(
-                              "LogPageCreationDate",
+                              "CreatedDate",
                               moment(e.target.value).isValid()
                                 ? moment(e.target.value).format(DATE_HTML_DISPLAY)
                                 : ""
                             );
                           }}
                           onBlur={handleBlur}
-                          error={!!touched.LogPageCreationDate && !!errors.LogPageCreationDate}
-                          helperText={!!touched.LogPageCreationDate && errors.LogPageCreationDate}
+                          error={!!touched.CreatedDate && !!errors.CreatedDate}
+                          helperText={!!touched.CreatedDate && errors.CreatedDate}
                           className={"sdr-status-edit"}
                         />
                       ) : (

@@ -16,7 +16,7 @@ import {
   SelectedTab,
   UserPermission,
 } from "src/commons/types";
-import { DATETIME_REQUEST, DATE_DISPLAY, transformUpsertSfrValues } from "src/helpers";
+import { DATE_DISPLAY, transformUpsertSfrValues } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
 import { GetSDREsfrRecordDetailsResResult } from "src/types/GetSdrEsfrRecordDetailsRes";
 import "./viewSdrData.css";
@@ -176,7 +176,7 @@ const ViewSfrData = ({
       CreatedbyLastName: detailsData?.CreatedbyLastName || "",
       ModifiedbyFirstName: `${profileData?.FirstName}`,
       ModifiedbyLastName: `${profileData?.LastName}`,
-      CreatedDate: moment(detailsData?.CreatedDate).format(DATETIME_REQUEST) || "",
+      CreatedDate: detailsData?.SdrDetails?.CreatedDate || detailsData?.CreatedDate || "",
       CorrectiveAction: detailsData?.FleetInfo?.CorrectiveActions || "",
       OperatorControlNumber:
         detailsData?.OperatorControlNumber || detailsData?.SdrDetails?.OperatorControlNumber || "",
@@ -377,8 +377,8 @@ const ViewSfrData = ({
                   <Grid className={"sdr-status-description"} container spacing={3}>
                     <Grid item xs={4}>
                       <ListItem>
-                        {moment(values?.LogPageCreationDate).isValid()
-                          ? moment(values?.LogPageCreationDate).format(DATE_DISPLAY)
+                        {moment(values?.CreatedDate).isValid()
+                          ? moment(values?.CreatedDate).format(DATE_DISPLAY)
                           : ""}
                       </ListItem>
                     </Grid>

@@ -363,25 +363,25 @@ const ViewSnapshotData = ({
                             inputProps={{
                               max: moment().format(DATE_HTML_DISPLAY),
                             }}
-                            name="LogPageCreationDate"
-                            value={moment(values?.LogPageCreationDate).format(DATE_HTML_DISPLAY)}
+                            name="CreatedDate"
+                            value={moment(values?.CreatedDate).format(DATE_HTML_DISPLAY)}
                             onChange={(e) => {
                               setFieldValue(
-                                "LogPageCreationDate",
+                                "CreatedDate",
                                 moment(e.target.value).isValid()
                                   ? moment(e.target.value).format(DATE_HTML_DISPLAY)
                                   : ""
                               );
                             }}
                             onBlur={handleBlur}
-                            error={!!touched?.LogPageCreationDate && !!errors?.LogPageCreationDate}
+                            error={!!touched?.CreatedDate && !!errors?.CreatedDate}
                             helperText={
-                              !!touched?.LogPageCreationDate && errors?.LogPageCreationDate
+                              !!touched?.CreatedDate && errors?.CreatedDate
                             }
                             className={"sdr-status-edit"}
                           />
-                        ) : moment(values?.LogPageCreationDate).isValid() ? (
-                          moment(values?.LogPageCreationDate).format(DATE_DISPLAY)
+                        ) : moment(values?.CreatedDate).isValid() ? (
+                          moment(values?.CreatedDate).format(DATE_DISPLAY)
                         ) : (
                           ""
                         )}
