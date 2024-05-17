@@ -211,7 +211,7 @@ const ViewSdrData = ({
       },
       LogPageCreationDate:
         detailsData?.SdrDetails?.LogPageCreationDate || detailsData?.LogPageCreatedDate || "",
-      Station: detailsData?.Station || "",
+      Station: (isSdr ? detailsData?.SdrDetails?.Station : detailsData?.Station) || "",
       LogPageNumber: detailsData?.LogPageNumber || selectedSdr?.LogpageNumber || "",
       AircraftNumber: detailsData?.FleetInfo?.TailNumber || "",
       PrecautionaryProcedureIds: detailsData?.SdrDetails?.PrecautionaryProcedureIds || [],
@@ -292,9 +292,8 @@ const ViewSdrData = ({
         <FlexBetween className={"subpage-title bottom-divider"} sx={{ pt: "1px" }}>
           <FlexRow>
             {`${
-              selectedSdr?.ReportType === Type.SDR ? "Service Difficulty" : "Significant Findings"
-            }
-            Report - #${selectedSdr?.Id}`}
+              selectedSdr?.ReportType === Type.SDR ? "Significant Findings" : "Service Difficulty"
+            } Report - #${selectedSdr?.Id}`}
             {isReport && (
               <IconButton
                 id="print-details-btn"
