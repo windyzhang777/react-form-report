@@ -78,16 +78,22 @@ const ViewSdrData = ({
             ? detailsData?.LocationDetails?.ToSta || ""
             : "",
         CorrisionLevel:
-          detailsData?.DiscrepancyDetails?.DiscrepancyTypeId === 4
+          detailsData?.DiscrepancyDetails?.DiscrepancyTypeId === 4 ||
+          detailsData?.DiscrepancyDetails?.DiscrepancyTypeId === 6
             ? masterData?.CorrosionLevels.find(
                 (o) => o.Id === detailsData.DiscrepancyDetails?.CorrosionLevelId
               )?.Description || ""
             : "",
         CrackLength:
-          detailsData?.DiscrepancyDetails?.DiscrepancyTypeId === 5
+          detailsData?.DiscrepancyDetails?.DiscrepancyTypeId === 5 ||
+          detailsData?.DiscrepancyDetails?.DiscrepancyTypeId === 6
             ? detailsData.DiscrepancyDetails?.CrackLength || ""
             : "",
-        NumberOfCracks: detailsData?.DiscrepancyDetails?.NumberOfCracks ?? 0,
+        NumberOfCracks:
+          detailsData?.DiscrepancyDetails?.DiscrepancyTypeId === 5 ||
+          detailsData?.DiscrepancyDetails?.DiscrepancyTypeId === 6
+            ? detailsData?.DiscrepancyDetails?.NumberOfCracks ?? 0
+            : "",
         WaterlineFrom: "",
         WaterlineTo: "",
         StringerFrom:
