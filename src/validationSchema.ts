@@ -16,7 +16,7 @@ export const regex = {
   EcraCode: /^[a-zA-Z0-9]{4}-[a-zA-Z0-9]{5}/,
   Fig: /^[a-zA-Z0-9]{3}/,
   // common
-  number8D3: /^(0|[1-9]\d{1,7})(?:\.\d{1,3})?$/,
+  number8D3: /^(0|[1-9]\d{0,7})(?:\.\d{1,3})?$/,
   numberD3: /^(0|[1-9]\d*)(?:\.\d{1,3})?$/,
   alphaNumeric: /^[a-zA-Z0-9]+$/,
   alphaNumericHyphen: /^[a-zA-Z0-9-]+$/,
@@ -59,7 +59,8 @@ export const commonSchema = {
   upToNum: (count: number) => string().matches(regex.numOnly, errMsg.upToNum(count)),
   number8D3: string().matches(regex.number8D3, errMsg.notValidNum),
   numberD3: string().matches(regex.numberD3, errMsg.notValidNum),
-  intOnly: number()
+  intOnly: string().matches(regex.intOnly, errMsg.notValidNum),
+  upTo255: number()
     .typeError(errMsg.posInt)
     .integer(errMsg.notValidValue)
     .min(0, errMsg.notValidValue)
@@ -81,21 +82,25 @@ export const ValidationSchema = {
   StageId: number().min(1, errMsg.required),
   HowDiscoveredId: number().min(1, errMsg.required),
   SubmitterDesignator: string().max(10, errMsg.upTo(10)),
+  EngineDetails: object().shape({
+    EngineTotalTime: commonSchema.number8D3,
+    EngineTotalCycles: commonSchema.intOnly,
+  }),
   ComponentDetails: object().shape({
     ComponentName: string().ensure(),
-    ComponentManufacturerName: string().when("ComponentName", {
+    ManufacturerName: string().when("ComponentName", {
       is: (v: string) => !!v && v.trim().length > 0,
       then: (schema) => schema.required(errMsg.required),
     }),
-    ComponentPartNumber: string().when("ComponentName", {
+    PartNumber: string().when("ComponentName", {
       is: (v: string) => !!v && v.trim().length > 0,
       then: (schema) => schema.required(errMsg.required),
     }),
-    ComponentPartSerialNumber: string().when("ComponentName", {
+    SerialNumber: string().when("ComponentName", {
       is: (v: string) => !!v && v.trim().length > 0,
       then: (schema) => schema.required(errMsg.required),
     }),
-    ComponentPartModelNumber: string().when("ComponentName", {
+    ModelNumber: string().when("ComponentName", {
       is: (v: string) => !!v && v.trim().length > 0,
       then: (schema) => schema.required(errMsg.required),
     }),
@@ -103,31 +108,27 @@ export const ValidationSchema = {
       is: (v: string) => !!v && v.trim().length > 0,
       then: (schema) => schema.required(errMsg.required),
     }),
-    PartTotalTime: string().when("ComponentName", {
+    ComponentTotalTime: string().when("ComponentName", {
       is: (v: string) => !!v && v.trim().length > 0,
       then: () => commonSchema.number8D3.required(errMsg.required),
       otherwise: () => commonSchema.number8D3,
     }),
-    PartTotalCycles: string().when("ComponentName", {
+    ComponentTotalCycles: string().when("ComponentName", {
       is: (v: string) => !!v && v.trim().length > 0,
       then: () => commonSchema.number8D3.required(errMsg.required),
       otherwise: () => commonSchema.number8D3,
     }),
-    PartTimeSince: string().when("ComponentName", {
+    ComponentTimeSince: string().when("ComponentName", {
       is: (v: string) => !!v && v.trim().length > 0,
       then: () => commonSchema.number8D3.required(errMsg.required),
       otherwise: () => commonSchema.number8D3,
     }),
-    PartTimeSinceCode: string().when("ComponentName", {
+    ComponentTimeSinceCode: string().when("ComponentName", {
       is: (v: string) => !!v && v.trim().length > 0,
       then: (schema) => schema.required(errMsg.required),
     }),
   }),
   PartDetails: object().shape({
-    PartManufacturerSerialNumber: string().required(errMsg.required),
-    ManufacturerName: string().required(errMsg.required),
-    PartCondition: string().required(errMsg.required),
-    PartLocation: string().required(errMsg.required),
     PartTotalTime: commonSchema.number8D3,
     PartTotalCycles: commonSchema.number8D3,
     PartTimeSince: commonSchema.number8D3,

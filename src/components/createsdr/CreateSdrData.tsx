@@ -19,6 +19,7 @@ import { resetLogpageDataSuccess } from "src/redux/ducks/getSdrEsfrRecordDetails
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
 import ValidationSchema, {
+  commonSchema,
   errMsg,
   removeNonAlphaNumeric,
   removeNonAlphabet,
@@ -224,6 +225,15 @@ const CreateSdrData = ({
                 : true;
             }
           ),
+          PartDetails: object().shape({
+            PartManufacturerSerialNumber: string().required(errMsg.required),
+            PartManufacturerName: string().required(errMsg.required),
+            PartCondition: string().required(errMsg.required),
+            PartLocation: string().required(errMsg.required),
+            PartTotalTime: commonSchema.number8D3,
+            PartTotalCycles: commonSchema.number8D3,
+            PartTimeSince: commonSchema.number8D3,
+          }),
           AircraftNumber: string(),
           SfrAdditionalDetails: object().nullable(),
         })}
