@@ -19,7 +19,13 @@ import {
   Sides,
   UserPermission,
 } from "src/commons/types";
-import { DATETIME_DISPLAY, DATE_DISPLAY, DATE_HTML_DISPLAY, printAsPage } from "src/helpers";
+import {
+  DATETIME_DISPLAY,
+  DATE_DISPLAY,
+  DATE_HTML_DISPLAY,
+  formatFullName,
+  printAsPage,
+} from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
 import ValidationSchema, {
@@ -122,8 +128,8 @@ const ViewSnapshotData = ({
       StageId: snapshotData?.StageId || 0,
       StatusId: snapshotData?.StatusId || SelectedStatus.Approved,
       HowDiscoveredId: snapshotData?.HowDiscoveredId || 0,
-      EmployeeId: `${profileData?.EmployeeId}`,
-      EmployeeName: `${profileData?.FirstName} ${profileData?.LastName}`,
+      EmployeeId: profileData?.EmployeeId || "",
+      EmployeeName: formatFullName(profileData?.FirstName, profileData?.LastName),
       PartDetails: {
         PartTrackingNumber: snapshotData?.PartDetails?.PartTrackingNumber || "",
         PartManufacturerSerialNumber: snapshotData?.PartDetails?.PartManufacturerSerialNumber || "",
@@ -143,8 +149,8 @@ const ViewSnapshotData = ({
       CreatedBy: snapshotData?.CreatedBy || "",
       CreatedbyFirstName: snapshotData?.CreatedbyFirstName || "",
       CreatedbyLastName: snapshotData?.CreatedbyLastName || "",
-      ModifiedbyFirstName: `${profileData?.FirstName}`,
-      ModifiedbyLastName: `${profileData?.LastName}`,
+      ModifiedbyFirstName: profileData?.FirstName || "",
+      ModifiedbyLastName: profileData?.LastName || "",
       CreatedDate: snapshotData?.CreatedDate || "",
       CorrectiveAction: snapshotData?.CorrectiveAction || "",
       OperatorControlNumber: snapshotData?.OperatorControlNumber || "",
@@ -919,28 +925,26 @@ const ViewSnapshotData = ({
                       <ListItem>
                         {editable ? (
                           <TextField
-                            name="SfrAdditionalDetails.PartName"
-                            value={values?.SfrAdditionalDetails?.PartName}
+                            name="PartDetails.PartName"
+                            value={values?.PartDetails?.PartName}
                             onChange={(e) =>
                               setFieldValue(
-                                "SfrAdditionalDetails.PartName",
+                                "PartDetails.PartName",
                                 removeNonAlphaNumeric(e.target.value)
                               )
                             }
                             onBlur={handleBlur}
                             error={
-                              !!touched.SfrAdditionalDetails?.PartName &&
-                              !!errors.SfrAdditionalDetails?.PartName
+                              !!touched.PartDetails?.PartName && !!errors.PartDetails?.PartName
                             }
                             helperText={
-                              !!touched.SfrAdditionalDetails?.PartName &&
-                              errors.SfrAdditionalDetails?.PartName
+                              !!touched.PartDetails?.PartName && errors.PartDetails?.PartName
                             }
                             className={"sdr-status-edit"}
                             inputProps={{ maxLength: 24 }}
                           />
                         ) : (
-                          values?.SfrAdditionalDetails?.PartName
+                          values?.PartDetails?.PartName
                         )}
                       </ListItem>
                     </Grid>
@@ -948,28 +952,28 @@ const ViewSnapshotData = ({
                       <ListItem>
                         {editable ? (
                           <TextField
-                            name="SfrAdditionalDetails.PartManufacturerName"
-                            value={values?.SfrAdditionalDetails?.PartManufacturerName}
+                            name="PartDetails.PartManufacturerName"
+                            value={values?.PartDetails?.PartManufacturerName}
                             onChange={(e) =>
                               setFieldValue(
-                                "SfrAdditionalDetails.PartManufacturerName",
+                                "PartDetails.PartManufacturerName",
                                 removeNonAlphaNumeric(e.target.value)
                               )
                             }
                             onBlur={handleBlur}
                             error={
-                              !!touched?.SfrAdditionalDetails?.PartManufacturerName &&
-                              !!errors?.SfrAdditionalDetails?.PartManufacturerName
+                              !!touched?.PartDetails?.PartManufacturerName &&
+                              !!errors?.PartDetails?.PartManufacturerName
                             }
                             helperText={
-                              !!touched?.SfrAdditionalDetails?.PartManufacturerName &&
-                              errors?.SfrAdditionalDetails?.PartManufacturerName
+                              !!touched?.PartDetails?.PartManufacturerName &&
+                              errors?.PartDetails?.PartManufacturerName
                             }
                             className={"sdr-status-edit"}
                             inputProps={{ maxLength: 15 }}
                           />
                         ) : (
-                          values?.SfrAdditionalDetails?.PartManufacturerName
+                          values?.PartDetails?.PartManufacturerName
                         )}
                       </ListItem>
                     </Grid>
@@ -977,28 +981,28 @@ const ViewSnapshotData = ({
                       <ListItem>
                         {editable ? (
                           <TextField
-                            name="SfrAdditionalDetails.PartNumber"
-                            value={values?.SfrAdditionalDetails?.PartNumber}
+                            name="PartDetails.PartManufacturerSerialNumber"
+                            value={values?.PartDetails?.PartManufacturerSerialNumber}
                             onChange={(e) =>
                               setFieldValue(
-                                "SfrAdditionalDetails.PartNumber",
+                                "PartDetails.PartManufacturerSerialNumber",
                                 removeNonAlphaNumeric(e.target.value)
                               )
                             }
                             onBlur={handleBlur}
                             error={
-                              !!touched.SfrAdditionalDetails?.PartNumber &&
-                              !!errors.SfrAdditionalDetails?.PartNumber
+                              !!touched.PartDetails?.PartManufacturerSerialNumber &&
+                              !!errors.PartDetails?.PartManufacturerSerialNumber
                             }
                             helperText={
-                              !!touched.SfrAdditionalDetails?.PartNumber &&
-                              errors.SfrAdditionalDetails?.PartNumber
+                              !!touched.PartDetails?.PartManufacturerSerialNumber &&
+                              errors.PartDetails?.PartManufacturerSerialNumber
                             }
                             className={"sdr-status-edit"}
                             inputProps={{ maxLength: 24 }}
                           />
                         ) : (
-                          values?.SfrAdditionalDetails?.PartNumber
+                          values?.PartDetails?.PartManufacturerSerialNumber
                         )}
                       </ListItem>
                     </Grid>
