@@ -84,6 +84,16 @@ const HomeScreen = () => {
         return newSdrData && filters.length > 0 ? filterSdrData(newSdrData, filters) : newSdrData;
     }
   }, [approvedSdrData, flaggedSdrData, newSdrData, tabIndex, filters]);
+  const hasLogpageNumberExist: boolean = useMemo(
+    () =>
+      newSdrData?.length &&
+      flaggedSdrData?.length &&
+      [...newSdrData, ...flaggedSdrData].find((sdr) => sdr.LogpageNumber === logpageNumberValue)
+        ? true
+        : false,
+    [newSdrData, flaggedSdrData, logpageNumberValue]
+  );
+  console.log("hasLogpageNumberExist :", hasLogpageNumberExist);
 
   const resetSdrs = () => {
     setViewSdrFlag(false);
@@ -404,6 +414,7 @@ const HomeScreen = () => {
               createSdrFlag={createSdrFlag}
               handleFetchLogpageData={handleFetchLogpageData}
               handleUpsertSdrSnapshot={handleUpsertSdrSnapshot}
+              hasLogpageNumberExist={hasLogpageNumberExist}
               logpageNumberValue={logpageNumberValue}
               setCreateSdrFlag={setCreateSdrFlag}
               setFormTouched={setFormTouched}

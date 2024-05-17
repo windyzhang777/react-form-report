@@ -16,7 +16,7 @@ export const regex = {
   EcraCode: /^[a-zA-Z0-9]{4}-[a-zA-Z0-9]{5}/,
   Fig: /^[a-zA-Z0-9]{3}/,
   // common
-  number7D3: /^(0|[1-9]\d{1,7})(?:\.\d{1,3})?$/,
+  number8D3: /^(0|[1-9]\d{1,7})(?:\.\d{1,3})?$/,
   numberD3: /^(0|[1-9]\d*)(?:\.\d{1,3})?$/,
   alphaNumeric: /^[a-zA-Z0-9]+$/,
   alphaNumericHyphen: /^[a-zA-Z0-9-]+$/,
@@ -57,6 +57,7 @@ export const commonSchema = {
   numOnly: string().matches(regex.numOnly, errMsg.notValidNum),
   upTo: (count: number) => string().matches(regex.alphaNumeric, errMsg.upTo(count)),
   upToNum: (count: number) => string().matches(regex.numOnly, errMsg.upToNum(count)),
+  number8D3: string().matches(regex.number8D3, errMsg.notValidNum),
   numberD3: string().matches(regex.numberD3, errMsg.notValidNum),
   intOnly: number()
     .typeError(errMsg.posInt)
@@ -104,18 +105,18 @@ export const ValidationSchema = {
     }),
     PartTotalTime: string().when("ComponentName", {
       is: (v: string) => !!v && v.trim().length > 0,
-      then: () => commonSchema.numberD3.required(errMsg.required),
-      otherwise: () => commonSchema.numberD3,
+      then: () => commonSchema.number8D3.required(errMsg.required),
+      otherwise: () => commonSchema.number8D3,
     }),
     PartTotalCycles: string().when("ComponentName", {
       is: (v: string) => !!v && v.trim().length > 0,
-      then: () => commonSchema.numberD3.required(errMsg.required),
-      otherwise: () => commonSchema.numberD3,
+      then: () => commonSchema.number8D3.required(errMsg.required),
+      otherwise: () => commonSchema.number8D3,
     }),
     PartTimeSince: string().when("ComponentName", {
       is: (v: string) => !!v && v.trim().length > 0,
-      then: () => commonSchema.numberD3.required(errMsg.required),
-      otherwise: () => commonSchema.numberD3,
+      then: () => commonSchema.number8D3.required(errMsg.required),
+      otherwise: () => commonSchema.number8D3,
     }),
     PartTimeSinceCode: string().when("ComponentName", {
       is: (v: string) => !!v && v.trim().length > 0,
@@ -123,13 +124,17 @@ export const ValidationSchema = {
     }),
   }),
   PartDetails: object().shape({
-    PartTotalTime: commonSchema.numberD3,
-    PartTotalCycles: commonSchema.numberD3,
-    PartTimeSince: commonSchema.numberD3,
+    PartManufacturerSerialNumber: string().required(errMsg.required),
+    ManufacturerName: string().required(errMsg.required),
+    PartCondition: string().required(errMsg.required),
+    PartLocation: string().required(errMsg.required),
+    PartTotalTime: commonSchema.number8D3,
+    PartTotalCycles: commonSchema.number8D3,
+    PartTimeSince: commonSchema.number8D3,
   }),
   SfrAdditionalDetails: object().shape({
     NumberOfCracks: commonSchema.intOnly,
-    CrackLength: string().matches(regex.number7D3, errMsg.notValidNum),
+    CrackLength: commonSchema.number8D3,
     OperatorType: string().trim().matches(regex.hasValue, errMsg.notValidNum),
     SubmitterType: string().trim().matches(regex.hasValue, errMsg.notValidValue),
   }),
