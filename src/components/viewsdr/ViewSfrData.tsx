@@ -193,6 +193,7 @@ const ViewSfrData = ({
         PartName: detailsData?.SdrDetails?.PartDetails?.PartName || "",
         PartType: detailsData?.SdrDetails?.PartDetails?.PartType || "",
       },
+      CreatedBy: detailsData?.CreatedBy || "",
       CreatedbyFirstName: detailsData?.CreatedbyFirstName || "",
       CreatedbyLastName: detailsData?.CreatedbyLastName || "",
       ModifiedbyFirstName: `${profileData?.FirstName}`,
