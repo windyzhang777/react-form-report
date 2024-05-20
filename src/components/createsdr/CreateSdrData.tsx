@@ -22,7 +22,6 @@ import ValidationSchema, {
   commonSchema,
   errMsg,
   removeNonAlphaNumeric,
-  removeNonAlphabet,
   removeNonNumeric,
   removeNonNumericDecimal,
 } from "src/validationSchema";
@@ -1049,7 +1048,7 @@ const CreateSdrData = ({
                           onChange={(e) => {
                             setFieldValue(
                               "PartDetails.PartManufacturerName",
-                              removeNonAlphabet(e.target.value)
+                              removeNonAlphaNumeric(e.target.value)
                             );
                           }}
                           onBlur={handleBlur}
@@ -1062,6 +1061,7 @@ const CreateSdrData = ({
                             errors.PartDetails?.PartManufacturerName
                           }
                           className={"sdr-status-edit"}
+                          inputProps={{ maxLength: 15 }}
                         />
                       ) : (
                         values?.PartDetails?.PartManufacturerName || "--"
