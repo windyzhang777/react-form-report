@@ -12,6 +12,12 @@ export interface GetApprovedSDRResResult {
   AircraftDetails: AircraftDetails;
   AircraftNumber: string;
   ComponentDetails: ComponentDetails;
+  ComponentLocation: null;
+  ComponentName: null;
+  ComponentTimeSince: null;
+  ComponentTimeSinceCode: null;
+  ComponentTotalCycles: null;
+  ComponentTotalTime: null;
   CorrectiveAction: string;
   CreatedBy: string | null;
   CreatedbyFirstName: string;
@@ -20,6 +26,11 @@ export interface GetApprovedSDRResResult {
   EmployeeId: string | null;
   EmployeeName: string | null;
   EngineDetails: EngineDetails;
+  EngineManufacturerName: null;
+  EngineModel: null;
+  EngineSerialNumber: null;
+  EngineTotalCycles: null;
+  EngineTotalTime: null;
   HowDiscoveredId: number | null;
   IsExtracted: boolean;
   LogPageCreationDate: string;
@@ -54,6 +65,10 @@ export interface GetApprovedSDRResResult {
   PartManufacturerName: string | null;
   PartName: string | null;
   PartType: string | null;
+  ManufacturerName: null;
+  ModelNumber: null;
+  PartNumber: null;
+  SerialNumber: null;
 }
 
 export interface AircraftDetails {
