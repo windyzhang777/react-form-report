@@ -30,7 +30,7 @@ export const a11yProps = (name: string, index: number) => {
       fontWeight: 500,
       fontSize: "16px",
       textTransform: "capitalize",
-      minWidth: "20%",
+      minWidth: "33%",
       width: "25%",
       // whiteSpace: "nowrap",
     },
