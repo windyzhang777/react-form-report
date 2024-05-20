@@ -149,13 +149,6 @@ const CreateSdrData = ({
       CreatedbyLastName: profileData?.LastName || "",
       ModifiedbyFirstName: profileData?.FirstName || "",
       ModifiedbyLastName: profileData?.LastName || "",
-      Engine: {
-        Manufacturer: "",
-        Model: "",
-        SerialNumber: "",
-        TotalTime: "",
-        TotalCycles: "",
-      },
       ComponentDetails: {
         ComponentName: "",
         ManufacturerName: "",
