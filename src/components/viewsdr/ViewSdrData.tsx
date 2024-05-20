@@ -239,11 +239,12 @@ const ViewSdrData = ({
         PartName: detailsData?.SdrDetails?.PartDetails?.PartName || "",
         PartType: detailsData?.SdrDetails?.PartDetails?.PartType || "",
       },
-      CreatedBy: detailsData?.CreatedBy || "",
+      CreatedBy: (isSdr ? detailsData?.SdrDetails?.CreatedBy : detailsData?.CreatedBy) || "",
       CreatedbyFirstName:
-        detailsData?.SdrDetails?.CreatedbyFirstName || detailsData?.CreatedbyFirstName || "",
+        (isSdr ? detailsData?.SdrDetails?.CreatedbyFirstName : detailsData?.CreatedbyFirstName) ||
+        "",
       CreatedbyLastName:
-        detailsData?.SdrDetails?.CreatedbyLastName || detailsData?.CreatedbyLastName || "",
+        (isSdr ? detailsData?.SdrDetails?.CreatedbyLastName : detailsData?.CreatedbyLastName) || "",
       ModifiedbyFirstName: profileData?.FirstName || "",
       ModifiedbyLastName: profileData?.LastName || "",
       CreatedDate: detailsData?.SdrDetails?.CreatedDate || detailsData?.CreatedDate || "",
