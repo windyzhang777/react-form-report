@@ -51,6 +51,9 @@ export interface GetApprovedSDRResResult {
   PartTimeSince: string;
   PartTotalCycles: string;
   PartTotalTime: string;
+  PartManufacturerName: string | null;
+  PartName: string | null;
+  PartType: string | null;
 }
 
 export interface AircraftDetails {
