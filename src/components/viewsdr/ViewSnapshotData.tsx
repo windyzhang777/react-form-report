@@ -2007,7 +2007,7 @@ const ViewSnapshotData = ({
                       <ListItem>From/At</ListItem>
                     </Grid>
                     <Grid item xs={4}>
-                      <ListItem>From Side</ListItem>
+                      <ListItem>From BL Side</ListItem>
                     </Grid>
                     <Grid item xs={4}>
                       <ListItem>To</ListItem>
@@ -2104,7 +2104,7 @@ const ViewSnapshotData = ({
                   </Grid>
                   <Grid className={"sdr-status-item"} container spacing={3}>
                     <Grid item xs={4}>
-                      <ListItem>To Side</ListItem>
+                      <ListItem>To BL Side</ListItem>
                     </Grid>
                   </Grid>
                   <Grid className={"sdr-status-description"} container spacing={3}>
