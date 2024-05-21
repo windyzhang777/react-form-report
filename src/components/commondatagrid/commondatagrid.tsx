@@ -88,7 +88,11 @@ const CommonDataGrid = ({
         disableColumnMenu
         columns={(columns as GridColDef<GridValidRowModel>[]) || []}
         rows={sdrData}
-        getRowId={(row) => `${row?.Id}-${isReport ? row?.ReportType : row?.Type}`}
+        getRowId={(row) =>
+          `${row?.Id}-${isReport ? row?.ReportType : row?.Type}-${row?.LogpageNumber}-${
+            row?.AircraftNumber
+          }-${row?.LogpageCreationDate}`
+        }
         checkboxSelection={showCheckbox}
         // hideFooter={isReport}
         rowSelectionModel={selectedSdrsToExtract}
@@ -102,7 +106,9 @@ const CommonDataGrid = ({
           let rowStyles = "";
           rowStyles +=
             params.id ===
-            `${selectedSdr?.Id}-${isReport ? selectedSdr?.ReportType : selectedSdr?.Type}`
+            `${selectedSdr?.Id}-${isReport ? selectedSdr?.ReportType : selectedSdr?.Type}-${
+              selectedSdr?.LogpageNumber
+            }-${selectedSdr?.AircraftNumber}-${selectedSdr?.LogpageCreationDate}`
               ? "Mui-selection "
               : "";
           rowStyles += params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd";
