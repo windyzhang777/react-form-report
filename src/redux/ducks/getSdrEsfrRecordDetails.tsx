@@ -146,7 +146,7 @@ export const sdrEsfrRecordDetailsReducer = (
         ...state,
         loading: false,
         logpageData: null,
-        error: `Fail to get Logpage Data (${action.message})`,
+        error: action.message,
       };
     }
     case SdrEsfrRecordDetailsActionType.FETCH_SFR_MASTER_DATA_SUCCESS: {
@@ -232,7 +232,7 @@ export const viewLogPageDetails = (logpageNumber: string, checkSdr: boolean = fa
               .then((res) => {
                 const isSdrExists = (res?.data?.Result as DoesSDRExistsResResult).IsSdrExists;
                 if (isSdrExists) {
-                  dispatch(fetchLogpageDataFailure("Logpage Number already Exist"));
+                  dispatch(fetchLogpageDataFailure("SDR for this logpage already exists"));
                 } else {
                   dispatch(fetchLogpageDataSuccess(logpageData));
                 }
@@ -242,7 +242,9 @@ export const viewLogPageDetails = (logpageNumber: string, checkSdr: boolean = fa
           dispatch(fetchLogpageDataFailure("Invalid Logpage Number"));
         }
       })
-      .catch((error) => dispatch(fetchLogpageDataFailure(error.message)));
+      .catch((error) =>
+        dispatch(fetchLogpageDataFailure(`Fail to get Logpage Data (${error.message})`))
+      );
   };
 };
 
