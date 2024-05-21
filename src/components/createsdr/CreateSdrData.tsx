@@ -36,9 +36,8 @@ import "./createSdrData.css";
 
 export interface ICreateSdrDataProps {
   createSdrFlag: string;
-  handleFetchLogpageData: (a: string) => void;
+  handleFetchLogpageData: (a: string, b: boolean) => void;
   handleUpsertSdrSnapshot: (a: ISaveSdrValues) => void;
-  hasLogpageNumberExist: boolean;
   logpageNumberValue: string;
   setCreateSdrFlag: Dispatch<SetStateAction<string>>;
   setFormTouched: Dispatch<SetStateAction<boolean>>;
@@ -49,7 +48,6 @@ const CreateSdrData = ({
   createSdrFlag,
   handleFetchLogpageData,
   handleUpsertSdrSnapshot,
-  hasLogpageNumberExist,
   logpageNumberValue,
   setCreateSdrFlag,
   setFormTouched,
@@ -218,8 +216,6 @@ const CreateSdrData = ({
                 ? createError({
                     message: "Re-fetch Log Page Data",
                   })
-                : hasLogpageNumberExist
-                ? createError({ message: "Logpage Number Exists" })
                 : true;
             }
           ),
@@ -283,7 +279,7 @@ const CreateSdrData = ({
                           className={"sdr-status-edit"}
                           onKeyDown={(e) => {
                             if (e.key === "Enter") {
-                              handleFetchLogpageData(values.LogPageNumber);
+                              handleFetchLogpageData(values.LogPageNumber, true);
                             }
                           }}
                           inputProps={{ ref: logPageNumberRef, maxLength: 7 }}
@@ -297,7 +293,7 @@ const CreateSdrData = ({
                   <Grid item xs={8}>
                     <Button
                       disabled={!values.LogPageNumber}
-                      onClick={() => handleFetchLogpageData(values.LogPageNumber)}
+                      onClick={() => handleFetchLogpageData(values.LogPageNumber, true)}
                       sx={{ paddingLeft: "20px", paddingRight: "20px" }}
                     >
                       Fetch Logpage Data

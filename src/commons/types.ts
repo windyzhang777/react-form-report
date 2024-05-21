@@ -419,6 +419,7 @@ export interface EnvironmentConfig {
   URL_CREATE_SDR: string;
   URL_CREATE_SFR: string;
   URL_VIEW_LOGPAGE: string;
+  URL_DOES_SDR_EXISTS: string;
   URL_EXTRACT_SDR_RECORDS: string;
   URL_UPDATE_SNAPSHOT_SDR_EXTRACTION_STATUS: string;
   URL_INSERT_SNAPSHOT_SDR_FILENAME: string;
