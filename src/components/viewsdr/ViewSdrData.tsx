@@ -301,28 +301,27 @@ const ViewSdrData = ({
                 onClick={() =>
                   printAsPage(
                     [
-                      `${initialValues?.AircraftNumber}`,
-                      `${initialValues?.AircraftDetails?.Manufacturer}`,
-                      `${initialValues?.AircraftDetails?.Model}`,
-                      `${initialValues?.AircraftDetails?.SerialNumber}`,
-                      `${initialValues?.AircraftDetails?.TotalTime}`,
-                      `${initialValues?.AircraftDetails?.TotalCycles}`,
-                      `${initialValues?.FlightNumber}`,
+                      initialValues?.AircraftNumber || "",
+                      initialValues?.AircraftDetails?.Manufacturer || "",
+                      initialValues?.AircraftDetails?.Model || "",
+                      initialValues?.AircraftDetails?.SerialNumber || "",
+                      initialValues?.AircraftDetails?.TotalTime
+                        ? "" + initialValues?.AircraftDetails?.TotalTime
+                        : "",
+                      initialValues?.AircraftDetails?.TotalCycles
+                        ? "" + initialValues?.AircraftDetails?.TotalCycles
+                        : "",
+                      initialValues?.FlightNumber || "",
                     ],
                     [
-                      `${
-                        detailsData?.SdrDetails?.CreatedbyFirstName ||
-                        detailsData?.CreatedbyFirstName ||
-                        ""
-                      } ${
-                        detailsData?.SdrDetails?.CreatedbyLastName ||
-                        detailsData?.CreatedbyLastName ||
-                        ""
-                      }`,
-                      `${detailsData?.CreatedBy || detailsData?.SdrDetails?.CreatedBy || ""}`,
-                      `${
-                        moment(detailsData?.SdrDetails?.CreatedDate).format(DATETIME_DISPLAY) || ""
-                      }`,
+                      formatFullName(
+                        initialValues?.CreatedbyFirstName,
+                        initialValues?.CreatedbyLastName
+                      ),
+                      detailsData?.CreatedBy || detailsData?.SdrDetails?.CreatedBy || "",
+                      moment(initialValues?.CreatedDate).isValid()
+                        ? moment(initialValues?.CreatedDate).format(DATETIME_DISPLAY)
+                        : "",
                     ]
                   )
                 }

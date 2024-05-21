@@ -199,20 +199,27 @@ const ViewSnapshotData = ({
                 onClick={() =>
                   printAsPage(
                     [
-                      `${initialValues?.AircraftNumber}`,
-                      `${initialValues?.AircraftDetails?.Manufacturer}`,
-                      `${initialValues?.AircraftDetails?.Model}`,
-                      `${initialValues?.AircraftDetails?.SerialNumber}`,
-                      `${initialValues?.AircraftDetails?.TotalTime}`,
-                      `${initialValues?.AircraftDetails?.TotalCycles}`,
-                      `${initialValues?.FlightNumber}`,
+                      initialValues?.AircraftNumber || "",
+                      initialValues?.AircraftDetails?.Manufacturer || "",
+                      initialValues?.AircraftDetails?.Model || "",
+                      initialValues?.AircraftDetails?.SerialNumber || "",
+                      initialValues?.AircraftDetails?.TotalTime
+                        ? "" + initialValues?.AircraftDetails?.TotalTime
+                        : "",
+                      initialValues?.AircraftDetails?.TotalCycles
+                        ? "" + initialValues?.AircraftDetails?.TotalCycles
+                        : "",
+                      initialValues?.FlightNumber || "",
                     ],
                     [
-                      `${snapshotData?.CreatedbyFirstName || ""} ${
-                        snapshotData?.CreatedbyLastName || ""
-                      }`,
-                      `${snapshotData?.CreatedBy || snapshotData?.EmployeeId || ""}`,
-                      `${moment(snapshotData?.CreatedDate).format(DATETIME_DISPLAY) || ""}`,
+                      formatFullName(
+                        initialValues?.CreatedbyFirstName,
+                        initialValues?.CreatedbyLastName
+                      ),
+                      initialValues?.CreatedBy || "",
+                      moment(initialValues?.CreatedDate).isValid()
+                        ? moment(initialValues?.CreatedDate).format(DATETIME_DISPLAY)
+                        : "",
                     ]
                   )
                 }
@@ -344,7 +351,7 @@ const ViewSnapshotData = ({
           }) => (
             <form
               onSubmit={handleSubmit}
-              className={`overflow-hidden mb-[4rem] ${isReport && "max-h-[210vh]"}`}
+              className={`overflow-hidden mb-[4rem] ${isReport && "max-h-[310vh]"}`}
             >
               <div
                 id={`view-${isReport ? "report" : "snapshot"}-details`}
