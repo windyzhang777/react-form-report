@@ -272,13 +272,13 @@ const ViewSdrData = ({
       },
       FlightNumber: detailsData?.FleetInfo?.FlightNumber || "",
       IsMajorRepair:
-        detailsData?.SdrDetails?.IsMajorRepair ||
-        detailsData?.RepairDetails?.IsMajorRepair ||
-        false,
+        (isSdr
+          ? detailsData?.SdrDetails?.IsMajorRepair
+          : detailsData?.RepairDetails?.IsMajorRepair) || false,
       IsSdrReportable:
-        detailsData?.SdrDetails?.IsSdrReportable ||
-        detailsData?.RepairDetails?.IsSdrReportable ||
-        false,
+        (isSdr
+          ? detailsData?.SdrDetails?.IsSdrReportable
+          : detailsData?.RepairDetails?.IsSdrReportable) || false,
     }),
     [detailsData, followUpFlag, profileData, selectedSdr]
   );
