@@ -15,7 +15,7 @@ const CommonListItem = ({
   required,
   ...props
 }: ICommonListItemProps) => (
-  <ListItem className={`${disabled && "text-[#00000061]"} ${className}`} {...props}>
+  <ListItem className={`break-words	${disabled && "text-[#00000061]"} ${className}`} {...props}>
     {children}
     {required && <span className="required">&nbsp;&#42;</span>}
   </ListItem>

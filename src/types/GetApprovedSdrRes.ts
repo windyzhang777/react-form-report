@@ -12,7 +12,7 @@ export interface GetApprovedSDRResResult {
   AircraftDetails: AircraftDetails;
   AircraftNumber: string;
   ComponentDetails: ComponentDetails;
-  ComponentLocation: null;
+  ComponentLocation: string | null;
   ComponentName: null;
   ComponentTimeSince: null;
   ComponentTimeSinceCode: null;
@@ -65,10 +65,10 @@ export interface GetApprovedSDRResResult {
   PartManufacturerName: string | null;
   PartName: string | null;
   PartType: string | null;
-  ManufacturerName: null;
-  ModelNumber: null;
-  PartNumber: null;
-  SerialNumber: null;
+  ComponentManufacturerName: string | null;
+  ComponentModelNumber: string | null;
+  ComponentPartNumber: string | null;
+  ComponentSerialNumber: string | null;
 }
 
 export interface AircraftDetails {
