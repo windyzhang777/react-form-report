@@ -71,6 +71,7 @@ export const ValidationSchema = {
   LogPageNumber: string().matches(regex.LogPageNumber, "Not a valid Logpage Number"),
   LogPageNumberPartial: string().matches(regex.LogPageNumberPartial, errMsg.upToNum(7)),
   LogPageCreationDate: date().max(moment().endOf("day"), errMsg.noFuture),
+  CreatedDate: date().max(moment().endOf("day"), errMsg.noFuture),
   Station: string().matches(regex.Station, "Not a valid Station"),
   AircraftNumber: string().matches(regex.AircraftNumber, "Not a valid Aircraft Number"),
   AtaCode: string().matches(regex.AtaCode, "Not a valid ATA Code"),

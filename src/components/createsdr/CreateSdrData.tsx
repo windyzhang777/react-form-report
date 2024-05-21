@@ -14,7 +14,13 @@ import {
   SelectedStatus,
 } from "src/commons/types";
 import { UseFormContext } from "src/components/createsdr/UseFormContext";
-import { DATE_HTML_DISPLAY, formatFullName, handleFocus, handleScroll } from "src/helpers";
+import {
+  DATETIME_REQUEST,
+  DATE_HTML_DISPLAY,
+  formatFullName,
+  handleFocus,
+  handleScroll,
+} from "src/helpers";
 import { resetLogpageDataSuccess } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
@@ -30,9 +36,8 @@ import "./createSdrData.css";
 
 export interface ICreateSdrDataProps {
   createSdrFlag: string;
-  handleFetchLogpageData: (a: string) => void;
+  handleFetchLogpageData: (a: string, b: boolean) => void;
   handleUpsertSdrSnapshot: (a: ISaveSdrValues) => void;
-  hasLogpageNumberExist: boolean;
   logpageNumberValue: string;
   setCreateSdrFlag: Dispatch<SetStateAction<string>>;
   setFormTouched: Dispatch<SetStateAction<boolean>>;
@@ -43,7 +48,6 @@ const CreateSdrData = ({
   createSdrFlag,
   handleFetchLogpageData,
   handleUpsertSdrSnapshot,
-  hasLogpageNumberExist,
   logpageNumberValue,
   setCreateSdrFlag,
   setFormTouched,
@@ -115,7 +119,7 @@ const CreateSdrData = ({
       },
       LogPageCreationDate: logpageData?.FleetInfo?.Date || "",
       OperatorControlNumber: "",
-      CreatedDate: "",
+      CreatedDate: moment().format(DATETIME_REQUEST),
       IsExtracted: false,
       Station: logpageData?.FleetInfo?.Station || "",
       AircraftNumber: logpageData?.FleetInfo?.TailNumber || "",
@@ -212,11 +216,10 @@ const CreateSdrData = ({
                 ? createError({
                     message: "Re-fetch Log Page Data",
                   })
-                : hasLogpageNumberExist
-                ? createError({ message: "Logpage Number Exists" })
                 : true;
             }
           ),
+          CreatedDate: ValidationSchema.CreatedDate.required(errMsg.required),
           PartDetails: object().shape({
             PartManufacturerSerialNumber: string().required(errMsg.required),
             PartManufacturerName: string().required(errMsg.required),
@@ -276,7 +279,7 @@ const CreateSdrData = ({
                           className={"sdr-status-edit"}
                           onKeyDown={(e) => {
                             if (e.key === "Enter") {
-                              handleFetchLogpageData(values.LogPageNumber);
+                              handleFetchLogpageData(values.LogPageNumber, true);
                             }
                           }}
                           inputProps={{ ref: logPageNumberRef, maxLength: 7 }}
@@ -290,7 +293,7 @@ const CreateSdrData = ({
                   <Grid item xs={8}>
                     <Button
                       disabled={!values.LogPageNumber}
-                      onClick={() => handleFetchLogpageData(values.LogPageNumber)}
+                      onClick={() => handleFetchLogpageData(values.LogPageNumber, true)}
                       sx={{ paddingLeft: "20px", paddingRight: "20px" }}
                     >
                       Fetch Logpage Data
@@ -630,7 +633,7 @@ const CreateSdrData = ({
                 <Box className={"sdr-status-title"}>Problem Description</Box>
                 <Grid className={"sdr-status-item"} container spacing={3}>
                   <Grid item xs={4}>
-                    <ListItem>Date</ListItem>
+                    <ListItem required>Date</ListItem>
                   </Grid>
                   <Grid item xs={4}>
                     <ListItem disabled>Station</ListItem>
@@ -659,6 +662,7 @@ const CreateSdrData = ({
                           error={!!touched.CreatedDate && !!errors.CreatedDate}
                           helperText={!!touched.CreatedDate && errors.CreatedDate}
                           className={"sdr-status-edit"}
+                          inputProps={{ max: moment().format(DATE_HTML_DISPLAY) }}
                         />
                       ) : (
                         ""

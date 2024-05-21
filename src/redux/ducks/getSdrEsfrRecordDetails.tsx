@@ -10,6 +10,7 @@ import {
   ViewLogPageDetailsFuncType,
   locationStaDataFuncType,
 } from "src/commons/types";
+import { DoesSDRExistsResResult } from "src/types/DoesSdrExistsRes";
 import { GetApprovedSDRResResult } from "src/types/GetApprovedSdrRes";
 import { GetCtnResResult } from "src/types/GetCtnRes";
 import { GetLocationStaDataResResult } from "src/types/GetLocationStaDataRes";
@@ -145,7 +146,7 @@ export const sdrEsfrRecordDetailsReducer = (
         ...state,
         loading: false,
         logpageData: null,
-        error: `Fail to get Logpage Data (${action.message})`,
+        error: action.message,
       };
     }
     case SdrEsfrRecordDetailsActionType.FETCH_SFR_MASTER_DATA_SUCCESS: {
@@ -215,7 +216,7 @@ export const getSdrEsfrRecordDetails = (selectedSdr: IViewSdrResult) => {
   };
 };
 
-export const viewLogPageDetails = (logpageNumber: string) => {
+export const viewLogPageDetails = (logpageNumber: string, checkSdr: boolean = false) => {
   return function (dispatch: Dispatch<ViewLogPageDetailsFuncType>) {
     dispatch(initFetch());
     axiosInstance
@@ -223,12 +224,27 @@ export const viewLogPageDetails = (logpageNumber: string) => {
       .then((res) => {
         const logpageData = res?.data?.Result;
         if (logpageData.MasterData) {
-          dispatch(fetchLogpageDataSuccess(logpageData));
+          if (checkSdr) {
+            axiosInstance
+              .get(
+                `${config.apiBaseAddress}${config.URL_DOES_SDR_EXISTS}?logpageNumber=${logpageNumber}&aircraftNumber=${logpageData?.FleetInfo?.TailNumber}&logpageCreationDate=${logpageData?.FleetInfo?.Date}`
+              )
+              .then((res) => {
+                const isSdrExists = (res?.data?.Result as DoesSDRExistsResResult).IsSdrExists;
+                if (isSdrExists) {
+                  dispatch(fetchLogpageDataFailure("SDR for this logpage already exists"));
+                } else {
+                  dispatch(fetchLogpageDataSuccess(logpageData));
+                }
+              });
+          }
         } else {
           dispatch(fetchLogpageDataFailure("Invalid Logpage Number"));
         }
       })
-      .catch((error) => dispatch(fetchLogpageDataFailure(error.message)));
+      .catch((error) =>
+        dispatch(fetchLogpageDataFailure(`Fail to get Logpage Data (${error.message})`))
+      );
   };
 };
 

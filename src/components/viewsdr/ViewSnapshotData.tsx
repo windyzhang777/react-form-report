@@ -29,6 +29,7 @@ import {
 import { useAppSelector } from "src/redux/hooks";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
 import ValidationSchema, {
+  errMsg,
   removeNonAlphaNumeric,
   removeNonAlphabet,
   removeNonNumeric,
@@ -326,6 +327,7 @@ const ViewSnapshotData = ({
           validationSchema={object().shape({
             ...ValidationSchema,
             LogPageNumber: ValidationSchema.LogPageNumber,
+            CreatedDate: ValidationSchema.CreatedDate.required(errMsg.required),
             CorrectiveAction: string().required("Required field"),
           })}
         >
@@ -361,7 +363,7 @@ const ViewSnapshotData = ({
                   <Grid className={"sdr-status-title"}>Problem Description</Grid>
                   <Grid className={"sdr-status-item"} container spacing={3}>
                     <Grid item xs={4}>
-                      <ListItem>Difficulty Date</ListItem>
+                      <ListItem required={editable}>Difficulty Date</ListItem>
                     </Grid>
                     <Grid item xs={4}>
                       <ListItem disabled={editable}>Log Page Number</ListItem>

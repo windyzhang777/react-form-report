@@ -10,6 +10,7 @@ const defaultConfig = {
   URL_CREATE_SDR: "/api/Elb/CreateSDR",
   URL_CREATE_SFR: "/api/Elb/CreateSFR",
   URL_VIEW_LOGPAGE: "/api/Elb/ViewLogPage",
+  URL_DOES_SDR_EXISTS: "/api/Elb/DoesSdrExists",
   URL_EXTRACT_SDR_RECORDS: "/api/Elb/ExtractSdrRecords",
   URL_UPDATE_SNAPSHOT_SDR_EXTRACTION_STATUS: "/api/Elb/UpdateSnapshotSdrExtractionStatus",
   URL_INSERT_SNAPSHOT_SDR_FILENAME: "/api/Elb/InsertSnapshotSdrFilename",
