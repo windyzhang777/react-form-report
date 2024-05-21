@@ -223,6 +223,7 @@ const CreateSdrData = ({
                 : true;
             }
           ),
+          CreatedDate: ValidationSchema.CreatedDate.required(errMsg.required),
           PartDetails: object().shape({
             PartManufacturerSerialNumber: string().required(errMsg.required),
             PartManufacturerName: string().required(errMsg.required),
@@ -636,7 +637,7 @@ const CreateSdrData = ({
                 <Box className={"sdr-status-title"}>Problem Description</Box>
                 <Grid className={"sdr-status-item"} container spacing={3}>
                   <Grid item xs={4}>
-                    <ListItem>Date</ListItem>
+                    <ListItem required>Date</ListItem>
                   </Grid>
                   <Grid item xs={4}>
                     <ListItem disabled>Station</ListItem>
