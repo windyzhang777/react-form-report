@@ -14,7 +14,13 @@ import {
   SelectedStatus,
 } from "src/commons/types";
 import { UseFormContext } from "src/components/createsdr/UseFormContext";
-import { DATE_HTML_DISPLAY, formatFullName, handleFocus, handleScroll } from "src/helpers";
+import {
+  DATETIME_REQUEST,
+  DATE_HTML_DISPLAY,
+  formatFullName,
+  handleFocus,
+  handleScroll,
+} from "src/helpers";
 import { resetLogpageDataSuccess } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { Type } from "src/types/GetAllEsfrRecordsRes";
@@ -115,7 +121,7 @@ const CreateSdrData = ({
       },
       LogPageCreationDate: logpageData?.FleetInfo?.Date || "",
       OperatorControlNumber: "",
-      CreatedDate: "",
+      CreatedDate: moment().format(DATETIME_REQUEST),
       IsExtracted: false,
       Station: logpageData?.FleetInfo?.Station || "",
       AircraftNumber: logpageData?.FleetInfo?.TailNumber || "",
@@ -659,6 +665,7 @@ const CreateSdrData = ({
                           error={!!touched.CreatedDate && !!errors.CreatedDate}
                           helperText={!!touched.CreatedDate && errors.CreatedDate}
                           className={"sdr-status-edit"}
+                          inputProps={{ max: moment().format(DATE_HTML_DISPLAY) }}
                         />
                       ) : (
                         ""
