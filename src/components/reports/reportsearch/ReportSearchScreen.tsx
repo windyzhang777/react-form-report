@@ -1,6 +1,6 @@
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { Box, Divider, Grid } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { WarningBox } from "src/commons/Box";
 import CommonLoader from "src/commons/CommonLoader";
 import RouterLink from "src/commons/Link";
@@ -24,7 +24,7 @@ import {
   resetLogpageDataSuccess,
 } from "src/redux/ducks/getSdrEsfrRecordDetails";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
-import { Status } from "src/types/GetAllEsfrRecordsRes";
+import { Status, Type } from "src/types/GetAllEsfrRecordsRes";
 
 export interface ISearchScreenProps {}
 
@@ -46,6 +46,7 @@ const ReportSearchScreen = () => {
   const [snackbarMessage, setSnackbarMessage] = useState<string>("");
   const [viewSdrFlag, setViewSdrFlag] = useState<boolean>(false);
   const [selectedSdr, setSelectedSdr] = useState<IViewSdrResult | null>(null);
+  const isSdr = useMemo(() => selectedSdr?.ReportType === Type.SDR, [selectedSdr]);
 
   const handleSearchReport = (values: IReportSearchValues) => {
     setViewSdrFlag(false);
@@ -148,6 +149,7 @@ const ReportSearchScreen = () => {
             {selectedSdr.Status === Status.Approved || selectedSdr.Status === Status.SentToFAA ? (
               <ViewSnapshotData
                 editable={false}
+                isSdr={isSdr}
                 selectedSdr={selectedSdr}
                 setViewSdrFlag={setViewSdrFlag}
                 tabIndex={3}
@@ -155,6 +157,7 @@ const ReportSearchScreen = () => {
             ) : (
               <ViewSdrData
                 editable={false}
+                isSdr={isSdr}
                 selectedSdr={selectedSdr}
                 setViewSdrFlag={setViewSdrFlag}
                 tabIndex={3}

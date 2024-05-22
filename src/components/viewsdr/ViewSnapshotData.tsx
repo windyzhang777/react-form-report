@@ -27,7 +27,6 @@ import {
   printAsPage,
 } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
-import { Type } from "src/types/GetAllEsfrRecordsRes";
 import ValidationSchema, {
   errMsg,
   removeNonAlphaNumeric,
@@ -189,10 +188,9 @@ const ViewSnapshotData = ({
       <FlexColumn id="print-sdr" className={"view-sdr h-full relative"}>
         <FlexBetween className={"subpage-title bottom-divider"} sx={{ pt: "1px" }}>
           <FlexRow>
-            {`${
-              selectedSdr?.ReportType === Type.SDR ? "Service Difficulty" : "Significant Findings"
-            }
-            Report - #${selectedSdr?.Id}`}
+            {`${isSdr ? "Service Difficulty" : "Significant Findings"} Report - #${
+              selectedSdr?.Id
+            }`}
             {isReport && (
               <IconButton
                 id="print-details-btn"
