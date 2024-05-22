@@ -23,6 +23,9 @@ export const regex = {
   nonAlphaNumeric: /[^a-zA-Z0-9]/gi,
   nonAlphaNumericSpace: /[^a-zA-Z0-9\s]/gi,
   nonAlphaNumericHyphen: /[^a-zA-Z0-9-]/gi,
+  nonAlphaNumericHyphenSpace: /[^a-zA-Z0-9\s-]/gi,
+  nonAlphaNumericSpecialSpace: /[^a-zA-Z0-9.,:;#'!?/\s/\-*/"]/gi,
+  nonAlphaNumericSpecial: /[^a-zA-Z0-9.,:;#'!?//\-*/"]/gi,
   nonNumeric: /[^0-9]/gi,
   nonNumericDecimal: /[^0-9.]/gi,
   nonAlphabetic: /[^a-zA-Z]/gi,
@@ -36,6 +39,12 @@ export const removeNonAlphaNumericSpace = (text: string) =>
   text.replace(regex.nonAlphaNumericSpace, "");
 export const removeNonAlphaNumericHyphen = (text: string) =>
   text.replace(regex.nonAlphaNumericHyphen, "");
+export const removeNonAlphaNumericHyphenSpace = (text: string) =>
+  text.replace(regex.nonAlphaNumericHyphenSpace, "");
+export const removeNonAlphaNumericSpecial = (text: string) =>
+  text.replace(regex.nonAlphaNumericSpecial, "");
+export const removeNonAlphaNumericSpecialSpace = (text: string) =>
+  text.replace(regex.nonAlphaNumericSpecialSpace, "");
 export const removeNonNumeric = (text: string) => text.replace(regex.nonNumeric, "");
 export const removeNonNumericDecimal = (text: string) => text.replace(regex.nonNumericDecimal, "");
 export const removeNonAlphabet = (text: string) => text.replace(regex.nonAlphabetic, "");
