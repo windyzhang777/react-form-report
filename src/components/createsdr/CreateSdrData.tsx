@@ -28,6 +28,9 @@ import ValidationSchema, {
   commonSchema,
   errMsg,
   removeNonAlphaNumeric,
+  removeNonAlphaNumericHyphenSpace,
+  removeNonAlphaNumericSpecial,
+  removeNonAlphaNumericSpecialSpace,
   removeNonNumeric,
   removeNonNumericDecimal,
 } from "src/validationSchema";
@@ -453,10 +456,10 @@ const CreateSdrData = ({
                 </Grid>
                 <Grid className={"sdr-status-item"} container spacing={3}>
                   <Grid item xs={4}>
-                    <ListItem>Manufacturer</ListItem>
+                    <ListItem>Manufacturer Name</ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                    <ListItem>Model/Series</ListItem>
+                    <ListItem>Model</ListItem>
                   </Grid>
                   <Grid item xs={4}>
                     <ListItem>Serial Number</ListItem>
@@ -472,7 +475,7 @@ const CreateSdrData = ({
                           onChange={(e) =>
                             setFieldValue(
                               "EngineDetails.EngineManufacturerName",
-                              removeNonAlphaNumeric(e.target.value)
+                              removeNonAlphaNumericHyphenSpace(e.target.value)
                             )
                           }
                           onBlur={handleBlur}
@@ -530,7 +533,7 @@ const CreateSdrData = ({
                           onChange={(e) =>
                             setFieldValue(
                               "EngineDetails.EngineSerialNumber",
-                              removeNonAlphaNumeric(e.target.value)
+                              removeNonAlphaNumericSpecial(e.target.value)
                             )
                           }
                           onBlur={handleBlur}
@@ -957,7 +960,7 @@ const CreateSdrData = ({
                           onChange={(e) =>
                             setFieldValue(
                               "PartDetails.PartManufacturerSerialNumber",
-                              removeNonAlphaNumeric(e.target.value)
+                              removeNonAlphaNumericSpecial(e.target.value)
                             )
                           }
                           onBlur={handleBlur}
@@ -985,7 +988,7 @@ const CreateSdrData = ({
                           onChange={(e) =>
                             setFieldValue(
                               "PartDetails.PartSerialNumber",
-                              removeNonAlphaNumeric(e.target.value)
+                              removeNonAlphaNumericSpecial(e.target.value)
                             )
                           }
                           onBlur={handleBlur}
@@ -1014,9 +1017,12 @@ const CreateSdrData = ({
                           onChange={(e) => {
                             setFieldValue(
                               "PartDetails.PartName",
-                              removeNonAlphaNumeric(e.target.value)
+                              removeNonAlphaNumericHyphenSpace(e.target.value)
                             );
-                            setFieldValue("PartName", removeNonAlphaNumeric(e.target.value));
+                            setFieldValue(
+                              "PartName",
+                              removeNonAlphaNumericHyphenSpace(e.target.value)
+                            );
                           }}
                           onBlur={handleBlur}
                           error={!!touched.PartDetails?.PartName && !!errors.PartDetails?.PartName}
@@ -1039,7 +1045,7 @@ const CreateSdrData = ({
                     <ListItem required>Part Condition</ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                    <ListItem required>Part Location</ListItem>
+                    <ListItem required>Part/Defect Location</ListItem>
                   </Grid>
                 </Grid>
                 <Grid className={"sdr-status-description"} container spacing={3}>
@@ -1052,7 +1058,7 @@ const CreateSdrData = ({
                           onChange={(e) => {
                             setFieldValue(
                               "PartDetails.PartManufacturerName",
-                              removeNonAlphaNumeric(e.target.value)
+                              removeNonAlphaNumericHyphenSpace(e.target.value)
                             );
                           }}
                           onBlur={handleBlur}
@@ -1081,7 +1087,7 @@ const CreateSdrData = ({
                           onChange={(e) =>
                             setFieldValue(
                               "PartDetails.PartCondition",
-                              removeNonAlphaNumeric(e.target.value)
+                              removeNonAlphaNumericSpecialSpace(e.target.value)
                             )
                           }
                           onBlur={handleBlur}
@@ -1109,7 +1115,7 @@ const CreateSdrData = ({
                           onChange={(e) =>
                             setFieldValue(
                               "PartDetails.PartLocation",
-                              removeNonAlphaNumeric(e.target.value)
+                              removeNonAlphaNumericSpecialSpace(e.target.value)
                             )
                           }
                           onBlur={handleBlur}
@@ -1301,7 +1307,7 @@ const CreateSdrData = ({
                           onChange={(e) => {
                             setFieldValue(
                               "ComponentDetails.ComponentName",
-                              removeNonAlphaNumeric(e.target.value)
+                              removeNonAlphaNumericHyphenSpace(e.target.value)
                             );
                           }}
                           onBlur={handleBlur}
@@ -1329,7 +1335,7 @@ const CreateSdrData = ({
                           onChange={(e) => {
                             setFieldValue(
                               "ComponentDetails.ManufacturerName",
-                              removeNonAlphaNumeric(e.target.value)
+                              removeNonAlphaNumericHyphenSpace(e.target.value)
                             );
                           }}
                           onBlur={handleBlur}
@@ -1357,7 +1363,7 @@ const CreateSdrData = ({
                           onChange={(e) => {
                             setFieldValue(
                               "ComponentDetails.PartNumber",
-                              removeNonAlphaNumeric(e.target.value)
+                              removeNonAlphaNumericSpecial(e.target.value)
                             );
                           }}
                           onBlur={handleBlur}
@@ -1385,7 +1391,7 @@ const CreateSdrData = ({
                   </Grid>
                   <Grid item xs={4}>
                     <ListItem required={!!values.ComponentDetails.ComponentName}>
-                      Manufacturer Model Number
+                      Model Number
                     </ListItem>
                   </Grid>
                   <Grid item xs={4}>
@@ -1402,7 +1408,7 @@ const CreateSdrData = ({
                           onChange={(e) => {
                             setFieldValue(
                               "ComponentDetails.SerialNumber",
-                              removeNonAlphaNumeric(e.target.value)
+                              removeNonAlphaNumericSpecial(e.target.value)
                             );
                           }}
                           onBlur={handleBlur}
@@ -1456,7 +1462,12 @@ const CreateSdrData = ({
                         <TextField
                           name="ComponentDetails.ComponentLocation"
                           value={values?.ComponentDetails?.ComponentLocation}
-                          onChange={handleChange}
+                          onChange={(e) => {
+                            setFieldValue(
+                              "ComponentDetails.ComponentLocation",
+                              removeNonAlphaNumericSpecialSpace(e.target.value)
+                            );
+                          }}
                           onBlur={handleBlur}
                           error={
                             !!touched.ComponentDetails?.ComponentLocation &&

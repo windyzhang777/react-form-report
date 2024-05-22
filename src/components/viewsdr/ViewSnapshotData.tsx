@@ -30,6 +30,9 @@ import { useAppSelector } from "src/redux/hooks";
 import ValidationSchema, {
   errMsg,
   removeNonAlphaNumeric,
+  removeNonAlphaNumericHyphenSpace,
+  removeNonAlphaNumericSpecial,
+  removeNonAlphaNumericSpecialSpace,
   removeNonAlphabet,
   removeNonNumeric,
   removeNonNumericDecimal,
@@ -937,7 +940,7 @@ const ViewSnapshotData = ({
                             onChange={(e) =>
                               setFieldValue(
                                 "PartDetails.PartName",
-                                removeNonAlphaNumeric(e.target.value)
+                                removeNonAlphaNumericHyphenSpace(e.target.value)
                               )
                             }
                             onBlur={handleBlur}
@@ -964,7 +967,7 @@ const ViewSnapshotData = ({
                             onChange={(e) =>
                               setFieldValue(
                                 "PartDetails.PartManufacturerName",
-                                removeNonAlphaNumeric(e.target.value)
+                                removeNonAlphaNumericHyphenSpace(e.target.value)
                               )
                             }
                             onBlur={handleBlur}
@@ -993,7 +996,7 @@ const ViewSnapshotData = ({
                             onChange={(e) =>
                               setFieldValue(
                                 "PartDetails.PartManufacturerSerialNumber",
-                                removeNonAlphaNumeric(e.target.value)
+                                removeNonAlphaNumericSpecial(e.target.value)
                               )
                             }
                             onBlur={handleBlur}
@@ -1035,7 +1038,7 @@ const ViewSnapshotData = ({
                             onChange={(e) =>
                               setFieldValue(
                                 "PartDetails.PartSerialNumber",
-                                removeNonAlphaNumeric(e.target.value)
+                                removeNonAlphaNumericSpecial(e.target.value)
                               )
                             }
                             onBlur={handleBlur}
@@ -1064,7 +1067,7 @@ const ViewSnapshotData = ({
                             onChange={(e) =>
                               setFieldValue(
                                 "PartDetails.PartCondition",
-                                removeNonAlphaNumeric(e.target.value)
+                                removeNonAlphaNumericSpecialSpace(e.target.value)
                               )
                             }
                             onBlur={handleBlur}
@@ -1093,7 +1096,7 @@ const ViewSnapshotData = ({
                             onChange={(e) =>
                               setFieldValue(
                                 "PartDetails.PartLocation",
-                                removeNonAlphaNumeric(e.target.value)
+                                removeNonAlphaNumericSpecialSpace(e.target.value)
                               )
                             }
                             onBlur={handleBlur}
@@ -1285,8 +1288,14 @@ const ViewSnapshotData = ({
                             name="ComponentDetails.ComponentName"
                             value={values?.ComponentDetails?.ComponentName}
                             onChange={(e) => {
-                              setFieldValue("ComponentDetails.ComponentName", e.target.value);
-                              setFieldValue("SfrAdditionalDetails.ComponentName", e.target.value);
+                              setFieldValue(
+                                "ComponentDetails.ComponentName",
+                                removeNonAlphaNumericHyphenSpace(e.target.value)
+                              );
+                              setFieldValue(
+                                "SfrAdditionalDetails.ComponentName",
+                                removeNonAlphaNumericHyphenSpace(e.target.value)
+                              );
                             }}
                             onBlur={handleBlur}
                             error={
@@ -1312,10 +1321,13 @@ const ViewSnapshotData = ({
                             name="ComponentDetails.ManufacturerName"
                             value={values?.ComponentDetails?.ManufacturerName}
                             onChange={(e) => {
-                              setFieldValue("ComponentDetails.ManufacturerName", e.target.value);
+                              setFieldValue(
+                                "ComponentDetails.ManufacturerName",
+                                removeNonAlphaNumericHyphenSpace(e.target.value)
+                              );
                               setFieldValue(
                                 "SfrAdditionalDetails.ComponentManufacturerName",
-                                e.target.value
+                                removeNonAlphaNumericHyphenSpace(e.target.value)
                               );
                             }}
                             onBlur={handleBlur}
@@ -1341,7 +1353,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="ComponentDetails.PartNumber"
                             value={values?.ComponentDetails?.PartNumber}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                              setFieldValue(
+                                "ComponentDetails.PartNumber",
+                                removeNonAlphaNumericSpecial(e.target.value)
+                              )
+                            }
                             onBlur={handleBlur}
                             error={
                               !!touched.ComponentDetails?.PartNumber &&
@@ -1383,7 +1400,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="ComponentDetails.SerialNumber"
                             value={values?.ComponentDetails?.SerialNumber}
-                            onChange={handleChange}
+                            onChange={(e) => {
+                              setFieldValue(
+                                "ComponentDetails.SerialNumber",
+                                removeNonAlphaNumericSpecial(e.target.value)
+                              );
+                            }}
                             onBlur={handleBlur}
                             error={
                               !!touched.ComponentDetails?.SerialNumber &&
@@ -1407,8 +1429,14 @@ const ViewSnapshotData = ({
                             name="ComponentDetails.ModelNumber"
                             value={values?.ComponentDetails?.ModelNumber}
                             onChange={(e) => {
-                              setFieldValue("ComponentDetails.ModelNumber", e.target.value);
-                              setFieldValue("SfrAdditionalDetails.PartModelNumber", e.target.value);
+                              setFieldValue(
+                                "ComponentDetails.ModelNumber",
+                                removeNonAlphaNumeric(e.target.value)
+                              );
+                              setFieldValue(
+                                "SfrAdditionalDetails.PartModelNumber",
+                                removeNonAlphaNumeric(e.target.value)
+                              );
                             }}
                             onBlur={handleBlur}
                             error={
@@ -1433,7 +1461,12 @@ const ViewSnapshotData = ({
                           <TextField
                             name="ComponentDetails.ComponentLocation"
                             value={values?.ComponentDetails?.ComponentLocation}
-                            onChange={handleChange}
+                            onChange={(e) => {
+                              setFieldValue(
+                                "ComponentDetails.ComponentLocation",
+                                removeNonAlphaNumericSpecialSpace(e.target.value)
+                              );
+                            }}
                             onBlur={handleBlur}
                             error={
                               !!touched.ComponentDetails?.ComponentLocation &&
