@@ -616,7 +616,7 @@ const ViewSdrData = ({
                   </Grid>
                 </Grid>
 
-                {/* Part or Structure Causing Difficulty */}
+                {/* Specific Part Causing Problem */}
                 <Grid
                   className={"sdr-status-grid"}
                   sx={{
@@ -626,7 +626,7 @@ const ViewSdrData = ({
                     borderColor: "#E6E6E6",
                   }}
                 >
-                  <Grid className={"sdr-status-title"}>Part or Structure Causing Difficulty</Grid>
+                  <Grid className={"sdr-status-title"}>Specific Part Causing Problem</Grid>
                   <Grid className={"sdr-status-item"} container spacing={3}>
                     <Grid item xs={4}>
                       <ListItem>Part Name</ListItem>
