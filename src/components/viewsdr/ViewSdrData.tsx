@@ -25,7 +25,6 @@ import {
   transformUpsertSfrValues,
 } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
-import { Type } from "src/types/GetAllEsfrRecordsRes";
 import { GetSDREsfrRecordDetailsResResult } from "src/types/GetSdrEsfrRecordDetailsRes";
 import "./viewSdrData.css";
 
@@ -33,6 +32,7 @@ export interface IViewSdrDataProps {
   editable: boolean;
   handleUpsertSdrSnapshot?: (a: IEditSdrValues, b: SelectedStatus) => void;
   handleUpsertSfrSnapshot?: (a: any, b: SelectedStatus) => void;
+  isSdr?: boolean;
   selectedSdr: IViewSdrResult;
   setViewSdrFlag: Dispatch<SetStateAction<boolean>>;
   tabIndex: number;
@@ -42,6 +42,7 @@ const ViewSdrData = ({
   editable,
   handleUpsertSdrSnapshot,
   handleUpsertSfrSnapshot,
+  isSdr = false,
   selectedSdr,
   setViewSdrFlag,
   tabIndex,
@@ -54,7 +55,6 @@ const ViewSdrData = ({
     tabIndex === SelectedTab.FlaggedForFollowUp
   );
   const isReport: boolean = useMemo(() => tabIndex > SelectedTab.Approved, [tabIndex]);
-  const isSdr: boolean = useMemo(() => selectedSdr?.Type === Type.SDR, [selectedSdr]);
 
   const handleSubmit = (values: IEditSdrValues) => {
     if (isSdr) {
@@ -292,9 +292,9 @@ const ViewSdrData = ({
       <FlexColumn id="print-sdr" className={"view-sdr h-full relative"}>
         <FlexBetween className={"subpage-title bottom-divider"} sx={{ pt: "1px" }}>
           <FlexRow>
-            {`${
-              selectedSdr?.ReportType === Type.SDR ? "Significant Findings" : "Service Difficulty"
-            } Report - #${selectedSdr?.Id}`}
+            {`${isSdr ? "Service Difficulty" : "Significant Findings"} Report - #${
+              selectedSdr?.Id
+            }`}
             {isReport && (
               <IconButton
                 id="print-details-btn"
@@ -616,7 +616,7 @@ const ViewSdrData = ({
                   </Grid>
                 </Grid>
 
-                {/* Part or Structure Causing Difficulty */}
+                {/* Specific Part Causing Problem */}
                 <Grid
                   className={"sdr-status-grid"}
                   sx={{
@@ -626,7 +626,7 @@ const ViewSdrData = ({
                     borderColor: "#E6E6E6",
                   }}
                 >
-                  <Grid className={"sdr-status-title"}>Part or Structure Causing Difficulty</Grid>
+                  <Grid className={"sdr-status-title"}>Specific Part Causing Problem</Grid>
                   <Grid className={"sdr-status-item"} container spacing={3}>
                     <Grid item xs={4}>
                       <ListItem>Part Name</ListItem>

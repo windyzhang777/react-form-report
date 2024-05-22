@@ -27,7 +27,6 @@ import {
   printAsPage,
 } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
-import { Type } from "src/types/GetAllEsfrRecordsRes";
 import ValidationSchema, {
   errMsg,
   removeNonAlphaNumeric,
@@ -189,10 +188,9 @@ const ViewSnapshotData = ({
       <FlexColumn id="print-sdr" className={"view-sdr h-full relative"}>
         <FlexBetween className={"subpage-title bottom-divider"} sx={{ pt: "1px" }}>
           <FlexRow>
-            {`${
-              selectedSdr?.ReportType === Type.SDR ? "Service Difficulty" : "Significant Findings"
-            }
-            Report - #${selectedSdr?.Id}`}
+            {`${isSdr ? "Service Difficulty" : "Significant Findings"} Report - #${
+              selectedSdr?.Id
+            }`}
             {isReport && (
               <IconButton
                 id="print-details-btn"
@@ -907,7 +905,7 @@ const ViewSnapshotData = ({
                   </Grid>
                 </Grid>
 
-                {/* Part or Structure Causing Difficulty */}
+                {/* Specific Part Causing Problem */}
                 <Grid
                   className={"sdr-status-grid"}
                   sx={{
@@ -917,7 +915,7 @@ const ViewSnapshotData = ({
                     borderColor: "#E6E6E6",
                   }}
                 >
-                  <Grid className={"sdr-status-title"}>Part or Structure Causing Difficulty</Grid>
+                  <Grid className={"sdr-status-title"}>Specific Part Causing Problem</Grid>
                   <Grid className={"sdr-status-item"} container spacing={3}>
                     <Grid item xs={4}>
                       <ListItem>Part Name</ListItem>
@@ -1933,10 +1931,7 @@ const ViewSnapshotData = ({
                             id="SfrAdditionalDetails.StringerFromSide"
                           />
                         ) : (
-                          Sides.find(
-                            (option) =>
-                              "" + option.Id === values?.SfrAdditionalDetails?.StringerFromSide
-                          )?.Description || ""
+                          values?.SfrAdditionalDetails?.StringerFromSide || ""
                         )}
                       </ListItem>
                     </Grid>
@@ -1998,10 +1993,7 @@ const ViewSnapshotData = ({
                             id="SfrAdditionalDetails.StringerToSide"
                           />
                         ) : (
-                          Sides.find(
-                            (option) =>
-                              "" + option.Id === values?.SfrAdditionalDetails?.StringerToSide
-                          )?.Description || ""
+                          values?.SfrAdditionalDetails?.StringerToSide || ""
                         )}
                       </ListItem>
                     </Grid>
@@ -2074,10 +2066,7 @@ const ViewSnapshotData = ({
                             id="SfrAdditionalDetails.ButtlineFromSide"
                           />
                         ) : (
-                          Sides.find(
-                            (option) =>
-                              "" + option.Id === values?.SfrAdditionalDetails?.ButtlineFromSide
-                          )?.Description || ""
+                          values?.SfrAdditionalDetails?.ButtlineFromSide || ""
                         )}
                       </ListItem>
                     </Grid>
@@ -2139,10 +2128,7 @@ const ViewSnapshotData = ({
                             id="SfrAdditionalDetails.ButtlineToSide"
                           />
                         ) : (
-                          Sides.find(
-                            (option) =>
-                              "" + option.Id === values?.SfrAdditionalDetails?.ButtlineToSide
-                          )?.Description || ""
+                          values?.SfrAdditionalDetails?.ButtlineToSide || ""
                         )}
                       </ListItem>
                     </Grid>
@@ -2215,10 +2201,7 @@ const ViewSnapshotData = ({
                             id="SfrAdditionalDetails.WingStationFromSide"
                           />
                         ) : (
-                          Sides.find(
-                            (option) =>
-                              "" + option.Id === values?.SfrAdditionalDetails?.WingStationFromSide
-                          )?.Description || ""
+                          values?.SfrAdditionalDetails?.WingStationFromSide || ""
                         )}
                       </ListItem>
                     </Grid>
@@ -2280,10 +2263,7 @@ const ViewSnapshotData = ({
                             id="SfrAdditionalDetails.WingStationToSide"
                           />
                         ) : (
-                          Sides.find(
-                            (option) =>
-                              "" + option.Id === values?.SfrAdditionalDetails?.WingStationToSide
-                          )?.Description || ""
+                          values?.SfrAdditionalDetails?.WingStationToSide || ""
                         )}
                       </ListItem>
                     </Grid>
