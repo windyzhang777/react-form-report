@@ -1933,10 +1933,7 @@ const ViewSnapshotData = ({
                             id="SfrAdditionalDetails.StringerFromSide"
                           />
                         ) : (
-                          Sides.find(
-                            (option) =>
-                              "" + option.Id === values?.SfrAdditionalDetails?.StringerFromSide
-                          )?.Description || ""
+                          values?.SfrAdditionalDetails?.StringerFromSide || ""
                         )}
                       </ListItem>
                     </Grid>
@@ -1998,10 +1995,7 @@ const ViewSnapshotData = ({
                             id="SfrAdditionalDetails.StringerToSide"
                           />
                         ) : (
-                          Sides.find(
-                            (option) =>
-                              "" + option.Id === values?.SfrAdditionalDetails?.StringerToSide
-                          )?.Description || ""
+                          values?.SfrAdditionalDetails?.StringerToSide || ""
                         )}
                       </ListItem>
                     </Grid>
@@ -2074,10 +2068,7 @@ const ViewSnapshotData = ({
                             id="SfrAdditionalDetails.ButtlineFromSide"
                           />
                         ) : (
-                          Sides.find(
-                            (option) =>
-                              "" + option.Id === values?.SfrAdditionalDetails?.ButtlineFromSide
-                          )?.Description || ""
+                          values?.SfrAdditionalDetails?.ButtlineFromSide || ""
                         )}
                       </ListItem>
                     </Grid>
@@ -2139,10 +2130,7 @@ const ViewSnapshotData = ({
                             id="SfrAdditionalDetails.ButtlineToSide"
                           />
                         ) : (
-                          Sides.find(
-                            (option) =>
-                              "" + option.Id === values?.SfrAdditionalDetails?.ButtlineToSide
-                          )?.Description || ""
+                          values?.SfrAdditionalDetails?.ButtlineToSide || ""
                         )}
                       </ListItem>
                     </Grid>
@@ -2215,10 +2203,7 @@ const ViewSnapshotData = ({
                             id="SfrAdditionalDetails.WingStationFromSide"
                           />
                         ) : (
-                          Sides.find(
-                            (option) =>
-                              "" + option.Id === values?.SfrAdditionalDetails?.WingStationFromSide
-                          )?.Description || ""
+                          values?.SfrAdditionalDetails?.WingStationFromSide || ""
                         )}
                       </ListItem>
                     </Grid>
@@ -2280,10 +2265,7 @@ const ViewSnapshotData = ({
                             id="SfrAdditionalDetails.WingStationToSide"
                           />
                         ) : (
-                          Sides.find(
-                            (option) =>
-                              "" + option.Id === values?.SfrAdditionalDetails?.WingStationToSide
-                          )?.Description || ""
+                          values?.SfrAdditionalDetails?.WingStationToSide || ""
                         )}
                       </ListItem>
                     </Grid>
