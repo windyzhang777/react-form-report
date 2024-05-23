@@ -636,7 +636,7 @@ const CreateSdrData = ({
                 <Box className={"sdr-status-title"}>Problem Description</Box>
                 <Grid className={"sdr-status-item"} container spacing={3}>
                   <Grid item xs={4}>
-                    <ListItem required>Date</ListItem>
+                    <ListItem required>Difficulty Date</ListItem>
                   </Grid>
                   <Grid item xs={4}>
                     <ListItem disabled>Station</ListItem>
