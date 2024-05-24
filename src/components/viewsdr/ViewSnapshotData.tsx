@@ -28,6 +28,7 @@ import {
 } from "src/helpers";
 import { useAppSelector } from "src/redux/hooks";
 import ValidationSchema, {
+  commonSchema,
   errMsg,
   removeNonAlphaNumeric,
   removeNonAlphaNumericHyphenSpace,
@@ -337,6 +338,17 @@ const ViewSnapshotData = ({
             LogPageNumber: ValidationSchema.LogPageNumber,
             CreatedDate: ValidationSchema.CreatedDate.required(errMsg.required),
             CorrectiveAction: string().required("Required field"),
+            PartDetails: object().shape({
+              PartManufacturerSerialNumber: string().required(errMsg.required),
+              PartSerialNumber: string().required(errMsg.required),
+              PartManufacturerName: string().required(errMsg.required),
+              PartCondition: string().required(errMsg.required),
+              PartLocation: string().required(errMsg.required),
+              PartName: string().required(errMsg.required),
+              PartTotalTime: commonSchema.number8D3,
+              PartTotalCycles: commonSchema.number8D3,
+              PartTimeSince: commonSchema.number8D3,
+            }),
           })}
         >
           {({
@@ -921,13 +933,13 @@ const ViewSnapshotData = ({
                   <Grid className={"sdr-status-title"}>Specific Part Causing Problem</Grid>
                   <Grid className={"sdr-status-item"} container spacing={3}>
                     <Grid item xs={4}>
-                      <ListItem>Part Name</ListItem>
+                      <ListItem required={editable}>Part Name</ListItem>
                     </Grid>
                     <Grid item xs={4}>
-                      <ListItem>{"Manufacturer's Name"}</ListItem>
+                      <ListItem required={editable}>{"Manufacturer's Name"}</ListItem>
                     </Grid>
                     <Grid item xs={4}>
-                      <ListItem>Part Number</ListItem>
+                      <ListItem required={editable}>Part Number</ListItem>
                     </Grid>
                   </Grid>
                   <Grid className={"sdr-status-description"} container spacing={3}>
@@ -1019,13 +1031,13 @@ const ViewSnapshotData = ({
                   </Grid>
                   <Grid className={"sdr-status-item"} container spacing={3}>
                     <Grid item xs={4}>
-                      <ListItem>Part Serial number</ListItem>
+                      <ListItem required={editable}>Part Serial number</ListItem>
                     </Grid>
                     <Grid item xs={4}>
-                      <ListItem>Part Condition</ListItem>
+                      <ListItem required={editable}>Part Condition</ListItem>
                     </Grid>
                     <Grid item xs={4}>
-                      <ListItem>Part Location</ListItem>
+                      <ListItem required={editable}>Part Location</ListItem>
                     </Grid>
                   </Grid>
                   <Grid className={"sdr-status-description"} container spacing={3}>

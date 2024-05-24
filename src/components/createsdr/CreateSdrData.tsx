@@ -225,9 +225,11 @@ const CreateSdrData = ({
           CreatedDate: ValidationSchema.CreatedDate.required(errMsg.required),
           PartDetails: object().shape({
             PartManufacturerSerialNumber: string().required(errMsg.required),
+            PartSerialNumber: string().required(errMsg.required),
             PartManufacturerName: string().required(errMsg.required),
             PartCondition: string().required(errMsg.required),
             PartLocation: string().required(errMsg.required),
+            PartName: string().required(errMsg.required),
             PartTotalTime: commonSchema.number8D3,
             PartTotalCycles: commonSchema.number8D3,
             PartTimeSince: commonSchema.number8D3,
@@ -944,7 +946,7 @@ const CreateSdrData = ({
                     <ListItem required>MFG Part Number</ListItem>
                   </Grid>
                   <Grid item xs={4}>
-                    <ListItem>MFG Serial Number</ListItem>
+                    <ListItem required>MFG Serial Number</ListItem>
                   </Grid>
                   <Grid item xs={4}>
                     <ListItem required>Part Name</ListItem>
